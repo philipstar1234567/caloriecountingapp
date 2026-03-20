@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://dba6tab5k5v8e"]
+
+[ext_resource type="Script" uid="uid://ca73e5ttudba8" path="res://leaderboard_button.gd" id="1_dr0c6"]
+[ext_resource type="Script" uid="uid://qjvqfaliht1w" path="res://avatar_button.gd" id="2_0ujwt"]
+[ext_resource type="Script" uid="uid://derx0607kgj4g" path="res://home_button.gd" id="3_208xd"]
+[ext_resource type="Script" uid="uid://bvxdmuqorkvg0" path="res://vitamins_button.gd" id="4_63ojx"]
+[ext_resource type="Script" uid="uid://bguvhejjqfrfc" path="res://shopping_button.gd" id="5_ium6o"]
+
+[node name="Root" type="Control"]
+layout_mode = 3
+anchor_right = 1.0
+anchor_bottom = 3.704
+offset_bottom = -6489.6
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1080.0
+offset_bottom = 2400.0
+
+[node name="ButtonContainer" type="GridContainer" parent="Panel"]
+layout_direction = 2
+layout_mode = 2
+offset_top = 2151.0
+offset_right = 1080.0
+offset_bottom = 2400.0
+columns = 5
+
+[node name="LeaderboardButton" type="Button" parent="Panel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+text = "L.BOARD"
+script = ExtResource("1_dr0c6")
+
+[node name="AvatarButton" type="Button" parent="Panel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+text = "AVATAR"
+script = ExtResource("2_0ujwt")
+
+[node name="HomeButton" type="Button" parent="Panel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 50
+text = "HOME"
+script = ExtResource("3_208xd")
+
+[node name="VitaminsButton" type="Button" parent="Panel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "VITAMINS"
+script = ExtResource("4_63ojx")
+
+[node name="ShoppingButton" type="Button" parent="Panel/ButtonContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 40
+text = "SHOPPING"
+script = ExtResource("5_ium6o")
+
+[node name="PlaceholderText" type="TextEdit" parent="."]
+layout_mode = 0
+offset_left = 266.0
+offset_top = 821.0
+offset_right = 842.0
+offset_bottom = 970.0
+theme_override_font_sizes/font_size = 100
+text = "VITAMINS"
+scroll_fit_content_height = true
+scroll_fit_content_width = true
+
+[connection signal="pressed" from="Panel/ButtonContainer/LeaderboardButton" to="Panel/ButtonContainer/LeaderboardButton" method="_on_pressed"]
+[connection signal="pressed" from="Panel/ButtonContainer/AvatarButton" to="Panel/ButtonContainer/AvatarButton" method="_on_pressed"]
+[connection signal="pressed" from="Panel/ButtonContainer/HomeButton" to="Panel/ButtonContainer/HomeButton" method="_on_pressed"]
+[connection signal="pressed" from="Panel/ButtonContainer/VitaminsButton" to="Panel/ButtonContainer/VitaminsButton" method="_on_pressed"]
+[connection signal="pressed" from="Panel/ButtonContainer/ShoppingButton" to="Panel/ButtonContainer/ShoppingButton" method="_on_pressed"]
