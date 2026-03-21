@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://c40gfxxse1lgm"]
+
+[ext_resource type="Script" uid="uid://eo3bqo2uqsjr" path="res://Main.gd" id="1_uu6xs"]
+[ext_resource type="PackedScene" uid="uid://c7d54sib2hqol" path="res://NavBar.tscn" id="2_r0du0"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_uu6xs")
+
+[node name="ContentArea" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -231.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="NavBar" parent="." instance=ExtResource("2_r0du0")]
+layout_mode = 1
+offset_top = -232.0
+offset_bottom = -1.0
+mouse_filter = 0

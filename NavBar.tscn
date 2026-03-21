@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://c7d54sib2hqol"]
+
+[ext_resource type="Texture2D" uid="uid://cqbjuu8cowgpv" path="res://Assets/icons/pngtree-leaderboard-icon-png-image_15304639.png" id="1_4yqoj"]
+[ext_resource type="Script" uid="uid://fefm1ao8ntck" path="res://NavBar.gd" id="1_n32ul"]
+[ext_resource type="Texture2D" uid="uid://c584asyuord5c" path="res://Assets/icons/vecteezy_fashion-icon-design_29327815.png" id="2_n32ul"]
+[ext_resource type="Texture2D" uid="uid://bhrro2ojs4fys" path="res://Assets/icons/favpng_844c19a52213263969a790086ce524e4.png" id="3_shum3"]
+[ext_resource type="Texture2D" uid="uid://bf7v2dscv6n60" path="res://Assets/icons/image-from-rawpixel-id-20469641-jpeg.png" id="4_oap13"]
+[ext_resource type="Texture2D" uid="uid://bcsu7eukfw7lh" path="res://Assets/icons/settings_3507142.png" id="5_duhwy"]
+
+[node name="NavBar" type="GridContainer"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+offset_right = 1.0
+offset_bottom = 131.0
+grow_horizontal = 2
+grow_vertical = 0
+columns = 5
+script = ExtResource("1_n32ul")
+
+[node name="LeaderboardButton" type="Button" parent="."]
+custom_minimum_size = Vector2(231, 231)
+layout_mode = 2
+icon = ExtResource("1_4yqoj")
+
+[node name="AvatarButton" type="Button" parent="."]
+custom_minimum_size = Vector2(231, 231)
+layout_mode = 2
+icon = ExtResource("2_n32ul")
+
+[node name="HomeButton" type="Button" parent="."]
+custom_minimum_size = Vector2(231, 231)
+layout_mode = 2
+icon = ExtResource("3_shum3")
+
+[node name="FridgeButton" type="Button" parent="."]
+custom_minimum_size = Vector2(231, 231)
+layout_mode = 2
+icon = ExtResource("4_oap13")
+
+[node name="SettingsButton" type="Button" parent="."]
+custom_minimum_size = Vector2(231, 231)
+layout_mode = 2
+icon = ExtResource("5_duhwy")
+
+[connection signal="pressed" from="HomeButton" to="." method="_on_home_button_pressed"]

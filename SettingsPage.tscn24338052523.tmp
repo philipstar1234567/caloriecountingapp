@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://lp2ytm723gwl"]
+
+[node name="SettingsPage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 1170.0
+offset_bottom = 2532.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS"
+
+[node name="KidneyCarePanel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="KnownDisease" type="CheckBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="eGFRLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CreatinineInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="OxalateInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="RiskLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2

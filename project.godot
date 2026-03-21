@@ -14,12 +14,22 @@ config/name="CalorieCountingApp"
 run/main_scene="uid://c40gfxxse1lgm"
 config/features=PackedStringArray("4.4", "Mobile")
 
+[autoload]
+
+Global="*res://Global.gd"
+
 [display]
 
-window/size/viewport_width=1080
-window/size/viewport_height=2400
-window/stretch/scale=0.5
+window/size/viewport_width=1170
+window/size/viewport_height=2532
+window/size/window_width_override=390
+window/size/window_height_override=844
+window/stretch/mode="canvas_items"
 window/handheld/orientation=1
+
+[dotnet]
+
+project/assembly_name="CalorieCountingApp"
 
 [rendering]
 

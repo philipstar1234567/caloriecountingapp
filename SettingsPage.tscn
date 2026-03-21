@@ -1,0 +1,96 @@
+[gd_scene load_steps=2 format=3 uid="uid://lp2ytm723gwl"]
+
+[ext_resource type="Script" uid="uid://j36t16rvv8ij" path="res://SettingsPage.gd" id="1_n364n"]
+
+[node name="SettingsPage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_n364n")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
+clip_contents = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 7
+size_flags_vertical = 7
+alignment = 1
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="KidneyCarePanel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel"]
+layout_mode = 0
+offset_top = 110.0
+offset_right = 1168.0
+offset_bottom = 397.0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+text = "Known kidney disease?"
+
+[node name="KnownDisease" type="CheckBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+text = "yes"
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="eGFRLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "eGFR"
+
+[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "female"
+popup/item_0/id = 0
+popup/item_1/text = "male"
+popup/item_1/id = 1
+
+[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+alignment = 1
+
+[node name="CreatinineInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+alignment = 1
+
+[node name="OxalateInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+alignment = 1
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "calculate"
+
+[node name="RiskLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ResetButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "reset"
