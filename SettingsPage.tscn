@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://lp2ytm723gwl"]
+[gd_scene load_steps=3 format=3 uid="uid://lp2ytm723gwl"]
 
 [ext_resource type="Script" uid="uid://j36t16rvv8ij" path="res://SettingsPage.gd" id="1_n364n"]
+[ext_resource type="Theme" uid="uid://6bg4j0jgclno" path="res://themeHomePagefont32.tres" id="1_shg78"]
 
 [node name="SettingsPage" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_shg78")
 script = ExtResource("1_n364n")
 
 [node name="Panel" type="Panel" parent="."]
@@ -32,7 +34,6 @@ grow_vertical = 2
 layout_mode = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
-alignment = 1
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
@@ -94,3 +95,120 @@ layout_mode = 2
 [node name="ResetButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 text = "reset"
+
+[node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 709.0
+offset_bottom = 1765.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Body Metrics"
+
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Gender:"
+
+[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 49.41)
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Male"
+popup/item_0/id = 0
+popup/item_1/text = "Female"
+popup/item_1/id = 1
+
+[node name="Label3" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Age:"
+
+[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 120.0
+value = 30.0
+
+[node name="Label4" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Current Weight:"
+
+[node name="WeightInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 20.0
+max_value = 300.0
+step = 0.1
+value = 70.0
+
+[node name="Label5" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Current Height:"
+
+[node name="HeightInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 100.0
+max_value = 250.0
+value = 170.0
+
+[node name="Label6" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Physical activity:"
+
+[node name="ActivityOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Sedentary"
+popup/item_0/id = 0
+popup/item_1/text = "Moderately Active"
+popup/item_1/id = 1
+popup/item_2/text = "Athlete"
+popup/item_2/id = 2
+
+[node name="Label7" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Goal weight:"
+
+[node name="GoalWeightInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 20.0
+max_value = 300.0
+step = 0.1
+value = 70.0
+
+[node name="Label8" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Time interval:"
+
+[node name="TimeIntervalInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+min_value = 1.0
+max_value = 104.0
+value = 12.0
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Calculate"
+
+[node name="BMIResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "BMI: —"
+
+[node name="BMRResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "BMR: —"
+
+[node name="TDEEResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "TDEE: —"
+
+[node name="GoalResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Daily goal: —"

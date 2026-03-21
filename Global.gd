@@ -1,5 +1,13 @@
 extends Node
 
+var body_metrics: Dictionary = {
+	"bmr": 0.0,
+	"tdee": 0.0,
+	"daily_goal": 0.0,
+	"goal_weight": 0.0,
+	"weight": 0.0
+}
+
 # ── Health conditions selected by user ──
 var active_conditions: Array = []
 
@@ -75,3 +83,40 @@ func load_profile():
 	if not data: return
 	active_conditions = data.get("conditions", [])
 	kidney_at_risk = data.get("kidney_at_risk", false)
+
+var points_history: Dictionary = {}  # key = "YYYY-MM-DD", value = points
+
+func save_points(date: String, points: float):
+	points_history[date] = points
+	var file = FileAccess.open("user://points.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(points_history))
+	file.close()
+
+func load_points():
+	if not FileAccess.file_exists("user://points.json"): return
+	var file = FileAccess.open("user://points.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data:
+		points_history = data
+
+func get_points_today() -> float:
+	var today = Time.get_date_string_from_system()
+	return points_history.get(today, 0.0)
+
+func get_points_week() -> float:
+	var total = 0.0
+	var unix_now = Time.get_unix_time_from_system()
+	for i in range(7):
+		var unix_day = unix_now - (i * 86400)
+		var date = Time.get_date_string_from_datetime_dict(
+			Time.get_datetime_dict_from_unix_time(unix_day)
+		)
+		total += points_history.get(date, 0.0)
+	return total
+
+func get_points_alltime() -> float:
+	var total = 0.0
+	for val in points_history.values():
+		total += val
+	return total

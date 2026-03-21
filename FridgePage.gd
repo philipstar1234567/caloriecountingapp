@@ -183,13 +183,46 @@ func open_food_popup(food: Dictionary):
 	popup.info_pressed.connect(_on_info_pressed)
 
 func _on_eat_pressed(food: Dictionary):
+	# Remove from fridge
 	fridge_foods = fridge_foods.filter(func(f): return f["id"] != food["id"])
+
 	save_fridge()
 	build_fridge_ui()
-	# Log to daily intake
-	var intake = get_tree().root.get_node_or_null("Main/ContentArea/HomePage")
-	if intake:
-		intake.log_food(food)
+
+	# Log to HomePage
+	var main = get_tree().root.get_node("Main")
+	var home = main.get_node_or_null("ContentArea/HomePage")
+	if home == null:
+		# HomePage not currently loaded — save directly to file
+		_log_food_to_file(food)
+	else:
+		home.log_food(food)
+
+func _log_food_to_file(food: Dictionary):
+	var today = Time.get_date_string_from_system()
+	var totals = {"calories":0.0,"protein_g":0.0,"fat_g":0.0,"carbs_g":0.0,"fiber_g":0.0,"calcium_mg":0.0,"oxalate_mg":0.0}
+	var foods = []
+
+	if FileAccess.file_exists("user://intake.json"):
+		var file = FileAccess.open("user://intake.json", FileAccess.READ)
+		var data = JSON.parse_string(file.get_as_text())
+		file.close()
+		if data and data.get("date","") == today:
+			totals = data.get("totals", totals)
+			foods = data.get("foods", [])
+
+	totals["calories"]   += food.get("calories", 0)
+	totals["protein_g"]  += food.get("protein_g", 0)
+	totals["fat_g"]      += food.get("fat_g", 0)
+	totals["carbs_g"]    += food.get("carbs_g", 0)
+	totals["fiber_g"]    += food.get("fiber_g", 0)
+	totals["calcium_mg"] += food.get("calcium_mg", 0)
+	totals["oxalate_mg"] += food.get("oxalate_mg_per_100g", 0)
+	foods.append(food.get("name", "Unknown"))
+
+	var file = FileAccess.open("user://intake.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"date": today, "totals": totals, "foods": foods}))
+	file.close()
 
 func _on_info_pressed(food: Dictionary):
 	var info = preload("res://NutritionalInfo.tscn").instantiate()
