@@ -1,4 +1,7 @@
-[gd_scene format=3 uid="uid://cm087ln0rtl34"]
+[gd_scene load_steps=3 format=3 uid="uid://cm087ln0rtl34"]
+
+[ext_resource type="Script" uid="uid://blw1318permhp" path="res://LeaderboardPage.gd" id="1_g7ku1"]
+[ext_resource type="Theme" uid="uid://6bg4j0jgclno" path="res://themeHomePagefont32.tres" id="1_qwaqi"]
 
 [node name="LeaderboardPage" type="Control"]
 layout_mode = 3
@@ -7,6 +10,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_qwaqi")
+script = ExtResource("1_g7ku1")
 
 [node name="Panel" type="Panel" parent="."]
 layout_mode = 1
@@ -15,3 +20,98 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -588.0
+offset_right = 581.0
+offset_bottom = 715.0
+grow_horizontal = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+text = "Leaderboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PeriodTabs" type="TabContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+tab_alignment = 1
+current_tab = 0
+
+[node name="TodayPanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
+custom_minimum_size = Vector2(0, 119.39)
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/TodayPanel"]
+layout_mode = 0
+offset_left = 285.0
+offset_top = 3.0
+offset_right = 712.0
+offset_bottom = 197.0
+
+[node name="PointsLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/TodayPanel/VBoxContainer"]
+layout_mode = 2
+text = "⭐ 0 points"
+
+[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/TodayPanel/VBoxContainer"]
+layout_mode = 2
+text = "stay healthy? get healthy?"
+
+[node name="WeekPanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
+visible = false
+custom_minimum_size = Vector2(0, 585.465)
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 12.0
+offset_right = 1172.0
+offset_bottom = 391.0
+
+[node name="PointsLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel/VBoxContainer"]
+layout_mode = 2
+text = "⭐ 0 points"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DaysList" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 281.24)
+layout_mode = 2
+
+[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="AllTimePanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
+visible = false
+custom_minimum_size = Vector2(0, 180.93)
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel"]
+layout_mode = 0
+offset_left = 383.0
+offset_right = 1169.0
+offset_bottom = 173.0
+
+[node name="PointsLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel/VBoxContainer"]
+layout_mode = 2
+text = "⭐ 0 points"
+horizontal_alignment = 1
+
+[node name="BestDayLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel/VBoxContainer"]
+layout_mode = 2
+text = "Best day: X pts"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel/VBoxContainer"]
+layout_mode = 2
+text = ":P"
+horizontal_alignment = 1

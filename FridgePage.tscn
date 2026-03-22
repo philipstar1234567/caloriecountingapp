@@ -1,10 +1,30 @@
-[gd_scene load_steps=4 format=3 uid="uid://dba6tab5k5v8e"]
+[gd_scene load_steps=11 format=3 uid="uid://dba6tab5k5v8e"]
 
 [ext_resource type="Script" uid="uid://bpjmipxx1mjsc" path="res://FridgePage.gd" id="1_g7aye"]
+[ext_resource type="Texture2D" uid="uid://b3xhy1nrqbcxj" path="res://Assets/backgrounds/fridge.png" id="2_jrcy7"]
 [ext_resource type="Texture2D" uid="uid://brqyx3p4tcu2n" path="res://Assets/icons/—Pngtree—list icon_3728045.png" id="2_xepse"]
+[ext_resource type="Texture2D" uid="uid://c8q2d58jisr7h" path="res://Assets/icons/ics.png" id="4_2hr5r"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wvv7q"]
+texture = ExtResource("2_jrcy7")
 
 [sub_resource type="Theme" id="Theme_xepse"]
 default_font_size = 32
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3iava"]
+bg_color = Color(0.803922, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jrcy7"]
+bg_color = Color(0.803922, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2hr5r"]
+bg_color = Color(0.803922, 1, 1, 1)
+
+[sub_resource type="Theme" id="Theme_vo4mu"]
+LineEdit/font_sizes/font_size = 50
+LineEdit/styles/focus = SubResource("StyleBoxFlat_3iava")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_jrcy7")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_2hr5r")
 
 [node name="FridgePage" type="Control"]
 layout_mode = 3
@@ -22,35 +42,40 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_wvv7q")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -1268.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TopBar" type="HBoxContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
 
 [node name="ListButton" type="Button" parent="Panel/VBoxContainer/TopBar"]
 layout_mode = 2
 icon = ExtResource("2_xepse")
-
-[node name="FridgeContainer" type="GridContainer" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
-layout_mode = 2
-columns = 4
+flat = true
 
 [node name="ShoppingListPanel" type="Panel" parent="Panel/VBoxContainer"]
 layout_mode = 2
-size_flags_vertical = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ShoppingListPanel"]
-layout_mode = 0
-offset_right = 1168.0
-offset_bottom = 1916.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -802.0
+offset_bottom = 1264.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = SubResource("Theme_xepse")
 
 [node name="TopBar2" type="HBoxContainer" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer"]
@@ -58,21 +83,34 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="SearchBar" type="LineEdit" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2"]
-custom_minimum_size = Vector2(900, 0)
+custom_minimum_size = Vector2(900, 150)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 
 [node name="CloseButton" type="Button" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
-text = "X"
+icon = ExtResource("4_2hr5r")
+flat = true
 
 [node name="TabContainer" type="TabContainer" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 600)
+custom_minimum_size = Vector2(0, 450)
 layout_mode = 2
+theme = SubResource("Theme_vo4mu")
 theme_override_font_sizes/font_size = 50
 
 [node name="ShoppingListContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 100)
+custom_minimum_size = Vector2(0, 1400)
 layout_mode = 2
 size_flags_vertical = 3
+
+[node name="FridgeContainer" type="GridContainer" parent="."]
+custom_minimum_size = Vector2(751, 1377)
+layout_mode = 2
+offset_left = 206.0
+offset_top = 829.0
+offset_right = 980.0
+offset_bottom = 2459.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 3

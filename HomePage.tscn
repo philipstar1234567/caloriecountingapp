@@ -76,6 +76,39 @@ text = "Fat"
 layout_mode = 2
 text = "0 g"
 
+[node name="SaturatedFatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SaturatedFatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SaturatedFatBar"]
+layout_mode = 2
+text = "Saturated"
+
+[node name="SaturatedFatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SaturatedFatBar"]
+layout_mode = 2
+text = "0 g"
+
+[node name="MonoFatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MonoFatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MonoFatBar"]
+layout_mode = 2
+text = "Mono"
+
+[node name="MonoFatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MonoFatBar"]
+layout_mode = 2
+text = "0 g"
+
+[node name="PolyFatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PolyFatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyFatBar"]
+layout_mode = 2
+text = "Poly"
+
+[node name="PolyFatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyFatBar"]
+layout_mode = 2
+text = "0 g"
+
 [node name="CarbsBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 

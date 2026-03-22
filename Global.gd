@@ -5,8 +5,29 @@ var body_metrics: Dictionary = {
 	"tdee": 0.0,
 	"daily_goal": 0.0,
 	"goal_weight": 0.0,
-	"weight": 0.0
+	"weight": 0.0,
+	"bmi_text": "BMI: —"
 }
+
+func _ready():
+	load_profile()
+	load_points()
+	load_body_metrics_from_file()
+
+func load_body_metrics_from_file():
+	if not FileAccess.file_exists("user://body_metrics.json"): return
+	var file = FileAccess.open("user://body_metrics.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data: return
+	body_metrics = {
+		"bmr": data.get("bmr", 0.0),
+		"tdee": data.get("tdee", 0.0),
+		"daily_goal": data.get("daily_goal", 0.0),
+		"goal_weight": data.get("goal_weight", 0.0),
+		"weight": data.get("weight", 0.0),
+		"bmi_text": data.get("bmi_text", "BMI: —")
+	}
 
 # ── Health conditions selected by user ──
 var active_conditions: Array = []
@@ -109,9 +130,8 @@ func get_points_week() -> float:
 	var unix_now = Time.get_unix_time_from_system()
 	for i in range(7):
 		var unix_day = unix_now - (i * 86400)
-		var date = Time.get_date_string_from_datetime_dict(
-			Time.get_datetime_dict_from_unix_time(unix_day)
-		)
+		var datetime = Time.get_datetime_dict_from_unix_time(unix_day)
+		var date = "%04d-%02d-%02d" % [datetime.year, datetime.month, datetime.day]
 		total += points_history.get(date, 0.0)
 	return total
 

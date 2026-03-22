@@ -1,16 +1,10 @@
 extends Control
 
 func _ready():
-	# Kidney care connections
 	$Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/KnownDisease.toggled.connect(_on_known_disease_toggled)
 	$Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields/CalculateButton.pressed.connect(_on_calculate_egfr)
-	
-	# Body metrics connection
 	$Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer/CalculateButton.pressed.connect(_on_calculate_metrics)
-	
-	# Reset button
 	$Panel/ScrollContainer/VBoxContainer/ResetButton.pressed.connect(_on_reset)
-
 	load_kidney_settings()
 	load_body_metrics()
 
@@ -22,7 +16,11 @@ func _on_known_disease_toggled(checked: bool):
 	if checked:
 		_set_kidney_risk("⚠️ Kidney disease flagged. High oxalate foods will be marked.")
 		Global.kidney_at_risk = true
-		Global.save_profile()
+	else:
+		Global.kidney_at_risk = false
+		_set_kidney_risk("")
+	save_kidney_settings(0.0)
+	Global.save_profile()
 
 func _on_calculate_egfr():
 	var fields = $Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields
@@ -76,7 +74,7 @@ func load_kidney_settings():
 	var known = data.get("known_disease", false)
 	$Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/KnownDisease.button_pressed = known
 	$Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields.visible = !known
-	if data.has("egfr"):
+	if data.has("egfr") and data["egfr"] > 0:
 		$Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields/eGFRLabel.text = "eGFR: " + str(data["egfr"]) + " mL/min/1.73m²"
 
 # ─────────────────────────────────────────
@@ -87,7 +85,7 @@ func _on_calculate_metrics():
 	var weight    = panel.get_node("WeightInput").value
 	var height_cm = panel.get_node("HeightInput").value
 	var age       = panel.get_node("AgeInput").value
-	var activity  = panel.get_node("ActivityOption").selected  # 0=sedentary 1=moderate 2=athlete
+	var activity  = panel.get_node("ActivityOption").selected
 	var goal_w    = panel.get_node("GoalWeightInput").value
 	var weeks     = panel.get_node("TimeIntervalInput").value
 	var is_female = panel.get_node("GenderOption").selected == 1
@@ -102,7 +100,8 @@ func _on_calculate_metrics():
 	elif bmi < 25.0:  bmi_category = "Normal"
 	elif bmi < 30.0:  bmi_category = "Overweight"
 	else:             bmi_category = "Obese"
-	panel.get_node("BMIResult").text = "BMI: " + str(bmi) + " (" + bmi_category + ")"
+	var bmi_text = "BMI: " + str(bmi) + " (" + bmi_category + ")"
+	panel.get_node("BMIResult").text = bmi_text
 
 	# BMR — Mifflin-St Jeor
 	var bmr = 10.0 * weight + 6.25 * height_cm - 5.0 * age
@@ -115,8 +114,7 @@ func _on_calculate_metrics():
 	var tdee = snappedf(bmr * tdee_multiplier, 1.0)
 	panel.get_node("TDEEResult").text = "TDEE: " + str(tdee) + " kcal/day"
 
-	# Daily kcal adjustment for goal weight
-	# 7700 kcal = 1kg of body fat, time in days (weeks × 7)
+	# Daily goal
 	var days = weeks * 7.0
 	var kcal_adjustment = 7700.0 * (goal_w - weight) / days
 	var daily_goal = snappedf(tdee + kcal_adjustment, 1.0)
@@ -126,9 +124,9 @@ func _on_calculate_metrics():
 	else:                     direction = "maintenance"
 	panel.get_node("GoalResult").text = "Daily goal: " + str(daily_goal) + " kcal (" + direction + ")"
 
-	save_body_metrics(weight, height_cm, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal)
+	save_body_metrics(weight, height_cm, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text)
 
-func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal):
+func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text):
 	var file = FileAccess.open("user://body_metrics.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"weight": weight,
@@ -140,22 +138,23 @@ func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, 
 		"is_female": is_female,
 		"bmr": bmr,
 		"tdee": tdee,
-		"daily_goal": daily_goal
+		"daily_goal": daily_goal,
+		"bmi_text": bmi_text
 	}))
 	file.close()
 
-	# Share with Global so HomePage can use it
 	Global.body_metrics = {
 		"bmr": bmr,
 		"tdee": tdee,
 		"daily_goal": daily_goal,
 		"goal_weight": goal_w,
-		"weight": weight
+		"weight": weight,
+		"bmi_text": bmi_text
 	}
 
 func load_body_metrics():
 	if not FileAccess.file_exists("user://body_metrics.json"): return
-	var file = FileAccess.open("user://body_metrics.json", FileAccess.WRITE if false else FileAccess.READ)
+	var file = FileAccess.open("user://body_metrics.json", FileAccess.READ)
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if not data: return
@@ -169,17 +168,20 @@ func load_body_metrics():
 	panel.get_node("TimeIntervalInput").value = data.get("weeks", 12)
 	panel.get_node("GenderOption").selected   = 1 if data.get("is_female", false) else 0
 
+	if data.has("bmi_text"):
+		panel.get_node("BMIResult").text = data["bmi_text"]
 	if data.has("bmr"):
 		panel.get_node("BMRResult").text  = "BMR: " + str(data["bmr"]) + " kcal/day"
 		panel.get_node("TDEEResult").text = "TDEE: " + str(data["tdee"]) + " kcal/day"
 		panel.get_node("GoalResult").text = "Daily goal: " + str(data["daily_goal"]) + " kcal"
 
 	Global.body_metrics = {
-		"bmr": data.get("bmr", 0),
-		"tdee": data.get("tdee", 0),
-		"daily_goal": data.get("daily_goal", 0),
-		"goal_weight": data.get("goal_weight", 0),
-		"weight": data.get("weight", 0)
+		"bmr": data.get("bmr", 0.0),
+		"tdee": data.get("tdee", 0.0),
+		"daily_goal": data.get("daily_goal", 0.0),
+		"goal_weight": data.get("goal_weight", 0.0),
+		"weight": data.get("weight", 0.0),
+		"bmi_text": data.get("bmi_text", "BMI: —")
 	}
 
 # ─────────────────────────────────────────

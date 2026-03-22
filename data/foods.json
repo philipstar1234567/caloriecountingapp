@@ -10,7 +10,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 12.8,
 	"fiber_g": 2.4,
-	"calcium_mg": 6
+	"calcium_mg": 6,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 9.0,
+	"sodium_mg": 1
   },
   {
 	"id": "apricot",
@@ -23,7 +28,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 9.5,
 	"fiber_g": 2.0,
-	"calcium_mg": 13
+	"calcium_mg": 13,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.07,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 6.6,
+	"sodium_mg": 1
   },
   {
 	"id": "dried-fruit",
@@ -36,7 +46,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 63.0,
 	"fiber_g": 6.8,
-	"calcium_mg": 43
+	"calcium_mg": 43,
+	"saturated_fat_g": 0.05,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 44.1,
+	"sodium_mg": 1
   },
   {
 	"id": "avocado",
@@ -49,7 +64,12 @@
 	"fat_g": 14.7,
 	"carbs_g": 1.8,
 	"fiber_g": 6.7,
-	"calcium_mg": 12
+	"calcium_mg": 12,
+	"saturated_fat_g": 2.1,
+	"monounsaturated_fat_g": 9.8,
+	"polyunsaturated_fat_g": 1.8,
+	"sugar_g": 1.3,
+	"sodium_mg": 1
   },
   {
 	"id": "banana",
@@ -62,7 +82,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 20.4,
 	"fiber_g": 2.6,
-	"calcium_mg": 5
+	"calcium_mg": 5,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 14.3,
+	"sodium_mg": 1
   },
   {
 	"id": "blackberry",
@@ -75,7 +100,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 5.1,
 	"fiber_g": 5.3,
-	"calcium_mg": 29
+	"calcium_mg": 29,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.13,
+	"sugar_g": 3.6,
+	"sodium_mg": 1
   },
   {
 	"id": "blueberry",
@@ -88,7 +118,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 12.1,
 	"fiber_g": 2.4,
-	"calcium_mg": 6
+	"calcium_mg": 6,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 8.5,
+	"sodium_mg": 1
   },
   {
 	"id": "breadfruit",
@@ -101,7 +136,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 23.4,
 	"fiber_g": 4.9,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 16.4,
+	"sodium_mg": 1
   },
   {
 	"id": "carambola",
@@ -114,7 +154,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 5.9,
 	"fiber_g": 2.8,
-	"calcium_mg": 3
+	"calcium_mg": 3,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 4.1,
+	"sodium_mg": 1
   },
   {
 	"id": "cherry",
@@ -127,7 +172,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 13.8,
 	"fiber_g": 2.1,
-	"calcium_mg": 13
+	"calcium_mg": 13,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 9.7,
+	"sodium_mg": 1
   },
   {
 	"id": "cranberry",
@@ -140,7 +190,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 9.3,
 	"fiber_g": 4.6,
-	"calcium_mg": 8
+	"calcium_mg": 8,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.08,
+	"sugar_g": 6.5,
+	"sodium_mg": 1
   },
   {
 	"id": "currant",
@@ -153,7 +208,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 10.0,
 	"fiber_g": 4.3,
-	"calcium_mg": 55
+	"calcium_mg": 55,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 7.0,
+	"sodium_mg": 1
   },
   {
 	"id": "dates",
@@ -166,7 +226,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 66.5,
 	"fiber_g": 8.0,
-	"calcium_mg": 39
+	"calcium_mg": 39,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 46.5,
+	"sodium_mg": 1
   },
   {
 	"id": "elderberry",
@@ -179,7 +244,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 11.5,
 	"fiber_g": 7.0,
-	"calcium_mg": 38
+	"calcium_mg": 38,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 8.0,
+	"sodium_mg": 1
   },
   {
 	"id": "figs",
@@ -192,7 +262,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 16.3,
 	"fiber_g": 2.9,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 11.4,
+	"sodium_mg": 1
   },
   {
 	"id": "gooseberry",
@@ -205,7 +280,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 6.2,
 	"fiber_g": 4.3,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 4.3,
+	"sodium_mg": 1
   },
   {
 	"id": "goji-berry",
@@ -218,7 +298,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 64.1,
 	"fiber_g": 13.0,
-	"calcium_mg": 190
+	"calcium_mg": 190,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 44.9,
+	"sodium_mg": 1
   },
   {
 	"id": "grapefruit",
@@ -231,7 +316,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 8.7,
 	"fiber_g": 1.6,
-	"calcium_mg": 22
+	"calcium_mg": 22,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 6.1,
+	"sodium_mg": 1
   },
   {
 	"id": "grape",
@@ -244,7 +334,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 15.5,
 	"fiber_g": 0.9,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 10.8,
+	"sodium_mg": 1
   },
   {
 	"id": "guava",
@@ -257,7 +352,12 @@
 	"fat_g": 1.0,
 	"carbs_g": 9.0,
 	"fiber_g": 5.4,
-	"calcium_mg": 18
+	"calcium_mg": 18,
+	"saturated_fat_g": 0.3,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 6.3,
+	"sodium_mg": 1
   },
   {
 	"id": "jackfruit",
@@ -270,7 +370,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 19.1,
 	"fiber_g": 1.5,
-	"calcium_mg": 24
+	"calcium_mg": 24,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.07,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 13.4,
+	"sodium_mg": 1
   },
   {
 	"id": "jujube",
@@ -283,7 +388,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 17.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 21
+	"calcium_mg": 21,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 12.4,
+	"sodium_mg": 1
   },
   {
 	"id": "kiwi",
@@ -296,7 +406,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 11.7,
 	"fiber_g": 3.0,
-	"calcium_mg": 34
+	"calcium_mg": 34,
+	"saturated_fat_g": 0.05,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.14,
+	"sugar_g": 8.2,
+	"sodium_mg": 1
   },
   {
 	"id": "kumquat",
@@ -309,7 +424,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 9.4,
 	"fiber_g": 6.5,
-	"calcium_mg": 62
+	"calcium_mg": 62,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.09,
+	"polyunsaturated_fat_g": 0.27,
+	"sugar_g": 6.6,
+	"sodium_mg": 1
   },
   {
 	"id": "lemon",
@@ -322,7 +442,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 3.7,
 	"fiber_g": 2.8,
-	"calcium_mg": 26
+	"calcium_mg": 26,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 2.6,
+	"sodium_mg": 1
   },
   {
 	"id": "lime",
@@ -335,7 +460,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 5.1,
 	"fiber_g": 2.8,
-	"calcium_mg": 33
+	"calcium_mg": 33,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 3.6,
+	"sodium_mg": 1
   },
   {
 	"id": "lychee",
@@ -348,7 +478,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 13.3,
 	"fiber_g": 1.3,
-	"calcium_mg": 5
+	"calcium_mg": 5,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 9.3,
+	"sodium_mg": 1
   },
   {
 	"id": "mango",
@@ -361,7 +496,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 13.7,
 	"fiber_g": 1.8,
-	"calcium_mg": 11
+	"calcium_mg": 11,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.14,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 9.6,
+	"sodium_mg": 1
   },
   {
 	"id": "melon",
@@ -374,7 +514,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 6.8,
 	"fiber_g": 0.9,
-	"calcium_mg": 9
+	"calcium_mg": 9,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 4.8,
+	"sodium_mg": 1
   },
   {
 	"id": "nectarine",
@@ -387,7 +532,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 8.7,
 	"fiber_g": 1.7,
-	"calcium_mg": 9
+	"calcium_mg": 9,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 6.1,
+	"sodium_mg": 1
   },
   {
 	"id": "orange",
@@ -400,7 +550,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 9.8,
 	"fiber_g": 2.2,
-	"calcium_mg": 40
+	"calcium_mg": 40,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 6.9,
+	"sodium_mg": 1
   },
   {
 	"id": "mandarin",
@@ -413,7 +568,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 11.2,
 	"fiber_g": 1.8,
-	"calcium_mg": 37
+	"calcium_mg": 37,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 7.8,
+	"sodium_mg": 1
   },
   {
 	"id": "papaya",
@@ -426,7 +586,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 8.8,
 	"fiber_g": 1.8,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 6.2,
+	"sodium_mg": 1
   },
   {
 	"id": "passion-fruit",
@@ -439,7 +604,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 13.0,
 	"fiber_g": 10.4,
-	"calcium_mg": 12
+	"calcium_mg": 12,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.09,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 9.1,
+	"sodium_mg": 1
   },
   {
 	"id": "peach",
@@ -452,7 +622,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 7.7,
 	"fiber_g": 1.5,
-	"calcium_mg": 6
+	"calcium_mg": 6,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 5.4,
+	"sodium_mg": 1
   },
   {
 	"id": "pear",
@@ -465,7 +640,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 13.1,
 	"fiber_g": 3.1,
-	"calcium_mg": 9
+	"calcium_mg": 9,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 9.2,
+	"sodium_mg": 1
   },
   {
 	"id": "pineapple",
@@ -478,7 +658,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 11.0,
 	"fiber_g": 1.4,
-	"calcium_mg": 13
+	"calcium_mg": 13,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 7.7,
+	"sodium_mg": 1
   },
   {
 	"id": "plum",
@@ -491,7 +676,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 9.6,
 	"fiber_g": 1.4,
-	"calcium_mg": 6
+	"calcium_mg": 6,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 6.7,
+	"sodium_mg": 1
   },
   {
 	"id": "pomegranate",
@@ -504,7 +694,12 @@
 	"fat_g": 1.2,
 	"carbs_g": 13.7,
 	"fiber_g": 4.0,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.09,
+	"polyunsaturated_fat_g": 0.08,
+	"sugar_g": 9.6,
+	"sodium_mg": 1
   },
   {
 	"id": "prickly-pear",
@@ -517,7 +712,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 7.1,
 	"fiber_g": 3.6,
-	"calcium_mg": 56
+	"calcium_mg": 56,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 5.0,
+	"sodium_mg": 1
   },
   {
 	"id": "prunes",
@@ -530,7 +730,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 57.5,
 	"fiber_g": 7.1,
-	"calcium_mg": 43
+	"calcium_mg": 43,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 40.2,
+	"sodium_mg": 1
   },
   {
 	"id": "raisin",
@@ -543,7 +748,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 70.6,
 	"fiber_g": 3.7,
-	"calcium_mg": 50
+	"calcium_mg": 50,
+	"saturated_fat_g": 0.05,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.15,
+	"sugar_g": 49.4,
+	"sodium_mg": 1
   },
   {
 	"id": "raspberry",
@@ -556,7 +766,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 5.4,
 	"fiber_g": 6.5,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.15,
+	"sugar_g": 3.8,
+	"sodium_mg": 1
   },
   {
 	"id": "strawberry",
@@ -569,7 +784,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 5.5,
 	"fiber_g": 2.0,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 3.8,
+	"sodium_mg": 1
   },
   {
 	"id": "watermelon",
@@ -582,7 +802,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 6.2,
 	"fiber_g": 0.4,
-	"calcium_mg": 7
+	"calcium_mg": 7,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 4.3,
+	"sodium_mg": 1
   },
   {
 	"id": "coconut",
@@ -595,7 +820,12 @@
 	"fat_g": 33.5,
 	"carbs_g": 6.2,
 	"fiber_g": 9.0,
-	"calcium_mg": 14
+	"calcium_mg": 14,
+	"saturated_fat_g": 16.5,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 4.3,
+	"sodium_mg": 1
   },
   {
 	"id": "boysenberry",
@@ -608,7 +838,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 9.6,
 	"fiber_g": 5.3,
-	"calcium_mg": 29
+	"calcium_mg": 29,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 6.7,
+	"sodium_mg": 1
   },
   {
 	"id": "feijoa",
@@ -621,7 +856,12 @@
 	"fat_g": 0.8,
 	"carbs_g": 8.2,
 	"fiber_g": 6.4,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 0.05,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 5.7,
+	"sodium_mg": 1
   },
   {
 	"id": "blackberry-b",
@@ -634,7 +874,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 5.1,
 	"fiber_g": 5.3,
-	"calcium_mg": 29
+	"calcium_mg": 29,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 3.3,
+	"sodium_mg": 1
   },
   {
 	"id": "blueberry-b",
@@ -647,7 +892,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 12.1,
 	"fiber_g": 2.4,
-	"calcium_mg": 6
+	"calcium_mg": 6,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 7.9,
+	"sodium_mg": 1
   },
   {
 	"id": "cranberry-b",
@@ -660,7 +910,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 9.3,
 	"fiber_g": 4.6,
-	"calcium_mg": 8
+	"calcium_mg": 8,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 6.0,
+	"sodium_mg": 1
   },
   {
 	"id": "currant-b",
@@ -673,7 +928,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 10.0,
 	"fiber_g": 4.3,
-	"calcium_mg": 55
+	"calcium_mg": 55,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 6.5,
+	"sodium_mg": 1
   },
   {
 	"id": "elderberry-b",
@@ -686,7 +946,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 11.5,
 	"fiber_g": 7.0,
-	"calcium_mg": 38
+	"calcium_mg": 38,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 7.5,
+	"sodium_mg": 1
   },
   {
 	"id": "gooseberry-b",
@@ -699,7 +964,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 6.2,
 	"fiber_g": 4.3,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.15,
+	"sugar_g": 4.0,
+	"sodium_mg": 1
   },
   {
 	"id": "goji-berry-b",
@@ -712,7 +982,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 64.1,
 	"fiber_g": 13.0,
-	"calcium_mg": 190
+	"calcium_mg": 190,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 41.7,
+	"sodium_mg": 1
   },
   {
 	"id": "raspberry-b",
@@ -725,7 +1000,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 5.4,
 	"fiber_g": 6.5,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.17,
+	"sugar_g": 3.5,
+	"sodium_mg": 1
   },
   {
 	"id": "strawberry-b",
@@ -738,7 +1018,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 5.5,
 	"fiber_g": 2.0,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 3.6,
+	"sodium_mg": 1
   },
   {
 	"id": "boysenberry-b",
@@ -751,7 +1036,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 9.6,
 	"fiber_g": 5.3,
-	"calcium_mg": 29
+	"calcium_mg": 29,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 6.2,
+	"sodium_mg": 1
   },
   {
 	"id": "artichoke",
@@ -764,7 +1054,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 5.1,
 	"fiber_g": 5.4,
-	"calcium_mg": 44
+	"calcium_mg": 44,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 1.5,
+	"sodium_mg": 10
   },
   {
 	"id": "asparagus",
@@ -777,7 +1072,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 1.8,
 	"fiber_g": 2.1,
-	"calcium_mg": 24
+	"calcium_mg": 24,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 0.5,
+	"sodium_mg": 10
   },
   {
 	"id": "bitter-melon",
@@ -790,7 +1090,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.0,
 	"fiber_g": 2.8,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 0.6,
+	"sodium_mg": 10
   },
   {
 	"id": "bamboo-shoots",
@@ -803,7 +1108,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 3.0,
 	"fiber_g": 2.2,
-	"calcium_mg": 13
+	"calcium_mg": 13,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "green-beans",
@@ -816,7 +1126,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 4.5,
 	"fiber_g": 3.4,
-	"calcium_mg": 37
+	"calcium_mg": 37,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.08,
+	"sugar_g": 1.3,
+	"sodium_mg": 10
   },
   {
 	"id": "beetroot",
@@ -829,7 +1144,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 7.6,
 	"fiber_g": 2.8,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 2.3,
+	"sodium_mg": 10
   },
   {
 	"id": "broad-beans",
@@ -842,7 +1162,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 9.4,
 	"fiber_g": 5.4,
-	"calcium_mg": 36
+	"calcium_mg": 36,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.18,
+	"sugar_g": 2.8,
+	"sodium_mg": 10
   },
   {
 	"id": "broccoli",
@@ -855,7 +1180,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 3.5,
 	"fiber_g": 2.6,
-	"calcium_mg": 47
+	"calcium_mg": 47,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 1.1,
+	"sodium_mg": 10
   },
   {
 	"id": "brussels-sprouts",
@@ -868,7 +1198,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 4.5,
 	"fiber_g": 3.8,
-	"calcium_mg": 42
+	"calcium_mg": 42,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.14,
+	"sugar_g": 1.3,
+	"sodium_mg": 10
   },
   {
 	"id": "cabbage",
@@ -881,7 +1216,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 3.8,
 	"fiber_g": 2.5,
-	"calcium_mg": 40
+	"calcium_mg": 40,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 1.1,
+	"sodium_mg": 10
   },
   {
 	"id": "red-cabbage",
@@ -894,7 +1234,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 5.3,
 	"fiber_g": 2.1,
-	"calcium_mg": 45
+	"calcium_mg": 45,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 1.6,
+	"sodium_mg": 10
   },
   {
 	"id": "carrot",
@@ -907,7 +1252,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 8.2,
 	"fiber_g": 2.8,
-	"calcium_mg": 33
+	"calcium_mg": 33,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 2.5,
+	"sodium_mg": 10
   },
   {
 	"id": "cassava",
@@ -920,7 +1270,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 38.1,
 	"fiber_g": 1.8,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 11.4,
+	"sodium_mg": 10
   },
   {
 	"id": "cauliflower",
@@ -933,7 +1288,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 3.0,
 	"fiber_g": 2.0,
-	"calcium_mg": 22
+	"calcium_mg": 22,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "chicory",
@@ -946,7 +1306,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 2.0,
 	"fiber_g": 4.1,
-	"calcium_mg": 41
+	"calcium_mg": 41,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 0.6,
+	"sodium_mg": 10
   },
   {
 	"id": "corn",
@@ -959,7 +1324,12 @@
 	"fat_g": 1.2,
 	"carbs_g": 16.8,
 	"fiber_g": 2.7,
-	"calcium_mg": 2
+	"calcium_mg": 2,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.4,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 5.0,
+	"sodium_mg": 10
   },
   {
 	"id": "cucumber",
@@ -972,7 +1342,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 2.2,
 	"fiber_g": 0.5,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 0.7,
+	"sodium_mg": 10
   },
   {
 	"id": "eggplant",
@@ -985,7 +1360,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 4.0,
 	"fiber_g": 3.0,
-	"calcium_mg": 9
+	"calcium_mg": 9,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 1.2,
+	"sodium_mg": 10
   },
   {
 	"id": "garlic",
@@ -998,7 +1378,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 24.4,
 	"fiber_g": 2.1,
-	"calcium_mg": 181
+	"calcium_mg": 181,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.21,
+	"sugar_g": 7.3,
+	"sodium_mg": 10
   },
   {
 	"id": "ginger",
@@ -1011,7 +1396,12 @@
 	"fat_g": 0.8,
 	"carbs_g": 15.8,
 	"fiber_g": 2.0,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.12,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 4.7,
+	"sodium_mg": 10
   },
   {
 	"id": "okra",
@@ -1024,7 +1414,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 4.5,
 	"fiber_g": 3.2,
-	"calcium_mg": 82
+	"calcium_mg": 82,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 1.3,
+	"sodium_mg": 10
   },
   {
 	"id": "onion",
@@ -1037,7 +1432,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 8.0,
 	"fiber_g": 1.7,
-	"calcium_mg": 23
+	"calcium_mg": 23,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 2.4,
+	"sodium_mg": 10
   },
   {
 	"id": "peas",
@@ -1050,7 +1450,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 10.4,
 	"fiber_g": 5.1,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 3.1,
+	"sodium_mg": 10
   },
   {
 	"id": "bell-pepper",
@@ -1063,7 +1468,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 5.1,
 	"fiber_g": 1.8,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 1.5,
+	"sodium_mg": 10
   },
   {
 	"id": "pumpkin",
@@ -1076,7 +1486,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 4.4,
 	"fiber_g": 0.5,
-	"calcium_mg": 21
+	"calcium_mg": 21,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 1.3,
+	"sodium_mg": 10
   },
   {
 	"id": "radish",
@@ -1089,7 +1504,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 2.2,
 	"fiber_g": 1.6,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.02,
+	"sugar_g": 0.7,
+	"sodium_mg": 10
   },
   {
 	"id": "sweet-potato",
@@ -1102,7 +1522,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 19.0,
 	"fiber_g": 3.0,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 5.7,
+	"sodium_mg": 10
   },
   {
 	"id": "taro",
@@ -1115,7 +1540,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 26.5,
 	"fiber_g": 4.1,
-	"calcium_mg": 43
+	"calcium_mg": 43,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 7.9,
+	"sodium_mg": 10
   },
   {
 	"id": "tomato",
@@ -1128,7 +1558,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.9,
 	"fiber_g": 1.2,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "turnip",
@@ -1141,7 +1576,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 4.7,
 	"fiber_g": 1.8,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 1.4,
+	"sodium_mg": 10
   },
   {
 	"id": "potato",
@@ -1154,7 +1594,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 17.0,
 	"fiber_g": 2.2,
-	"calcium_mg": 12
+	"calcium_mg": 12,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 5.1,
+	"sodium_mg": 10
   },
   {
 	"id": "zucchini",
@@ -1167,7 +1612,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 2.0,
 	"fiber_g": 1.1,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 0.6,
+	"sodium_mg": 10
   },
   {
 	"id": "fennel",
@@ -1180,7 +1630,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 4.2,
 	"fiber_g": 3.1,
-	"calcium_mg": 49
+	"calcium_mg": 49,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.14,
+	"sugar_g": 1.3,
+	"sodium_mg": 10
   },
   {
 	"id": "chili-pepper",
@@ -1193,7 +1648,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 5.3,
 	"fiber_g": 1.5,
-	"calcium_mg": 14
+	"calcium_mg": 14,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 1.6,
+	"sodium_mg": 10
   },
   {
 	"id": "yam",
@@ -1206,7 +1666,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 27.6,
 	"fiber_g": 4.1,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 8.3,
+	"sodium_mg": 10
   },
   {
 	"id": "spinach",
@@ -1219,7 +1684,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 1.4,
 	"fiber_g": 2.2,
-	"calcium_mg": 99
+	"calcium_mg": 99,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.16,
+	"sugar_g": 0.3,
+	"sodium_mg": 30
   },
   {
 	"id": "rhubarb",
@@ -1232,7 +1702,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.7,
 	"fiber_g": 1.8,
-	"calcium_mg": 86
+	"calcium_mg": 86,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 0.5,
+	"sodium_mg": 30
   },
   {
 	"id": "collard-greens",
@@ -1245,7 +1720,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 2.8,
 	"fiber_g": 4.0,
-	"calcium_mg": 232
+	"calcium_mg": 232,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.15,
+	"sugar_g": 0.6,
+	"sodium_mg": 30
   },
   {
 	"id": "parsley",
@@ -1258,7 +1738,12 @@
 	"fat_g": 0.8,
 	"carbs_g": 2.7,
 	"fiber_g": 3.3,
-	"calcium_mg": 138
+	"calcium_mg": 138,
+	"saturated_fat_g": 0.12,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.28,
+	"sugar_g": 0.5,
+	"sodium_mg": 30
   },
   {
 	"id": "purslane",
@@ -1271,7 +1756,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 2.4,
 	"fiber_g": 0.4,
-	"calcium_mg": 65
+	"calcium_mg": 65,
+	"saturated_fat_g": 0.08,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.36,
+	"sugar_g": 0.5,
+	"sodium_mg": 30
   },
   {
 	"id": "dandelion-greens",
@@ -1284,7 +1774,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 5.1,
 	"fiber_g": 3.5,
-	"calcium_mg": 187
+	"calcium_mg": 187,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 1.0,
+	"sodium_mg": 30
   },
   {
 	"id": "thyme",
@@ -1297,7 +1792,12 @@
 	"fat_g": 1.7,
 	"carbs_g": 14.0,
 	"fiber_g": 14.0,
-	"calcium_mg": 405
+	"calcium_mg": 405,
+	"saturated_fat_g": 0.26,
+	"monounsaturated_fat_g": 0.17,
+	"polyunsaturated_fat_g": 0.59,
+	"sugar_g": 2.8,
+	"sodium_mg": 30
   },
   {
 	"id": "dill",
@@ -1310,7 +1810,12 @@
 	"fat_g": 1.1,
 	"carbs_g": 7.0,
 	"fiber_g": 2.1,
-	"calcium_mg": 208
+	"calcium_mg": 208,
+	"saturated_fat_g": 0.17,
+	"monounsaturated_fat_g": 0.11,
+	"polyunsaturated_fat_g": 0.39,
+	"sugar_g": 1.4,
+	"sodium_mg": 30
   },
   {
 	"id": "celery",
@@ -1323,7 +1828,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.0,
 	"fiber_g": 1.6,
-	"calcium_mg": 40
+	"calcium_mg": 40,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.08,
+	"sugar_g": 0.4,
+	"sodium_mg": 30
   },
   {
 	"id": "chives",
@@ -1336,7 +1846,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 1.9,
 	"fiber_g": 2.5,
-	"calcium_mg": 92
+	"calcium_mg": 92,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.07,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 0.4,
+	"sodium_mg": 30
   },
   {
 	"id": "coriander",
@@ -1349,7 +1864,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 2.1,
 	"fiber_g": 2.8,
-	"calcium_mg": 67
+	"calcium_mg": 67,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.17,
+	"sugar_g": 0.4,
+	"sodium_mg": 30
   },
   {
 	"id": "leek",
@@ -1362,7 +1882,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 12.4,
 	"fiber_g": 1.8,
-	"calcium_mg": 59
+	"calcium_mg": 59,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.08,
+	"sugar_g": 2.5,
+	"sodium_mg": 30
   },
   {
 	"id": "lettuce",
@@ -1375,7 +1900,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 1.2,
 	"fiber_g": 1.3,
-	"calcium_mg": 36
+	"calcium_mg": 36,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 0.2,
+	"sodium_mg": 30
   },
   {
 	"id": "mustard-greens",
@@ -1388,7 +1918,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 2.6,
 	"fiber_g": 3.2,
-	"calcium_mg": 115
+	"calcium_mg": 115,
+	"saturated_fat_g": 0.05,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.13,
+	"sugar_g": 0.5,
+	"sodium_mg": 30
   },
   {
 	"id": "watercress",
@@ -1401,7 +1936,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 0.4,
 	"fiber_g": 0.5,
-	"calcium_mg": 120
+	"calcium_mg": 120,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 0.1,
+	"sodium_mg": 30
   },
   {
 	"id": "arugula",
@@ -1414,7 +1954,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 2.1,
 	"fiber_g": 1.6,
-	"calcium_mg": 160
+	"calcium_mg": 160,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.11,
+	"sugar_g": 0.4,
+	"sodium_mg": 30
   },
   {
 	"id": "quinoa",
@@ -1427,7 +1972,12 @@
 	"fat_g": 1.9,
 	"carbs_g": 19.7,
 	"fiber_g": 2.8,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 0.7,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 1.5,
+	"sugar_g": 3.9,
+	"sodium_mg": 30
   },
   {
 	"id": "almonds",
@@ -1440,7 +1990,12 @@
 	"fat_g": 49.9,
 	"carbs_g": 10.6,
 	"fiber_g": 12.5,
-	"calcium_mg": 264
+	"calcium_mg": 264,
+	"saturated_fat_g": 3.8,
+	"monounsaturated_fat_g": 31.6,
+	"polyunsaturated_fat_g": 12.3,
+	"sugar_g": 1.6,
+	"sodium_mg": 5
   },
   {
 	"id": "cashew",
@@ -1453,7 +2008,12 @@
 	"fat_g": 43.9,
 	"carbs_g": 27.4,
 	"fiber_g": 3.3,
-	"calcium_mg": 37
+	"calcium_mg": 37,
+	"saturated_fat_g": 7.8,
+	"monounsaturated_fat_g": 23.8,
+	"polyunsaturated_fat_g": 7.8,
+	"sugar_g": 4.1,
+	"sodium_mg": 5
   },
   {
 	"id": "hazelnut",
@@ -1466,7 +2026,12 @@
 	"fat_g": 60.8,
 	"carbs_g": 10.4,
 	"fiber_g": 9.7,
-	"calcium_mg": 114
+	"calcium_mg": 114,
+	"saturated_fat_g": 4.5,
+	"monounsaturated_fat_g": 45.7,
+	"polyunsaturated_fat_g": 7.9,
+	"sugar_g": 1.6,
+	"sodium_mg": 5
   },
   {
 	"id": "pine-nuts",
@@ -1479,7 +2044,12 @@
 	"fat_g": 68.4,
 	"carbs_g": 9.4,
 	"fiber_g": 3.7,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 8.21,
+	"monounsaturated_fat_g": 34.2,
+	"polyunsaturated_fat_g": 20.52,
+	"sugar_g": 1.4,
+	"sodium_mg": 5
   },
   {
 	"id": "mixed-nuts",
@@ -1492,7 +2062,12 @@
 	"fat_g": 54.0,
 	"carbs_g": 17.0,
 	"fiber_g": 7.0,
-	"calcium_mg": 80
+	"calcium_mg": 80,
+	"saturated_fat_g": 6.48,
+	"monounsaturated_fat_g": 27.0,
+	"polyunsaturated_fat_g": 16.2,
+	"sugar_g": 2.5,
+	"sodium_mg": 5
   },
   {
 	"id": "peanut",
@@ -1505,7 +2080,12 @@
 	"fat_g": 49.2,
 	"carbs_g": 10.4,
 	"fiber_g": 8.5,
-	"calcium_mg": 62
+	"calcium_mg": 62,
+	"saturated_fat_g": 5.9,
+	"monounsaturated_fat_g": 24.6,
+	"polyunsaturated_fat_g": 14.76,
+	"sugar_g": 1.6,
+	"sodium_mg": 5
   },
   {
 	"id": "pistachio",
@@ -1518,7 +2098,12 @@
 	"fat_g": 45.3,
 	"carbs_g": 16.6,
 	"fiber_g": 10.3,
-	"calcium_mg": 105
+	"calcium_mg": 105,
+	"saturated_fat_g": 5.4,
+	"monounsaturated_fat_g": 23.3,
+	"polyunsaturated_fat_g": 13.5,
+	"sugar_g": 2.5,
+	"sodium_mg": 5
   },
   {
 	"id": "chestnut",
@@ -1531,7 +2116,12 @@
 	"fat_g": 2.2,
 	"carbs_g": 45.6,
 	"fiber_g": 8.1,
-	"calcium_mg": 29
+	"calcium_mg": 29,
+	"saturated_fat_g": 0.5,
+	"monounsaturated_fat_g": 1.6,
+	"polyunsaturated_fat_g": 1.1,
+	"sugar_g": 6.8,
+	"sodium_mg": 5
   },
   {
 	"id": "walnut",
@@ -1544,7 +2134,12 @@
 	"fat_g": 65.2,
 	"carbs_g": 7.0,
 	"fiber_g": 6.7,
-	"calcium_mg": 98
+	"calcium_mg": 98,
+	"saturated_fat_g": 6.1,
+	"monounsaturated_fat_g": 8.9,
+	"polyunsaturated_fat_g": 47.2,
+	"sugar_g": 1.1,
+	"sodium_mg": 5
   },
   {
 	"id": "almond-butter",
@@ -1557,7 +2152,12 @@
 	"fat_g": 55.5,
 	"carbs_g": 10.5,
 	"fiber_g": 10.3,
-	"calcium_mg": 347
+	"calcium_mg": 347,
+	"saturated_fat_g": 6.66,
+	"monounsaturated_fat_g": 27.75,
+	"polyunsaturated_fat_g": 16.65,
+	"sugar_g": 1.6,
+	"sodium_mg": 5
   },
   {
 	"id": "pecan",
@@ -1570,7 +2170,12 @@
 	"fat_g": 72.0,
 	"carbs_g": 4.3,
 	"fiber_g": 9.6,
-	"calcium_mg": 70
+	"calcium_mg": 70,
+	"saturated_fat_g": 6.2,
+	"monounsaturated_fat_g": 40.8,
+	"polyunsaturated_fat_g": 21.6,
+	"sugar_g": 0.6,
+	"sodium_mg": 5
   },
   {
 	"id": "macadamia",
@@ -1583,7 +2188,12 @@
 	"fat_g": 75.8,
 	"carbs_g": 5.2,
 	"fiber_g": 8.6,
-	"calcium_mg": 85
+	"calcium_mg": 85,
+	"saturated_fat_g": 12.1,
+	"monounsaturated_fat_g": 58.9,
+	"polyunsaturated_fat_g": 1.5,
+	"sugar_g": 0.8,
+	"sodium_mg": 5
   },
   {
 	"id": "ginkgo-nuts",
@@ -1596,7 +2206,12 @@
 	"fat_g": 1.7,
 	"carbs_g": 38.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 5
+	"calcium_mg": 5,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.85,
+	"polyunsaturated_fat_g": 0.51,
+	"sugar_g": 5.7,
+	"sodium_mg": 5
   },
   {
 	"id": "pili-nuts",
@@ -1609,7 +2224,12 @@
 	"fat_g": 79.6,
 	"carbs_g": 3.7,
 	"fiber_g": 3.0,
-	"calcium_mg": 98
+	"calcium_mg": 98,
+	"saturated_fat_g": 9.55,
+	"monounsaturated_fat_g": 39.8,
+	"polyunsaturated_fat_g": 23.88,
+	"sugar_g": 0.6,
+	"sodium_mg": 5
   },
   {
 	"id": "watermelon-seeds",
@@ -1622,7 +2242,12 @@
 	"fat_g": 47.4,
 	"carbs_g": 15.3,
 	"fiber_g": 0.0,
-	"calcium_mg": 54
+	"calcium_mg": 54,
+	"saturated_fat_g": 5.69,
+	"monounsaturated_fat_g": 23.7,
+	"polyunsaturated_fat_g": 14.22,
+	"sugar_g": 2.3,
+	"sodium_mg": 5
   },
   {
 	"id": "oatmeal",
@@ -1635,7 +2260,12 @@
 	"fat_g": 1.4,
 	"carbs_g": 11.6,
 	"fiber_g": 1.7,
-	"calcium_mg": 8
+	"calcium_mg": 8,
+	"saturated_fat_g": 0.4,
+	"monounsaturated_fat_g": 0.9,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 0.6,
+	"sodium_mg": 5
   },
   {
 	"id": "oats",
@@ -1648,7 +2278,12 @@
 	"fat_g": 6.9,
 	"carbs_g": 55.7,
 	"fiber_g": 10.6,
-	"calcium_mg": 54
+	"calcium_mg": 54,
+	"saturated_fat_g": 0.7,
+	"monounsaturated_fat_g": 1.5,
+	"polyunsaturated_fat_g": 1.8,
+	"sugar_g": 2.8,
+	"sodium_mg": 5
   },
   {
 	"id": "rice",
@@ -1661,7 +2296,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 28.2,
 	"fiber_g": 0.4,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.2,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 1.4,
+	"sodium_mg": 5
   },
   {
 	"id": "brown-rice",
@@ -1674,7 +2314,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 23.0,
 	"fiber_g": 1.8,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 1.2,
+	"sodium_mg": 5
   },
   {
 	"id": "pasta",
@@ -1687,7 +2332,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 30.9,
 	"fiber_g": 1.8,
-	"calcium_mg": 7
+	"calcium_mg": 7,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 1.5,
+	"sodium_mg": 5
   },
   {
 	"id": "spaghetti",
@@ -1700,7 +2350,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 30.9,
 	"fiber_g": 1.8,
-	"calcium_mg": 7
+	"calcium_mg": 7,
+	"saturated_fat_g": 0.14,
+	"monounsaturated_fat_g": 0.18,
+	"polyunsaturated_fat_g": 0.36,
+	"sugar_g": 1.5,
+	"sodium_mg": 5
   },
   {
 	"id": "flour",
@@ -1713,7 +2368,12 @@
 	"fat_g": 1.0,
 	"carbs_g": 75.0,
 	"fiber_g": 2.7,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 0.15,
+	"monounsaturated_fat_g": 0.2,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 3.8,
+	"sodium_mg": 5
   },
   {
 	"id": "sesame",
@@ -1726,7 +2386,12 @@
 	"fat_g": 49.7,
 	"carbs_g": 12.0,
 	"fiber_g": 11.8,
-	"calcium_mg": 975
+	"calcium_mg": 975,
+	"saturated_fat_g": 7.46,
+	"monounsaturated_fat_g": 9.94,
+	"polyunsaturated_fat_g": 19.88,
+	"sugar_g": 0.6,
+	"sodium_mg": 5
   },
   {
 	"id": "buckwheat",
@@ -1739,7 +2404,12 @@
 	"fat_g": 3.4,
 	"carbs_g": 62.6,
 	"fiber_g": 10.0,
-	"calcium_mg": 18
+	"calcium_mg": 18,
+	"saturated_fat_g": 0.3,
+	"monounsaturated_fat_g": 0.5,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 3.1,
+	"sodium_mg": 5
   },
   {
 	"id": "amaranth",
@@ -1752,7 +2422,12 @@
 	"fat_g": 7.0,
 	"carbs_g": 60.9,
 	"fiber_g": 6.7,
-	"calcium_mg": 159
+	"calcium_mg": 159,
+	"saturated_fat_g": 0.5,
+	"monounsaturated_fat_g": 0.9,
+	"polyunsaturated_fat_g": 1.5,
+	"sugar_g": 3.0,
+	"sodium_mg": 5
   },
   {
 	"id": "couscous",
@@ -1765,7 +2440,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 23.2,
 	"fiber_g": 1.4,
-	"calcium_mg": 8
+	"calcium_mg": 8,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.2,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 1.2,
+	"sodium_mg": 5
   },
   {
 	"id": "cornmeal",
@@ -1778,7 +2458,12 @@
 	"fat_g": 3.6,
 	"carbs_g": 73.0,
 	"fiber_g": 7.3,
-	"calcium_mg": 7
+	"calcium_mg": 7,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.4,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 3.7,
+	"sodium_mg": 5
   },
   {
 	"id": "millet",
@@ -1791,7 +2476,12 @@
 	"fat_g": 4.2,
 	"carbs_g": 68.9,
 	"fiber_g": 8.5,
-	"calcium_mg": 8
+	"calcium_mg": 8,
+	"saturated_fat_g": 0.3,
+	"monounsaturated_fat_g": 0.5,
+	"polyunsaturated_fat_g": 0.7,
+	"sugar_g": 3.4,
+	"sodium_mg": 5
   },
   {
 	"id": "rye",
@@ -1804,7 +2494,12 @@
 	"fat_g": 1.6,
 	"carbs_g": 69.8,
 	"fiber_g": 15.1,
-	"calcium_mg": 24
+	"calcium_mg": 24,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.4,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 3.5,
+	"sodium_mg": 5
   },
   {
 	"id": "chickpeas",
@@ -1817,7 +2512,12 @@
 	"fat_g": 2.6,
 	"carbs_g": 22.5,
 	"fiber_g": 7.6,
-	"calcium_mg": 49
+	"calcium_mg": 49,
+	"saturated_fat_g": 0.39,
+	"monounsaturated_fat_g": 0.52,
+	"polyunsaturated_fat_g": 1.04,
+	"sugar_g": 1.1,
+	"sodium_mg": 5
   },
   {
 	"id": "lentil",
@@ -1830,7 +2530,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 16.0,
 	"fiber_g": 7.9,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.16,
+	"sugar_g": 0.8,
+	"sodium_mg": 5
   },
   {
 	"id": "kidney-beans",
@@ -1843,7 +2548,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 17.8,
 	"fiber_g": 7.4,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 0.9,
+	"sodium_mg": 5
   },
   {
 	"id": "soybean",
@@ -1856,7 +2566,12 @@
 	"fat_g": 9.0,
 	"carbs_g": 5.7,
 	"fiber_g": 6.0,
-	"calcium_mg": 197
+	"calcium_mg": 197,
+	"saturated_fat_g": 1.3,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 5.1,
+	"sugar_g": 0.3,
+	"sodium_mg": 5
   },
   {
 	"id": "tofu",
@@ -1869,7 +2584,12 @@
 	"fat_g": 4.2,
 	"carbs_g": 1.9,
 	"fiber_g": 0.3,
-	"calcium_mg": 350
+	"calcium_mg": 350,
+	"saturated_fat_g": 0.63,
+	"monounsaturated_fat_g": 0.84,
+	"polyunsaturated_fat_g": 1.68,
+	"sugar_g": 0.1,
+	"sodium_mg": 5
   },
   {
 	"id": "hummus",
@@ -1882,7 +2602,12 @@
 	"fat_g": 9.6,
 	"carbs_g": 14.3,
 	"fiber_g": 6.0,
-	"calcium_mg": 38
+	"calcium_mg": 38,
+	"saturated_fat_g": 1.44,
+	"monounsaturated_fat_g": 1.92,
+	"polyunsaturated_fat_g": 3.84,
+	"sugar_g": 0.7,
+	"sodium_mg": 5
   },
   {
 	"id": "white-beans",
@@ -1895,7 +2620,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 21.0,
 	"fiber_g": 10.5,
-	"calcium_mg": 90
+	"calcium_mg": 90,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.16,
+	"sugar_g": 1.1,
+	"sodium_mg": 5
   },
   {
 	"id": "black-gram",
@@ -1908,7 +2638,12 @@
 	"fat_g": 1.6,
 	"carbs_g": 59.6,
 	"fiber_g": 18.3,
-	"calcium_mg": 138
+	"calcium_mg": 138,
+	"saturated_fat_g": 0.24,
+	"monounsaturated_fat_g": 0.32,
+	"polyunsaturated_fat_g": 0.64,
+	"sugar_g": 3.0,
+	"sodium_mg": 5
   },
   {
 	"id": "sunflower-seeds",
@@ -1921,7 +2656,12 @@
 	"fat_g": 51.5,
 	"carbs_g": 11.4,
 	"fiber_g": 8.6,
-	"calcium_mg": 78
+	"calcium_mg": 78,
+	"saturated_fat_g": 4.5,
+	"monounsaturated_fat_g": 18.5,
+	"polyunsaturated_fat_g": 32.7,
+	"sugar_g": 0.6,
+	"sodium_mg": 5
   },
   {
 	"id": "pumpkin-seeds",
@@ -1934,7 +2674,12 @@
 	"fat_g": 49.1,
 	"carbs_g": 10.7,
 	"fiber_g": 6.0,
-	"calcium_mg": 46
+	"calcium_mg": 46,
+	"saturated_fat_g": 5.0,
+	"monounsaturated_fat_g": 13.6,
+	"polyunsaturated_fat_g": 20.9,
+	"sugar_g": 0.5,
+	"sodium_mg": 5
   },
   {
 	"id": "flax-seeds",
@@ -1947,7 +2692,12 @@
 	"fat_g": 42.2,
 	"carbs_g": 7.7,
 	"fiber_g": 27.3,
-	"calcium_mg": 255
+	"calcium_mg": 255,
+	"saturated_fat_g": 6.33,
+	"monounsaturated_fat_g": 8.44,
+	"polyunsaturated_fat_g": 16.88,
+	"sugar_g": 0.4,
+	"sodium_mg": 5
   },
   {
 	"id": "milk",
@@ -1960,7 +2710,12 @@
 	"fat_g": 3.3,
 	"carbs_g": 4.8,
 	"fiber_g": 0.0,
-	"calcium_mg": 120
+	"calcium_mg": 120,
+	"saturated_fat_g": 1.9,
+	"monounsaturated_fat_g": 0.8,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 2.4,
+	"sodium_mg": 50
   },
   {
 	"id": "yogurt",
@@ -1973,7 +2728,12 @@
 	"fat_g": 3.3,
 	"carbs_g": 4.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 121
+	"calcium_mg": 121,
+	"saturated_fat_g": 1.1,
+	"monounsaturated_fat_g": 0.5,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 2.4,
+	"sodium_mg": 50
   },
   {
 	"id": "greek-yogurt",
@@ -1986,7 +2746,12 @@
 	"fat_g": 5.0,
 	"carbs_g": 4.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 110
+	"calcium_mg": 110,
+	"saturated_fat_g": 2.1,
+	"monounsaturated_fat_g": 0.9,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 2.0,
+	"sodium_mg": 50
   },
   {
 	"id": "cheese",
@@ -1999,7 +2764,12 @@
 	"fat_g": 33.0,
 	"carbs_g": 0.5,
 	"fiber_g": 0.0,
-	"calcium_mg": 700
+	"calcium_mg": 700,
+	"saturated_fat_g": 18.9,
+	"monounsaturated_fat_g": 8.7,
+	"polyunsaturated_fat_g": 0.7,
+	"sugar_g": 0.2,
+	"sodium_mg": 50
   },
   {
 	"id": "cottage-cheese",
@@ -2012,7 +2782,12 @@
 	"fat_g": 4.3,
 	"carbs_g": 3.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 83
+	"calcium_mg": 83,
+	"saturated_fat_g": 1.7,
+	"monounsaturated_fat_g": 0.7,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 1.7,
+	"sodium_mg": 50
   },
   {
 	"id": "cream-cheese",
@@ -2025,7 +2800,12 @@
 	"fat_g": 34.9,
 	"carbs_g": 2.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 98
+	"calcium_mg": 98,
+	"saturated_fat_g": 19.3,
+	"monounsaturated_fat_g": 8.3,
+	"polyunsaturated_fat_g": 0.7,
+	"sugar_g": 1.4,
+	"sodium_mg": 50
   },
   {
 	"id": "butter",
@@ -2038,7 +2818,12 @@
 	"fat_g": 81.1,
 	"carbs_g": 0.1,
 	"fiber_g": 0.0,
-	"calcium_mg": 24
+	"calcium_mg": 24,
+	"saturated_fat_g": 51.4,
+	"monounsaturated_fat_g": 21.0,
+	"polyunsaturated_fat_g": 3.0,
+	"sugar_g": 0.1,
+	"sodium_mg": 50
   },
   {
 	"id": "egg",
@@ -2051,7 +2836,12 @@
 	"fat_g": 10.6,
 	"carbs_g": 0.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 52
+	"calcium_mg": 52,
+	"saturated_fat_g": 5.83,
+	"monounsaturated_fat_g": 2.97,
+	"polyunsaturated_fat_g": 0.42,
+	"sugar_g": 0.3,
+	"sodium_mg": 50
   },
   {
 	"id": "chocolate-milk",
@@ -2064,7 +2854,12 @@
 	"fat_g": 3.4,
 	"carbs_g": 10.4,
 	"fiber_g": 0.4,
-	"calcium_mg": 113
+	"calcium_mg": 113,
+	"saturated_fat_g": 1.87,
+	"monounsaturated_fat_g": 0.95,
+	"polyunsaturated_fat_g": 0.14,
+	"sugar_g": 5.2,
+	"sodium_mg": 50
   },
   {
 	"id": "mozzarella",
@@ -2077,7 +2872,12 @@
 	"fat_g": 22.4,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 505
+	"calcium_mg": 505,
+	"saturated_fat_g": 9.5,
+	"monounsaturated_fat_g": 5.0,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 0.0,
+	"sodium_mg": 50
   },
   {
 	"id": "feta",
@@ -2090,7 +2890,12 @@
 	"fat_g": 21.3,
 	"carbs_g": 4.1,
 	"fiber_g": 0.0,
-	"calcium_mg": 493
+	"calcium_mg": 493,
+	"saturated_fat_g": 14.9,
+	"monounsaturated_fat_g": 4.7,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 2.0,
+	"sodium_mg": 50
   },
   {
 	"id": "brie",
@@ -2103,7 +2908,12 @@
 	"fat_g": 27.7,
 	"carbs_g": 0.5,
 	"fiber_g": 0.0,
-	"calcium_mg": 184
+	"calcium_mg": 184,
+	"saturated_fat_g": 17.4,
+	"monounsaturated_fat_g": 8.7,
+	"polyunsaturated_fat_g": 0.7,
+	"sugar_g": 0.2,
+	"sodium_mg": 50
   },
   {
 	"id": "goat-cheese",
@@ -2116,7 +2926,12 @@
 	"fat_g": 29.8,
 	"carbs_g": 2.5,
 	"fiber_g": 0.0,
-	"calcium_mg": 140
+	"calcium_mg": 140,
+	"saturated_fat_g": 16.39,
+	"monounsaturated_fat_g": 8.34,
+	"polyunsaturated_fat_g": 1.19,
+	"sugar_g": 1.2,
+	"sodium_mg": 50
   },
   {
 	"id": "ricotta",
@@ -2129,7 +2944,12 @@
 	"fat_g": 13.0,
 	"carbs_g": 3.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 207
+	"calcium_mg": 207,
+	"saturated_fat_g": 6.1,
+	"monounsaturated_fat_g": 2.9,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 1.5,
+	"sodium_mg": 50
   },
   {
 	"id": "sour-cream",
@@ -2142,7 +2962,12 @@
 	"fat_g": 19.4,
 	"carbs_g": 3.6,
 	"fiber_g": 0.0,
-	"calcium_mg": 116
+	"calcium_mg": 116,
+	"saturated_fat_g": 12.3,
+	"monounsaturated_fat_g": 5.3,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 1.8,
+	"sodium_mg": 50
   },
   {
 	"id": "coconut-milk",
@@ -2155,7 +2980,12 @@
 	"fat_g": 23.8,
 	"carbs_g": 3.3,
 	"fiber_g": 2.2,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 16.5,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 1.6,
+	"sodium_mg": 50
   },
   {
 	"id": "kefir",
@@ -2168,7 +2998,12 @@
 	"fat_g": 1.5,
 	"carbs_g": 5.9,
 	"fiber_g": 0.0,
-	"calcium_mg": 120
+	"calcium_mg": 120,
+	"saturated_fat_g": 1.1,
+	"monounsaturated_fat_g": 0.5,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 3.0,
+	"sodium_mg": 50
   },
   {
 	"id": "whipped-cream",
@@ -2181,7 +3016,12 @@
 	"fat_g": 27.2,
 	"carbs_g": 2.8,
 	"fiber_g": 0.0,
-	"calcium_mg": 65
+	"calcium_mg": 65,
+	"saturated_fat_g": 14.96,
+	"monounsaturated_fat_g": 7.62,
+	"polyunsaturated_fat_g": 1.09,
+	"sugar_g": 1.4,
+	"sodium_mg": 50
   },
   {
 	"id": "chicken-breast",
@@ -2194,7 +3034,12 @@
 	"fat_g": 3.6,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 0.9,
+	"monounsaturated_fat_g": 1.2,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "chicken-thigh",
@@ -2207,7 +3052,12 @@
 	"fat_g": 10.9,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 12
+	"calcium_mg": 12,
+	"saturated_fat_g": 2.3,
+	"monounsaturated_fat_g": 3.3,
+	"polyunsaturated_fat_g": 1.6,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "whole-chicken",
@@ -2220,7 +3070,12 @@
 	"fat_g": 15.1,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 11
+	"calcium_mg": 11,
+	"saturated_fat_g": 2.1,
+	"monounsaturated_fat_g": 2.9,
+	"polyunsaturated_fat_g": 1.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "turkey",
@@ -2233,7 +3088,12 @@
 	"fat_g": 7.4,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 2.59,
+	"monounsaturated_fat_g": 2.96,
+	"polyunsaturated_fat_g": 0.74,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "duck",
@@ -2246,7 +3106,12 @@
 	"fat_g": 28.4,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 11
+	"calcium_mg": 11,
+	"saturated_fat_g": 5.8,
+	"monounsaturated_fat_g": 6.0,
+	"polyunsaturated_fat_g": 1.9,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "pork-tenderloin",
@@ -2259,7 +3124,12 @@
 	"fat_g": 5.9,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 6
+	"calcium_mg": 6,
+	"saturated_fat_g": 2.06,
+	"monounsaturated_fat_g": 2.36,
+	"polyunsaturated_fat_g": 0.59,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "pork-shoulder",
@@ -2272,7 +3142,12 @@
 	"fat_g": 16.0,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 22
+	"calcium_mg": 22,
+	"saturated_fat_g": 5.6,
+	"monounsaturated_fat_g": 6.4,
+	"polyunsaturated_fat_g": 1.6,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "pork-chop",
@@ -2285,7 +3160,12 @@
 	"fat_g": 13.7,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 3.3,
+	"monounsaturated_fat_g": 4.1,
+	"polyunsaturated_fat_g": 0.9,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "bacon",
@@ -2298,7 +3178,12 @@
 	"fat_g": 41.8,
 	"carbs_g": 1.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 9.9,
+	"monounsaturated_fat_g": 12.8,
+	"polyunsaturated_fat_g": 3.2,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "ground-beef",
@@ -2311,7 +3196,12 @@
 	"fat_g": 20.0,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 18
+	"calcium_mg": 18,
+	"saturated_fat_g": 6.2,
+	"monounsaturated_fat_g": 5.5,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "beef-steak",
@@ -2324,7 +3214,12 @@
 	"fat_g": 17.8,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 18
+	"calcium_mg": 18,
+	"saturated_fat_g": 3.7,
+	"monounsaturated_fat_g": 4.2,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "veal",
@@ -2337,7 +3232,12 @@
 	"fat_g": 9.9,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 2.1,
+	"monounsaturated_fat_g": 2.4,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "lamb",
@@ -2350,7 +3250,12 @@
 	"fat_g": 16.5,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 5.77,
+	"monounsaturated_fat_g": 6.6,
+	"polyunsaturated_fat_g": 1.65,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "reindeer",
@@ -2363,7 +3268,12 @@
 	"fat_g": 3.8,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 5
+	"calcium_mg": 5,
+	"saturated_fat_g": 1.33,
+	"monounsaturated_fat_g": 1.52,
+	"polyunsaturated_fat_g": 0.38,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "elk",
@@ -2376,7 +3286,12 @@
 	"fat_g": 3.7,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 5
+	"calcium_mg": 5,
+	"saturated_fat_g": 1.29,
+	"monounsaturated_fat_g": 1.48,
+	"polyunsaturated_fat_g": 0.37,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "sausage",
@@ -2389,7 +3304,12 @@
 	"fat_g": 27.3,
 	"carbs_g": 2.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 14
+	"calcium_mg": 14,
+	"saturated_fat_g": 9.0,
+	"monounsaturated_fat_g": 10.2,
+	"polyunsaturated_fat_g": 2.5,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "meatballs",
@@ -2402,7 +3322,12 @@
 	"fat_g": 14.8,
 	"carbs_g": 8.9,
 	"fiber_g": 0.5,
-	"calcium_mg": 28
+	"calcium_mg": 28,
+	"saturated_fat_g": 5.18,
+	"monounsaturated_fat_g": 5.92,
+	"polyunsaturated_fat_g": 1.48,
+	"sugar_g": 0.0,
+	"sodium_mg": 70
   },
   {
 	"id": "salmon",
@@ -2415,7 +3340,12 @@
 	"fat_g": 13.4,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 12
+	"calcium_mg": 12,
+	"saturated_fat_g": 3.5,
+	"monounsaturated_fat_g": 7.1,
+	"polyunsaturated_fat_g": 5.0,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "cod",
@@ -2428,7 +3358,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "mackerel",
@@ -2441,7 +3376,12 @@
 	"fat_g": 13.9,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 12
+	"calcium_mg": 12,
+	"saturated_fat_g": 4.6,
+	"monounsaturated_fat_g": 7.7,
+	"polyunsaturated_fat_g": 4.9,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "herring",
@@ -2454,7 +3394,12 @@
 	"fat_g": 9.0,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 57
+	"calcium_mg": 57,
+	"saturated_fat_g": 2.3,
+	"monounsaturated_fat_g": 5.6,
+	"polyunsaturated_fat_g": 4.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "trout",
@@ -2467,7 +3412,12 @@
 	"fat_g": 6.6,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 1.32,
+	"monounsaturated_fat_g": 1.98,
+	"polyunsaturated_fat_g": 2.31,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "tuna",
@@ -2480,7 +3430,12 @@
 	"fat_g": 1.0,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 39
+	"calcium_mg": 39,
+	"saturated_fat_g": 0.6,
+	"monounsaturated_fat_g": 0.9,
+	"polyunsaturated_fat_g": 1.5,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "shrimp",
@@ -2493,7 +3448,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 0.9,
 	"fiber_g": 0.0,
-	"calcium_mg": 70
+	"calcium_mg": 70,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.2,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "lobster",
@@ -2506,7 +3466,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 1.2,
 	"fiber_g": 0.0,
-	"calcium_mg": 61
+	"calcium_mg": 61,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "crab",
@@ -2519,7 +3484,12 @@
 	"fat_g": 1.8,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 89
+	"calcium_mg": 89,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "scampi",
@@ -2532,7 +3502,12 @@
 	"fat_g": 1.5,
 	"carbs_g": 1.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 68
+	"calcium_mg": 68,
+	"saturated_fat_g": 0.3,
+	"monounsaturated_fat_g": 0.45,
+	"polyunsaturated_fat_g": 0.52,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "tilapia",
@@ -2545,7 +3520,12 @@
 	"fat_g": 1.7,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.34,
+	"monounsaturated_fat_g": 0.51,
+	"polyunsaturated_fat_g": 0.59,
+	"sugar_g": 0.0,
+	"sodium_mg": 80
   },
   {
 	"id": "white-bread",
@@ -2558,7 +3538,12 @@
 	"fat_g": 3.2,
 	"carbs_g": 49.0,
 	"fiber_g": 2.7,
-	"calcium_mg": 144
+	"calcium_mg": 144,
+	"saturated_fat_g": 0.5,
+	"monounsaturated_fat_g": 0.7,
+	"polyunsaturated_fat_g": 1.2,
+	"sugar_g": 2.5,
+	"sodium_mg": 400
   },
   {
 	"id": "whole-grain-bread",
@@ -2571,7 +3556,12 @@
 	"fat_g": 3.5,
 	"carbs_g": 41.5,
 	"fiber_g": 7.4,
-	"calcium_mg": 107
+	"calcium_mg": 107,
+	"saturated_fat_g": 0.6,
+	"monounsaturated_fat_g": 0.9,
+	"polyunsaturated_fat_g": 1.8,
+	"sugar_g": 2.1,
+	"sodium_mg": 400
   },
   {
 	"id": "sourdough-bread",
@@ -2584,7 +3574,12 @@
 	"fat_g": 1.5,
 	"carbs_g": 50.0,
 	"fiber_g": 2.2,
-	"calcium_mg": 23
+	"calcium_mg": 23,
+	"saturated_fat_g": 0.4,
+	"monounsaturated_fat_g": 0.6,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 2.5,
+	"sodium_mg": 400
   },
   {
 	"id": "crispbread",
@@ -2597,7 +3592,12 @@
 	"fat_g": 2.6,
 	"carbs_g": 72.0,
 	"fiber_g": 16.0,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 0.52,
+	"monounsaturated_fat_g": 0.65,
+	"polyunsaturated_fat_g": 0.91,
+	"sugar_g": 3.6,
+	"sodium_mg": 400
   },
   {
 	"id": "bread-roll",
@@ -2610,7 +3610,12 @@
 	"fat_g": 3.5,
 	"carbs_g": 49.8,
 	"fiber_g": 2.8,
-	"calcium_mg": 100
+	"calcium_mg": 100,
+	"saturated_fat_g": 0.7,
+	"monounsaturated_fat_g": 0.88,
+	"polyunsaturated_fat_g": 1.22,
+	"sugar_g": 2.5,
+	"sodium_mg": 400
   },
   {
 	"id": "kale",
@@ -2623,7 +3628,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 4.4,
 	"fiber_g": 3.6,
-	"calcium_mg": 150
+	"calcium_mg": 150,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.27,
+	"sugar_g": 0.9,
+	"sodium_mg": 30
   },
   {
 	"id": "pak-choi",
@@ -2636,7 +3646,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 1.2,
 	"fiber_g": 1.0,
-	"calcium_mg": 105
+	"calcium_mg": 105,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.4,
+	"sodium_mg": 10
   },
   {
 	"id": "rutabaga",
@@ -2649,7 +3664,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 6.5,
 	"fiber_g": 2.3,
-	"calcium_mg": 47
+	"calcium_mg": 47,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 1.9,
+	"sodium_mg": 10
   },
   {
 	"id": "savoy-cabbage",
@@ -2662,7 +3682,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 3.1,
 	"fiber_g": 3.1,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "iceberg-lettuce",
@@ -2675,7 +3700,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 2.0,
 	"fiber_g": 1.2,
-	"calcium_mg": 18
+	"calcium_mg": 18,
+	"saturated_fat_g": 0.02,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 0.4,
+	"sodium_mg": 30
   },
   {
 	"id": "chia-seeds",
@@ -2688,7 +3718,12 @@
 	"fat_g": 30.7,
 	"carbs_g": 7.7,
 	"fiber_g": 34.4,
-	"calcium_mg": 631
+	"calcium_mg": 631,
+	"saturated_fat_g": 3.3,
+	"monounsaturated_fat_g": 2.3,
+	"polyunsaturated_fat_g": 23.7,
+	"sugar_g": 0.4,
+	"sodium_mg": 5
   },
   {
 	"id": "chinese-cabbage",
@@ -2701,7 +3736,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 1.2,
 	"fiber_g": 1.0,
-	"calcium_mg": 77
+	"calcium_mg": 77,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.4,
+	"sodium_mg": 10
   },
   {
 	"id": "celeriac",
@@ -2714,7 +3754,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 7.4,
 	"fiber_g": 1.8,
-	"calcium_mg": 43
+	"calcium_mg": 43,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 2.2,
+	"sodium_mg": 10
   },
   {
 	"id": "yardlong-beans",
@@ -2727,7 +3772,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 8.4,
 	"fiber_g": 3.1,
-	"calcium_mg": 40
+	"calcium_mg": 40,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 2.5,
+	"sodium_mg": 10
   },
   {
 	"id": "edamame",
@@ -2740,7 +3790,12 @@
 	"fat_g": 5.2,
 	"carbs_g": 8.9,
 	"fiber_g": 5.2,
-	"calcium_mg": 63
+	"calcium_mg": 63,
+	"saturated_fat_g": 0.78,
+	"monounsaturated_fat_g": 0.52,
+	"polyunsaturated_fat_g": 1.56,
+	"sugar_g": 2.7,
+	"sodium_mg": 10
   },
   {
 	"id": "endive",
@@ -2753,7 +3808,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 1.7,
 	"fiber_g": 3.1,
-	"calcium_mg": 52
+	"calcium_mg": 52,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 0.5,
+	"sodium_mg": 10
   },
   {
 	"id": "jerusalem-artichoke",
@@ -2766,7 +3826,12 @@
 	"fat_g": 0.0,
 	"carbs_g": 17.4,
 	"fiber_g": 1.6,
-	"calcium_mg": 14
+	"calcium_mg": 14,
+	"saturated_fat_g": 0.0,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.0,
+	"sugar_g": 5.2,
+	"sodium_mg": 10
   },
   {
 	"id": "kohlrabi",
@@ -2779,7 +3844,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 3.8,
 	"fiber_g": 3.6,
-	"calcium_mg": 24
+	"calcium_mg": 24,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 1.1,
+	"sodium_mg": 10
   },
   {
 	"id": "lotus-root",
@@ -2792,7 +3862,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 17.2,
 	"fiber_g": 4.9,
-	"calcium_mg": 45
+	"calcium_mg": 45,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 5.2,
+	"sodium_mg": 10
   },
   {
 	"id": "parsnip",
@@ -2805,7 +3880,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 17.0,
 	"fiber_g": 4.9,
-	"calcium_mg": 36
+	"calcium_mg": 36,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.05,
+	"sugar_g": 5.1,
+	"sodium_mg": 10
   },
   {
 	"id": "sauerkraut",
@@ -2818,7 +3898,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 3.0,
 	"fiber_g": 2.9,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "seaweed",
@@ -2831,7 +3916,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 5.1,
 	"fiber_g": 0.5,
-	"calcium_mg": 168
+	"calcium_mg": 168,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 1.5,
+	"sodium_mg": 10
   },
   {
 	"id": "turnip-greens",
@@ -2844,7 +3934,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 5.0,
 	"fiber_g": 3.5,
-	"calcium_mg": 190
+	"calcium_mg": 190,
+	"saturated_fat_g": 0.05,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 1.5,
+	"sodium_mg": 10
   },
   {
 	"id": "water-chestnuts",
@@ -2857,7 +3952,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 23.9,
 	"fiber_g": 3.0,
-	"calcium_mg": 11
+	"calcium_mg": 11,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.03,
+	"sugar_g": 7.2,
+	"sodium_mg": 10
   },
   {
 	"id": "winter-melon",
@@ -2870,7 +3970,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.9,
 	"fiber_g": 0.5,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "wax-gourd",
@@ -2883,7 +3988,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.9,
 	"fiber_g": 2.9,
-	"calcium_mg": 19
+	"calcium_mg": 19,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.9,
+	"sodium_mg": 10
   },
   {
 	"id": "summer-squash",
@@ -2896,7 +4006,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 1.8,
 	"fiber_g": 1.1,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.5,
+	"sodium_mg": 10
   },
   {
 	"id": "wakame",
@@ -2909,7 +4024,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 9.1,
 	"fiber_g": 0.5,
-	"calcium_mg": 150
+	"calcium_mg": 150,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.18,
+	"sugar_g": 2.7,
+	"sodium_mg": 10
   },
   {
 	"id": "shallot",
@@ -2922,7 +4042,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 16.8,
 	"fiber_g": 3.2,
-	"calcium_mg": 37
+	"calcium_mg": 37,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.01,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 5.0,
+	"sodium_mg": 10
   },
   {
 	"id": "arrowroot",
@@ -2935,7 +4060,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 15.3,
 	"fiber_g": 1.6,
-	"calcium_mg": 42
+	"calcium_mg": 42,
+	"saturated_fat_g": 0.0,
+	"monounsaturated_fat_g": 0.0,
+	"polyunsaturated_fat_g": 0.0,
+	"sugar_g": 4.6,
+	"sodium_mg": 10
   },
   {
 	"id": "pickled-cucumber",
@@ -2948,7 +4078,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.0,
 	"fiber_g": 0.7,
-	"calcium_mg": 16
+	"calcium_mg": 16,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.6,
+	"sodium_mg": 10
   },
   {
 	"id": "sun-dried-tomato",
@@ -2961,7 +4096,12 @@
 	"fat_g": 2.9,
 	"carbs_g": 43.5,
 	"fiber_g": 12.3,
-	"calcium_mg": 110
+	"calcium_mg": 110,
+	"saturated_fat_g": 0.43,
+	"monounsaturated_fat_g": 0.29,
+	"polyunsaturated_fat_g": 0.87,
+	"sugar_g": 13.0,
+	"sodium_mg": 10
   },
   {
 	"id": "napa-cabbage",
@@ -2974,7 +4114,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 2.2,
 	"fiber_g": 1.2,
-	"calcium_mg": 77
+	"calcium_mg": 77,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.06,
+	"sugar_g": 0.7,
+	"sodium_mg": 10
   },
   {
 	"id": "yautia",
@@ -2987,7 +4132,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 23.0,
 	"fiber_g": 3.9,
-	"calcium_mg": 14
+	"calcium_mg": 14,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.09,
+	"sugar_g": 6.9,
+	"sodium_mg": 10
   },
   {
 	"id": "amaranth-leaves",
@@ -3000,7 +4150,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 1.6,
 	"fiber_g": 2.2,
-	"calcium_mg": 215
+	"calcium_mg": 215,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 0.3,
+	"sodium_mg": 30
   },
   {
 	"id": "chrysanthemum",
@@ -3013,7 +4168,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 2.2,
 	"fiber_g": 2.0,
-	"calcium_mg": 105
+	"calcium_mg": 105,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 0.4,
+	"sodium_mg": 30
   },
   {
 	"id": "garden-cress",
@@ -3026,7 +4186,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 1.3,
 	"fiber_g": 1.1,
-	"calcium_mg": 81
+	"calcium_mg": 81,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.07,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 0.3,
+	"sodium_mg": 30
   },
   {
 	"id": "drumstick-leaves",
@@ -3039,7 +4204,12 @@
 	"fat_g": 1.4,
 	"carbs_g": 3.8,
 	"fiber_g": 2.0,
-	"calcium_mg": 185
+	"calcium_mg": 185,
+	"saturated_fat_g": 0.21,
+	"monounsaturated_fat_g": 0.14,
+	"polyunsaturated_fat_g": 0.49,
+	"sugar_g": 0.8,
+	"sodium_mg": 30
   },
   {
 	"id": "lambsquarters",
@@ -3052,7 +4222,12 @@
 	"fat_g": 0.8,
 	"carbs_g": 3.7,
 	"fiber_g": 4.0,
-	"calcium_mg": 309
+	"calcium_mg": 309,
+	"saturated_fat_g": 0.12,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.28,
+	"sugar_g": 0.7,
+	"sodium_mg": 30
   },
   {
 	"id": "scallion",
@@ -3065,7 +4240,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 5.2,
 	"fiber_g": 2.6,
-	"calcium_mg": 72
+	"calcium_mg": 72,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.07,
+	"sugar_g": 1.0,
+	"sodium_mg": 30
   },
   {
 	"id": "welsh-onion",
@@ -3078,7 +4258,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 4.7,
 	"fiber_g": 2.5,
-	"calcium_mg": 72
+	"calcium_mg": 72,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.14,
+	"sugar_g": 0.9,
+	"sodium_mg": 30
   },
   {
 	"id": "pumpkin-leaves",
@@ -3091,7 +4276,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 0.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 39
+	"calcium_mg": 39,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.14,
+	"sugar_g": 0.0,
+	"sodium_mg": 30
   },
   {
 	"id": "sweet-potato-leaves",
@@ -3104,7 +4294,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 6.5,
 	"fiber_g": 1.7,
-	"calcium_mg": 78
+	"calcium_mg": 78,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.07,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 1.3,
+	"sodium_mg": 30
   },
   {
 	"id": "taro-leaves",
@@ -3117,7 +4312,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 3.6,
 	"fiber_g": 3.7,
-	"calcium_mg": 107
+	"calcium_mg": 107,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.07,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 0.7,
+	"sodium_mg": 30
   },
   {
 	"id": "vine-spinach",
@@ -3130,7 +4330,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 2.4,
 	"fiber_g": 0.7,
-	"calcium_mg": 109
+	"calcium_mg": 109,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.03,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 0.5,
+	"sodium_mg": 30
   },
   {
 	"id": "lemongrass",
@@ -3143,7 +4348,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 25.3,
 	"fiber_g": 0.0,
-	"calcium_mg": 65
+	"calcium_mg": 65,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.05,
+	"polyunsaturated_fat_g": 0.17,
+	"sugar_g": 5.1,
+	"sodium_mg": 30
   },
   {
 	"id": "grape-leaves",
@@ -3156,7 +4366,12 @@
 	"fat_g": 2.1,
 	"carbs_g": 17.3,
 	"fiber_g": 11.0,
-	"calcium_mg": 363
+	"calcium_mg": 363,
+	"saturated_fat_g": 0.32,
+	"monounsaturated_fat_g": 0.21,
+	"polyunsaturated_fat_g": 0.73,
+	"sugar_g": 3.5,
+	"sodium_mg": 30
   },
   {
 	"id": "spelt",
@@ -3169,7 +4384,12 @@
 	"fat_g": 2.4,
 	"carbs_g": 61.6,
 	"fiber_g": 10.7,
-	"calcium_mg": 27
+	"calcium_mg": 27,
+	"saturated_fat_g": 0.3,
+	"monounsaturated_fat_g": 0.5,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 3.1,
+	"sodium_mg": 5
   },
   {
 	"id": "barley",
@@ -3182,7 +4402,12 @@
 	"fat_g": 2.3,
 	"carbs_g": 62.8,
 	"fiber_g": 17.3,
-	"calcium_mg": 33
+	"calcium_mg": 33,
+	"saturated_fat_g": 0.2,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 3.1,
+	"sodium_mg": 5
   },
   {
 	"id": "bulgur",
@@ -3195,7 +4420,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 18.6,
 	"fiber_g": 4.5,
-	"calcium_mg": 10
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 0.9,
+	"sodium_mg": 5
   },
   {
 	"id": "lotus-seeds",
@@ -3208,7 +4438,12 @@
 	"fat_g": 2.0,
 	"carbs_g": 64.5,
 	"fiber_g": 4.0,
-	"calcium_mg": 163
+	"calcium_mg": 163,
+	"saturated_fat_g": 0.24,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 9.7,
+	"sodium_mg": 5
   },
   {
 	"id": "adzuki-bean",
@@ -3221,7 +4456,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 25.0,
 	"fiber_g": 7.3,
-	"calcium_mg": 32
+	"calcium_mg": 32,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 1.2,
+	"sodium_mg": 5
   },
   {
 	"id": "baked-beans",
@@ -3234,7 +4474,12 @@
 	"fat_g": 0.3,
 	"carbs_g": 17.2,
 	"fiber_g": 4.0,
-	"calcium_mg": 45
+	"calcium_mg": 45,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 0.9,
+	"sodium_mg": 5
   },
   {
 	"id": "black-turtle-bean",
@@ -3247,7 +4492,12 @@
 	"fat_g": 1.4,
 	"carbs_g": 62.4,
 	"fiber_g": 15.5,
-	"calcium_mg": 160
+	"calcium_mg": 160,
+	"saturated_fat_g": 0.21,
+	"monounsaturated_fat_g": 0.28,
+	"polyunsaturated_fat_g": 0.56,
+	"sugar_g": 3.1,
+	"sodium_mg": 5
   },
   {
 	"id": "french-beans",
@@ -3260,7 +4510,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 5.7,
 	"fiber_g": 2.7,
-	"calcium_mg": 37
+	"calcium_mg": 37,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 0.3,
+	"sodium_mg": 5
   },
   {
 	"id": "great-northern-beans",
@@ -3273,7 +4528,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 21.1,
 	"fiber_g": 7.0,
-	"calcium_mg": 85
+	"calcium_mg": 85,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 1.1,
+	"sodium_mg": 5
   },
   {
 	"id": "navy-beans",
@@ -3286,7 +4546,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 26.0,
 	"fiber_g": 10.5,
-	"calcium_mg": 69
+	"calcium_mg": 69,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.12,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 1.3,
+	"sodium_mg": 5
   },
   {
 	"id": "pinto-beans",
@@ -3299,7 +4564,12 @@
 	"fat_g": 0.7,
 	"carbs_g": 26.9,
 	"fiber_g": 9.0,
-	"calcium_mg": 46
+	"calcium_mg": 46,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.14,
+	"polyunsaturated_fat_g": 0.28,
+	"sugar_g": 1.3,
+	"sodium_mg": 5
   },
   {
 	"id": "fava-beans",
@@ -3312,7 +4582,12 @@
 	"fat_g": 0.6,
 	"carbs_g": 9.4,
 	"fiber_g": 5.4,
-	"calcium_mg": 36
+	"calcium_mg": 36,
+	"saturated_fat_g": 0.09,
+	"monounsaturated_fat_g": 0.12,
+	"polyunsaturated_fat_g": 0.24,
+	"sugar_g": 0.5,
+	"sodium_mg": 5
   },
   {
 	"id": "cowpea",
@@ -3325,7 +4600,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 20.8,
 	"fiber_g": 6.5,
-	"calcium_mg": 24
+	"calcium_mg": 24,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 1.0,
+	"sodium_mg": 5
   },
   {
 	"id": "lablab",
@@ -3338,7 +4618,12 @@
 	"fat_g": 0.8,
 	"carbs_g": 26.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 74
+	"calcium_mg": 74,
+	"saturated_fat_g": 0.12,
+	"monounsaturated_fat_g": 0.16,
+	"polyunsaturated_fat_g": 0.32,
+	"sugar_g": 1.3,
+	"sodium_mg": 5
   },
   {
 	"id": "lima-beans",
@@ -3351,7 +4636,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 20.9,
 	"fiber_g": 7.0,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.16,
+	"sugar_g": 1.0,
+	"sodium_mg": 5
   },
   {
 	"id": "lupin-bean",
@@ -3364,7 +4654,12 @@
 	"fat_g": 9.7,
 	"carbs_g": 40.4,
 	"fiber_g": 18.9,
-	"calcium_mg": 176
+	"calcium_mg": 176,
+	"saturated_fat_g": 1.45,
+	"monounsaturated_fat_g": 1.94,
+	"polyunsaturated_fat_g": 3.88,
+	"sugar_g": 2.0,
+	"sodium_mg": 5
   },
   {
 	"id": "mung-beans",
@@ -3377,7 +4672,12 @@
 	"fat_g": 0.4,
 	"carbs_g": 19.2,
 	"fiber_g": 7.6,
-	"calcium_mg": 27
+	"calcium_mg": 27,
+	"saturated_fat_g": 0.06,
+	"monounsaturated_fat_g": 0.08,
+	"polyunsaturated_fat_g": 0.16,
+	"sugar_g": 1.0,
+	"sodium_mg": 5
   },
   {
 	"id": "pigeon-pea",
@@ -3390,7 +4690,12 @@
 	"fat_g": 1.5,
 	"carbs_g": 62.8,
 	"fiber_g": 15.0,
-	"calcium_mg": 130
+	"calcium_mg": 130,
+	"saturated_fat_g": 0.22,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 3.1,
+	"sodium_mg": 5
   },
   {
 	"id": "refried-beans",
@@ -3403,7 +4708,12 @@
 	"fat_g": 1.5,
 	"carbs_g": 14.9,
 	"fiber_g": 5.5,
-	"calcium_mg": 41
+	"calcium_mg": 41,
+	"saturated_fat_g": 0.22,
+	"monounsaturated_fat_g": 0.3,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 0.7,
+	"sodium_mg": 5
   },
   {
 	"id": "tempeh",
@@ -3416,7 +4726,12 @@
 	"fat_g": 10.8,
 	"carbs_g": 9.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 111
+	"calcium_mg": 111,
+	"saturated_fat_g": 1.62,
+	"monounsaturated_fat_g": 2.16,
+	"polyunsaturated_fat_g": 4.32,
+	"sugar_g": 0.5,
+	"sodium_mg": 5
   },
   {
 	"id": "winged-beans",
@@ -3429,7 +4744,12 @@
 	"fat_g": 5.9,
 	"carbs_g": 15.2,
 	"fiber_g": 4.3,
-	"calcium_mg": 44
+	"calcium_mg": 44,
+	"saturated_fat_g": 0.89,
+	"monounsaturated_fat_g": 1.18,
+	"polyunsaturated_fat_g": 2.36,
+	"sugar_g": 0.8,
+	"sodium_mg": 5
   },
   {
 	"id": "falafel",
@@ -3442,7 +4762,12 @@
 	"fat_g": 17.8,
 	"carbs_g": 31.8,
 	"fiber_g": 4.9,
-	"calcium_mg": 74
+	"calcium_mg": 74,
+	"saturated_fat_g": 2.67,
+	"monounsaturated_fat_g": 3.56,
+	"polyunsaturated_fat_g": 7.12,
+	"sugar_g": 1.6,
+	"sodium_mg": 5
   },
   {
 	"id": "arborio-rice",
@@ -3455,7 +4780,12 @@
 	"fat_g": 0.5,
 	"carbs_g": 77.3,
 	"fiber_g": 0.8,
-	"calcium_mg": 18
+	"calcium_mg": 18,
+	"saturated_fat_g": 0.07,
+	"monounsaturated_fat_g": 0.1,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 3.9,
+	"sodium_mg": 5
   },
   {
 	"id": "glutinous-rice",
@@ -3468,7 +4798,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 21.9,
 	"fiber_g": 0.4,
-	"calcium_mg": 3
+	"calcium_mg": 3,
+	"saturated_fat_g": 0.03,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.08,
+	"sugar_g": 1.1,
+	"sodium_mg": 5
   },
   {
 	"id": "soba",
@@ -3481,7 +4816,12 @@
 	"fat_g": 0.1,
 	"carbs_g": 21.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 11
+	"calcium_mg": 11,
+	"saturated_fat_g": 0.01,
+	"monounsaturated_fat_g": 0.02,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 1.1,
+	"sodium_mg": 5
   },
   {
 	"id": "semolina",
@@ -3494,7 +4834,12 @@
 	"fat_g": 1.1,
 	"carbs_g": 72.8,
 	"fiber_g": 3.9,
-	"calcium_mg": 17
+	"calcium_mg": 17,
+	"saturated_fat_g": 0.17,
+	"monounsaturated_fat_g": 0.22,
+	"polyunsaturated_fat_g": 0.44,
+	"sugar_g": 3.6,
+	"sodium_mg": 5
   },
   {
 	"id": "khorasan-wheat",
@@ -3507,7 +4852,12 @@
 	"fat_g": 2.2,
 	"carbs_g": 70.2,
 	"fiber_g": 11.0,
-	"calcium_mg": 31
+	"calcium_mg": 31,
+	"saturated_fat_g": 0.33,
+	"monounsaturated_fat_g": 0.44,
+	"polyunsaturated_fat_g": 0.88,
+	"sugar_g": 3.5,
+	"sodium_mg": 5
   },
   {
 	"id": "blue-cheese",
@@ -3520,7 +4870,12 @@
 	"fat_g": 28.7,
 	"carbs_g": 2.3,
 	"fiber_g": 0.0,
-	"calcium_mg": 528
+	"calcium_mg": 528,
+	"saturated_fat_g": 15.79,
+	"monounsaturated_fat_g": 8.04,
+	"polyunsaturated_fat_g": 1.15,
+	"sugar_g": 1.1,
+	"sodium_mg": 50
   },
   {
 	"id": "camembert",
@@ -3533,7 +4888,12 @@
 	"fat_g": 24.3,
 	"carbs_g": 0.5,
 	"fiber_g": 0.0,
-	"calcium_mg": 388
+	"calcium_mg": 388,
+	"saturated_fat_g": 14.3,
+	"monounsaturated_fat_g": 7.1,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 0.2,
+	"sodium_mg": 50
   },
   {
 	"id": "edam",
@@ -3546,7 +4906,12 @@
 	"fat_g": 27.8,
 	"carbs_g": 1.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 731
+	"calcium_mg": 731,
+	"saturated_fat_g": 15.29,
+	"monounsaturated_fat_g": 7.78,
+	"polyunsaturated_fat_g": 1.11,
+	"sugar_g": 0.7,
+	"sodium_mg": 50
   },
   {
 	"id": "brunost",
@@ -3559,7 +4924,12 @@
 	"fat_g": 29.5,
 	"carbs_g": 42.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 400
+	"calcium_mg": 400,
+	"saturated_fat_g": 16.23,
+	"monounsaturated_fat_g": 8.26,
+	"polyunsaturated_fat_g": 1.18,
+	"sugar_g": 21.4,
+	"sodium_mg": 50
   },
   {
 	"id": "gouda-cheese",
@@ -3572,7 +4942,12 @@
 	"fat_g": 27.4,
 	"carbs_g": 2.2,
 	"fiber_g": 0.0,
-	"calcium_mg": 700
+	"calcium_mg": 700,
+	"saturated_fat_g": 15.07,
+	"monounsaturated_fat_g": 7.67,
+	"polyunsaturated_fat_g": 1.1,
+	"sugar_g": 1.1,
+	"sodium_mg": 50
   },
   {
 	"id": "gruyere",
@@ -3585,7 +4960,12 @@
 	"fat_g": 32.3,
 	"carbs_g": 0.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 1011
+	"calcium_mg": 1011,
+	"saturated_fat_g": 17.77,
+	"monounsaturated_fat_g": 9.04,
+	"polyunsaturated_fat_g": 1.29,
+	"sugar_g": 0.2,
+	"sodium_mg": 50
   },
   {
 	"id": "buttermilk",
@@ -3598,7 +4978,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 4.8,
 	"fiber_g": 0.0,
-	"calcium_mg": 116
+	"calcium_mg": 116,
+	"saturated_fat_g": 0.5,
+	"monounsaturated_fat_g": 0.25,
+	"polyunsaturated_fat_g": 0.04,
+	"sugar_g": 2.4,
+	"sodium_mg": 50
   },
   {
 	"id": "condensed-milk",
@@ -3611,7 +4996,12 @@
 	"fat_g": 8.7,
 	"carbs_g": 54.4,
 	"fiber_g": 0.0,
-	"calcium_mg": 284
+	"calcium_mg": 284,
+	"saturated_fat_g": 8.7,
+	"monounsaturated_fat_g": 3.8,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 27.2,
+	"sodium_mg": 50
   },
   {
 	"id": "goat-milk",
@@ -3624,7 +5014,12 @@
 	"fat_g": 4.1,
 	"carbs_g": 4.5,
 	"fiber_g": 0.0,
-	"calcium_mg": 134
+	"calcium_mg": 134,
+	"saturated_fat_g": 2.25,
+	"monounsaturated_fat_g": 1.15,
+	"polyunsaturated_fat_g": 0.16,
+	"sugar_g": 2.2,
+	"sodium_mg": 50
   },
   {
 	"id": "egg-white",
@@ -3637,7 +5032,12 @@
 	"fat_g": 0.2,
 	"carbs_g": 0.7,
 	"fiber_g": 0.0,
-	"calcium_mg": 7
+	"calcium_mg": 7,
+	"saturated_fat_g": 0.11,
+	"monounsaturated_fat_g": 0.06,
+	"polyunsaturated_fat_g": 0.01,
+	"sugar_g": 0.3,
+	"sodium_mg": 50
   },
   {
 	"id": "egg-yolk",
@@ -3650,7 +5050,12 @@
 	"fat_g": 26.5,
 	"carbs_g": 3.6,
 	"fiber_g": 0.0,
-	"calcium_mg": 129
+	"calcium_mg": 129,
+	"saturated_fat_g": 14.58,
+	"monounsaturated_fat_g": 7.42,
+	"polyunsaturated_fat_g": 1.06,
+	"sugar_g": 1.8,
+	"sodium_mg": 50
   },
   {
 	"id": "fiskesuppe-fjordland",
@@ -3663,7 +5068,12 @@
 	"fat_g": 5.5,
 	"carbs_g": 5.3,
 	"fiber_g": 1.0,
-	"calcium_mg": 60
+	"calcium_mg": 60,
+	"saturated_fat_g": 1.0,
+	"monounsaturated_fat_g": 1.2,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 0.8,
+	"sodium_mg": 300
   },
   {
 	"id": "kjottsuppe-fjordland",
@@ -3676,7 +5086,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 4.9,
 	"fiber_g": 1.0,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 1.2,
+	"monounsaturated_fat_g": 1.5,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 0.7,
+	"sodium_mg": 300
   },
   {
 	"id": "proteinbowl-taco-fjordland",
@@ -3689,7 +5104,12 @@
 	"fat_g": 5.5,
 	"carbs_g": 12.0,
 	"fiber_g": 2.2,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 2.5,
+	"monounsaturated_fat_g": 3.0,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 1.8,
+	"sodium_mg": 300
   },
   {
 	"id": "betasuppe-fjordland",
@@ -3702,7 +5122,12 @@
 	"fat_g": 1.8,
 	"carbs_g": 8.9,
 	"fiber_g": 1.9,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 0.8,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 1.3,
+	"sodium_mg": 300
   },
   {
 	"id": "laks-pasta-fjordland",
@@ -3715,7 +5140,12 @@
 	"fat_g": 9.3,
 	"carbs_g": 14.0,
 	"fiber_g": 0.9,
-	"calcium_mg": 45
+	"calcium_mg": 45,
+	"saturated_fat_g": 2.0,
+	"monounsaturated_fat_g": 3.5,
+	"polyunsaturated_fat_g": 2.5,
+	"sugar_g": 2.1,
+	"sodium_mg": 300
   },
   {
 	"id": "proteinbowl-kylling-fjordland",
@@ -3728,7 +5158,12 @@
 	"fat_g": 4.4,
 	"carbs_g": 17.0,
 	"fiber_g": 2.8,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 1.5,
+	"monounsaturated_fat_g": 2.5,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 2.5,
+	"sodium_mg": 300
   },
   {
 	"id": "skogsgryte-fjordland",
@@ -3741,7 +5176,12 @@
 	"fat_g": 6.4,
 	"carbs_g": 9.7,
 	"fiber_g": 1.6,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 2.0,
+	"monounsaturated_fat_g": 2.5,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 1.5,
+	"sodium_mg": 300
   },
   {
 	"id": "butter-chickpeas-fjordland",
@@ -3754,7 +5194,12 @@
 	"fat_g": 4.7,
 	"carbs_g": 17.0,
 	"fiber_g": 1.7,
-	"calcium_mg": 40
+	"calcium_mg": 40,
+	"saturated_fat_g": 1.65,
+	"monounsaturated_fat_g": 1.65,
+	"polyunsaturated_fat_g": 0.7,
+	"sugar_g": 2.5,
+	"sodium_mg": 300
   },
   {
 	"id": "butter-chicken-fjordland",
@@ -3767,7 +5212,12 @@
 	"fat_g": 8.6,
 	"carbs_g": 14.0,
 	"fiber_g": 0.8,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 3.01,
+	"monounsaturated_fat_g": 3.01,
+	"polyunsaturated_fat_g": 1.29,
+	"sugar_g": 2.1,
+	"sodium_mg": 300
   },
   {
 	"id": "pasta-kjottsaus-fjordland",
@@ -3780,7 +5230,12 @@
 	"fat_g": 5.0,
 	"carbs_g": 15.0,
 	"fiber_g": 1.1,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 2.0,
+	"monounsaturated_fat_g": 2.5,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 2.2,
+	"sodium_mg": 300
   },
   {
 	"id": "pasta-ost-skinke-fjordland",
@@ -3793,7 +5248,12 @@
 	"fat_g": 10.0,
 	"carbs_g": 14.0,
 	"fiber_g": 0.4,
-	"calcium_mg": 120
+	"calcium_mg": 120,
+	"saturated_fat_g": 4.5,
+	"monounsaturated_fat_g": 3.5,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 2.1,
+	"sodium_mg": 300
   },
   {
 	"id": "polsegrateng-fjordland",
@@ -3806,7 +5266,12 @@
 	"fat_g": 7.1,
 	"carbs_g": 12.0,
 	"fiber_g": 0.4,
-	"calcium_mg": 100
+	"calcium_mg": 100,
+	"saturated_fat_g": 4.0,
+	"monounsaturated_fat_g": 4.5,
+	"polyunsaturated_fat_g": 1.2,
+	"sugar_g": 1.8,
+	"sodium_mg": 300
   },
   {
 	"id": "fiskegrateng-findus",
@@ -3819,7 +5284,12 @@
 	"fat_g": 6.0,
 	"carbs_g": 15.0,
 	"fiber_g": 1.0,
-	"calcium_mg": 60
+	"calcium_mg": 60,
+	"saturated_fat_g": 2.5,
+	"monounsaturated_fat_g": 2.0,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 2.2,
+	"sodium_mg": 300
   },
   {
 	"id": "kyllingsuppe-marokkansk-meremat",
@@ -3832,7 +5302,12 @@
 	"fat_g": 2.1,
 	"carbs_g": 5.8,
 	"fiber_g": 1.9,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.73,
+	"monounsaturated_fat_g": 0.73,
+	"polyunsaturated_fat_g": 0.32,
+	"sugar_g": 0.9,
+	"sodium_mg": 300
   },
   {
 	"id": "kyllingsuppe-curry-meremat",
@@ -3845,7 +5320,12 @@
 	"fat_g": 5.4,
 	"carbs_g": 4.5,
 	"fiber_g": 1.0,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 1.89,
+	"monounsaturated_fat_g": 1.89,
+	"polyunsaturated_fat_g": 0.81,
+	"sugar_g": 0.7,
+	"sodium_mg": 300
   },
   {
 	"id": "gulrotsuppe-meremat",
@@ -3858,7 +5338,12 @@
 	"fat_g": 5.3,
 	"carbs_g": 3.3,
 	"fiber_g": 1.1,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 0.6,
+	"monounsaturated_fat_g": 1.0,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 0.5,
+	"sodium_mg": 300
   },
   {
 	"id": "blomkalsuppe-meremat",
@@ -3871,7 +5356,12 @@
 	"fat_g": 3.3,
 	"carbs_g": 3.9,
 	"fiber_g": 1.2,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 0.5,
+	"monounsaturated_fat_g": 0.8,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 0.6,
+	"sodium_mg": 300
   },
   {
 	"id": "red-curry-suppe-meremat",
@@ -3884,7 +5374,12 @@
 	"fat_g": 5.6,
 	"carbs_g": 11.0,
 	"fiber_g": 1.0,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 3.5,
+	"monounsaturated_fat_g": 2.5,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 1.6,
+	"sodium_mg": 300
   },
   {
 	"id": "tomatsuppe-meremat",
@@ -3897,7 +5392,12 @@
 	"fat_g": 2.5,
 	"carbs_g": 3.5,
 	"fiber_g": 1.6,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 0.4,
+	"monounsaturated_fat_g": 0.6,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 0.5,
+	"sodium_mg": 300
   },
   {
 	"id": "ramen-meremat",
@@ -3910,7 +5410,12 @@
 	"fat_g": 9.2,
 	"carbs_g": 10.0,
 	"fiber_g": 0.7,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 3.22,
+	"monounsaturated_fat_g": 3.22,
+	"polyunsaturated_fat_g": 1.38,
+	"sugar_g": 1.5,
+	"sodium_mg": 300
   },
   {
 	"id": "risgrot-fjordland",
@@ -3923,7 +5428,12 @@
 	"fat_g": 2.6,
 	"carbs_g": 17.0,
 	"fiber_g": 0.5,
-	"calcium_mg": 120
+	"calcium_mg": 120,
+	"saturated_fat_g": 1.6,
+	"monounsaturated_fat_g": 0.7,
+	"polyunsaturated_fat_g": 0.1,
+	"sugar_g": 4.5,
+	"sodium_mg": 120.0
   },
   {
 	"id": "kjottkaker-ertestuing-fjordland",
@@ -3936,7 +5446,12 @@
 	"fat_g": 5.1,
 	"carbs_g": 11.0,
 	"fiber_g": 1.7,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 2.6,
+	"monounsaturated_fat_g": 1.6,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 1.3,
+	"sodium_mg": 284.0
   },
   {
 	"id": "svenske-kjottboller-fjordland",
@@ -3949,7 +5464,12 @@
 	"fat_g": 7.7,
 	"carbs_g": 12.0,
 	"fiber_g": 0.9,
-	"calcium_mg": 50
+	"calcium_mg": 50,
+	"saturated_fat_g": 3.6,
+	"monounsaturated_fat_g": 2.3,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 3.8,
+	"sodium_mg": 300.0
   },
   {
 	"id": "fettuccine-funghi",
@@ -3962,7 +5482,12 @@
 	"fat_g": 3.7,
 	"carbs_g": 23.0,
 	"fiber_g": 1.2,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 0.9,
+	"monounsaturated_fat_g": 1.1,
+	"polyunsaturated_fat_g": 1.5,
+	"sugar_g": 1.7,
+	"sodium_mg": 400.0
   },
   {
 	"id": "pulled-pork-fjordland",
@@ -3975,7 +5500,12 @@
 	"fat_g": 3.9,
 	"carbs_g": 9.9,
 	"fiber_g": 1.3,
-	"calcium_mg": 20
+	"calcium_mg": 20,
+	"saturated_fat_g": 1.9,
+	"monounsaturated_fat_g": 1.2,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 5.8,
+	"sodium_mg": 312.0
   },
   {
 	"id": "torsk-purreloksaus-fjordland",
@@ -3988,7 +5518,12 @@
 	"fat_g": 1.9,
 	"carbs_g": 7.3,
 	"fiber_g": 1.3,
-	"calcium_mg": 25
+	"calcium_mg": 25,
+	"saturated_fat_g": 1.1,
+	"monounsaturated_fat_g": 0.4,
+	"polyunsaturated_fat_g": 0.3,
+	"sugar_g": 2.6,
+	"sodium_mg": 0.0
   },
   {
 	"id": "lammefrikasse-fjordland",
@@ -4001,7 +5536,12 @@
 	"fat_g": 5.2,
 	"carbs_g": 7.8,
 	"fiber_g": 1.3,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 3.0,
+	"monounsaturated_fat_g": 1.5,
+	"polyunsaturated_fat_g": 0.4,
+	"sugar_g": 2.1,
+	"sodium_mg": 292.0
   },
   {
 	"id": "laksefilet-urtesaus-fjordland",
@@ -4014,7 +5554,12 @@
 	"fat_g": 5.2,
 	"carbs_g": 6.7,
 	"fiber_g": 1.1,
-	"calcium_mg": 35
+	"calcium_mg": 35,
+	"saturated_fat_g": 1.3,
+	"monounsaturated_fat_g": 1.4,
+	"polyunsaturated_fat_g": 1.0,
+	"sugar_g": 2.1,
+	"sodium_mg": 224.0
   },
   {
 	"id": "saucy-noodles-teriyaki",
@@ -4027,7 +5572,12 @@
 	"fat_g": 4.7,
 	"carbs_g": 15.4,
 	"fiber_g": 0.8,
-	"calcium_mg": 15
+	"calcium_mg": 15,
+	"saturated_fat_g": 0.4,
+	"monounsaturated_fat_g": 2.1,
+	"polyunsaturated_fat_g": 1.8,
+	"sugar_g": 2.9,
+	"sodium_mg": 332.0
   },
   {
 	"id": "chili-con-carne-waldemars",
@@ -4040,7 +5590,12 @@
 	"fat_g": 4.0,
 	"carbs_g": 7.0,
 	"fiber_g": 2.5,
-	"calcium_mg": 30
+	"calcium_mg": 30,
+	"saturated_fat_g": 1.6,
+	"monounsaturated_fat_g": 1.5,
+	"polyunsaturated_fat_g": 0.5,
+	"sugar_g": 3.6,
+	"sodium_mg": 400.0
   },
   {
 	"id": "pasta-carbonara-foodcollective",
@@ -4053,7 +5608,12 @@
 	"fat_g": 8.2,
 	"carbs_g": 22.0,
 	"fiber_g": 0.5,
-	"calcium_mg": 80
+	"calcium_mg": 80,
+	"saturated_fat_g": 4.0,
+	"monounsaturated_fat_g": 2.8,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 2.0,
+	"sodium_mg": 148.0
   },
   {
 	"id": "lasagne-bolognese-foodcollective",
@@ -4066,7 +5626,12 @@
 	"fat_g": 6.3,
 	"carbs_g": 12.0,
 	"fiber_g": 1.4,
-	"calcium_mg": 70
+	"calcium_mg": 70,
+	"saturated_fat_g": 3.1,
+	"monounsaturated_fat_g": 2.2,
+	"polyunsaturated_fat_g": 0.6,
+	"sugar_g": 1.5,
+	"sodium_mg": 312.0
   },
   {
 	"id": "pizza-grandiosa",
@@ -4079,7 +5644,12 @@
 	"fat_g": 7.6,
 	"carbs_g": 26.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 150
+	"calcium_mg": 150,
+	"saturated_fat_g": 4.2,
+	"monounsaturated_fat_g": 2.2,
+	"polyunsaturated_fat_g": 0.8,
+	"sugar_g": 2.7,
+	"sodium_mg": 360.0
   },
   {
 	"id": "pizza-bigone-classic",
@@ -4092,7 +5662,12 @@
 	"fat_g": 9.3,
 	"carbs_g": 23.0,
 	"fiber_g": 0.0,
-	"calcium_mg": 130
+	"calcium_mg": 130,
+	"saturated_fat_g": 4.1,
+	"monounsaturated_fat_g": 3.3,
+	"polyunsaturated_fat_g": 1.2,
+	"sugar_g": 1.9,
+	"sodium_mg": 480.0
   },
   {
 	"id": "pizza-ristorante-mozzarella",
@@ -4105,7 +5680,12 @@
 	"fat_g": 12.0,
 	"carbs_g": 23.0,
 	"fiber_g": 1.0,
-	"calcium_mg": 180
+	"calcium_mg": 180,
+	"saturated_fat_g": 3.9,
+	"monounsaturated_fat_g": 5.2,
+	"polyunsaturated_fat_g": 2.1,
+	"sugar_g": 2.8,
+	"sodium_mg": 400.0
   },
   {
 	"id": "pizza-ristorante-pollo",
@@ -4118,7 +5698,12 @@
 	"fat_g": 8.0,
 	"carbs_g": 23.0,
 	"fiber_g": 1.5,
-	"calcium_mg": 150
+	"calcium_mg": 150,
+	"saturated_fat_g": 2.8,
+	"monounsaturated_fat_g": 3.5,
+	"polyunsaturated_fat_g": 1.3,
+	"sugar_g": 2.9,
+	"sodium_mg": 400.0
   },
   {
 	"id": "pizza-ristorante-pepperoni",
@@ -4131,7 +5716,12 @@
 	"fat_g": 12.0,
 	"carbs_g": 25.0,
 	"fiber_g": 1.0,
-	"calcium_mg": 130
+	"calcium_mg": 130,
+	"saturated_fat_g": 4.0,
+	"monounsaturated_fat_g": 5.5,
+	"polyunsaturated_fat_g": 2.0,
+	"sugar_g": 3.0,
+	"sodium_mg": 560.0
   },
   {
 	"id": "risdrikk",
@@ -4144,7 +5734,12 @@
 	"fat_g": 0.9,
 	"carbs_g": 7.8,
 	"fiber_g": 0.5,
-	"calcium_mg": 120
+	"calcium_mg": 120,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.6,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 3.9,
+	"sodium_mg": 32.0
   },
   {
 	"id": "soya-drikk-alpro",
@@ -4157,7 +5752,12 @@
 	"fat_g": 1.8,
 	"carbs_g": 0.2,
 	"fiber_g": 0.6,
-	"calcium_mg": 240
+	"calcium_mg": 240,
+	"saturated_fat_g": 0.3,
+	"monounsaturated_fat_g": 0.4,
+	"polyunsaturated_fat_g": 1.1,
+	"sugar_g": 0.1,
+	"sodium_mg": 36.0
   },
   {
 	"id": "mandeldrikk-alpro",
@@ -4170,6 +5770,11 @@
 	"fat_g": 1.1,
 	"carbs_g": 0.3,
 	"fiber_g": 0.3,
-	"calcium_mg": 240
+	"calcium_mg": 240,
+	"saturated_fat_g": 0.1,
+	"monounsaturated_fat_g": 0.7,
+	"polyunsaturated_fat_g": 0.2,
+	"sugar_g": 0.0,
+	"sodium_mg": 60.0
   }
 ]
