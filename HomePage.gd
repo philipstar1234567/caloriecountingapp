@@ -34,6 +34,35 @@ func log_food(food: Dictionary):
 func refresh_display():
 	var vbox = $Panel/ScrollContainer/VBoxContainer
 	vbox.get_node("DateLabel").text = Time.get_date_string_from_system()
+	var conditions = Global.active_metabolic_conditions  # new array in Global
+
+	# Always show these
+	vbox.get_node("CaloriesBar").visible = true
+	vbox.get_node("ProteinBar").visible = true
+	vbox.get_node("FatBar").visible = true
+	vbox.get_node("CarbsBar").visible = true
+	vbox.get_node("FiberBar").visible = true
+	vbox.get_node("CalciumBar").visible = true
+	vbox.get_node("OxalatesBar").visible = true
+	vbox.get_node("GoalLabel").visible = true
+	vbox.get_node("PointsLabel").visible = true
+
+	# Only show if relevant condition active
+	var has_glycemic = conditions.has("glycemic-health") or conditions.has("nafld")
+	var has_lipid    = conditions.has("nafld") or conditions.has("lipid-health")
+	var has_iron     = conditions.has("hemochromatosis")
+	var has_copper   = conditions.has("wilsons-disease")
+	var has_selenium = conditions.has("hashimotos")
+	var has_sodium   = conditions.has("osteoporosis") or conditions.has("fabry")
+
+	vbox.get_node("SugarBar").visible          = has_glycemic
+	vbox.get_node("SaturatedFatBar").visible   = has_lipid
+	vbox.get_node("MonoFatBar").visible        = has_lipid
+	vbox.get_node("PolyFatBar").visible        = has_lipid
+	vbox.get_node("IronBar").visible           = has_iron
+	vbox.get_node("CopperBar").visible         = has_copper
+	vbox.get_node("SeleniumBar").visible       = has_selenium
+	vbox.get_node("SodiumBar").visible         = has_sodium
 
 	# Totals
 	var kcal = snappedf(today_totals["calories"], 0.1)

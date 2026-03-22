@@ -15,7 +15,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 9.0,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.12,
+	"copper_mg": 0.027,
+	"selenium_mcg": 0.0
   },
   {
 	"id": "apricot",
@@ -33,7 +36,10 @@
 	"monounsaturated_fat_g": 0.07,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 6.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.39,
+	"copper_mg": 0.078,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "dried-fruit",
@@ -51,7 +57,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 44.1,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.5,
+	"copper_mg": 0.3,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "avocado",
@@ -69,7 +78,10 @@
 	"monounsaturated_fat_g": 9.8,
 	"polyunsaturated_fat_g": 1.8,
 	"sugar_g": 1.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.55,
+	"copper_mg": 0.19,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "banana",
@@ -87,7 +99,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 14.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.26,
+	"copper_mg": 0.078,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "blackberry",
@@ -105,7 +120,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.13,
 	"sugar_g": 3.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.62,
+	"copper_mg": 0.165,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "blueberry",
@@ -123,7 +141,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 8.5,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.28,
+	"copper_mg": 0.057,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "breadfruit",
@@ -141,7 +162,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 16.4,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.54,
+	"copper_mg": 0.084,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "carambola",
@@ -159,7 +183,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 4.1,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.08,
+	"copper_mg": 0.137,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "cherry",
@@ -177,7 +204,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 9.7,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.36,
+	"copper_mg": 0.06,
+	"selenium_mcg": 0.0
   },
   {
 	"id": "cranberry",
@@ -195,7 +225,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.08,
 	"sugar_g": 6.5,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.25,
+	"copper_mg": 0.061,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "currant",
@@ -213,7 +246,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 7.0,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.54,
+	"copper_mg": 0.12,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "dates",
@@ -231,7 +267,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 46.5,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.9,
+	"copper_mg": 0.206,
+	"selenium_mcg": 1.9
   },
   {
 	"id": "elderberry",
@@ -249,7 +288,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 8.0,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.6,
+	"copper_mg": 0.06,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "figs",
@@ -267,7 +309,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 11.4,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.37,
+	"copper_mg": 0.07,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "gooseberry",
@@ -285,7 +330,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 4.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.31,
+	"copper_mg": 0.07,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "goji-berry",
@@ -303,7 +351,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 44.9,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 6.8,
+	"copper_mg": 0.8,
+	"selenium_mcg": 3.0
   },
   {
 	"id": "grapefruit",
@@ -321,7 +372,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 6.1,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.08,
+	"copper_mg": 0.032,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "grape",
@@ -339,7 +393,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 10.8,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.36,
+	"copper_mg": 0.127,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "guava",
@@ -357,7 +414,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 6.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.26,
+	"copper_mg": 0.23,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "jackfruit",
@@ -375,7 +435,10 @@
 	"monounsaturated_fat_g": 0.07,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 13.4,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.23,
+	"copper_mg": 0.076,
+	"selenium_mcg": 0.8
   },
   {
 	"id": "jujube",
@@ -393,7 +456,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 12.4,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.48,
+	"copper_mg": 0.073,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "kiwi",
@@ -411,7 +477,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.14,
 	"sugar_g": 8.2,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.31,
+	"copper_mg": 0.13,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "kumquat",
@@ -429,7 +498,10 @@
 	"monounsaturated_fat_g": 0.09,
 	"polyunsaturated_fat_g": 0.27,
 	"sugar_g": 6.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.86,
+	"copper_mg": 0.095,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "lemon",
@@ -447,7 +519,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 2.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.6,
+	"copper_mg": 0.037,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "lime",
@@ -465,7 +540,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 3.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.6,
+	"copper_mg": 0.065,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "lychee",
@@ -483,7 +561,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 9.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.31,
+	"copper_mg": 0.148,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "mango",
@@ -501,7 +582,10 @@
 	"monounsaturated_fat_g": 0.14,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 9.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.16,
+	"copper_mg": 0.111,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "melon",
@@ -519,7 +603,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 4.8,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.21,
+	"copper_mg": 0.041,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "nectarine",
@@ -537,7 +624,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 6.1,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.28,
+	"copper_mg": 0.086,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "orange",
@@ -555,7 +645,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 6.9,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.1,
+	"copper_mg": 0.045,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "mandarin",
@@ -573,7 +666,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 7.8,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.15,
+	"copper_mg": 0.042,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "papaya",
@@ -591,7 +687,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 6.2,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.25,
+	"copper_mg": 0.016,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "passion-fruit",
@@ -609,7 +708,10 @@
 	"monounsaturated_fat_g": 0.09,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 9.1,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.6,
+	"copper_mg": 0.086,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "peach",
@@ -627,7 +729,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 5.4,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.25,
+	"copper_mg": 0.068,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "pear",
@@ -645,7 +750,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 9.2,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.18,
+	"copper_mg": 0.082,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "pineapple",
@@ -663,7 +771,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 7.7,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.29,
+	"copper_mg": 0.099,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "plum",
@@ -681,7 +792,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 6.7,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.17,
+	"copper_mg": 0.057,
+	"selenium_mcg": 0.0
   },
   {
 	"id": "pomegranate",
@@ -699,7 +813,10 @@
 	"monounsaturated_fat_g": 0.09,
 	"polyunsaturated_fat_g": 0.08,
 	"sugar_g": 9.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.3,
+	"copper_mg": 0.158,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "prickly-pear",
@@ -717,7 +834,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 5.0,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.3,
+	"copper_mg": 0.05,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "prunes",
@@ -735,7 +855,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 40.2,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.93,
+	"copper_mg": 0.28,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "raisin",
@@ -753,7 +876,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.15,
 	"sugar_g": 49.4,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.88,
+	"copper_mg": 0.318,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "raspberry",
@@ -771,7 +897,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.15,
 	"sugar_g": 3.8,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.69,
+	"copper_mg": 0.09,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "strawberry",
@@ -789,7 +918,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 3.8,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.41,
+	"copper_mg": 0.048,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "watermelon",
@@ -807,7 +939,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 4.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.24,
+	"copper_mg": 0.042,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "coconut",
@@ -825,7 +960,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 4.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 2.43,
+	"copper_mg": 0.435,
+	"selenium_mcg": 10.1
   },
   {
 	"id": "boysenberry",
@@ -843,7 +981,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 6.7,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.62,
+	"copper_mg": 0.1,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "feijoa",
@@ -861,7 +1002,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 5.7,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.14,
+	"copper_mg": 0.04,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "blackberry-b",
@@ -879,7 +1023,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 3.3,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.62,
+	"copper_mg": 0.165,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "blueberry-b",
@@ -897,7 +1044,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 7.9,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.28,
+	"copper_mg": 0.057,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "cranberry-b",
@@ -915,7 +1065,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 6.0,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.25,
+	"copper_mg": 0.061,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "currant-b",
@@ -933,7 +1086,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 6.5,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.54,
+	"copper_mg": 0.12,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "elderberry-b",
@@ -951,7 +1107,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 7.5,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 1.6,
+	"copper_mg": 0.06,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "gooseberry-b",
@@ -969,7 +1128,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.15,
 	"sugar_g": 4.0,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.31,
+	"copper_mg": 0.07,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "goji-berry-b",
@@ -987,7 +1149,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 41.7,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 6.8,
+	"copper_mg": 0.8,
+	"selenium_mcg": 3.0
   },
   {
 	"id": "raspberry-b",
@@ -1005,7 +1170,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.17,
 	"sugar_g": 3.5,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.69,
+	"copper_mg": 0.09,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "strawberry-b",
@@ -1023,7 +1191,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 3.6,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.41,
+	"copper_mg": 0.048,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "boysenberry-b",
@@ -1041,7 +1212,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 6.2,
-	"sodium_mg": 1
+	"sodium_mg": 1,
+	"iron_mg": 0.62,
+	"copper_mg": 0.1,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "artichoke",
@@ -1059,7 +1233,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 1.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.28,
+	"copper_mg": 0.231,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "asparagus",
@@ -1077,7 +1254,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 0.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 2.14,
+	"copper_mg": 0.189,
+	"selenium_mcg": 2.3
   },
   {
 	"id": "bitter-melon",
@@ -1095,7 +1275,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 0.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.43,
+	"copper_mg": 0.034,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "bamboo-shoots",
@@ -1113,7 +1296,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.5,
+	"copper_mg": 0.26,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "green-beans",
@@ -1131,7 +1317,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.08,
 	"sugar_g": 1.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.03,
+	"copper_mg": 0.069,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "beetroot",
@@ -1149,7 +1338,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 2.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.8,
+	"copper_mg": 0.075,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "broad-beans",
@@ -1167,7 +1359,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.18,
 	"sugar_g": 2.8,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.5,
+	"copper_mg": 0.1,
+	"selenium_mcg": 1.2
   },
   {
 	"id": "broccoli",
@@ -1185,7 +1380,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 1.1,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.73,
+	"copper_mg": 0.049,
+	"selenium_mcg": 2.5
   },
   {
 	"id": "brussels-sprouts",
@@ -1203,7 +1401,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.14,
 	"sugar_g": 1.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.4,
+	"copper_mg": 0.07,
+	"selenium_mcg": 1.6
   },
   {
 	"id": "cabbage",
@@ -1221,7 +1422,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 1.1,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.47,
+	"copper_mg": 0.016,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "red-cabbage",
@@ -1239,7 +1443,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 1.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.57,
+	"copper_mg": 0.017,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "carrot",
@@ -1257,7 +1464,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 2.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.3,
+	"copper_mg": 0.045,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "cassava",
@@ -1275,7 +1485,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 11.4,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.27,
+	"copper_mg": 0.1,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "cauliflower",
@@ -1293,7 +1506,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.44,
+	"copper_mg": 0.039,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "chicory",
@@ -1311,7 +1527,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 0.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.9,
+	"copper_mg": 0.07,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "corn",
@@ -1329,7 +1548,10 @@
 	"monounsaturated_fat_g": 0.4,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 5.0,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.52,
+	"copper_mg": 0.054,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "cucumber",
@@ -1347,7 +1569,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 0.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.28,
+	"copper_mg": 0.041,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "eggplant",
@@ -1365,7 +1590,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 1.2,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.23,
+	"copper_mg": 0.081,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "garlic",
@@ -1383,7 +1611,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.21,
 	"sugar_g": 7.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.7,
+	"copper_mg": 0.299,
+	"selenium_mcg": 14.2
   },
   {
 	"id": "ginger",
@@ -1401,7 +1632,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 4.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.6,
+	"copper_mg": 0.226,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "okra",
@@ -1419,7 +1653,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 1.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.62,
+	"copper_mg": 0.094,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "onion",
@@ -1437,7 +1674,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 2.4,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.21,
+	"copper_mg": 0.039,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "peas",
@@ -1455,7 +1695,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 3.1,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.47,
+	"copper_mg": 0.176,
+	"selenium_mcg": 1.8
   },
   {
 	"id": "bell-pepper",
@@ -1473,7 +1716,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 1.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.43,
+	"copper_mg": 0.066,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "pumpkin",
@@ -1491,7 +1737,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 1.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.8,
+	"copper_mg": 0.127,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "radish",
@@ -1509,7 +1758,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.02,
 	"sugar_g": 0.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.34,
+	"copper_mg": 0.05,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "sweet-potato",
@@ -1527,7 +1779,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 5.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.61,
+	"copper_mg": 0.151,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "taro",
@@ -1545,7 +1800,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 7.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.72,
+	"copper_mg": 0.172,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "tomato",
@@ -1563,7 +1821,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.27,
+	"copper_mg": 0.059,
+	"selenium_mcg": 0.0
   },
   {
 	"id": "turnip",
@@ -1581,7 +1842,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 1.4,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.3,
+	"copper_mg": 0.085,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "potato",
@@ -1599,7 +1863,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 5.1,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.78,
+	"copper_mg": 0.108,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "zucchini",
@@ -1617,7 +1884,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 0.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.37,
+	"copper_mg": 0.037,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "fennel",
@@ -1635,7 +1905,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.14,
 	"sugar_g": 1.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.73,
+	"copper_mg": 0.066,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "chili-pepper",
@@ -1653,7 +1926,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 1.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.03,
+	"copper_mg": 0.174,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "yam",
@@ -1671,7 +1947,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 8.3,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.54,
+	"copper_mg": 0.178,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "spinach",
@@ -1689,7 +1968,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.16,
 	"sugar_g": 0.3,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.71,
+	"copper_mg": 0.13,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "rhubarb",
@@ -1707,7 +1989,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 0.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.22,
+	"copper_mg": 0.021,
+	"selenium_mcg": 1.1
   },
   {
 	"id": "collard-greens",
@@ -1725,7 +2010,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.15,
 	"sugar_g": 0.6,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.47,
+	"copper_mg": 0.048,
+	"selenium_mcg": 1.7
   },
   {
 	"id": "parsley",
@@ -1743,7 +2031,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.28,
 	"sugar_g": 0.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 6.2,
+	"copper_mg": 0.149,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "purslane",
@@ -1761,7 +2052,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.36,
 	"sugar_g": 0.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.0,
+	"copper_mg": 0.113,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "dandelion-greens",
@@ -1779,7 +2073,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 1.0,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 3.1,
+	"copper_mg": 0.171,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "thyme",
@@ -1797,7 +2094,10 @@
 	"monounsaturated_fat_g": 0.17,
 	"polyunsaturated_fat_g": 0.59,
 	"sugar_g": 2.8,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 123.6,
+	"copper_mg": 0.88,
+	"selenium_mcg": 0.8
   },
   {
 	"id": "dill",
@@ -1815,7 +2115,10 @@
 	"monounsaturated_fat_g": 0.11,
 	"polyunsaturated_fat_g": 0.39,
 	"sugar_g": 1.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 6.59,
+	"copper_mg": 0.146,
+	"selenium_mcg": 0.8
   },
   {
 	"id": "celery",
@@ -1833,7 +2136,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.08,
 	"sugar_g": 0.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.2,
+	"copper_mg": 0.035,
+	"selenium_mcg": 0.4
   },
   {
 	"id": "chives",
@@ -1851,7 +2157,10 @@
 	"monounsaturated_fat_g": 0.07,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 0.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.6,
+	"copper_mg": 0.157,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "coriander",
@@ -1869,7 +2178,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.17,
 	"sugar_g": 0.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.77,
+	"copper_mg": 0.225,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "leek",
@@ -1887,7 +2199,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.08,
 	"sugar_g": 2.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.1,
+	"copper_mg": 0.12,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "lettuce",
@@ -1905,7 +2220,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 0.2,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.86,
+	"copper_mg": 0.025,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "mustard-greens",
@@ -1923,7 +2241,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.13,
 	"sugar_g": 0.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.64,
+	"copper_mg": 0.082,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "watercress",
@@ -1941,7 +2262,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 0.1,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.2,
+	"copper_mg": 0.02,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "arugula",
@@ -1959,7 +2283,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.11,
 	"sugar_g": 0.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.46,
+	"copper_mg": 0.073,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "quinoa",
@@ -1977,7 +2304,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 1.5,
 	"sugar_g": 3.9,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 4.57,
+	"copper_mg": 0.59,
+	"selenium_mcg": 8.5
   },
   {
 	"id": "almonds",
@@ -1995,7 +2325,10 @@
 	"monounsaturated_fat_g": 31.6,
 	"polyunsaturated_fat_g": 12.3,
 	"sugar_g": 1.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.71,
+	"copper_mg": 1.0,
+	"selenium_mcg": 4.08
   },
   {
 	"id": "cashew",
@@ -2013,7 +2346,10 @@
 	"monounsaturated_fat_g": 23.8,
 	"polyunsaturated_fat_g": 7.8,
 	"sugar_g": 4.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 6.68,
+	"copper_mg": 2.19,
+	"selenium_mcg": 19.9
   },
   {
 	"id": "hazelnut",
@@ -2031,7 +2367,10 @@
 	"monounsaturated_fat_g": 45.7,
 	"polyunsaturated_fat_g": 7.9,
 	"sugar_g": 1.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 4.7,
+	"copper_mg": 1.73,
+	"selenium_mcg": 2.4
   },
   {
 	"id": "pine-nuts",
@@ -2049,7 +2388,10 @@
 	"monounsaturated_fat_g": 34.2,
 	"polyunsaturated_fat_g": 20.52,
 	"sugar_g": 1.4,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.53,
+	"copper_mg": 1.32,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "mixed-nuts",
@@ -2067,7 +2409,10 @@
 	"monounsaturated_fat_g": 27.0,
 	"polyunsaturated_fat_g": 16.2,
 	"sugar_g": 2.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.0,
+	"copper_mg": 1.2,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "peanut",
@@ -2085,7 +2430,10 @@
 	"monounsaturated_fat_g": 24.6,
 	"polyunsaturated_fat_g": 14.76,
 	"sugar_g": 1.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 4.58,
+	"copper_mg": 0.671,
+	"selenium_mcg": 7.2
   },
   {
 	"id": "pistachio",
@@ -2103,7 +2451,10 @@
 	"monounsaturated_fat_g": 23.3,
 	"polyunsaturated_fat_g": 13.5,
 	"sugar_g": 2.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.92,
+	"copper_mg": 1.3,
+	"selenium_mcg": 7.0
   },
   {
 	"id": "chestnut",
@@ -2121,7 +2472,10 @@
 	"monounsaturated_fat_g": 1.6,
 	"polyunsaturated_fat_g": 1.1,
 	"sugar_g": 6.8,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.01,
+	"copper_mg": 0.507,
+	"selenium_mcg": 1.2
   },
   {
 	"id": "walnut",
@@ -2139,7 +2493,10 @@
 	"monounsaturated_fat_g": 8.9,
 	"polyunsaturated_fat_g": 47.2,
 	"sugar_g": 1.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.91,
+	"copper_mg": 1.59,
+	"selenium_mcg": 4.9
   },
   {
 	"id": "almond-butter",
@@ -2157,7 +2514,10 @@
 	"monounsaturated_fat_g": 27.75,
 	"polyunsaturated_fat_g": 16.65,
 	"sugar_g": 1.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.49,
+	"copper_mg": 0.84,
+	"selenium_mcg": 3.0
   },
   {
 	"id": "pecan",
@@ -2175,7 +2535,10 @@
 	"monounsaturated_fat_g": 40.8,
 	"polyunsaturated_fat_g": 21.6,
 	"sugar_g": 0.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.53,
+	"copper_mg": 1.2,
+	"selenium_mcg": 6.0
   },
   {
 	"id": "macadamia",
@@ -2193,7 +2556,10 @@
 	"monounsaturated_fat_g": 58.9,
 	"polyunsaturated_fat_g": 1.5,
 	"sugar_g": 0.8,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.69,
+	"copper_mg": 0.756,
+	"selenium_mcg": 3.6
   },
   {
 	"id": "ginkgo-nuts",
@@ -2211,7 +2577,10 @@
 	"monounsaturated_fat_g": 0.85,
 	"polyunsaturated_fat_g": 0.51,
 	"sugar_g": 5.7,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.0,
+	"copper_mg": 0.27,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "pili-nuts",
@@ -2229,7 +2598,10 @@
 	"monounsaturated_fat_g": 39.8,
 	"polyunsaturated_fat_g": 23.88,
 	"sugar_g": 0.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.0,
+	"copper_mg": 1.5,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "watermelon-seeds",
@@ -2247,7 +2619,10 @@
 	"monounsaturated_fat_g": 23.7,
 	"polyunsaturated_fat_g": 14.22,
 	"sugar_g": 2.3,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 7.28,
+	"copper_mg": 0.7,
+	"selenium_mcg": 4.0
   },
   {
 	"id": "oatmeal",
@@ -2265,7 +2640,10 @@
 	"monounsaturated_fat_g": 0.9,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 0.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.7,
+	"copper_mg": 0.18,
+	"selenium_mcg": 13.0
   },
   {
 	"id": "oats",
@@ -2283,7 +2661,10 @@
 	"monounsaturated_fat_g": 1.5,
 	"polyunsaturated_fat_g": 1.8,
 	"sugar_g": 2.8,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 4.72,
+	"copper_mg": 0.626,
+	"selenium_mcg": 28.9
   },
   {
 	"id": "rice",
@@ -2301,7 +2682,10 @@
 	"monounsaturated_fat_g": 0.2,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 1.4,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 0.2,
+	"copper_mg": 0.07,
+	"selenium_mcg": 7.5
   },
   {
 	"id": "brown-rice",
@@ -2319,7 +2703,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 1.2,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 0.8,
+	"copper_mg": 0.208,
+	"selenium_mcg": 9.8
   },
   {
 	"id": "pasta",
@@ -2337,7 +2724,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 1.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.3,
+	"copper_mg": 0.17,
+	"selenium_mcg": 26.4
   },
   {
 	"id": "spaghetti",
@@ -2355,7 +2745,10 @@
 	"monounsaturated_fat_g": 0.18,
 	"polyunsaturated_fat_g": 0.36,
 	"sugar_g": 1.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.3,
+	"copper_mg": 0.17,
+	"selenium_mcg": 26.4
   },
   {
 	"id": "flour",
@@ -2373,7 +2766,10 @@
 	"monounsaturated_fat_g": 0.2,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 3.8,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.2,
+	"copper_mg": 0.14,
+	"selenium_mcg": 33.9
   },
   {
 	"id": "sesame",
@@ -2391,7 +2787,10 @@
 	"monounsaturated_fat_g": 9.94,
 	"polyunsaturated_fat_g": 19.88,
 	"sugar_g": 0.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 14.55,
+	"copper_mg": 4.08,
+	"selenium_mcg": 34.4
   },
   {
 	"id": "buckwheat",
@@ -2409,7 +2808,10 @@
 	"monounsaturated_fat_g": 0.5,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 3.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.2,
+	"copper_mg": 1.1,
+	"selenium_mcg": 8.3
   },
   {
 	"id": "amaranth",
@@ -2427,7 +2829,10 @@
 	"monounsaturated_fat_g": 0.9,
 	"polyunsaturated_fat_g": 1.5,
 	"sugar_g": 3.0,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 7.6,
+	"copper_mg": 0.525,
+	"selenium_mcg": 18.7
   },
   {
 	"id": "couscous",
@@ -2445,7 +2850,10 @@
 	"monounsaturated_fat_g": 0.2,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 1.2,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 0.38,
+	"copper_mg": 0.128,
+	"selenium_mcg": 27.5
   },
   {
 	"id": "cornmeal",
@@ -2463,7 +2871,10 @@
 	"monounsaturated_fat_g": 0.4,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 3.7,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.6,
+	"copper_mg": 0.09,
+	"selenium_mcg": 9.0
   },
   {
 	"id": "millet",
@@ -2481,7 +2892,10 @@
 	"monounsaturated_fat_g": 0.5,
 	"polyunsaturated_fat_g": 0.7,
 	"sugar_g": 3.4,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.01,
+	"copper_mg": 0.75,
+	"selenium_mcg": 2.7
   },
   {
 	"id": "rye",
@@ -2499,7 +2913,10 @@
 	"monounsaturated_fat_g": 0.4,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 3.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.67,
+	"copper_mg": 0.367,
+	"selenium_mcg": 35.3
   },
   {
 	"id": "chickpeas",
@@ -2517,7 +2934,10 @@
 	"monounsaturated_fat_g": 0.52,
 	"polyunsaturated_fat_g": 1.04,
 	"sugar_g": 1.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 6.24,
+	"copper_mg": 0.847,
+	"selenium_mcg": 8.2
   },
   {
 	"id": "lentil",
@@ -2535,7 +2955,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.16,
 	"sugar_g": 0.8,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 6.51,
+	"copper_mg": 0.754,
+	"selenium_mcg": 8.3
   },
   {
 	"id": "kidney-beans",
@@ -2553,7 +2976,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 0.9,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 6.69,
+	"copper_mg": 0.797,
+	"selenium_mcg": 3.2
   },
   {
 	"id": "soybean",
@@ -2571,7 +2997,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 5.1,
 	"sugar_g": 0.3,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 15.7,
+	"copper_mg": 1.66,
+	"selenium_mcg": 17.8
   },
   {
 	"id": "tofu",
@@ -2589,7 +3018,10 @@
 	"monounsaturated_fat_g": 0.84,
 	"polyunsaturated_fat_g": 1.68,
 	"sugar_g": 0.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.66,
+	"copper_mg": 0.19,
+	"selenium_mcg": 8.9
   },
   {
 	"id": "hummus",
@@ -2607,7 +3039,10 @@
 	"monounsaturated_fat_g": 1.92,
 	"polyunsaturated_fat_g": 3.84,
 	"sugar_g": 0.7,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.44,
+	"copper_mg": 0.52,
+	"selenium_mcg": 2.6
   },
   {
 	"id": "white-beans",
@@ -2625,7 +3060,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.16,
 	"sugar_g": 1.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.49,
+	"copper_mg": 0.337,
+	"selenium_mcg": 2.7
   },
   {
 	"id": "black-gram",
@@ -2643,7 +3081,10 @@
 	"monounsaturated_fat_g": 0.32,
 	"polyunsaturated_fat_g": 0.64,
 	"sugar_g": 3.0,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 7.57,
+	"copper_mg": 0.951,
+	"selenium_mcg": 4.0
   },
   {
 	"id": "sunflower-seeds",
@@ -2661,7 +3102,10 @@
 	"monounsaturated_fat_g": 18.5,
 	"polyunsaturated_fat_g": 32.7,
 	"sugar_g": 0.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.25,
+	"copper_mg": 1.8,
+	"selenium_mcg": 53.0
   },
   {
 	"id": "pumpkin-seeds",
@@ -2679,7 +3123,10 @@
 	"monounsaturated_fat_g": 13.6,
 	"polyunsaturated_fat_g": 20.9,
 	"sugar_g": 0.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 8.82,
+	"copper_mg": 1.343,
+	"selenium_mcg": 9.4
   },
   {
 	"id": "flax-seeds",
@@ -2697,7 +3144,10 @@
 	"monounsaturated_fat_g": 8.44,
 	"polyunsaturated_fat_g": 16.88,
 	"sugar_g": 0.4,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.73,
+	"copper_mg": 1.22,
+	"selenium_mcg": 25.4
   },
   {
 	"id": "milk",
@@ -2715,7 +3165,10 @@
 	"monounsaturated_fat_g": 0.8,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 2.4,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.03,
+	"copper_mg": 0.01,
+	"selenium_mcg": 3.7
   },
   {
 	"id": "yogurt",
@@ -2733,7 +3186,10 @@
 	"monounsaturated_fat_g": 0.5,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 2.4,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.05,
+	"copper_mg": 0.006,
+	"selenium_mcg": 3.3
   },
   {
 	"id": "greek-yogurt",
@@ -2751,7 +3207,10 @@
 	"monounsaturated_fat_g": 0.9,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 2.0,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.07,
+	"copper_mg": 0.01,
+	"selenium_mcg": 9.7
   },
   {
 	"id": "cheese",
@@ -2769,7 +3228,10 @@
 	"monounsaturated_fat_g": 8.7,
 	"polyunsaturated_fat_g": 0.7,
 	"sugar_g": 0.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.68,
+	"copper_mg": 0.03,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "cottage-cheese",
@@ -2787,7 +3249,10 @@
 	"monounsaturated_fat_g": 0.7,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 1.7,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.15,
+	"copper_mg": 0.03,
+	"selenium_mcg": 11.9
   },
   {
 	"id": "cream-cheese",
@@ -2805,7 +3270,10 @@
 	"monounsaturated_fat_g": 8.3,
 	"polyunsaturated_fat_g": 0.7,
 	"sugar_g": 1.4,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.5,
+	"copper_mg": 0.02,
+	"selenium_mcg": 8.0
   },
   {
 	"id": "butter",
@@ -2823,7 +3291,10 @@
 	"monounsaturated_fat_g": 21.0,
 	"polyunsaturated_fat_g": 3.0,
 	"sugar_g": 0.1,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.02,
+	"copper_mg": 0.016,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "egg",
@@ -2841,7 +3312,10 @@
 	"monounsaturated_fat_g": 2.97,
 	"polyunsaturated_fat_g": 0.42,
 	"sugar_g": 0.3,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 1.75,
+	"copper_mg": 0.072,
+	"selenium_mcg": 30.8
   },
   {
 	"id": "chocolate-milk",
@@ -2859,7 +3333,10 @@
 	"monounsaturated_fat_g": 0.95,
 	"polyunsaturated_fat_g": 0.14,
 	"sugar_g": 5.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.1,
+	"copper_mg": 0.05,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "mozzarella",
@@ -2877,7 +3354,10 @@
 	"monounsaturated_fat_g": 5.0,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 0.0,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.44,
+	"copper_mg": 0.01,
+	"selenium_mcg": 17.0
   },
   {
 	"id": "feta",
@@ -2895,7 +3375,10 @@
 	"monounsaturated_fat_g": 4.7,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 2.0,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.65,
+	"copper_mg": 0.03,
+	"selenium_mcg": 15.0
   },
   {
 	"id": "brie",
@@ -2913,7 +3396,10 @@
 	"monounsaturated_fat_g": 8.7,
 	"polyunsaturated_fat_g": 0.7,
 	"sugar_g": 0.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.5,
+	"copper_mg": 0.019,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "goat-cheese",
@@ -2931,7 +3417,10 @@
 	"monounsaturated_fat_g": 8.34,
 	"polyunsaturated_fat_g": 1.19,
 	"sugar_g": 1.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 1.62,
+	"copper_mg": 0.07,
+	"selenium_mcg": 3.4
   },
   {
 	"id": "ricotta",
@@ -2949,7 +3438,10 @@
 	"monounsaturated_fat_g": 2.9,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 1.5,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.38,
+	"copper_mg": 0.03,
+	"selenium_mcg": 17.7
   },
   {
 	"id": "sour-cream",
@@ -2967,7 +3459,10 @@
 	"monounsaturated_fat_g": 5.3,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 1.8,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.06,
+	"copper_mg": 0.02,
+	"selenium_mcg": 2.5
   },
   {
 	"id": "coconut-milk",
@@ -2985,7 +3480,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 1.6,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 1.64,
+	"copper_mg": 0.266,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "kefir",
@@ -3003,7 +3501,10 @@
 	"monounsaturated_fat_g": 0.5,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 3.0,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.04,
+	"copper_mg": 0.006,
+	"selenium_mcg": 3.3
   },
   {
 	"id": "whipped-cream",
@@ -3021,7 +3522,10 @@
 	"monounsaturated_fat_g": 7.62,
 	"polyunsaturated_fat_g": 1.09,
 	"sugar_g": 1.4,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.07,
+	"copper_mg": 0.013,
+	"selenium_mcg": 1.5
   },
   {
 	"id": "chicken-breast",
@@ -3039,7 +3543,10 @@
 	"monounsaturated_fat_g": 1.2,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 0.73,
+	"copper_mg": 0.045,
+	"selenium_mcg": 27.6
   },
   {
 	"id": "chicken-thigh",
@@ -3057,7 +3564,10 @@
 	"monounsaturated_fat_g": 3.3,
 	"polyunsaturated_fat_g": 1.6,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.07,
+	"copper_mg": 0.07,
+	"selenium_mcg": 24.4
   },
   {
 	"id": "whole-chicken",
@@ -3075,7 +3585,10 @@
 	"monounsaturated_fat_g": 2.9,
 	"polyunsaturated_fat_g": 1.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 0.9,
+	"copper_mg": 0.06,
+	"selenium_mcg": 25.0
   },
   {
 	"id": "turkey",
@@ -3093,7 +3606,10 @@
 	"monounsaturated_fat_g": 2.96,
 	"polyunsaturated_fat_g": 0.74,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.04,
+	"copper_mg": 0.11,
+	"selenium_mcg": 32.0
   },
   {
 	"id": "duck",
@@ -3111,7 +3627,10 @@
 	"monounsaturated_fat_g": 6.0,
 	"polyunsaturated_fat_g": 1.9,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 2.7,
+	"copper_mg": 0.25,
+	"selenium_mcg": 14.8
   },
   {
 	"id": "pork-tenderloin",
@@ -3129,7 +3648,10 @@
 	"monounsaturated_fat_g": 2.36,
 	"polyunsaturated_fat_g": 0.59,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 0.89,
+	"copper_mg": 0.065,
+	"selenium_mcg": 32.4
   },
   {
 	"id": "pork-shoulder",
@@ -3147,7 +3669,10 @@
 	"monounsaturated_fat_g": 6.4,
 	"polyunsaturated_fat_g": 1.6,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.0,
+	"copper_mg": 0.1,
+	"selenium_mcg": 30.0
   },
   {
 	"id": "pork-chop",
@@ -3165,7 +3690,10 @@
 	"monounsaturated_fat_g": 4.1,
 	"polyunsaturated_fat_g": 0.9,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 0.84,
+	"copper_mg": 0.065,
+	"selenium_mcg": 38.1
   },
   {
 	"id": "bacon",
@@ -3183,7 +3711,10 @@
 	"monounsaturated_fat_g": 12.8,
 	"polyunsaturated_fat_g": 3.2,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.44,
+	"copper_mg": 0.066,
+	"selenium_mcg": 25.4
   },
   {
 	"id": "ground-beef",
@@ -3201,7 +3732,10 @@
 	"monounsaturated_fat_g": 5.5,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 2.49,
+	"copper_mg": 0.07,
+	"selenium_mcg": 18.0
   },
   {
 	"id": "beef-steak",
@@ -3219,7 +3753,10 @@
 	"monounsaturated_fat_g": 4.2,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 2.36,
+	"copper_mg": 0.075,
+	"selenium_mcg": 26.0
   },
   {
 	"id": "veal",
@@ -3237,7 +3774,10 @@
 	"monounsaturated_fat_g": 2.4,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.44,
+	"copper_mg": 0.1,
+	"selenium_mcg": 11.0
   },
   {
 	"id": "lamb",
@@ -3255,7 +3795,10 @@
 	"monounsaturated_fat_g": 6.6,
 	"polyunsaturated_fat_g": 1.65,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.88,
+	"copper_mg": 0.13,
+	"selenium_mcg": 26.3
   },
   {
 	"id": "reindeer",
@@ -3273,7 +3816,10 @@
 	"monounsaturated_fat_g": 1.52,
 	"polyunsaturated_fat_g": 0.38,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 3.1,
+	"copper_mg": 0.15,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "elk",
@@ -3291,7 +3837,10 @@
 	"monounsaturated_fat_g": 1.48,
 	"polyunsaturated_fat_g": 0.37,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 3.7,
+	"copper_mg": 0.2,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "sausage",
@@ -3309,7 +3858,10 @@
 	"monounsaturated_fat_g": 10.2,
 	"polyunsaturated_fat_g": 2.5,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.2,
+	"copper_mg": 0.08,
+	"selenium_mcg": 14.2
   },
   {
 	"id": "meatballs",
@@ -3327,7 +3879,10 @@
 	"monounsaturated_fat_g": 5.92,
 	"polyunsaturated_fat_g": 1.48,
 	"sugar_g": 0.0,
-	"sodium_mg": 70
+	"sodium_mg": 70,
+	"iron_mg": 1.8,
+	"copper_mg": 0.07,
+	"selenium_mcg": 15.0
   },
   {
 	"id": "salmon",
@@ -3345,7 +3900,10 @@
 	"monounsaturated_fat_g": 7.1,
 	"polyunsaturated_fat_g": 5.0,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.8,
+	"copper_mg": 0.25,
+	"selenium_mcg": 36.5
   },
   {
 	"id": "cod",
@@ -3363,7 +3921,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.38,
+	"copper_mg": 0.03,
+	"selenium_mcg": 33.1
   },
   {
 	"id": "mackerel",
@@ -3381,7 +3942,10 @@
 	"monounsaturated_fat_g": 7.7,
 	"polyunsaturated_fat_g": 4.9,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 1.63,
+	"copper_mg": 0.11,
+	"selenium_mcg": 44.1
   },
   {
 	"id": "herring",
@@ -3399,7 +3963,10 @@
 	"monounsaturated_fat_g": 5.6,
 	"polyunsaturated_fat_g": 4.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 1.1,
+	"copper_mg": 0.1,
+	"selenium_mcg": 46.8
   },
   {
 	"id": "trout",
@@ -3417,7 +3984,10 @@
 	"monounsaturated_fat_g": 1.98,
 	"polyunsaturated_fat_g": 2.31,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.7,
+	"copper_mg": 0.07,
+	"selenium_mcg": 12.6
   },
   {
 	"id": "tuna",
@@ -3435,7 +4005,10 @@
 	"monounsaturated_fat_g": 0.9,
 	"polyunsaturated_fat_g": 1.5,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 1.02,
+	"copper_mg": 0.1,
+	"selenium_mcg": 108.2
   },
   {
 	"id": "shrimp",
@@ -3453,7 +4026,10 @@
 	"monounsaturated_fat_g": 0.2,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 2.41,
+	"copper_mg": 0.319,
+	"selenium_mcg": 38.0
   },
   {
 	"id": "lobster",
@@ -3471,7 +4047,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.61,
+	"copper_mg": 1.9,
+	"selenium_mcg": 59.4
   },
   {
 	"id": "crab",
@@ -3489,7 +4068,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.77,
+	"copper_mg": 0.654,
+	"selenium_mcg": 40.0
   },
   {
 	"id": "scampi",
@@ -3507,7 +4089,10 @@
 	"monounsaturated_fat_g": 0.45,
 	"polyunsaturated_fat_g": 0.52,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.5,
+	"copper_mg": 0.3,
+	"selenium_mcg": 38.0
   },
   {
 	"id": "tilapia",
@@ -3525,7 +4110,10 @@
 	"monounsaturated_fat_g": 0.51,
 	"polyunsaturated_fat_g": 0.59,
 	"sugar_g": 0.0,
-	"sodium_mg": 80
+	"sodium_mg": 80,
+	"iron_mg": 0.56,
+	"copper_mg": 0.05,
+	"selenium_mcg": 54.4
   },
   {
 	"id": "white-bread",
@@ -3543,7 +4131,10 @@
 	"monounsaturated_fat_g": 0.7,
 	"polyunsaturated_fat_g": 1.2,
 	"sugar_g": 2.5,
-	"sodium_mg": 400
+	"sodium_mg": 400,
+	"iron_mg": 2.27,
+	"copper_mg": 0.1,
+	"selenium_mcg": 26.0
   },
   {
 	"id": "whole-grain-bread",
@@ -3561,7 +4152,10 @@
 	"monounsaturated_fat_g": 0.9,
 	"polyunsaturated_fat_g": 1.8,
 	"sugar_g": 2.1,
-	"sodium_mg": 400
+	"sodium_mg": 400,
+	"iron_mg": 2.5,
+	"copper_mg": 0.2,
+	"selenium_mcg": 35.0
   },
   {
 	"id": "sourdough-bread",
@@ -3579,7 +4173,10 @@
 	"monounsaturated_fat_g": 0.6,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 2.5,
-	"sodium_mg": 400
+	"sodium_mg": 400,
+	"iron_mg": 2.2,
+	"copper_mg": 0.15,
+	"selenium_mcg": 28.0
   },
   {
 	"id": "crispbread",
@@ -3597,7 +4194,10 @@
 	"monounsaturated_fat_g": 0.65,
 	"polyunsaturated_fat_g": 0.91,
 	"sugar_g": 3.6,
-	"sodium_mg": 400
+	"sodium_mg": 400,
+	"iron_mg": 3.0,
+	"copper_mg": 0.2,
+	"selenium_mcg": 30.0
   },
   {
 	"id": "bread-roll",
@@ -3615,7 +4215,10 @@
 	"monounsaturated_fat_g": 0.88,
 	"polyunsaturated_fat_g": 1.22,
 	"sugar_g": 2.5,
-	"sodium_mg": 400
+	"sodium_mg": 400,
+	"iron_mg": 2.0,
+	"copper_mg": 0.1,
+	"selenium_mcg": 25.0
   },
   {
 	"id": "kale",
@@ -3633,7 +4236,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.27,
 	"sugar_g": 0.9,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.47,
+	"copper_mg": 0.29,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "pak-choi",
@@ -3651,7 +4257,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.4,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.3,
+	"copper_mg": 0.021,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "rutabaga",
@@ -3669,7 +4278,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 1.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.44,
+	"copper_mg": 0.05,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "savoy-cabbage",
@@ -3687,7 +4299,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.4,
+	"copper_mg": 0.021,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "iceberg-lettuce",
@@ -3705,7 +4320,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 0.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.41,
+	"copper_mg": 0.025,
+	"selenium_mcg": 0.1
   },
   {
 	"id": "chia-seeds",
@@ -3723,7 +4341,10 @@
 	"monounsaturated_fat_g": 2.3,
 	"polyunsaturated_fat_g": 23.7,
 	"sugar_g": 0.4,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 7.72,
+	"copper_mg": 0.924,
+	"selenium_mcg": 55.2
   },
   {
 	"id": "chinese-cabbage",
@@ -3741,7 +4362,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.4,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.31,
+	"copper_mg": 0.024,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "celeriac",
@@ -3759,7 +4383,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 2.2,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.7,
+	"copper_mg": 0.07,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "yardlong-beans",
@@ -3777,7 +4404,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 2.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.47,
+	"copper_mg": 0.1,
+	"selenium_mcg": 1.5
   },
   {
 	"id": "edamame",
@@ -3795,7 +4425,10 @@
 	"monounsaturated_fat_g": 0.52,
 	"polyunsaturated_fat_g": 1.56,
 	"sugar_g": 2.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 2.27,
+	"copper_mg": 0.35,
+	"selenium_mcg": 1.5
   },
   {
 	"id": "endive",
@@ -3813,7 +4446,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 0.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.83,
+	"copper_mg": 0.098,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "jerusalem-artichoke",
@@ -3831,7 +4467,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.0,
 	"sugar_g": 5.2,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 3.4,
+	"copper_mg": 0.14,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "kohlrabi",
@@ -3849,7 +4488,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 1.1,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.4,
+	"copper_mg": 0.045,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "lotus-root",
@@ -3867,7 +4509,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 5.2,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.16,
+	"copper_mg": 0.258,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "parsnip",
@@ -3885,7 +4530,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.05,
 	"sugar_g": 5.1,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.59,
+	"copper_mg": 0.12,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "sauerkraut",
@@ -3903,7 +4551,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.47,
+	"copper_mg": 0.05,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "seaweed",
@@ -3921,7 +4572,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 1.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 2.85,
+	"copper_mg": 0.3,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "turnip-greens",
@@ -3939,7 +4593,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 1.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.1,
+	"copper_mg": 0.35,
+	"selenium_mcg": 1.2
   },
   {
 	"id": "water-chestnuts",
@@ -3957,7 +4614,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.03,
 	"sugar_g": 7.2,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.39,
+	"copper_mg": 0.328,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "winter-melon",
@@ -3975,7 +4635,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.4,
+	"copper_mg": 0.03,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "wax-gourd",
@@ -3993,7 +4656,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.4,
+	"copper_mg": 0.03,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "summer-squash",
@@ -4011,7 +4677,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.5,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.35,
+	"copper_mg": 0.05,
+	"selenium_mcg": 0.2
   },
   {
 	"id": "wakame",
@@ -4029,7 +4698,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.18,
 	"sugar_g": 2.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 2.18,
+	"copper_mg": 0.1,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "shallot",
@@ -4047,7 +4719,10 @@
 	"monounsaturated_fat_g": 0.01,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 5.0,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 1.2,
+	"copper_mg": 0.088,
+	"selenium_mcg": 1.2
   },
   {
 	"id": "arrowroot",
@@ -4065,7 +4740,10 @@
 	"monounsaturated_fat_g": 0.0,
 	"polyunsaturated_fat_g": 0.0,
 	"sugar_g": 4.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 2.22,
+	"copper_mg": 0.03,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "pickled-cucumber",
@@ -4083,7 +4761,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.6,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.5,
+	"copper_mg": 0.04,
+	"selenium_mcg": 0.3
   },
   {
 	"id": "sun-dried-tomato",
@@ -4101,7 +4782,10 @@
 	"monounsaturated_fat_g": 0.29,
 	"polyunsaturated_fat_g": 0.87,
 	"sugar_g": 13.0,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 9.1,
+	"copper_mg": 0.8,
+	"selenium_mcg": 5.5
   },
   {
 	"id": "napa-cabbage",
@@ -4119,7 +4803,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.06,
 	"sugar_g": 0.7,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.31,
+	"copper_mg": 0.024,
+	"selenium_mcg": 0.6
   },
   {
 	"id": "yautia",
@@ -4137,7 +4824,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.09,
 	"sugar_g": 6.9,
-	"sodium_mg": 10
+	"sodium_mg": 10,
+	"iron_mg": 0.55,
+	"copper_mg": 0.2,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "amaranth-leaves",
@@ -4155,7 +4845,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 0.3,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.32,
+	"copper_mg": 0.16,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "chrysanthemum",
@@ -4173,7 +4866,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 0.4,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 0.9,
+	"copper_mg": 0.1,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "garden-cress",
@@ -4191,7 +4887,10 @@
 	"monounsaturated_fat_g": 0.07,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 0.3,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.3,
+	"copper_mg": 0.17,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "drumstick-leaves",
@@ -4209,7 +4908,10 @@
 	"monounsaturated_fat_g": 0.14,
 	"polyunsaturated_fat_g": 0.49,
 	"sugar_g": 0.8,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 4.0,
+	"copper_mg": 0.1,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "lambsquarters",
@@ -4227,7 +4929,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.28,
 	"sugar_g": 0.7,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.2,
+	"copper_mg": 0.15,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "scallion",
@@ -4245,7 +4950,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.07,
 	"sugar_g": 1.0,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.48,
+	"copper_mg": 0.083,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "welsh-onion",
@@ -4263,7 +4971,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.14,
 	"sugar_g": 0.9,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.22,
+	"copper_mg": 0.083,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "pumpkin-leaves",
@@ -4281,7 +4992,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.14,
 	"sugar_g": 0.0,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.0,
+	"copper_mg": 0.15,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "sweet-potato-leaves",
@@ -4299,7 +5013,10 @@
 	"monounsaturated_fat_g": 0.07,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 1.3,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.5,
+	"copper_mg": 0.15,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "taro-leaves",
@@ -4317,7 +5034,10 @@
 	"monounsaturated_fat_g": 0.07,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 0.7,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.0,
+	"copper_mg": 0.17,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "vine-spinach",
@@ -4335,7 +5055,10 @@
 	"monounsaturated_fat_g": 0.03,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 0.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 1.0,
+	"copper_mg": 0.13,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "lemongrass",
@@ -4353,7 +5076,10 @@
 	"monounsaturated_fat_g": 0.05,
 	"polyunsaturated_fat_g": 0.17,
 	"sugar_g": 5.1,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 8.17,
+	"copper_mg": 0.266,
+	"selenium_mcg": 0.7
   },
   {
 	"id": "grape-leaves",
@@ -4371,7 +5097,10 @@
 	"monounsaturated_fat_g": 0.21,
 	"polyunsaturated_fat_g": 0.73,
 	"sugar_g": 3.5,
-	"sodium_mg": 30
+	"sodium_mg": 30,
+	"iron_mg": 2.0,
+	"copper_mg": 0.36,
+	"selenium_mcg": 0.9
   },
   {
 	"id": "spelt",
@@ -4389,7 +5118,10 @@
 	"monounsaturated_fat_g": 0.5,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 3.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 4.44,
+	"copper_mg": 0.44,
+	"selenium_mcg": 11.6
   },
   {
 	"id": "barley",
@@ -4407,7 +5139,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 3.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.6,
+	"copper_mg": 0.42,
+	"selenium_mcg": 37.7
   },
   {
 	"id": "bulgur",
@@ -4425,7 +5160,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 0.9,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.46,
+	"copper_mg": 0.33,
+	"selenium_mcg": 2.3
   },
   {
 	"id": "lotus-seeds",
@@ -4443,7 +5181,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 9.7,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.5,
+	"copper_mg": 0.5,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "adzuki-bean",
@@ -4461,7 +5202,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 1.2,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 4.98,
+	"copper_mg": 0.78,
+	"selenium_mcg": 3.0
   },
   {
 	"id": "baked-beans",
@@ -4479,7 +5223,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.12,
 	"sugar_g": 0.9,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.96,
+	"copper_mg": 0.19,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "black-turtle-bean",
@@ -4497,7 +5244,10 @@
 	"monounsaturated_fat_g": 0.28,
 	"polyunsaturated_fat_g": 0.56,
 	"sugar_g": 3.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.02,
+	"copper_mg": 0.795,
+	"selenium_mcg": 2.1
   },
   {
 	"id": "french-beans",
@@ -4515,7 +5265,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 0.3,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.0,
+	"copper_mg": 0.1,
+	"selenium_mcg": 1.0
   },
   {
 	"id": "great-northern-beans",
@@ -4533,7 +5286,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 1.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.77,
+	"copper_mg": 0.377,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "navy-beans",
@@ -4551,7 +5307,10 @@
 	"monounsaturated_fat_g": 0.12,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 1.3,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.49,
+	"copper_mg": 0.337,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "pinto-beans",
@@ -4569,7 +5328,10 @@
 	"monounsaturated_fat_g": 0.14,
 	"polyunsaturated_fat_g": 0.28,
 	"sugar_g": 1.3,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.07,
+	"copper_mg": 0.78,
+	"selenium_mcg": 2.4
   },
   {
 	"id": "fava-beans",
@@ -4587,7 +5349,10 @@
 	"monounsaturated_fat_g": 0.12,
 	"polyunsaturated_fat_g": 0.24,
 	"sugar_g": 0.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.5,
+	"copper_mg": 0.5,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "cowpea",
@@ -4605,7 +5370,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 1.0,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 4.3,
+	"copper_mg": 0.69,
+	"selenium_mcg": 4.5
   },
   {
 	"id": "lablab",
@@ -4623,7 +5391,10 @@
 	"monounsaturated_fat_g": 0.16,
 	"polyunsaturated_fat_g": 0.32,
 	"sugar_g": 1.3,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.0,
+	"copper_mg": 0.5,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "lima-beans",
@@ -4641,7 +5412,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.16,
 	"sugar_g": 1.0,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.39,
+	"copper_mg": 0.394,
+	"selenium_mcg": 4.5
   },
   {
 	"id": "lupin-bean",
@@ -4659,7 +5433,10 @@
 	"monounsaturated_fat_g": 1.94,
 	"polyunsaturated_fat_g": 3.88,
 	"sugar_g": 2.0,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.2,
+	"copper_mg": 0.5,
+	"selenium_mcg": 3.0
   },
   {
 	"id": "mung-beans",
@@ -4677,7 +5454,10 @@
 	"monounsaturated_fat_g": 0.08,
 	"polyunsaturated_fat_g": 0.16,
 	"sugar_g": 1.0,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 6.74,
+	"copper_mg": 0.941,
+	"selenium_mcg": 2.5
   },
   {
 	"id": "pigeon-pea",
@@ -4695,7 +5475,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 3.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 5.23,
+	"copper_mg": 0.6,
+	"selenium_mcg": 2.8
   },
   {
 	"id": "refried-beans",
@@ -4713,7 +5496,10 @@
 	"monounsaturated_fat_g": 0.3,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 0.7,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.0,
+	"copper_mg": 0.2,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "tempeh",
@@ -4731,7 +5517,10 @@
 	"monounsaturated_fat_g": 2.16,
 	"polyunsaturated_fat_g": 4.32,
 	"sugar_g": 0.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.7,
+	"copper_mg": 0.56,
+	"selenium_mcg": 14.0
   },
   {
 	"id": "winged-beans",
@@ -4749,7 +5538,10 @@
 	"monounsaturated_fat_g": 1.18,
 	"polyunsaturated_fat_g": 2.36,
 	"sugar_g": 0.8,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 2.9,
+	"copper_mg": 0.6,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "falafel",
@@ -4767,7 +5559,10 @@
 	"monounsaturated_fat_g": 3.56,
 	"polyunsaturated_fat_g": 7.12,
 	"sugar_g": 1.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.0,
+	"copper_mg": 0.4,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "arborio-rice",
@@ -4785,7 +5580,10 @@
 	"monounsaturated_fat_g": 0.1,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 3.9,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 0.5,
+	"copper_mg": 0.1,
+	"selenium_mcg": 7.5
   },
   {
 	"id": "glutinous-rice",
@@ -4803,7 +5601,10 @@
 	"monounsaturated_fat_g": 0.04,
 	"polyunsaturated_fat_g": 0.08,
 	"sugar_g": 1.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 0.14,
+	"copper_mg": 0.07,
+	"selenium_mcg": 7.5
   },
   {
 	"id": "soba",
@@ -4821,7 +5622,10 @@
 	"monounsaturated_fat_g": 0.02,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 1.1,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.1,
+	"copper_mg": 0.12,
+	"selenium_mcg": 4.0
   },
   {
 	"id": "semolina",
@@ -4839,7 +5643,10 @@
 	"monounsaturated_fat_g": 0.22,
 	"polyunsaturated_fat_g": 0.44,
 	"sugar_g": 3.6,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 1.23,
+	"copper_mg": 0.17,
+	"selenium_mcg": 30.0
   },
   {
 	"id": "khorasan-wheat",
@@ -4857,7 +5664,10 @@
 	"monounsaturated_fat_g": 0.44,
 	"polyunsaturated_fat_g": 0.88,
 	"sugar_g": 3.5,
-	"sodium_mg": 5
+	"sodium_mg": 5,
+	"iron_mg": 3.1,
+	"copper_mg": 0.4,
+	"selenium_mcg": 20.0
   },
   {
 	"id": "blue-cheese",
@@ -4875,7 +5685,10 @@
 	"monounsaturated_fat_g": 8.04,
 	"polyunsaturated_fat_g": 1.15,
 	"sugar_g": 1.1,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.31,
+	"copper_mg": 0.04,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "camembert",
@@ -4893,7 +5706,10 @@
 	"monounsaturated_fat_g": 7.1,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 0.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.33,
+	"copper_mg": 0.021,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "edam",
@@ -4911,7 +5727,10 @@
 	"monounsaturated_fat_g": 7.78,
 	"polyunsaturated_fat_g": 1.11,
 	"sugar_g": 0.7,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.44,
+	"copper_mg": 0.03,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "brunost",
@@ -4929,7 +5748,10 @@
 	"monounsaturated_fat_g": 8.26,
 	"polyunsaturated_fat_g": 1.18,
 	"sugar_g": 21.4,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.5,
+	"copper_mg": 0.05,
+	"selenium_mcg": 5.0
   },
   {
 	"id": "gouda-cheese",
@@ -4947,7 +5769,10 @@
 	"monounsaturated_fat_g": 7.67,
 	"polyunsaturated_fat_g": 1.1,
 	"sugar_g": 1.1,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.24,
+	"copper_mg": 0.03,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "gruyere",
@@ -4965,7 +5790,10 @@
 	"monounsaturated_fat_g": 9.04,
 	"polyunsaturated_fat_g": 1.29,
 	"sugar_g": 0.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.17,
+	"copper_mg": 0.032,
+	"selenium_mcg": 14.5
   },
   {
 	"id": "buttermilk",
@@ -4983,7 +5811,10 @@
 	"monounsaturated_fat_g": 0.25,
 	"polyunsaturated_fat_g": 0.04,
 	"sugar_g": 2.4,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.03,
+	"copper_mg": 0.01,
+	"selenium_mcg": 3.7
   },
   {
 	"id": "condensed-milk",
@@ -5001,7 +5832,10 @@
 	"monounsaturated_fat_g": 3.8,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 27.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.16,
+	"copper_mg": 0.05,
+	"selenium_mcg": 3.7
   },
   {
 	"id": "goat-milk",
@@ -5019,7 +5853,10 @@
 	"monounsaturated_fat_g": 1.15,
 	"polyunsaturated_fat_g": 0.16,
 	"sugar_g": 2.2,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.05,
+	"copper_mg": 0.046,
+	"selenium_mcg": 1.4
   },
   {
 	"id": "egg-white",
@@ -5037,7 +5874,10 @@
 	"monounsaturated_fat_g": 0.06,
 	"polyunsaturated_fat_g": 0.01,
 	"sugar_g": 0.3,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 0.08,
+	"copper_mg": 0.023,
+	"selenium_mcg": 20.0
   },
   {
 	"id": "egg-yolk",
@@ -5055,7 +5895,10 @@
 	"monounsaturated_fat_g": 7.42,
 	"polyunsaturated_fat_g": 1.06,
 	"sugar_g": 1.8,
-	"sodium_mg": 50
+	"sodium_mg": 50,
+	"iron_mg": 2.73,
+	"copper_mg": 0.077,
+	"selenium_mcg": 56.0
   },
   {
 	"id": "fiskesuppe-fjordland",
@@ -5073,7 +5916,10 @@
 	"monounsaturated_fat_g": 1.2,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 0.8,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.4,
+	"copper_mg": 0.05,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "kjottsuppe-fjordland",
@@ -5091,7 +5937,10 @@
 	"monounsaturated_fat_g": 1.5,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 0.7,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.8,
+	"copper_mg": 0.08,
+	"selenium_mcg": 8.0
   },
   {
 	"id": "proteinbowl-taco-fjordland",
@@ -5109,7 +5958,10 @@
 	"monounsaturated_fat_g": 3.0,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 1.8,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.5,
+	"copper_mg": 0.1,
+	"selenium_mcg": 15.0
   },
   {
 	"id": "betasuppe-fjordland",
@@ -5127,7 +5979,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 1.3,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.6,
+	"copper_mg": 0.05,
+	"selenium_mcg": 5.0
   },
   {
 	"id": "laks-pasta-fjordland",
@@ -5145,7 +6000,10 @@
 	"monounsaturated_fat_g": 3.5,
 	"polyunsaturated_fat_g": 2.5,
 	"sugar_g": 2.1,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.9,
+	"copper_mg": 0.15,
+	"selenium_mcg": 18.0
   },
   {
 	"id": "proteinbowl-kylling-fjordland",
@@ -5163,7 +6021,10 @@
 	"monounsaturated_fat_g": 2.5,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 2.5,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.2,
+	"copper_mg": 0.08,
+	"selenium_mcg": 14.0
   },
   {
 	"id": "skogsgryte-fjordland",
@@ -5181,7 +6042,10 @@
 	"monounsaturated_fat_g": 2.5,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 1.5,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.4,
+	"copper_mg": 0.1,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "butter-chickpeas-fjordland",
@@ -5199,7 +6063,10 @@
 	"monounsaturated_fat_g": 1.65,
 	"polyunsaturated_fat_g": 0.7,
 	"sugar_g": 2.5,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.8,
+	"copper_mg": 0.15,
+	"selenium_mcg": 8.0
   },
   {
 	"id": "butter-chicken-fjordland",
@@ -5217,7 +6084,10 @@
 	"monounsaturated_fat_g": 3.01,
 	"polyunsaturated_fat_g": 1.29,
 	"sugar_g": 2.1,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.2,
+	"copper_mg": 0.1,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "pasta-kjottsaus-fjordland",
@@ -5235,7 +6105,10 @@
 	"monounsaturated_fat_g": 2.5,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 2.2,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.3,
+	"copper_mg": 0.08,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "pasta-ost-skinke-fjordland",
@@ -5253,7 +6126,10 @@
 	"monounsaturated_fat_g": 3.5,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 2.1,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.8,
+	"copper_mg": 0.07,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "polsegrateng-fjordland",
@@ -5271,7 +6147,10 @@
 	"monounsaturated_fat_g": 4.5,
 	"polyunsaturated_fat_g": 1.2,
 	"sugar_g": 1.8,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.0,
+	"copper_mg": 0.06,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "fiskegrateng-findus",
@@ -5289,7 +6168,10 @@
 	"monounsaturated_fat_g": 2.0,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 2.2,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.7,
+	"copper_mg": 0.05,
+	"selenium_mcg": 15.0
   },
   {
 	"id": "kyllingsuppe-marokkansk-meremat",
@@ -5307,7 +6189,10 @@
 	"monounsaturated_fat_g": 0.73,
 	"polyunsaturated_fat_g": 0.32,
 	"sugar_g": 0.9,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.8,
+	"copper_mg": 0.07,
+	"selenium_mcg": 8.0
   },
   {
 	"id": "kyllingsuppe-curry-meremat",
@@ -5325,7 +6210,10 @@
 	"monounsaturated_fat_g": 1.89,
 	"polyunsaturated_fat_g": 0.81,
 	"sugar_g": 0.7,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.9,
+	"copper_mg": 0.08,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "gulrotsuppe-meremat",
@@ -5343,7 +6231,10 @@
 	"monounsaturated_fat_g": 1.0,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 0.5,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.5,
+	"copper_mg": 0.05,
+	"selenium_mcg": 3.0
   },
   {
 	"id": "blomkalsuppe-meremat",
@@ -5361,7 +6252,10 @@
 	"monounsaturated_fat_g": 0.8,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 0.6,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.4,
+	"copper_mg": 0.04,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "red-curry-suppe-meremat",
@@ -5379,7 +6273,10 @@
 	"monounsaturated_fat_g": 2.5,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 1.6,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.2,
+	"copper_mg": 0.1,
+	"selenium_mcg": 5.0
   },
   {
 	"id": "tomatsuppe-meremat",
@@ -5397,7 +6294,10 @@
 	"monounsaturated_fat_g": 0.6,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 0.5,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 0.6,
+	"copper_mg": 0.05,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "ramen-meremat",
@@ -5415,7 +6315,10 @@
 	"monounsaturated_fat_g": 3.22,
 	"polyunsaturated_fat_g": 1.38,
 	"sugar_g": 1.5,
-	"sodium_mg": 300
+	"sodium_mg": 300,
+	"iron_mg": 1.5,
+	"copper_mg": 0.08,
+	"selenium_mcg": 8.0
   },
   {
 	"id": "risgrot-fjordland",
@@ -5433,7 +6336,10 @@
 	"monounsaturated_fat_g": 0.7,
 	"polyunsaturated_fat_g": 0.1,
 	"sugar_g": 4.5,
-	"sodium_mg": 120.0
+	"sodium_mg": 120.0,
+	"iron_mg": 0.2,
+	"copper_mg": 0.03,
+	"selenium_mcg": 4.0
   },
   {
 	"id": "kjottkaker-ertestuing-fjordland",
@@ -5451,7 +6357,10 @@
 	"monounsaturated_fat_g": 1.6,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 1.3,
-	"sodium_mg": 284.0
+	"sodium_mg": 284.0,
+	"iron_mg": 1.4,
+	"copper_mg": 0.07,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "svenske-kjottboller-fjordland",
@@ -5469,7 +6378,10 @@
 	"monounsaturated_fat_g": 2.3,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 3.8,
-	"sodium_mg": 300.0
+	"sodium_mg": 300.0,
+	"iron_mg": 1.2,
+	"copper_mg": 0.06,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "fettuccine-funghi",
@@ -5487,7 +6399,10 @@
 	"monounsaturated_fat_g": 1.1,
 	"polyunsaturated_fat_g": 1.5,
 	"sugar_g": 1.7,
-	"sodium_mg": 400.0
+	"sodium_mg": 400.0,
+	"iron_mg": 1.0,
+	"copper_mg": 0.1,
+	"selenium_mcg": 8.0
   },
   {
 	"id": "pulled-pork-fjordland",
@@ -5505,7 +6420,10 @@
 	"monounsaturated_fat_g": 1.2,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 5.8,
-	"sodium_mg": 312.0
+	"sodium_mg": 312.0,
+	"iron_mg": 0.8,
+	"copper_mg": 0.07,
+	"selenium_mcg": 18.0
   },
   {
 	"id": "torsk-purreloksaus-fjordland",
@@ -5523,7 +6441,10 @@
 	"monounsaturated_fat_g": 0.4,
 	"polyunsaturated_fat_g": 0.3,
 	"sugar_g": 2.6,
-	"sodium_mg": 0.0
+	"sodium_mg": 0.0,
+	"iron_mg": 0.5,
+	"copper_mg": 0.04,
+	"selenium_mcg": 14.0
   },
   {
 	"id": "lammefrikasse-fjordland",
@@ -5541,7 +6462,10 @@
 	"monounsaturated_fat_g": 1.5,
 	"polyunsaturated_fat_g": 0.4,
 	"sugar_g": 2.1,
-	"sodium_mg": 292.0
+	"sodium_mg": 292.0,
+	"iron_mg": 1.1,
+	"copper_mg": 0.09,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "laksefilet-urtesaus-fjordland",
@@ -5559,7 +6483,10 @@
 	"monounsaturated_fat_g": 1.4,
 	"polyunsaturated_fat_g": 1.0,
 	"sugar_g": 2.1,
-	"sodium_mg": 224.0
+	"sodium_mg": 224.0,
+	"iron_mg": 0.6,
+	"copper_mg": 0.15,
+	"selenium_mcg": 20.0
   },
   {
 	"id": "saucy-noodles-teriyaki",
@@ -5577,7 +6504,10 @@
 	"monounsaturated_fat_g": 2.1,
 	"polyunsaturated_fat_g": 1.8,
 	"sugar_g": 2.9,
-	"sodium_mg": 332.0
+	"sodium_mg": 332.0,
+	"iron_mg": 0.8,
+	"copper_mg": 0.05,
+	"selenium_mcg": 5.0
   },
   {
 	"id": "chili-con-carne-waldemars",
@@ -5595,7 +6525,10 @@
 	"monounsaturated_fat_g": 1.5,
 	"polyunsaturated_fat_g": 0.5,
 	"sugar_g": 3.6,
-	"sodium_mg": 400.0
+	"sodium_mg": 400.0,
+	"iron_mg": 2.1,
+	"copper_mg": 0.12,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "pasta-carbonara-foodcollective",
@@ -5613,7 +6546,10 @@
 	"monounsaturated_fat_g": 2.8,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 2.0,
-	"sodium_mg": 148.0
+	"sodium_mg": 148.0,
+	"iron_mg": 0.7,
+	"copper_mg": 0.05,
+	"selenium_mcg": 10.0
   },
   {
 	"id": "lasagne-bolognese-foodcollective",
@@ -5631,7 +6567,10 @@
 	"monounsaturated_fat_g": 2.2,
 	"polyunsaturated_fat_g": 0.6,
 	"sugar_g": 1.5,
-	"sodium_mg": 312.0
+	"sodium_mg": 312.0,
+	"iron_mg": 1.2,
+	"copper_mg": 0.08,
+	"selenium_mcg": 12.0
   },
   {
 	"id": "pizza-grandiosa",
@@ -5649,7 +6588,10 @@
 	"monounsaturated_fat_g": 2.2,
 	"polyunsaturated_fat_g": 0.8,
 	"sugar_g": 2.7,
-	"sodium_mg": 360.0
+	"sodium_mg": 360.0,
+	"iron_mg": 1.8,
+	"copper_mg": 0.07,
+	"selenium_mcg": 15.0
   },
   {
 	"id": "pizza-bigone-classic",
@@ -5667,7 +6609,10 @@
 	"monounsaturated_fat_g": 3.3,
 	"polyunsaturated_fat_g": 1.2,
 	"sugar_g": 1.9,
-	"sodium_mg": 480.0
+	"sodium_mg": 480.0,
+	"iron_mg": 2.0,
+	"copper_mg": 0.08,
+	"selenium_mcg": 16.0
   },
   {
 	"id": "pizza-ristorante-mozzarella",
@@ -5685,7 +6630,10 @@
 	"monounsaturated_fat_g": 5.2,
 	"polyunsaturated_fat_g": 2.1,
 	"sugar_g": 2.8,
-	"sodium_mg": 400.0
+	"sodium_mg": 400.0,
+	"iron_mg": 1.5,
+	"copper_mg": 0.06,
+	"selenium_mcg": 14.0
   },
   {
 	"id": "pizza-ristorante-pollo",
@@ -5703,7 +6651,10 @@
 	"monounsaturated_fat_g": 3.5,
 	"polyunsaturated_fat_g": 1.3,
 	"sugar_g": 2.9,
-	"sodium_mg": 400.0
+	"sodium_mg": 400.0,
+	"iron_mg": 1.4,
+	"copper_mg": 0.07,
+	"selenium_mcg": 14.0
   },
   {
 	"id": "pizza-ristorante-pepperoni",
@@ -5721,7 +6672,10 @@
 	"monounsaturated_fat_g": 5.5,
 	"polyunsaturated_fat_g": 2.0,
 	"sugar_g": 3.0,
-	"sodium_mg": 560.0
+	"sodium_mg": 560.0,
+	"iron_mg": 1.6,
+	"copper_mg": 0.08,
+	"selenium_mcg": 16.0
   },
   {
 	"id": "risdrikk",
@@ -5739,7 +6693,10 @@
 	"monounsaturated_fat_g": 0.6,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 3.9,
-	"sodium_mg": 32.0
+	"sodium_mg": 32.0,
+	"iron_mg": 0.1,
+	"copper_mg": 0.02,
+	"selenium_mcg": 0.5
   },
   {
 	"id": "soya-drikk-alpro",
@@ -5757,7 +6714,10 @@
 	"monounsaturated_fat_g": 0.4,
 	"polyunsaturated_fat_g": 1.1,
 	"sugar_g": 0.1,
-	"sodium_mg": 36.0
+	"sodium_mg": 36.0,
+	"iron_mg": 0.4,
+	"copper_mg": 0.05,
+	"selenium_mcg": 2.0
   },
   {
 	"id": "mandeldrikk-alpro",
@@ -5775,6 +6735,9 @@
 	"monounsaturated_fat_g": 0.7,
 	"polyunsaturated_fat_g": 0.2,
 	"sugar_g": 0.0,
-	"sodium_mg": 60.0
+	"sodium_mg": 60.0,
+	"iron_mg": 0.1,
+	"copper_mg": 0.05,
+	"selenium_mcg": 0.5
   }
 ]

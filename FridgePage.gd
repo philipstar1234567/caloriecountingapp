@@ -157,7 +157,7 @@ func build_fridge_ui():
 		child.queue_free()
 	
 	var max_display = 18  # 3 columns × 8 rows
-	var fridge_foods = fridge_foods.slice(max(0, fridge_foods.size() - max_display))
+	var _display_foods = fridge_foods.slice(max(0, fridge_foods.size() - max_display))
 
 	for food in fridge_foods:
 		var btn = Button.new()
