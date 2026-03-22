@@ -27,45 +27,59 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -12.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/ScrollContainer"]
+custom_minimum_size = Vector2(1170, 2532)
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer"]
+custom_minimum_size = Vector2(0, 8000)
 layout_mode = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
+theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="KidneyCarePanel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Kidney Care"
+
+[node name="KidneyCarePanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel"]
 layout_mode = 0
-offset_top = 110.0
-offset_right = 1168.0
-offset_bottom = 397.0
+offset_right = 356.0
+offset_bottom = 485.0
 
-[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
 text = "Known kidney disease?"
 
-[node name="KnownDisease" type="CheckBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+[node name="KnownDisease" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
 text = "yes"
 
-[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="eGFRLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="eGFRLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
 text = "eGFR"
 
-[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
 item_count = 2
 popup/item_0/text = "female"
@@ -73,33 +87,30 @@ popup/item_0/id = 0
 popup/item_1/text = "male"
 popup/item_1/id = 1
 
-[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
-alignment = 1
 
-[node name="CreatinineInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="CreatinineInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
-alignment = 1
 
-[node name="OxalateInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="OxalateInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
-alignment = 1
 
-[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
 text = "calculate"
 
-[node name="RiskLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
+[node name="RiskLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="ResetButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="Label3" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "reset"
+text = "Body Metrics"
 
-[node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel"]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -110,15 +121,15 @@ offset_bottom = 1765.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Body Metrics"
 
-[node name="Label2" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Gender:"
 
-[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 49.41)
 layout_mode = 2
 item_count = 2
@@ -127,42 +138,42 @@ popup/item_0/id = 0
 popup/item_1/text = "Female"
 popup/item_1/id = 1
 
-[node name="Label3" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label3" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Age:"
 
-[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 120.0
 value = 30.0
 
-[node name="Label4" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label4" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Current Weight:"
 
-[node name="WeightInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="WeightInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 min_value = 20.0
 max_value = 300.0
 step = 0.1
 value = 70.0
 
-[node name="Label5" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label5" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Current Height:"
 
-[node name="HeightInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="HeightInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 min_value = 100.0
 max_value = 250.0
 value = 170.0
 
-[node name="Label6" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label6" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Physical activity:"
 
-[node name="ActivityOption" type="OptionButton" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="ActivityOption" type="OptionButton" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 item_count = 3
 popup/item_0/text = "Sedentary"
@@ -172,43 +183,293 @@ popup/item_1/id = 1
 popup/item_2/text = "Athlete"
 popup/item_2/id = 2
 
-[node name="Label7" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label7" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Goal weight:"
 
-[node name="GoalWeightInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="GoalWeightInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 min_value = 20.0
 max_value = 300.0
 step = 0.1
 value = 70.0
 
-[node name="Label8" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="Label8" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Time interval:"
 
-[node name="TimeIntervalInput" type="SpinBox" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="TimeIntervalInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 min_value = 1.0
 max_value = 104.0
 value = 12.0
 
-[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Calculate"
 
-[node name="BMIResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="BMIResult" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "BMI: —"
 
-[node name="BMRResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="BMRResult" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "BMR: —"
 
-[node name="TDEEResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="TDEEResult" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "TDEE: —"
 
-[node name="GoalResult" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+[node name="GoalResult" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Daily goal: —"
+
+[node name="MetabolicLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Metabolic Health"
+
+[node name="GlycemicPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
+layout_mode = 2
+text = "Glycemic Health"
+
+[node name="KnownDiabetes" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="HbA1cInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="FPGInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="NAFLDPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer"]
+layout_mode = 2
+text = "Liver Health (NAFLD)"
+
+[node name="KnownNAFLD" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="ALTInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ASTInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="TriglInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="LipidPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer"]
+layout_mode = 2
+text = "Lipid Health"
+
+[node name="KnownLipid" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer"]
+layout_mode = 2
+text = "Known dyslipidemia / hyperlipidemia"
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TotalCholInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="LDLInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="HDLInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="TriglInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="ThyroidPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 350)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer"]
+layout_mode = 2
+text = "Thyroid Health"
+
+[node name="KnownThyroid" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer"]
+layout_mode = 2
+text = "Known thyroid condition"
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TSHInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="FT4Input" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="TPOPositive" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "TPO Antibodies Positive"
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="OsteoPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer"]
+layout_mode = 2
+text = "Bone Health (Osteoporosis)"
+
+[node name="KnownOsteo" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer"]
+layout_mode = 2
+text = "Known osteoporosis"
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CTxInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="P1NPInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="HemoPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
+layout_mode = 2
+text = "Iron Overload (Hemochromatosis)"
+
+[node name="KnownHemo" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
+layout_mode = 2
+text = "Known hemochromatosis"
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TsatInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="FerritinInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="WilsonPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer"]
+layout_mode = 2
+text = "Copper Overload (Wilson's Disease)"
+
+[node name="KnownWilson" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer"]
+layout_mode = 2
+text = "Known Wilson's disease"
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CerulInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="UrineCuInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "-"
+
+[node name="ResetButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "reset"

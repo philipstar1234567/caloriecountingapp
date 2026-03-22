@@ -171,3 +171,58 @@ text = "Foods eaten today:"
 custom_minimum_size = Vector2(0, 572.49)
 layout_mode = 2
 theme = ExtResource("1_k1fio")
+
+[node name="SugarBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SugarLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SugarBar"]
+layout_mode = 2
+text = "Sugar"
+
+[node name="SugarValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SugarBar"]
+layout_mode = 2
+text = "0 g"
+
+[node name="IronBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="IronLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IronBar"]
+layout_mode = 2
+text = "Iron"
+
+[node name="IronValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IronBar"]
+layout_mode = 2
+text = "0 mg"
+
+[node name="CopperBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CopperLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CopperBar"]
+layout_mode = 2
+text = "Copper"
+
+[node name="CopperValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CopperBar"]
+layout_mode = 2
+text = "0 mg"
+
+[node name="SeleniumBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SeleniumLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SeleniumBar"]
+layout_mode = 2
+text = "Selenium"
+
+[node name="SeleniumValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SeleniumBar"]
+layout_mode = 2
+text = "0 mcg"
+
+[node name="SodiumBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SodiumLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SodiumBar"]
+layout_mode = 2
+text = "Sodium"
+
+[node name="SodiumValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SodiumBar"]
+layout_mode = 2
+text = "0 mg"

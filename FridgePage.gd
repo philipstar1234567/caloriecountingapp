@@ -293,7 +293,12 @@ func _on_info_pressed(food: Dictionary):
 # ── Log food to file when HomePage is not loaded ──
 func _log_food_to_file(food: Dictionary):
 	var today = Time.get_date_string_from_system()
-	var totals = {"calories":0.0,"protein_g":0.0,"fat_g":0.0,"carbs_g":0.0,"fiber_g":0.0,"calcium_mg":0.0,"oxalate_mg":0.0}
+	var totals = {
+		"calories":0.0,"protein_g":0.0,"fat_g":0.0,
+		"saturated_fat_g":0.0,"monounsaturated_fat_g":0.0,"polyunsaturated_fat_g":0.0,
+		"carbs_g":0.0,"fiber_g":0.0,"calcium_mg":0.0,"oxalate_mg":0.0,
+		"sugar_g":0.0,"sodium_mg":0.0,"iron_mg":0.0,"copper_mg":0.0,"selenium_mcg":0.0
+	}
 	var foods = []
 
 	if FileAccess.file_exists("user://intake.json"):
@@ -304,13 +309,21 @@ func _log_food_to_file(food: Dictionary):
 			totals = data.get("totals", totals)
 			foods  = data.get("foods", [])
 
-	totals["calories"]   += food.get("calories", 0)
-	totals["protein_g"]  += food.get("protein_g", 0)
-	totals["fat_g"]      += food.get("fat_g", 0)
-	totals["carbs_g"]    += food.get("carbs_g", 0)
-	totals["fiber_g"]    += food.get("fiber_g", 0)
-	totals["calcium_mg"] += food.get("calcium_mg", 0)
-	totals["oxalate_mg"] += food.get("oxalate_mg_per_100g", 0)
+	totals["calories"]             += food.get("calories", 0)
+	totals["protein_g"]            += food.get("protein_g", 0)
+	totals["fat_g"]                += food.get("fat_g", 0)
+	totals["saturated_fat_g"]      += food.get("saturated_fat_g", 0)
+	totals["monounsaturated_fat_g"]+= food.get("monounsaturated_fat_g", 0)
+	totals["polyunsaturated_fat_g"]+= food.get("polyunsaturated_fat_g", 0)
+	totals["carbs_g"]              += food.get("carbs_g", 0)
+	totals["fiber_g"]              += food.get("fiber_g", 0)
+	totals["calcium_mg"]           += food.get("calcium_mg", 0)
+	totals["oxalate_mg"]           += food.get("oxalate_mg_per_100g", 0)
+	totals["sugar_g"]              += food.get("sugar_g", 0)
+	totals["sodium_mg"]            += food.get("sodium_mg", 0)
+	totals["iron_mg"]              += food.get("iron_mg", 0)
+	totals["copper_mg"]            += food.get("copper_mg", 0)
+	totals["selenium_mcg"]         += food.get("selenium_mcg", 0)
 	foods.append(food.get("name", "Unknown"))
 
 	var file = FileAccess.open("user://intake.json", FileAccess.WRITE)

@@ -3,7 +3,8 @@ extends Control
 var today_totals = {
 	"calories": 0.0, "protein_g": 0.0, "fat_g": 0.0,
 	"saturated_fat_g": 0.0, "monounsaturated_fat_g": 0.0, "polyunsaturated_fat_g": 0.0,
-	"carbs_g": 0.0, "fiber_g": 0.0, "calcium_mg": 0.0, "oxalate_mg": 0.0
+	"carbs_g": 0.0, "fiber_g": 0.0, "calcium_mg": 0.0, "oxalate_mg": 0.0,
+	"sugar_g": 0.0, "sodium_mg": 0.0, "iron_mg": 0.0, "copper_mg": 0.0, "selenium_mcg": 0.0
 }
 var foods_eaten: Array = []
 
@@ -17,67 +18,75 @@ func _notification(what):
 		refresh_display()
 
 func log_food(food: Dictionary):
-	today_totals["calories"]   += food.get("calories", 0)
-	today_totals["protein_g"]  += food.get("protein_g", 0)
-	today_totals["fat_g"]      += food.get("fat_g", 0)
-	today_totals["saturated_fat_g"]       += food.get("saturated_fat_g", 0)
-	today_totals["monounsaturated_fat_g"] += food.get("monounsaturated_fat_g", 0)
-	today_totals["polyunsaturated_fat_g"] += food.get("polyunsaturated_fat_g", 0)
-	today_totals["carbs_g"]    += food.get("carbs_g", 0)
-	today_totals["fiber_g"]    += food.get("fiber_g", 0)
-	today_totals["calcium_mg"] += food.get("calcium_mg", 0)
-	today_totals["oxalate_mg"] += food.get("oxalate_mg_per_100g", 0)
+	today_totals["calories"]             += food.get("calories", 0)
+	today_totals["protein_g"]            += food.get("protein_g", 0)
+	today_totals["fat_g"]                += food.get("fat_g", 0)
+	today_totals["saturated_fat_g"]      += food.get("saturated_fat_g", 0)
+	today_totals["monounsaturated_fat_g"]+= food.get("monounsaturated_fat_g", 0)
+	today_totals["polyunsaturated_fat_g"]+= food.get("polyunsaturated_fat_g", 0)
+	today_totals["carbs_g"]              += food.get("carbs_g", 0)
+	today_totals["fiber_g"]              += food.get("fiber_g", 0)
+	today_totals["calcium_mg"]           += food.get("calcium_mg", 0)
+	today_totals["oxalate_mg"]           += food.get("oxalate_mg_per_100g", 0)
+	today_totals["sugar_g"]              += food.get("sugar_g", 0)
+	today_totals["sodium_mg"]            += food.get("sodium_mg", 0)
+	today_totals["iron_mg"]              += food.get("iron_mg", 0)
+	today_totals["copper_mg"]            += food.get("copper_mg", 0)
+	today_totals["selenium_mcg"]         += food.get("selenium_mcg", 0)
 	foods_eaten.append(food.get("name", "Unknown"))
 	save_today()
 	refresh_display()
 
 func refresh_display():
 	var vbox = $Panel/ScrollContainer/VBoxContainer
+	var c    = Global.active_metabolic_conditions
+
 	vbox.get_node("DateLabel").text = Time.get_date_string_from_system()
-	var conditions = Global.active_metabolic_conditions  # new array in Global
 
-	# Always show these
-	vbox.get_node("CaloriesBar").visible = true
-	vbox.get_node("ProteinBar").visible = true
-	vbox.get_node("FatBar").visible = true
-	vbox.get_node("CarbsBar").visible = true
-	vbox.get_node("FiberBar").visible = true
-	vbox.get_node("CalciumBar").visible = true
-	vbox.get_node("OxalatesBar").visible = true
-	vbox.get_node("GoalLabel").visible = true
-	vbox.get_node("PointsLabel").visible = true
+	# ── Always visible ──
+	vbox.get_node("CaloriesBar/CaloriesValue").text = str(snappedf(today_totals["calories"], 0.1)) + " kcal"
+	vbox.get_node("ProteinBar/ProteinValue").text   = str(snappedf(today_totals["protein_g"], 0.1)) + " g"
+	vbox.get_node("FatBar/FatValue").text           = str(snappedf(today_totals["fat_g"], 0.1)) + " g"
+	vbox.get_node("CarbsBar/CarbsValue").text       = str(snappedf(today_totals["carbs_g"], 0.1)) + " g"
+	vbox.get_node("FiberBar/FiberValue").text       = str(snappedf(today_totals["fiber_g"], 0.1)) + " g"
+	vbox.get_node("CalciumBar/CalciumValue").text   = str(snappedf(today_totals["calcium_mg"], 0.1)) + " mg"
+	vbox.get_node("OxalatesBar/OxalatesValue").text = str(snappedf(today_totals["oxalate_mg"], 0.1)) + " mg"
 
-	# Only show if relevant condition active
-	var has_glycemic = conditions.has("glycemic-health") or conditions.has("nafld")
-	var has_lipid    = conditions.has("nafld") or conditions.has("lipid-health")
-	var has_iron     = conditions.has("hemochromatosis")
-	var has_copper   = conditions.has("wilsons-disease")
-	var has_selenium = conditions.has("hashimotos")
-	var has_sodium   = conditions.has("osteoporosis") or conditions.has("fabry")
+	# ── Condition-specific visibility ──
+	var has_glycemic  = c.has("glycemic-health") or c.has("nafld")
+	var has_lipid     = c.has("nafld") or c.has("lipid-health")
+	var has_iron      = c.has("hemochromatosis")
+	var has_copper    = c.has("wilsons-disease")
+	var has_selenium  = c.has("thyroid-health")
+	var has_sodium    = c.has("osteoporosis") or c.has("wilsons-disease")
 
-	vbox.get_node("SugarBar").visible          = has_glycemic
-	vbox.get_node("SaturatedFatBar").visible   = has_lipid
-	vbox.get_node("MonoFatBar").visible        = has_lipid
-	vbox.get_node("PolyFatBar").visible        = has_lipid
-	vbox.get_node("IronBar").visible           = has_iron
-	vbox.get_node("CopperBar").visible         = has_copper
-	vbox.get_node("SeleniumBar").visible       = has_selenium
-	vbox.get_node("SodiumBar").visible         = has_sodium
+	vbox.get_node("SugarBar").visible        = has_glycemic
+	vbox.get_node("SaturatedFatBar").visible = has_lipid
+	vbox.get_node("MonoFatBar").visible      = has_lipid
+	vbox.get_node("PolyFatBar").visible      = has_lipid
+	vbox.get_node("IronBar").visible         = has_iron
+	vbox.get_node("CopperBar").visible       = has_copper
+	vbox.get_node("SeleniumBar").visible     = has_selenium
+	vbox.get_node("SodiumBar").visible       = has_sodium
 
-	# Totals
-	var kcal = snappedf(today_totals["calories"], 0.1)
-	vbox.get_node("CaloriesBar/CaloriesValue").text  = str(kcal) + " kcal"
-	vbox.get_node("ProteinBar/ProteinValue").text    = str(snappedf(today_totals["protein_g"], 0.1)) + " g"
-	vbox.get_node("FatBar/FatValue").text            = str(snappedf(today_totals["fat_g"], 0.1)) + " g"
-	vbox.get_node("SaturatedFatBar/SaturatedFatValue").text = str(snappedf(today_totals["saturated_fat_g"], 0.1)) + " g"
-	vbox.get_node("MonoFatBar/MonoFatValue").text           = str(snappedf(today_totals["monounsaturated_fat_g"], 0.1)) + " g"
-	vbox.get_node("PolyFatBar/PolyFatValue").text           = str(snappedf(today_totals["polyunsaturated_fat_g"], 0.1)) + " g"
-	vbox.get_node("CarbsBar/CarbsValue").text        = str(snappedf(today_totals["carbs_g"], 0.1)) + " g"
-	vbox.get_node("FiberBar/FiberValue").text        = str(snappedf(today_totals["fiber_g"], 0.1)) + " g"
-	vbox.get_node("CalciumBar/CalciumValue").text    = str(snappedf(today_totals["calcium_mg"], 0.1)) + " mg"
-	vbox.get_node("OxalatesBar/OxalatesValue").text  = str(snappedf(today_totals["oxalate_mg"], 0.1)) + " mg"
+	# ── Condition-specific values ──
+	if has_glycemic:
+		vbox.get_node("SugarBar/SugarValue").text = str(snappedf(today_totals["sugar_g"], 0.1)) + " g"
+	if has_lipid:
+		vbox.get_node("SaturatedFatBar/SaturatedFatValue").text = str(snappedf(today_totals["saturated_fat_g"], 0.1)) + " g"
+		vbox.get_node("MonoFatBar/MonoFatValue").text           = str(snappedf(today_totals["monounsaturated_fat_g"], 0.1)) + " g"
+		vbox.get_node("PolyFatBar/PolyFatValue").text           = str(snappedf(today_totals["polyunsaturated_fat_g"], 0.1)) + " g"
+	if has_iron:
+		vbox.get_node("IronBar/IronValue").text = str(snappedf(today_totals["iron_mg"], 0.1)) + " mg"
+	if has_copper:
+		vbox.get_node("CopperBar/CopperValue").text = str(snappedf(today_totals["copper_mg"], 0.2)) + " mg"
+	if has_selenium:
+		vbox.get_node("SeleniumBar/SeleniumValue").text = str(snappedf(today_totals["selenium_mcg"], 0.1)) + " mcg"
+	if has_sodium:
+		vbox.get_node("SodiumBar/SodiumValue").text = str(snappedf(today_totals["sodium_mg"], 0.1)) + " mg"
 
-	# Calorie goal progress
+	# ── Calorie goal ──
+	var kcal       = snappedf(today_totals["calories"], 0.1)
 	var daily_goal = Global.body_metrics.get("daily_goal", 0.0)
 	var bmr        = Global.body_metrics.get("bmr", 0.0)
 	if daily_goal > 0:
@@ -87,15 +96,12 @@ func refresh_display():
 	else:
 		vbox.get_node("GoalLabel").text = "Set your goal in Settings ⚙️"
 
-	# Points calculation
+	# ── Points ──
 	var points = calculate_points(kcal, daily_goal, bmr)
 	vbox.get_node("PointsLabel").text = "⭐ Points today: " + str(snappedf(points, 0.1))
+	Global.save_points(Time.get_date_string_from_system(), points)
 
-	# Save today's points to history
-	var today = Time.get_date_string_from_system()
-	Global.save_points(today, points)
-
-	# Foods eaten list
+	# ── Foods eaten list ──
 	var list = vbox.get_node("FoodsEatenList")
 	for child in list.get_children():
 		child.queue_free()
@@ -111,19 +117,11 @@ func calculate_points(daily_kcal: float, kcal_goal: float, bmr: float) -> float:
 	if goal_weight == 0 or weight == 0: return 0.0
 
 	if goal_weight > weight:
-		# Gaining weight — reward eating at or over goal
 		if daily_kcal >= kcal_goal:
-			var extra_kcal = daily_kcal - kcal_goal
-			var bonus = floor(extra_kcal / 500.0)
-			return 1.0 + bonus
-
+			return 1.0 + floor((daily_kcal - kcal_goal) / 500.0)
 	elif goal_weight < weight:
-		# Losing weight — reward staying at or under goal
 		if daily_kcal <= kcal_goal and daily_kcal >= bmr:
-			var saved_kcal = kcal_goal - daily_kcal
-			var bonus = floor(saved_kcal / 500.0)
-			return 1.0 + bonus
-
+			return 1.0 + floor((kcal_goal - daily_kcal) / 500.0)
 	return 0.0
 
 func save_today():
@@ -142,8 +140,6 @@ func load_today():
 	file.close()
 	if not data: return
 	if data.get("date", "") != Time.get_date_string_from_system(): return
-	# Merge saved values into today_totals instead of replacing entirely
-	# This way new fields that didn't exist in old saves default to 0
 	var saved = data.get("totals", {})
 	for key in today_totals.keys():
 		if saved.has(key):
