@@ -1,9 +1,6 @@
 extends Control
 
-# ─────────────────────────────────────────
-#  Shorthand paths
-# ─────────────────────────────────────────
-const BASE = "Panel/ScrollContainer/MarginContainer/VBoxContainer/"
+const BASE  = "Panel/ScrollContainer/MarginContainer/VBoxContainer/"
 const KIDNEY = BASE + "KidneyCarePanel/VBoxContainer/"
 const BODY   = BASE + "BodyMetricsPanel/VBoxContainer/"
 const GLYC   = BASE + "GlycemicPanel/VBoxContainer/"
@@ -14,7 +11,113 @@ const OSTEO  = BASE + "OsteoPanel/VBoxContainer/"
 const HEMO   = BASE + "HemoPanel/VBoxContainer/"
 const WILS   = BASE + "WilsonPanel/VBoxContainer/"
 
+# ─────────────────────────────────────────
+#  UNIT DEFINITIONS
+#  Each entry: { "options": [...], "conversions": [...] }
+#  conversions[i] = multiplier to convert option[i] → standard unit
+#  standard unit is always options[0]
+# ─────────────────────────────────────────
+const UNITS = {
+	"hba1c": {
+		"options": ["% (NGSP)", "mmol/mol (IFCC)"],
+		"multipliers": [1.0, 1.0]
+	},
+	"fpg": {
+		"options": ["mg/dL", "mmol/L"],
+		"multipliers": [1.0, 18.016]
+	},
+	"alt": {
+		"options": ["IU/L", "U/L", "µkat/L"],
+		"multipliers": [1.0, 1.0, 60.0]
+	},
+	"ast": {
+		"options": ["IU/L", "U/L", "µkat/L"],
+		"multipliers": [1.0, 1.0, 60.0]
+	},
+	"trigl": {
+		"options": ["mg/dL", "mmol/L"],
+		"multipliers": [1.0, 88.57]
+	},
+	"tchol": {
+		"options": ["mg/dL", "mmol/L"],
+		"multipliers": [1.0, 38.67]
+	},
+	"ldl": {
+		"options": ["mg/dL", "mmol/L"],
+		"multipliers": [1.0, 38.67]
+	},
+	"hdl": {
+		"options": ["mg/dL", "mmol/L"],
+		"multipliers": [1.0, 38.67]
+	},
+	"tsh": {
+		"options": ["mIU/L", "µIU/mL"],
+		"multipliers": [1.0, 1.0]
+	},
+	"ft4": {
+		"options": ["ng/dL", "pmol/L"],
+		"multipliers": [1.0, 0.07772]
+	},
+	"ctx": {
+		"options": ["pg/mL", "ng/L", "µg/L"],
+		"multipliers": [1.0, 1.0, 1000.0]
+	},
+	"p1np": {
+		"options": ["µg/L", "ng/mL"],
+		"multipliers": [1.0, 1.0]
+	},
+	"ferritin": {
+		"options": ["µg/L", "ng/mL", "pmol/L"],
+		"multipliers": [1.0, 1.0, 0.4451]
+	},
+	"tsat": {
+		"options": ["%"],
+		"multipliers": [1.0]
+	},
+	"cerul": {
+		"options": ["mg/dL", "mg/L", "g/L"],
+		"multipliers": [1.0, 0.1, 100.0]
+	},
+	"urine_cu": {
+		"options": ["µg/day", "nmol/day"],
+		"multipliers": [1.0, 0.06355]
+	},
+	"creatinine": {
+		"options": ["mg/dL", "µmol/L"],
+		"multipliers": [1.0, 0.01131]
+	},
+}
+
+# Stores references to unit OptionButtons: { "field_key": OptionButton }
+var _unit_buttons: Dictionary = {}
+
+func _get_input(path: String, node_name: String) -> SpinBox:
+	return get_node(path + "InputFields").find_child(node_name, true, false)
+
+# ─────────────────────────────────────────
+#  READY
+# ─────────────────────────────────────────
 func _ready():
+	# Add unit selectors to all input fields
+	_add_unit_selector(KIDNEY + "InputFields/CreatinineInput", "creatinine")
+	_add_unit_selector(GLYC   + "InputFields/HbA1cInput",     "hba1c")
+	_add_unit_selector(GLYC   + "InputFields/FPGInput",        "fpg")
+	_add_unit_selector(NAFLD  + "InputFields/ALTInput",        "alt")
+	_add_unit_selector(NAFLD  + "InputFields/ASTInput",        "ast")
+	_add_unit_selector(NAFLD  + "InputFields/TriglInput",      "trigl")
+	_add_unit_selector(LIPID  + "InputFields/TotalCholInput",  "tchol")
+	_add_unit_selector(LIPID  + "InputFields/LDLInput",        "ldl")
+	_add_unit_selector(LIPID  + "InputFields/HDLInput",        "hdl")
+	_add_unit_selector(LIPID  + "InputFields/TriglInput",      "trigl")
+	_add_unit_selector(THYR   + "InputFields/TSHInput",        "tsh")
+	_add_unit_selector(THYR   + "InputFields/FT4Input",        "ft4")
+	_add_unit_selector(OSTEO  + "InputFields/CTxInput",        "ctx")
+	_add_unit_selector(OSTEO  + "InputFields/P1NPInput",       "p1np")
+	_add_unit_selector(HEMO   + "InputFields/FerritinInput",   "ferritin")
+	_add_unit_selector(HEMO   + "InputFields/TsatInput",       "tsat")
+	_add_unit_selector(WILS   + "InputFields/CerulInput",      "cerul")
+	_add_unit_selector(WILS   + "InputFields/UrineCuInput",    "urine_cu")
+
 	# Kidney care
 	get_node(KIDNEY + "KnownDisease").toggled.connect(_on_known_disease_toggled)
 	get_node(KIDNEY + "InputFields/CalculateButton").pressed.connect(_on_calculate_egfr)
@@ -22,7 +125,7 @@ func _ready():
 	# Body metrics
 	get_node(BODY + "CalculateButton").pressed.connect(_on_calculate_metrics)
 
-	# Metabolic panels — checkboxes
+	# Metabolic checkboxes
 	get_node(GLYC  + "KnownDiabetes").toggled.connect(func(c): _on_known_metabolic("glycemic-health", c, GLYC))
 	get_node(NAFLD + "KnownNAFLD").toggled.connect(func(c):    _on_known_metabolic("nafld", c, NAFLD))
 	get_node(LIPID + "KnownLipid").toggled.connect(func(c):    _on_known_metabolic("lipid-health", c, LIPID))
@@ -31,7 +134,7 @@ func _ready():
 	get_node(HEMO  + "KnownHemo").toggled.connect(func(c):     _on_known_metabolic("hemochromatosis", c, HEMO))
 	get_node(WILS  + "KnownWilson").toggled.connect(func(c):   _on_known_metabolic("wilsons-disease", c, WILS))
 
-	# Metabolic panels — calculate buttons
+	# Metabolic calculate buttons
 	get_node(GLYC  + "InputFields/CalculateButton").pressed.connect(_on_calculate_glycemic)
 	get_node(NAFLD + "InputFields/CalculateButton").pressed.connect(_on_calculate_nafld)
 	get_node(LIPID + "InputFields/CalculateButton").pressed.connect(_on_calculate_lipid)
@@ -40,7 +143,6 @@ func _ready():
 	get_node(HEMO  + "InputFields/CalculateButton").pressed.connect(_on_calculate_hemo)
 	get_node(WILS  + "InputFields/CalculateButton").pressed.connect(_on_calculate_wilson)
 
-	# Reset
 	get_node(BASE + "ResetButton").pressed.connect(_on_reset)
 
 	load_kidney_settings()
@@ -48,11 +150,75 @@ func _ready():
 	load_metabolic_ui()
 
 # ─────────────────────────────────────────
+#  UNIT SELECTOR — adds OptionButton next to SpinBox
+# ─────────────────────────────────────────
+func _add_unit_selector(spinbox_path: String, field_key: String):
+	var spinbox = get_node_or_null(spinbox_path)
+	if not spinbox: return
+	if not UNITS.has(field_key): return
+
+	# Wrap SpinBox in HBoxContainer
+	var parent = spinbox.get_parent()
+	var idx    = spinbox.get_index()
+
+	var hbox = HBoxContainer.new()
+	hbox.name = spinbox.name + "Row"
+	hbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+	# Remove spinbox from parent, put hbox in its place
+	parent.remove_child(spinbox)
+	parent.add_child(hbox)
+	parent.move_child(hbox, idx)
+
+	# Add spinbox back inside hbox
+	spinbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_child(spinbox)
+
+	# Only add OptionButton if there are multiple units
+	var unit_def = UNITS[field_key]
+	var options  = unit_def["options"]
+	if options.size() > 1:
+		var opt = OptionButton.new()
+		opt.name = field_key + "_unit"
+		opt.custom_minimum_size = Vector2(120, 0)
+		for o in options:
+			opt.add_item(o)
+		hbox.add_child(opt)
+		_unit_buttons[field_key] = opt
+	else:
+		# Just show a label for single-unit fields
+		var lbl = Label.new()
+		lbl.text = options[0]
+		hbox.add_child(lbl)
+
+# ─────────────────────────────────────────
+#  CONVERSION — converts entered value to standard unit
+# ─────────────────────────────────────────
+func _convert(value: float, field_key: String) -> float:
+	if not UNITS.has(field_key): return value
+	var unit_def = UNITS[field_key]
+
+	# Special case: HbA1c mmol/mol → %
+	if field_key == "hba1c":
+		if _unit_buttons.has("hba1c") and _unit_buttons["hba1c"].selected == 1:
+			# IFCC mmol/mol to NGSP %
+			return (value / 10.929) + 2.15
+		return value
+
+	if not _unit_buttons.has(field_key): return value
+	var selected = _unit_buttons[field_key].selected
+	var multipliers = unit_def.get("multipliers", [1.0])
+	if selected < multipliers.size():
+		return value * multipliers[selected]
+	return value
+
+# ─────────────────────────────────────────
 #  HELPER — known condition checkbox
 # ─────────────────────────────────────────
 func _on_known_metabolic(condition: String, checked: bool, path: String):
 	get_node(path + "InputFields").visible = !checked
 	Global.set_metabolic_condition(condition, checked)
+	Global.set_known_diagnosis(condition, checked)
 	if checked:
 		Global.set_metabolic_risk(condition, "confirmed")
 		get_node(path + "ResultLabel").text = "⚠️ " + condition.replace("-", " ").capitalize() + " confirmed."
@@ -73,23 +239,57 @@ func _on_known_disease_toggled(checked: bool):
 	save_kidney_settings(0.0)
 	Global.save_profile()
 
+func save_kidney_settings(egfr: float):
+	var risk_text = get_node(KIDNEY + "RiskLabel").text
+	var egfr_text = ""
+	if egfr > 0:
+		egfr_text = get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false).text
+	_save_metabolic_inputs("kidney", {
+		"egfr": egfr,
+		"at_risk": Global.kidney_at_risk,
+		"known_disease": get_node(KIDNEY + "KnownDisease").button_pressed,
+		"risk_text": risk_text,
+		"egfr_text": egfr_text,
+		"creatinine_unit": _unit_buttons["creatinine"].selected if _unit_buttons.has("creatinine") else 0
+	})
+	Global.save_profile()
+
+func load_kidney_settings():
+	if not FileAccess.file_exists("user://metabolic_inputs.json"): return
+	var file = FileAccess.open("user://metabolic_inputs.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data or not data.has("kidney"): return
+	var k = data["kidney"]
+	Global.kidney_at_risk = k.get("at_risk", false)
+	var known = k.get("known_disease", false)
+	get_node(KIDNEY + "KnownDisease").button_pressed = known
+	get_node(KIDNEY + "InputFields").visible = !known
+	if k.has("risk_text") and k["risk_text"] != "":
+		get_node(KIDNEY + "RiskLabel").text = k["risk_text"]
+	if k.has("egfr_text") and k["egfr_text"] != "":
+		get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false).text = k["egfr_text"]
+	if _unit_buttons.has("creatinine"):
+		_unit_buttons["creatinine"].selected = k.get("creatinine_unit", 0)
+		
 func _on_calculate_egfr():
-	var fields = get_node(KIDNEY + "InputFields")
-	var scr       = fields.get_node("CreatinineInput").value
-	var age       = fields.get_node("AgeInput").value
+	var scr_raw   = _get_input(KIDNEY, "CreatinineInput").value
+	var scr       = _convert(scr_raw, "creatinine")
+	var age       = _get_input(KIDNEY, "AgeInput").value
 	var is_female = Global.body_metrics.get("is_female", false)
 
 	var kappa      = 0.7 if is_female else 0.9
 	var alpha      = -0.329 if is_female else -0.411
 	var sex_factor = 1.012 if is_female else 1.0
-	var ratio = scr / kappa
-	var egfr = 142.0 \
+	var ratio      = scr / kappa
+	var egfr       = 142.0 \
 		* pow(min(ratio, 1.0), alpha) \
 		* pow(max(ratio, 1.0), -1.200) \
 		* pow(0.9938, age) \
 		* sex_factor
 	egfr = snappedf(egfr, 0.1)
-	fields.get_node("eGFRLabel").text = "eGFR: " + str(egfr) + " mL/min/1.73m²"
+
+	get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false).text = "eGFR: " + str(egfr) + " mL/min/1.73m²"
 
 	if egfr <= 60:
 		get_node(KIDNEY + "RiskLabel").text = "⚠️ eGFR ≤ 60 — kidney function reduced."
@@ -100,28 +300,6 @@ func _on_calculate_egfr():
 
 	save_kidney_settings(egfr)
 	Global.save_profile()
-
-func save_kidney_settings(egfr: float):
-	var file = FileAccess.open("user://kidney.json", FileAccess.WRITE)
-	file.store_string(JSON.stringify({
-		"egfr": egfr,
-		"at_risk": Global.kidney_at_risk,
-		"known_disease": get_node(KIDNEY + "KnownDisease").button_pressed
-	}))
-	file.close()
-
-func load_kidney_settings():
-	if not FileAccess.file_exists("user://kidney.json"): return
-	var file = FileAccess.open("user://kidney.json", FileAccess.READ)
-	var data = JSON.parse_string(file.get_as_text())
-	file.close()
-	if not data: return
-	Global.kidney_at_risk = data.get("at_risk", false)
-	var known = data.get("known_disease", false)
-	get_node(KIDNEY + "KnownDisease").button_pressed = known
-	get_node(KIDNEY + "InputFields").visible = !known
-	if data.has("egfr") and data["egfr"] > 0:
-		get_node(KIDNEY + "InputFields/eGFRLabel").text = "eGFR: " + str(data["egfr"]) + " mL/min/1.73m²"
 
 # ─────────────────────────────────────────
 #  BODY METRICS
@@ -168,24 +346,14 @@ func _on_calculate_metrics():
 	save_body_metrics(weight, height_cm, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text)
 
 func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text):
-	var bmi = weight / ((height / 100.0) * (height / 100.0))
-	bmi = snappedf(bmi, 0.1)
-	var bmi_category = ""
-	if bmi < 18.5:    bmi_category = "Underweight"
-	elif bmi < 25.0:  bmi_category = "Normal"
-	elif bmi < 30.0:  bmi_category = "Overweight"
-	else:             bmi_category = "Obese"
-
 	var file = FileAccess.open("user://body_metrics.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"weight": weight, "height": height, "age": age,
 		"activity": activity, "goal_weight": goal_w, "weeks": weeks,
 		"is_female": is_female, "bmr": bmr, "tdee": tdee,
-		"daily_goal": daily_goal,
-		"bmi_text": "BMI: " + str(bmi) + " (" + bmi_category + ")"
+		"daily_goal": daily_goal, "bmi_text": bmi_text
 	}))
 	file.close()
-
 	Global.body_metrics = {
 		"bmr": bmr, "tdee": tdee, "daily_goal": daily_goal,
 		"goal_weight": goal_w, "weight": weight,
@@ -198,7 +366,6 @@ func load_body_metrics():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if not data: return
-
 	var panel = get_node(BODY)
 	panel.get_node("WeightInput").value       = data.get("weight", 70)
 	panel.get_node("HeightInput").value       = data.get("height", 170)
@@ -207,14 +374,12 @@ func load_body_metrics():
 	panel.get_node("GoalWeightInput").value   = data.get("goal_weight", 70)
 	panel.get_node("TimeIntervalInput").value = data.get("weeks", 12)
 	panel.get_node("GenderOption").selected   = 1 if data.get("is_female", false) else 0
-
 	if data.has("bmi_text"):
 		panel.get_node("BMIResult").text = data["bmi_text"]
 	if data.has("bmr"):
 		panel.get_node("BMRResult").text  = "BMR: " + str(data["bmr"]) + " kcal/day"
 		panel.get_node("TDEEResult").text = "TDEE: " + str(data["tdee"]) + " kcal/day"
 		panel.get_node("GoalResult").text = "Daily goal: " + str(data["daily_goal"]) + " kcal"
-
 	Global.body_metrics = {
 		"bmr": data.get("bmr", 0.0), "tdee": data.get("tdee", 0.0),
 		"daily_goal": data.get("daily_goal", 0.0),
@@ -225,121 +390,157 @@ func load_body_metrics():
 	}
 
 # ─────────────────────────────────────────
-#  GLYCEMIC HEALTH
+#  GLYCEMIC
 # ─────────────────────────────────────────
 func _on_calculate_glycemic():
-	var fields    = get_node(GLYC + "InputFields")
-	var hba1c     = fields.get_node("HbA1cInput").value
-	var fpg       = fields.get_node("FPGInput").value
+	var hba1c      = _convert(_get_input(GLYC, "HbA1cInput").value, "hba1c")
+	var fpg        = _convert(_get_input(GLYC, "FPGInput").value, "fpg")
 	var result_lbl = get_node(GLYC + "ResultLabel")
-
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
 	if hba1c >= 6.5 or fpg >= 126:
 		risk = "diabetes"
-		msg = "🔴 Diabetes range detected (HbA1c ≥ 6.5% or FPG ≥ 126 mg/dL). Consult your doctor."
+		msg  = "🔴 Diabetes range (HbA1c ≥ 6.5% or FPG ≥ 126 mg/dL). Consult your doctor."
 	elif hba1c >= 5.7 or fpg >= 100:
 		risk = "prediabetes"
-		msg = "🟡 Prediabetes range (HbA1c 5.7–6.4% or FPG 100–125 mg/dL). Reduce sugar intake."
+		msg  = "🟡 Prediabetes range (HbA1c 5.7–6.4% or FPG 100–125 mg/dL). Reduce sugar."
 	else:
-		msg = "✅ Glycemic values appear normal."
+		msg  = "✅ Glycemic values appear normal."
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("glycemic-health", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("glycemic-health", true)
-	_save_metabolic_inputs("glycemic", {"hba1c": hba1c, "fpg": fpg})
+	_save_metabolic_inputs("glycemic", {
+		"hba1c": _get_input(GLYC, "HbA1cInput").value,
+		"fpg": _get_input(GLYC, "FPGInput").value,
+		"hba1c_unit": _unit_buttons.get("hba1c", null).selected if _unit_buttons.has("hba1c") else 0,
+		"fpg_unit": _unit_buttons.get("fpg", null).selected if _unit_buttons.has("fpg") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
 #  NAFLD
 # ─────────────────────────────────────────
 func _on_calculate_nafld():
-	var fields     = get_node(NAFLD + "InputFields")
-	var alt        = fields.get_node("ALTInput").value
-	var ast        = fields.get_node("ASTInput").value
-	var trigl      = fields.get_node("TriglInput").value
+	var alt        = _convert(_get_input(NAFLD, "ALTInput").value, "alt")
+	var ast        = _convert(_get_input(NAFLD, "ASTInput").value, "ast")
+	var trigl      = _convert(_get_input(NAFLD, "TriglInput").value, "trigl")
 	var is_female  = Global.body_metrics.get("is_female", false)
 	var result_lbl = get_node(NAFLD + "ResultLabel")
-
-	# Sex-specific ALT thresholds
-	var alt_upper = 30.0 if is_female else 63.0
-
+	var alt_upper  = 30.0 if is_female else 63.0
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
 	if alt > alt_upper * 2 or ast > 60 or trigl > 150:
 		risk = "elevated"
-		msg = "🔴 Elevated liver enzymes or triglycerides — NAFLD likely. Restrict sugar and saturated fat."
+		msg  = "🔴 Elevated liver enzymes or triglycerides. Restrict sugar and saturated fat."
 	elif alt > alt_upper or ast > 30 or trigl > 100:
 		risk = "borderline"
-		msg = "🟡 Borderline liver values. Monitor diet — reduce sugar and fructose."
+		msg  = "🟡 Borderline liver values. Reduce sugar and fructose."
 	else:
-		msg = "✅ Liver markers appear normal."
+		msg  = "✅ Liver markers appear normal."
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("nafld", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("nafld", true)
-	_save_metabolic_inputs("nafld", {"alt": alt, "ast": ast, "trigl": trigl})
+	_save_metabolic_inputs("nafld", {
+		"alt": _get_input(NAFLD, "ALTInput").value,
+		"ast": _get_input(NAFLD, "ASTInput").value,
+		"trigl": _get_input(NAFLD, "TriglInput").value,
+		"alt_unit": _unit_buttons.get("alt", null).selected if _unit_buttons.has("alt") else 0,
+		"ast_unit": _unit_buttons.get("ast", null).selected if _unit_buttons.has("ast") else 0,
+		"trigl_unit": _unit_buttons.get("trigl", null).selected if _unit_buttons.has("trigl") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
-#  LIPID HEALTH
+#  LIPID
 # ─────────────────────────────────────────
 func _on_calculate_lipid():
-	var fields     = get_node(LIPID + "InputFields")
-	var tchol      = fields.get_node("TotalCholInput").value
-	var ldl        = fields.get_node("LDLInput").value
-	var hdl        = fields.get_node("HDLInput").value
-	var trigl      = fields.get_node("TriglInput").value
+	var tchol      = _convert(_get_input(LIPID, "TotalCholInput").value, "tchol")
+	var ldl        = _convert(_get_input(LIPID, "LDLInput").value, "ldl")
+	var hdl        = _convert(_get_input(LIPID, "HDLInput").value, "hdl")
+	var trigl      = _convert(_get_input(LIPID, "TriglInput").value, "trigl")
 	var is_female  = Global.body_metrics.get("is_female", false)
 	var result_lbl = get_node(LIPID + "ResultLabel")
 
-	# Sex-specific HDL thresholds
+	if tchol == 0 and ldl == 0 and hdl == 0 and trigl == 0:
+		result_lbl.text = "Enter your blood test values above."
+		return
+
 	var hdl_low = 50.0 if is_female else 40.0
+	var abnormal_details  = []
+	var borderline_details = []
+
+	if tchol > 0:
+		if tchol > 200:   abnormal_details.append("Total cholesterol > 200 mg/dL")
+		elif tchol > 180: borderline_details.append("Total cholesterol borderline")
+	if ldl > 0:
+		if ldl > 130:     abnormal_details.append("LDL > 130 mg/dL")
+		elif ldl > 110:   borderline_details.append("LDL borderline")
+	if hdl > 0:
+		if hdl < hdl_low: abnormal_details.append("HDL too low (< " + str(hdl_low) + " mg/dL)")
+	if trigl > 0:
+		if trigl > 150:   abnormal_details.append("Triglycerides > 150 mg/dL")
+		elif trigl > 100: borderline_details.append("Triglycerides borderline")
 
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
-	if tchol > 200 or ldl > 130 or hdl < hdl_low or trigl > 150:
+	if abnormal_details.size() >= 1:
 		risk = "high"
-		msg = "🔴 Abnormal lipid levels detected. Reduce saturated fat, increase fiber and omega-3."
-	elif tchol > 180 or ldl > 110 or trigl > 100:
+		msg  = "🔴 Abnormal lipid levels:\n"
+		for d in abnormal_details: msg += "• " + d + "\n"
+		msg += "Reduce saturated fat, increase fiber and omega-3."
+	elif borderline_details.size() >= 1:
 		risk = "borderline"
-		msg = "🟡 Borderline lipid values. Monitor saturated fat intake."
+		msg  = "🟡 Borderline lipid values:\n"
+		for d in borderline_details: msg += "• " + d + "\n"
+		msg += "Monitor saturated fat intake."
 	else:
-		msg = "✅ Lipid levels appear normal."
+		msg  = "✅ Lipid levels appear normal."
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("lipid-health", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("lipid-health", true)
-	_save_metabolic_inputs("lipid", {"tchol": tchol, "ldl": ldl, "hdl": hdl, "trigl": trigl})
+	_save_metabolic_inputs("lipid", {
+		"tchol": _get_input(LIPID, "TotalCholInput").value,
+		"ldl": _get_input(LIPID, "LDLInput").value,
+		"hdl": _get_input(LIPID, "HDLInput").value,
+		"trigl": _get_input(LIPID, "TriglInput").value,
+		"tchol_unit": _unit_buttons.get("tchol", null).selected if _unit_buttons.has("tchol") else 0,
+		"ldl_unit": _unit_buttons.get("ldl", null).selected if _unit_buttons.has("ldl") else 0,
+		"hdl_unit": _unit_buttons.get("hdl", null).selected if _unit_buttons.has("hdl") else 0,
+		"trigl_unit": _unit_buttons.get("trigl", null).selected if _unit_buttons.has("trigl") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
-#  THYROID HEALTH
+#  THYROID
 # ─────────────────────────────────────────
 func _on_calculate_thyroid():
-	var fields     = get_node(THYR + "InputFields")
-	var tsh        = fields.get_node("TSHInput").value
-	var ft4        = fields.get_node("FT4Input").value
-	var tpo_pos    = fields.get_node("TPOPositive").button_pressed
+	var tsh        = _convert(_get_input(THYR, "TSHInput").value, "tsh")
+	var ft4        = _convert(_get_input(THYR, "FT4Input").value, "ft4")
+	var tpo_pos    = get_node(THYR + "InputFields").find_child("TPOPositive", true, false).button_pressed
 	var result_lbl = get_node(THYR + "ResultLabel")
-
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
 	if tsh > 5.0 and ft4 < 0.7:
 		risk = "hypothyroid"
-		msg = "🔴 Hypothyroidism detected (TSH > 5.0, FT4 < 0.7). Consult your doctor."
+		msg  = "🔴 Hypothyroidism detected (TSH > 5.0, FT4 < 0.7 ng/dL). Consult your doctor."
 	elif tsh > 5.0:
 		risk = "subclinical"
-		msg = "🟡 Subclinical hypothyroidism (elevated TSH). Monitor closely."
+		msg  = "🟡 Subclinical hypothyroidism (elevated TSH). Monitor closely."
 	elif tsh < 0.4:
 		risk = "hyperthyroid"
-		msg = "🟡 Possible hyperthyroidism (TSH < 0.4). Consult your doctor."
+		msg  = "🟡 Possible hyperthyroidism (TSH < 0.4). Consult your doctor."
 	else:
-		msg = "✅ Thyroid values appear normal."
+		msg  = "✅ Thyroid values appear normal."
 
 	if tpo_pos:
 		risk = "hashimotos"
@@ -350,100 +551,114 @@ func _on_calculate_thyroid():
 	Global.set_metabolic_risk("thyroid-health", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("thyroid-health", true)
-	_save_metabolic_inputs("thyroid", {"tsh": tsh, "ft4": ft4, "tpo": tpo_pos})
+	_save_metabolic_inputs("thyroid", {
+		"tsh": _get_input(THYR, "TSHInput").value,
+		"ft4": _get_input(THYR, "FT4Input").value,
+		"tpo": tpo_pos,
+		"tsh_unit": _unit_buttons.get("tsh", null).selected if _unit_buttons.has("tsh") else 0,
+		"ft4_unit": _unit_buttons.get("ft4", null).selected if _unit_buttons.has("ft4") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
 #  OSTEOPOROSIS
 # ─────────────────────────────────────────
 func _on_calculate_osteo():
-	var fields     = get_node(OSTEO + "InputFields")
-	var ctx        = fields.get_node("CTxInput").value
-	var p1np       = fields.get_node("P1NPInput").value
+	var ctx        = _convert(_get_input(OSTEO, "CTxInput").value, "ctx")
+	var p1np       = _convert(_get_input(OSTEO, "P1NPInput").value, "p1np")
 	var is_female  = Global.body_metrics.get("is_female", false)
 	var result_lbl = get_node(OSTEO + "ResultLabel")
-
-	# CTx reference: premenopausal F < 600, postmenopausal > 1000 = high
-	var ctx_high = 1000.0 if is_female else 800.0
-	var ctx_caution = 600.0 if is_female else 500.0
-
+	var ctx_high    = 1000.0 if is_female else 800.0
+	var ctx_caution = 600.0  if is_female else 500.0
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
 	if ctx > ctx_high or p1np > 75:
 		risk = "high-turnover"
-		msg = "🔴 High bone turnover markers — significant bone loss likely. Increase calcium and vitamin D."
+		msg  = "🔴 High bone turnover — significant bone loss likely. Increase calcium and vitamin D."
 	elif ctx > ctx_caution or p1np > 50:
 		risk = "borderline"
-		msg = "🟡 Borderline bone turnover. Ensure adequate calcium (1000–1200 mg/day) and vitamin D."
+		msg  = "🟡 Borderline bone turnover. Ensure calcium (1000–1200 mg/day) and vitamin D."
 	else:
-		msg = "✅ Bone turnover markers appear normal."
+		msg  = "✅ Bone turnover markers appear normal."
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("osteoporosis", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("osteoporosis", true)
-	_save_metabolic_inputs("osteo", {"ctx": ctx, "p1np": p1np})
+	_save_metabolic_inputs("osteo", {
+		"ctx": _get_input(OSTEO, "CTxInput").value,
+		"p1np": _get_input(OSTEO, "P1NPInput").value,
+		"ctx_unit": _unit_buttons.get("ctx", null).selected if _unit_buttons.has("ctx") else 0,
+		"p1np_unit": _unit_buttons.get("p1np", null).selected if _unit_buttons.has("p1np") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
 #  HEMOCHROMATOSIS
 # ─────────────────────────────────────────
 func _on_calculate_hemo():
-	var fields     = get_node(HEMO + "InputFields")
-	var tsat       = fields.get_node("TsatInput").value
-	var ferritin   = fields.get_node("FerritinInput").value
+	var tsat       = _convert(_get_input(HEMO, "TsatInput").value, "tsat")
+	var ferritin   = _convert(_get_input(HEMO, "FerritinInput").value, "ferritin")
 	var is_female  = Global.body_metrics.get("is_female", false)
 	var result_lbl = get_node(HEMO + "ResultLabel")
-
-	# Sex-specific ferritin thresholds
 	var ferritin_high = 200.0 if is_female else 300.0
-
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
 	if tsat > 45 or ferritin > ferritin_high:
 		risk = "overload"
-		msg = "🔴 Iron overload markers elevated. Avoid iron-rich foods and vitamin C supplements."
+		msg  = "🔴 Iron overload markers elevated. Avoid iron-rich foods and vitamin C supplements."
 	elif tsat > 35 or ferritin > (ferritin_high * 0.7):
 		risk = "borderline"
-		msg = "🟡 Borderline iron levels. Monitor iron-rich food intake."
+		msg  = "🟡 Borderline iron levels. Monitor iron-rich food intake."
 	else:
-		msg = "✅ Iron levels appear normal."
+		msg  = "✅ Iron levels appear normal."
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("hemochromatosis", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("hemochromatosis", true)
-	_save_metabolic_inputs("hemo", {"tsat": tsat, "ferritin": ferritin})
+	_save_metabolic_inputs("hemo", {
+		"tsat": _get_input(HEMO, "TsatInput").value,
+		"ferritin": _get_input(HEMO, "FerritinInput").value,
+		"ferritin_unit": _unit_buttons.get("ferritin", null).selected if _unit_buttons.has("ferritin") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
 #  WILSON'S DISEASE
 # ─────────────────────────────────────────
 func _on_calculate_wilson():
-	var fields     = get_node(WILS + "InputFields")
-	var cerul      = fields.get_node("CerulInput").value
-	var urine_cu   = fields.get_node("UrineCuInput").value
+	var cerul      = _convert(_get_input(WILS, "CerulInput").value, "cerul")
+	var urine_cu   = _convert(_get_input(WILS, "UrineCuInput").value, "urine_cu")
 	var result_lbl = get_node(WILS + "ResultLabel")
-
 	var risk = "normal"
-	var msg = ""
+	var msg  = ""
 
 	if cerul < 20 and urine_cu > 100:
 		risk = "likely"
-		msg = "🔴 Both ceruloplasmin low and urinary copper elevated — Wilson's disease likely. Avoid copper-rich foods."
+		msg  = "🔴 Ceruloplasmin low + urinary copper elevated — Wilson's likely. Avoid copper-rich foods."
 	elif cerul < 20 or urine_cu > 40:
 		risk = "suspicious"
-		msg = "🟡 Suspicious copper markers. Limit copper-rich foods (shellfish, nuts, organ meats)."
+		msg  = "🟡 Suspicious copper markers. Limit shellfish, nuts and organ meats."
 	else:
-		msg = "✅ Copper markers appear normal."
+		msg  = "✅ Copper markers appear normal."
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("wilsons-disease", risk)
 	if risk != "normal":
 		Global.set_metabolic_condition("wilsons-disease", true)
-	_save_metabolic_inputs("wilson", {"cerul": cerul, "urine_cu": urine_cu})
+	_save_metabolic_inputs("wilson", {
+		"cerul": _get_input(WILS, "CerulInput").value,
+		"urine_cu": _get_input(WILS, "UrineCuInput").value,
+		"cerul_unit": _unit_buttons.get("cerul", null).selected if _unit_buttons.has("cerul") else 0,
+		"urine_cu_unit": _unit_buttons.get("urine_cu", null).selected if _unit_buttons.has("urine_cu") else 0,
+		"result": msg
+	})
 
 # ─────────────────────────────────────────
-#  SAVE/LOAD METABOLIC INPUTS
+#  SAVE / LOAD METABOLIC INPUTS
 # ─────────────────────────────────────────
 func _save_metabolic_inputs(key: String, values: Dictionary):
 	var all = {}
@@ -451,8 +666,7 @@ func _save_metabolic_inputs(key: String, values: Dictionary):
 		var read_file = FileAccess.open("user://metabolic_inputs.json", FileAccess.READ)
 		var parsed = JSON.parse_string(read_file.get_as_text())
 		read_file.close()
-		if parsed:
-			all = parsed
+		if parsed: all = parsed
 	all[key] = values
 	var file = FileAccess.open("user://metabolic_inputs.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(all))
@@ -465,47 +679,74 @@ func load_metabolic_ui():
 	file.close()
 	if not data: return
 
-	# Restore input values
 	if data.has("glycemic"):
-		get_node(GLYC + "InputFields/HbA1cInput").value = data["glycemic"].get("hba1c", 5.0)
-		get_node(GLYC + "InputFields/FPGInput").value   = data["glycemic"].get("fpg", 90)
+		get_node(GLYC + "InputFields/HbA1cInputRow/HbA1cInput").value = data["glycemic"].get("hba1c", 5.0)
+		get_node(GLYC + "InputFields/FPGInputRow/FPGInput").value   = data["glycemic"].get("fpg", 90)
+		get_node(GLYC + "ResultLabel").text             = data["glycemic"].get("result", "—")
+		if _unit_buttons.has("hba1c"):
+			_unit_buttons["hba1c"].selected = data["glycemic"].get("hba1c_unit", 0)
+		if _unit_buttons.has("fpg"):
+			_unit_buttons["fpg"].selected = data["glycemic"].get("fpg_unit", 0)
+
 	if data.has("nafld"):
-		get_node(NAFLD + "InputFields/ALTInput").value  = data["nafld"].get("alt", 20)
-		get_node(NAFLD + "InputFields/ASTInput").value  = data["nafld"].get("ast", 20)
+		get_node(NAFLD + "InputFields/ALTInput").value   = data["nafld"].get("alt", 20)
+		get_node(NAFLD + "InputFields/ASTInput").value   = data["nafld"].get("ast", 20)
 		get_node(NAFLD + "InputFields/TriglInput").value = data["nafld"].get("trigl", 100)
+		get_node(NAFLD + "ResultLabel").text             = data["nafld"].get("result", "—")
+		if _unit_buttons.has("alt"):   _unit_buttons["alt"].selected   = data["nafld"].get("alt_unit", 0)
+		if _unit_buttons.has("ast"):   _unit_buttons["ast"].selected   = data["nafld"].get("ast_unit", 0)
+
 	if data.has("lipid"):
 		get_node(LIPID + "InputFields/TotalCholInput").value = data["lipid"].get("tchol", 150)
 		get_node(LIPID + "InputFields/LDLInput").value       = data["lipid"].get("ldl", 100)
 		get_node(LIPID + "InputFields/HDLInput").value       = data["lipid"].get("hdl", 60)
 		get_node(LIPID + "InputFields/TriglInput").value     = data["lipid"].get("trigl", 100)
+		get_node(LIPID + "ResultLabel").text                 = data["lipid"].get("result", "—")
+		if _unit_buttons.has("tchol"): _unit_buttons["tchol"].selected = data["lipid"].get("tchol_unit", 0)
+		if _unit_buttons.has("ldl"):   _unit_buttons["ldl"].selected   = data["lipid"].get("ldl_unit", 0)
+		if _unit_buttons.has("hdl"):   _unit_buttons["hdl"].selected   = data["lipid"].get("hdl_unit", 0)
+
 	if data.has("thyroid"):
-		get_node(THYR + "InputFields/TSHInput").value      = data["thyroid"].get("tsh", 2.0)
-		get_node(THYR + "InputFields/FT4Input").value      = data["thyroid"].get("ft4", 1.2)
+		get_node(THYR + "InputFields/TSHInput").value            = data["thyroid"].get("tsh", 2.0)
+		get_node(THYR + "InputFields/FT4Input").value            = data["thyroid"].get("ft4", 1.2)
 		get_node(THYR + "InputFields/TPOPositive").button_pressed = data["thyroid"].get("tpo", false)
+		get_node(THYR + "ResultLabel").text                      = data["thyroid"].get("result", "—")
+		if _unit_buttons.has("tsh"): _unit_buttons["tsh"].selected = data["thyroid"].get("tsh_unit", 0)
+		if _unit_buttons.has("ft4"): _unit_buttons["ft4"].selected = data["thyroid"].get("ft4_unit", 0)
+
 	if data.has("osteo"):
 		get_node(OSTEO + "InputFields/CTxInput").value  = data["osteo"].get("ctx", 300)
 		get_node(OSTEO + "InputFields/P1NPInput").value = data["osteo"].get("p1np", 40)
+		get_node(OSTEO + "ResultLabel").text            = data["osteo"].get("result", "—")
+		if _unit_buttons.has("ctx"):  _unit_buttons["ctx"].selected  = data["osteo"].get("ctx_unit", 0)
+		if _unit_buttons.has("p1np"): _unit_buttons["p1np"].selected = data["osteo"].get("p1np_unit", 0)
+
 	if data.has("hemo"):
 		get_node(HEMO + "InputFields/TsatInput").value     = data["hemo"].get("tsat", 30)
 		get_node(HEMO + "InputFields/FerritinInput").value = data["hemo"].get("ferritin", 100)
+		get_node(HEMO + "ResultLabel").text                = data["hemo"].get("result", "—")
+		if _unit_buttons.has("ferritin"): _unit_buttons["ferritin"].selected = data["hemo"].get("ferritin_unit", 0)
+
 	if data.has("wilson"):
-		get_node(WILS + "InputFields/CerulInput").value    = data["wilson"].get("cerul", 25)
-		get_node(WILS + "InputFields/UrineCuInput").value  = data["wilson"].get("urine_cu", 20)
+		get_node(WILS + "InputFields/CerulInput").value   = data["wilson"].get("cerul", 25)
+		get_node(WILS + "InputFields/UrineCuInput").value = data["wilson"].get("urine_cu", 20)
+		get_node(WILS + "ResultLabel").text               = data["wilson"].get("result", "—")
+		if _unit_buttons.has("cerul"):    _unit_buttons["cerul"].selected    = data["wilson"].get("cerul_unit", 0)
+		if _unit_buttons.has("urine_cu"): _unit_buttons["urine_cu"].selected = data["wilson"].get("urine_cu_unit", 0)
 
-	# Restore known condition checkboxes
-	var conditions = Global.active_metabolic_conditions
-	_restore_checkbox(GLYC,  "KnownDiabetes", "glycemic-health", conditions)
-	_restore_checkbox(NAFLD, "KnownNAFLD",    "nafld",           conditions)
-	_restore_checkbox(LIPID, "KnownLipid",    "lipid-health",    conditions)
-	_restore_checkbox(THYR,  "KnownThyroid",  "thyroid-health",  conditions)
-	_restore_checkbox(OSTEO, "KnownOsteo",    "osteoporosis",    conditions)
-	_restore_checkbox(HEMO,  "KnownHemo",     "hemochromatosis", conditions)
-	_restore_checkbox(WILS,  "KnownWilson",   "wilsons-disease", conditions)
+	# Restore checkboxes
+	_restore_checkbox(GLYC,  "KnownDiabetes", "glycemic-health", [])
+	_restore_checkbox(NAFLD, "KnownNAFLD",    "nafld",           [])
+	_restore_checkbox(LIPID, "KnownLipid",    "lipid-health",    [])
+	_restore_checkbox(THYR,  "KnownThyroid",  "thyroid-health",  [])
+	_restore_checkbox(OSTEO, "KnownOsteo",    "osteoporosis",    [])
+	_restore_checkbox(HEMO,  "KnownHemo",     "hemochromatosis", [])
+	_restore_checkbox(WILS,  "KnownWilson",   "wilsons-disease", [])
 
-func _restore_checkbox(path: String, node_name: String, condition: String, conditions: Array):
-	var is_active = conditions.has(condition)
-	get_node(path + node_name).button_pressed = is_active
-	get_node(path + "InputFields").visible = !is_active
+func _restore_checkbox(path: String, node_name: String, condition: String, _conditions: Array):
+	var is_known = Global.known_diagnoses.has(condition)
+	get_node(path + node_name).button_pressed = is_known
+	get_node(path + "InputFields").visible = !is_known
 
 # ─────────────────────────────────────────
 #  RESET

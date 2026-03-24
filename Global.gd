@@ -17,6 +17,7 @@ var kidney_at_risk: bool = false
 
 # ── Metabolic conditions (Tier 1) ──
 var active_metabolic_conditions: Array = []
+var known_diagnoses: Array = []  # only manually checked boxes
 # Possible values:
 # "glycemic-health", "nafld", "lipid-health",
 # "thyroid-health", "osteoporosis",
@@ -117,6 +118,9 @@ func _ready():
 	load_points()
 	load_body_metrics_from_file()
 	load_metabolic_conditions()
+	# Create metabolic.json if it doesn't exist yet
+	if not FileAccess.file_exists("user://metabolic.json"):
+		save_metabolic_conditions()
 
 # ─────────────────────────────────────────
 #  WARNINGS — called by FridgePage per food
@@ -188,7 +192,8 @@ func save_metabolic_conditions():
 	var file = FileAccess.open("user://metabolic.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"conditions": active_metabolic_conditions,
-		"risk_levels": metabolic_risk_levels
+		"risk_levels": metabolic_risk_levels,
+		"known_diagnoses": known_diagnoses
 	}))
 	file.close()
 
@@ -199,6 +204,7 @@ func load_metabolic_conditions():
 	file.close()
 	if not data: return
 	active_metabolic_conditions = data.get("conditions", [])
+	known_diagnoses = data.get("known_diagnoses", [])
 	var saved_risks = data.get("risk_levels", {})
 	for key in saved_risks.keys():
 		metabolic_risk_levels[key] = saved_risks[key]

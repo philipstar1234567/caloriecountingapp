@@ -178,9 +178,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel"]
 layout_mode = 0
-offset_top = 1138.0
+offset_top = 1207.0
 offset_right = 1138.0
-offset_bottom = 1623.0
+offset_bottom = 1692.0
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
@@ -193,9 +193,9 @@ text = "yes"
 [node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
+[node name="eGFRLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
-text = "Gender:"
+text = "eGFR"
 
 [node name="GenderOption" type="OptionButton" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
@@ -205,24 +205,11 @@ popup/item_0/id = 0
 popup/item_1/text = "male"
 popup/item_1/id = 1
 
-[node name="Label2" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
-layout_mode = 2
-text = "Age:"
-
 [node name="AgeInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
 
-[node name="Label3" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
-layout_mode = 2
-text = "Creatinine value:"
-
 [node name="CreatinineInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
-step = 0.05
-
-[node name="Label4" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
-layout_mode = 2
-text = "Urine Oxalate Crystals value:"
 
 [node name="OxalateInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
 layout_mode = 2
@@ -231,13 +218,8 @@ layout_mode = 2
 layout_mode = 2
 text = "calculate"
 
-[node name="eGFRLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer/InputFields"]
-layout_mode = 2
-text = "eGFR:"
-
 [node name="RiskLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
-text = "-"
 
 [node name="GlycemicPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 200)
@@ -245,9 +227,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel"]
 layout_mode = 0
-offset_top = 1862.0
+offset_top = 1688.0
 offset_right = 1148.0
-offset_bottom = 2282.0
+offset_bottom = 2424.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
 layout_mode = 2
@@ -276,7 +258,6 @@ layout_mode = 2
 
 [node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer/InputFields"]
 layout_mode = 2
-text = "calculate"
 
 [node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
 layout_mode = 2
@@ -288,9 +269,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel"]
 layout_mode = 0
-offset_top = 2112.0
+offset_top = 1892.0
 offset_right = 1143.0
-offset_bottom = 2638.0
+offset_bottom = 2373.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer"]
 layout_mode = 2
@@ -338,9 +319,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel"]
 layout_mode = 0
-offset_top = 2376.0
+offset_top = 2172.0
 offset_right = 1144.0
-offset_bottom = 3008.0
+offset_bottom = 2659.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer"]
 layout_mode = 2
@@ -399,9 +380,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel"]
 layout_mode = 0
-offset_top = 2646.0
+offset_top = 2453.0
 offset_right = 1137.0
-offset_bottom = 3123.0
+offset_bottom = 2930.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer"]
 layout_mode = 2
@@ -446,9 +427,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel"]
 layout_mode = 0
-offset_top = 2813.0
+offset_top = 2616.0
 offset_right = 1240.0
-offset_bottom = 3329.0
+offset_bottom = 3036.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer"]
 layout_mode = 2
@@ -463,16 +444,14 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
 layout_mode = 2
-text = " C-terminal telopeptide of type I collagen (CTx)
- - Bone Breakdown marker value:"
+text = " C-terminal telopeptide of type I collagen (CTx) - Bone Breakdown marker value:"
 
 [node name="CTxInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
 layout_mode = 2
 
 [node name="Label2" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
 layout_mode = 2
-text = "Procollagen type I N-terminal propeptide (P1NP)
- - Bone Formation marker value:"
+text = "Procollagen type I N-terminal propeptide (P1NP) - Bone Formation marker value:"
 
 [node name="P1NPInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer/InputFields"]
 layout_mode = 2
@@ -491,9 +470,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel"]
 layout_mode = 0
-offset_top = 3065.0
+offset_top = 2767.0
 offset_right = 1108.0
-offset_bottom = 3485.0
+offset_bottom = 3187.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
 layout_mode = 2
@@ -534,9 +513,9 @@ layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel"]
 layout_mode = 0
-offset_top = 3222.0
+offset_top = 2939.0
 offset_right = 1098.0
-offset_bottom = 3642.0
+offset_bottom = 3359.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer"]
 layout_mode = 2
