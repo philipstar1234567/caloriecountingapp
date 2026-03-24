@@ -492,7 +492,7 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel"]
 layout_mode = 0
 offset_top = 3065.0
-offset_right = 1108.0
+offset_right = 1176.0
 offset_bottom = 3485.0
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
@@ -504,6 +504,7 @@ layout_mode = 2
 text = "Known hemochromatosis"
 
 [node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
+clip_contents = true
 layout_mode = 2
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer/InputFields"]
@@ -519,6 +520,7 @@ text = "Ferritin value:"
 
 [node name="FerritinInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer/InputFields"]
 layout_mode = 2
+max_value = 800.0
 
 [node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer/InputFields"]
 layout_mode = 2

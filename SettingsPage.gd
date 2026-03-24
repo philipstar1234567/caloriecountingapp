@@ -689,47 +689,47 @@ func load_metabolic_ui():
 			_unit_buttons["fpg"].selected = data["glycemic"].get("fpg_unit", 0)
 
 	if data.has("nafld"):
-		get_node(NAFLD + "InputFields/ALTInput").value   = data["nafld"].get("alt", 20)
-		get_node(NAFLD + "InputFields/ASTInput").value   = data["nafld"].get("ast", 20)
-		get_node(NAFLD + "InputFields/TriglInput").value = data["nafld"].get("trigl", 100)
+		get_node(NAFLD + "InputFields/ALTInputRow/ALTInput").value   = data["nafld"].get("alt", 20)
+		get_node(NAFLD + "InputFields/ASTInputRow/ASTInput").value   = data["nafld"].get("ast", 20)
+		get_node(NAFLD + "InputFields/TriglInputRow/TriglInput").value = data["nafld"].get("trigl", 100)
 		get_node(NAFLD + "ResultLabel").text             = data["nafld"].get("result", "—")
 		if _unit_buttons.has("alt"):   _unit_buttons["alt"].selected   = data["nafld"].get("alt_unit", 0)
 		if _unit_buttons.has("ast"):   _unit_buttons["ast"].selected   = data["nafld"].get("ast_unit", 0)
 
 	if data.has("lipid"):
-		get_node(LIPID + "InputFields/TotalCholInput").value = data["lipid"].get("tchol", 150)
-		get_node(LIPID + "InputFields/LDLInput").value       = data["lipid"].get("ldl", 100)
-		get_node(LIPID + "InputFields/HDLInput").value       = data["lipid"].get("hdl", 60)
-		get_node(LIPID + "InputFields/TriglInput").value     = data["lipid"].get("trigl", 100)
+		get_node(LIPID + "InputFields/TotalCholInputRow/TotalCholInput").value = data["lipid"].get("tchol", 150)
+		get_node(LIPID + "InputFields/LDLInputRow/LDLInput").value       = data["lipid"].get("ldl", 100)
+		get_node(LIPID + "InputFields/HDLInputRow/HDLInput").value       = data["lipid"].get("hdl", 60)
+		get_node(LIPID + "InputFields/TriglInputRow/TriglInput").value     = data["lipid"].get("trigl", 100)
 		get_node(LIPID + "ResultLabel").text                 = data["lipid"].get("result", "—")
 		if _unit_buttons.has("tchol"): _unit_buttons["tchol"].selected = data["lipid"].get("tchol_unit", 0)
 		if _unit_buttons.has("ldl"):   _unit_buttons["ldl"].selected   = data["lipid"].get("ldl_unit", 0)
 		if _unit_buttons.has("hdl"):   _unit_buttons["hdl"].selected   = data["lipid"].get("hdl_unit", 0)
 
 	if data.has("thyroid"):
-		get_node(THYR + "InputFields/TSHInput").value            = data["thyroid"].get("tsh", 2.0)
-		get_node(THYR + "InputFields/FT4Input").value            = data["thyroid"].get("ft4", 1.2)
-		get_node(THYR + "InputFields/TPOPositive").button_pressed = data["thyroid"].get("tpo", false)
+		get_node(THYR + "InputFields/TSHInputRow/TSHInput").value            = data["thyroid"].get("tsh", 2.0)
+		get_node(THYR + "InputFields/FT4InputRow/FT4Input").value            = data["thyroid"].get("ft4", 1.2)
+		get_node(THYR + "InputFields/TPOPositiveRow/TPOPositive").button_pressed = data["thyroid"].get("tpo", false)
 		get_node(THYR + "ResultLabel").text                      = data["thyroid"].get("result", "—")
 		if _unit_buttons.has("tsh"): _unit_buttons["tsh"].selected = data["thyroid"].get("tsh_unit", 0)
 		if _unit_buttons.has("ft4"): _unit_buttons["ft4"].selected = data["thyroid"].get("ft4_unit", 0)
 
 	if data.has("osteo"):
-		get_node(OSTEO + "InputFields/CTxInput").value  = data["osteo"].get("ctx", 300)
-		get_node(OSTEO + "InputFields/P1NPInput").value = data["osteo"].get("p1np", 40)
+		get_node(OSTEO + "InputFields/CTxInputRow/CTxInput").value  = data["osteo"].get("ctx", 300)
+		get_node(OSTEO + "InputFields/P1NPInputRow/P1NPInput").value = data["osteo"].get("p1np", 40)
 		get_node(OSTEO + "ResultLabel").text            = data["osteo"].get("result", "—")
 		if _unit_buttons.has("ctx"):  _unit_buttons["ctx"].selected  = data["osteo"].get("ctx_unit", 0)
 		if _unit_buttons.has("p1np"): _unit_buttons["p1np"].selected = data["osteo"].get("p1np_unit", 0)
 
 	if data.has("hemo"):
-		get_node(HEMO + "InputFields/TsatInput").value     = data["hemo"].get("tsat", 30)
-		get_node(HEMO + "InputFields/FerritinInput").value = data["hemo"].get("ferritin", 100)
+		get_node(HEMO + "InputFields/TsatInputRow/TsatInput").value     = data["hemo"].get("tsat", 30)
+		get_node(HEMO + "InputFields/FerritinInputRow/FerritinInput").value = data["hemo"].get("ferritin", 100)
 		get_node(HEMO + "ResultLabel").text                = data["hemo"].get("result", "—")
 		if _unit_buttons.has("ferritin"): _unit_buttons["ferritin"].selected = data["hemo"].get("ferritin_unit", 0)
 
 	if data.has("wilson"):
-		get_node(WILS + "InputFields/CerulInput").value   = data["wilson"].get("cerul", 25)
-		get_node(WILS + "InputFields/UrineCuInput").value = data["wilson"].get("urine_cu", 20)
+		get_node(WILS + "InputFields/CerulInputRow/CerulInput").value   = data["wilson"].get("cerul", 25)
+		get_node(WILS + "InputFields/UrineCuInputRow/UrineCuInput").value = data["wilson"].get("urine_cu", 20)
 		get_node(WILS + "ResultLabel").text               = data["wilson"].get("result", "—")
 		if _unit_buttons.has("cerul"):    _unit_buttons["cerul"].selected    = data["wilson"].get("cerul_unit", 0)
 		if _unit_buttons.has("urine_cu"): _unit_buttons["urine_cu"].selected = data["wilson"].get("urine_cu_unit", 0)
