@@ -170,6 +170,7 @@ func refresh_shopping_list():
 		var plus_btn = Button.new()
 		plus_btn.text = "+"
 		plus_btn.custom_minimum_size = Vector2(50, 50)
+		plus_btn.z_index = 100
 		plus_btn.pressed.connect(func(): add_to_shopping_list(food))
 		row.add_child(plus_btn)
 
@@ -209,12 +210,12 @@ func build_fridge_ui():
 
 		# Outer container to stack badge over button
 		var container = Control.new()
-		container.custom_minimum_size = Vector2(110, 110)
+		container.custom_minimum_size = Vector2(220, 220)
 
 		# Button
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(100, 100)
-		btn.size = Vector2(100, 100)
+		btn.custom_minimum_size = Vector2(220, 220)
+		btn.size = Vector2(220, 220)
 		btn.position = Vector2(0, 0)
 		btn.tooltip_text = food.get("name", "")
 
@@ -228,7 +229,7 @@ func build_fridge_ui():
 
 		# Long press timer
 		var timer = Timer.new()
-		timer.wait_time = 2.0
+		timer.wait_time = 1.4
 		timer.one_shot = true
 		btn.add_child(timer)
 

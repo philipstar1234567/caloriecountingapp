@@ -221,6 +221,13 @@ func set_metabolic_risk(condition: String, level: String):
 	metabolic_risk_levels[condition] = level
 	save_metabolic_conditions()
 
+func set_known_diagnosis(condition: String, known: bool):
+	if known:
+		if not known_diagnoses.has(condition):
+			known_diagnoses.append(condition)
+	else:
+		known_diagnoses.erase(condition)
+	save_metabolic_conditions()
 # ─────────────────────────────────────────
 #  BODY METRICS
 # ─────────────────────────────────────────
