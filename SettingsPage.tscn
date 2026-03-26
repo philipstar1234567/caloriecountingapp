@@ -173,6 +173,9 @@ text = "TDEE: —"
 layout_mode = 2
 text = "Daily goal: —"
 
+[node name="AdjustedGoalResult" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
+layout_mode = 2
+
 [node name="KidneyCarePanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 

@@ -8,7 +8,8 @@ var body_metrics: Dictionary = {
 	"goal_weight": 0.0,
 	"weight": 0.0,
 	"bmi_text": "BMI: —",
-	"is_female": false
+	"is_female": false,
+	"adjusted_kcal_goal": 0.0
 }
 
 # ── Kidney/oxalate conditions ──
@@ -23,6 +24,119 @@ var known_diagnoses: Array = []  # only manually checked boxes
 # "thyroid-health", "osteoporosis",
 # "hemochromatosis", "wilsons-disease"
 
+var daily_water_liters: float = 2.5  # default, recalculated based on conditions
+
+func calculate_water_recommendation() -> float:
+	var is_female = body_metrics.get("is_female", false)
+	var weight    = body_metrics.get("weight", 70.0)
+	var egfr      = 0.0
+
+	# Check for saved eGFR
+	if FileAccess.file_exists("user://metabolic_inputs.json"):
+		var file = FileAccess.open("user://metabolic_inputs.json", FileAccess.READ)
+		var data = JSON.parse_string(file.get_as_text())
+		file.close()
+		if data and data.has("kidney"):
+			egfr = data["kidney"].get("egfr", 0.0)
+
+	var liters = 2.5  # baseline
+
+	# CKD stage based on eGFR
+	if kidney_at_risk or egfr > 0:
+		if egfr >= 90 or egfr == 0:
+			liters = 2.5
+		elif egfr >= 60:
+			liters = 2.5
+		elif egfr >= 30:
+			liters = 2.0 if is_female else 3.0
+		elif egfr >= 15:
+			liters = 1.25
+		else:
+			liters = 1.0  # Stage 5 — strict restriction
+
+	# Metabolic conditions override baseline
+	for condition in active_metabolic_conditions:
+		var rec = 0.0
+		match condition:
+			"glycemic-health":
+				rec = 2.7 if is_female else 3.5
+			"nafld":
+				rec = 1.75  # 6-8 glasses
+			"lipid-health":
+				rec = 2.7 if is_female else 3.7
+			"thyroid-health":
+				rec = 2.1 if is_female else 3.1
+			"osteoporosis":
+				rec = 1.75  # 6-8 glasses
+			"hemochromatosis":
+				rec = 2.5
+			"wilsons-disease":
+				rec = 2.0
+
+		# Take highest recommendation unless CKD restricts
+		if not kidney_at_risk and rec > liters:
+			liters = rec
+
+	daily_water_liters = liters
+	return liters
+
+func calculate_adjusted_kcal_goal() -> Dictionary:
+	var base_goal = body_metrics.get("daily_goal", 0.0)
+	var bmr       = body_metrics.get("bmr", 0.0)
+	var weight    = body_metrics.get("weight", 0.0)
+	var bmi_text  = body_metrics.get("bmi_text", "")
+
+	if base_goal == 0 or bmr == 0:
+		return {"adjusted_goal": 0.0, "adjustments": []}
+
+	var adjusted  = base_goal
+	var notes     = []
+
+	# Determine BMI category from saved text
+	var is_overweight = bmi_text.contains("Overweight") or bmi_text.contains("Obese")
+
+	for condition in active_metabolic_conditions:
+		match condition:
+			"nafld":
+				# 500-1000 kcal deficit for 7-10% weight loss
+				if is_overweight:
+					var reduction = 750.0  # middle of 500-1000 range
+					adjusted -= reduction
+					notes.append("NAFLD: −750 kcal/day for weight reduction")
+
+			"glycemic-health":
+				# Reduce by 500 kcal if overweight
+				if is_overweight:
+					adjusted -= 500.0
+					notes.append("Glycemic health: −500 kcal/day deficit")
+
+			"lipid-health":
+				# Only adjust if overweight
+				if is_overweight:
+					adjusted -= 300.0
+					notes.append("Lipid health: −300 kcal/day for gradual weight loss")
+
+			"thyroid-health":
+				# Never let goal drop below BMR+200 for thyroid patients
+				# Low calorie diets worsen hypothyroidism
+				if adjusted < bmr + 200:
+					adjusted = bmr + 200
+					notes.append("Thyroid health: minimum " + str(snappedf(bmr + 200, 0)) + " kcal to protect metabolism")
+
+			"osteoporosis":
+				# Never below BMR — bone health requires adequate nutrition
+				if adjusted < bmr:
+					adjusted = bmr
+					notes.append("Osteoporosis: minimum BMR (" + str(snappedf(bmr, 0)) + " kcal) to protect bone health")
+
+	# Hard floor — never go below BMR regardless of conditions
+	if adjusted < bmr:
+		adjusted = bmr
+		notes.append("Floor applied: goal cannot go below BMR (" + str(snappedf(bmr, 0)) + " kcal)")
+
+	adjusted = snappedf(adjusted, 1.0)
+	return {"adjusted_goal": adjusted, "adjustments": notes}
+	
 # ── Metabolic condition risk levels ──
 # Set by SettingsPage calculators, read by HomePage + FridgePage
 var metabolic_risk_levels: Dictionary = {
@@ -109,6 +223,115 @@ var metabolic_warnings_data = {
 		"avoid_msg": "High sodium. Avoid — significantly increases calcium loss."
 	},
 }
+
+# ─────────────────────────────────────────
+#  MICRONUTRIENT RDAs — sex-aware, condition-adjusted
+#  Returns dict: { field_key: { "rda": float, "unit": String, "label": String } }
+# ─────────────────────────────────────────
+func get_micronutrient_rdas() -> Dictionary:
+	var is_female = body_metrics.get("is_female", false)
+	var c = active_metabolic_conditions
+
+	# Base RDAs (healthy adult, EFSA/NIH reference)
+	var rdas = {
+		# Vitamins
+		"vitamin_a_mcg":   {"rda": 700.0 if is_female else 900.0,  "unit":"mcg", "label":"Vitamin A"},
+		"vitamin_c_mg":    {"rda": 75.0  if is_female else 90.0,   "unit":"mg",  "label":"Vitamin C"},
+		"vitamin_d_mcg":   {"rda": 15.0,                           "unit":"mcg", "label":"Vitamin D"},
+		"vitamin_e_mg":    {"rda": 15.0,                           "unit":"mg",  "label":"Vitamin E"},
+		"vitamin_k2_mcg":  {"rda": 90.0  if is_female else 120.0,  "unit":"mcg", "label":"Vitamin K2"},
+		"vitamin_b6_mg":   {"rda": 1.3,                            "unit":"mg",  "label":"Vitamin B6"},
+		"vitamin_b9_mcg":  {"rda": 400.0,                          "unit":"mcg", "label":"Folate (B9)"},
+		"vitamin_b12_mcg": {"rda": 2.4,                            "unit":"mcg", "label":"Vitamin B12"},
+		# Minerals
+		"magnesium_mg":    {"rda": 310.0 if is_female else 400.0,  "unit":"mg",  "label":"Magnesium"},
+		"potassium_mg":    {"rda": 2600.0 if is_female else 3400.0,"unit":"mg",  "label":"Potassium"},
+		"zinc_mg":         {"rda": 8.0   if is_female else 11.0,   "unit":"mg",  "label":"Zinc"},
+		"iodine_mcg":      {"rda": 150.0,                          "unit":"mcg", "label":"Iodine"},
+		# Antioxidants (no official RDA — using therapeutic targets)
+		"beta_carotene_mcg":    {"rda": 3000.0,  "unit":"mcg", "label":"Beta-carotene"},
+		"lycopene_mcg":         {"rda": 8000.0,  "unit":"mcg", "label":"Lycopene"},
+		"quercetin_mg":         {"rda": 10.0,    "unit":"mg",  "label":"Quercetin"},
+		"total_polyphenols_mg": {"rda": 650.0,   "unit":"mg",  "label":"Polyphenols"},
+	}
+
+	# ── Condition-specific adjustments ──
+	if c.has("nafld"):
+		rdas["vitamin_e_mg"]["rda"]         = 800.0  # therapeutic dose for NASH
+		rdas["vitamin_c_mg"]["rda"]         = 500.0  # antioxidant support
+		rdas["beta_carotene_mcg"]["rda"]    = 6000.0
+		rdas["total_polyphenols_mg"]["rda"] = 1000.0
+
+	if c.has("glycemic-health"):
+		rdas["vitamin_b6_mg"]["rda"]  = 1.7   # improves insulin sensitivity
+		rdas["vitamin_b9_mcg"]["rda"] = 600.0 # reduces homocysteine risk in diabetics
+		rdas["magnesium_mg"]["rda"]   = 420.0 if is_female else 500.0  # magnesium deficiency common in T2DM
+		rdas["potassium_mg"]["rda"]   = 3500.0 if is_female else 4700.0
+		rdas["quercetin_mg"]["rda"]   = 15.0
+
+	if c.has("lipid-health"):
+		rdas["potassium_mg"]["rda"]         = 3500.0 if is_female else 4700.0
+		rdas["vitamin_b6_mg"]["rda"]        = 1.7
+		rdas["vitamin_b9_mcg"]["rda"]       = 600.0
+		rdas["lycopene_mcg"]["rda"]         = 10000.0  # cardioprotective
+		rdas["quercetin_mg"]["rda"]         = 15.0
+		rdas["total_polyphenols_mg"]["rda"] = 1000.0
+
+	if c.has("thyroid-health"):
+		rdas["iodine_mcg"]["rda"]    = 150.0   # careful — not too high
+		rdas["selenium_mcg"]         = {"rda": 200.0, "unit":"mcg", "label":"Selenium"}
+		rdas["zinc_mg"]["rda"]       = 10.0 if is_female else 15.0
+		rdas["vitamin_d_mcg"]["rda"] = 25.0   # higher for autoimmune support
+
+	if c.has("osteoporosis"):
+		rdas["vitamin_d_mcg"]["rda"]  = 20.0
+		rdas["vitamin_k2_mcg"]["rda"] = 180.0 if is_female else 200.0  # MK-7 for bone
+		rdas["magnesium_mg"]["rda"]   = 420.0 if is_female else 500.0
+		rdas["vitamin_c_mg"]["rda"]   = 100.0  # collagen synthesis
+
+	if c.has("hemochromatosis"):
+		# Iron and vitamin C already tracked, no extra vitamins needed
+		pass
+
+	if c.has("wilsons-disease"):
+		# Copper and zinc already tracked
+		rdas["zinc_mg"]["rda"] = 25.0 if is_female else 40.0  # pharmacological zinc blocks copper
+
+	if kidney_at_risk:
+		# CKD — restrict potassium and phosphorus
+		rdas["potassium_mg"]["rda"] = 2000.0  # restriction
+		rdas.erase("vitamin_c_mg")  # large doses harmful in CKD
+
+	return rdas
+
+# ── Which micronutrients to show on HomePage ──
+func get_visible_micronutrients() -> Array:
+	var c = active_metabolic_conditions
+	var visible = []
+
+	# Always show
+	visible.append_array(["vitamin_a_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_b12_mcg","magnesium_mg"])
+
+	# Condition-specific
+	if c.has("nafld") or c.has("thyroid-health") or c.has("osteoporosis"):
+		if not visible.has("vitamin_e_mg"): visible.append("vitamin_e_mg")
+	if c.has("osteoporosis"):
+		if not visible.has("vitamin_k2_mcg"): visible.append("vitamin_k2_mcg")
+	if c.has("glycemic-health") or c.has("lipid-health"):
+		for f in ["vitamin_b6_mg","vitamin_b9_mcg","potassium_mg","quercetin_mg"]:
+			if not visible.has(f): visible.append(f)
+	if c.has("thyroid-health"):
+		for f in ["iodine_mcg","zinc_mg"]:
+			if not visible.has(f): visible.append(f)
+	if c.has("nafld"):
+		for f in ["beta_carotene_mcg","total_polyphenols_mg"]:
+			if not visible.has(f): visible.append(f)
+	if c.has("lipid-health"):
+		for f in ["lycopene_mcg","total_polyphenols_mg"]:
+			if not visible.has(f): visible.append(f)
+
+	return visible
+
 
 # ─────────────────────────────────────────
 #  STARTUP
@@ -246,7 +469,7 @@ func load_body_metrics_from_file():
 		"bmi_text": data.get("bmi_text", "BMI: —"),
 		"is_female": data.get("is_female", false)
 	}
-
+	body_metrics["adjusted_kcal_goal"] = data.get("adjusted_goal", data.get("daily_goal", 0.0))
 # ─────────────────────────────────────────
 #  POINTS
 # ─────────────────────────────────────────

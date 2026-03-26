@@ -159,6 +159,47 @@ layout_mode = 2
 [node name="PointsLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 
+[node name="HSeparator" type="HSeparator" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WaterTitle" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "💧 Water Intake"
+
+[node name="WaterGoalLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+text = "Goal: 2.5 L"
+
+[node name="WaterBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="WaterProgress" type="Label" parent="Panel/ScrollContainer/VBoxContainer/WaterBar"]
+layout_mode = 2
+text = "0.0 / 2.5 L"
+
+[node name="WaterPoints" type="Label" parent="Panel/ScrollContainer/VBoxContainer/WaterBar"]
+layout_mode = 2
+text = "💧 +0 pts"
+
+[node name="WaterButtonsRow" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Water100Btn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
+layout_mode = 2
+text = "+100 mL"
+
+[node name="Water250Btn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
+layout_mode = 2
+text = "+250 mL"
+
+[node name="Water500Btn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
+layout_mode = 2
+text = "+500 mL"
+
+[node name="WaterResetBtn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
+layout_mode = 2
+text = "Reset"
+
 [node name="Divider" type="HSeparator" parent="Panel/ScrollContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 37.47)
 layout_mode = 2
@@ -226,3 +267,6 @@ text = "Sodium"
 [node name="SodiumValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SodiumBar"]
 layout_mode = 2
 text = "0 mg"
+
+[node name="VitABar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2

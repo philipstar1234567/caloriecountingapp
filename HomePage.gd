@@ -7,15 +7,36 @@ var today_totals = {
 	"sugar_g": 0.0, "sodium_mg": 0.0, "iron_mg": 0.0, "copper_mg": 0.0, "selenium_mcg": 0.0
 }
 var foods_eaten: Array = []
+var water_ml: float = 0.0
 
 func _ready():
 	Global.load_points()
 	load_today()
+	load_water()
 	refresh_display()
-
+	_connect_water_buttons()
 func _notification(what):
 	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
 		refresh_display()
+
+
+func _connect_water_buttons():
+	$Panel/ScrollContainer/VBoxContainer/WaterButtonsRow/Water100Btn.pressed.connect(func(): add_water(100))
+	$Panel/ScrollContainer/VBoxContainer/WaterButtonsRow/Water250Btn.pressed.connect(func(): add_water(250))
+	$Panel/ScrollContainer/VBoxContainer/WaterButtonsRow/Water500Btn.pressed.connect(func(): add_water(500))
+	$Panel/ScrollContainer/VBoxContainer/WaterButtonsRow/WaterResetBtn.pressed.connect(func(): reset_water())
+
+# ── Add water ──
+func add_water(ml: float):
+	water_ml += ml
+	save_water()
+	refresh_water_display()
+
+func reset_water():
+	water_ml = 0.0
+	save_water()
+	refresh_water_display()
+
 
 func log_food(food: Dictionary):
 	today_totals["calories"]             += food.get("calories", 0)
@@ -97,9 +118,16 @@ func refresh_display():
 		vbox.get_node("GoalLabel").text = "Set your goal in Settings ⚙️"
 
 	# ── Points ──
-	var points = calculate_points(kcal, daily_goal, bmr)
-	vbox.get_node("PointsLabel").text = "⭐ Points today: " + str(snappedf(points, 0.1))
-	Global.save_points(Time.get_date_string_from_system(), points)
+	var kcal_points = calculate_points(kcal, daily_goal, bmr)
+	# ── Water display ──
+	refresh_water_display()
+
+	# ── Total points = kcal points + water points ──
+	var water_goal_ml = Global.daily_water_liters * 1000.0
+	var water_points  = calculate_water_points(water_ml, water_goal_ml)
+	var total_points  = kcal_points + water_points
+	vbox.get_node("PointsLabel").text = "⭐ Points today: " + str(snappedf(total_points, 0.1))
+	Global.save_points(Time.get_date_string_from_system(), total_points)
 
 	# ── Foods eaten list ──
 	var list = vbox.get_node("FoodsEatenList")
@@ -109,6 +137,33 @@ func refresh_display():
 		var lbl = Label.new()
 		lbl.text = "• " + food_name
 		list.add_child(lbl)
+
+func refresh_water_display():
+	var vbox = $Panel/ScrollContainer/VBoxContainer
+	var water_goal_l  = Global.calculate_water_recommendation()
+	var water_goal_ml = water_goal_l * 1000.0
+	var water_l       = snappedf(water_ml / 1000.0, 2)
+	var goal_l        = snappedf(water_goal_l, 1)
+
+	vbox.get_node("WaterGoalLabel").text = "Goal: " + str(goal_l) + " L/day"
+
+	var pct = clamp(water_ml / water_goal_ml, 0.0, 1.0)
+	var bar_text = str(water_l) + " / " + str(goal_l) + " L"
+	# Add a simple visual fill indicator using blocks
+	var filled = int(pct * 10)
+	var bar = "█".repeat(filled) + "░".repeat(10 - filled)
+	vbox.get_node("WaterBar/WaterProgress").text = bar_text + "\n" + bar
+
+	var w_pts = calculate_water_points(water_ml, water_goal_ml)
+	vbox.get_node("WaterBar/WaterPoints").text = "💧 +" + str(snappedf(w_pts, 0.1)) + " pts"
+
+func calculate_water_points(current_ml: float, goal_ml: float) -> float:
+	if goal_ml <= 0: return 0.0
+	# 1 point for reaching goal, +1 per extra 500mL beyond goal
+	if current_ml >= goal_ml:
+		var extra = current_ml - goal_ml
+		return 1.0 + floor(extra / 500.0)
+	return 0.0
 
 func calculate_points(daily_kcal: float, kcal_goal: float, bmr: float) -> float:
 	if bmr == 0: return 0.0
@@ -145,3 +200,21 @@ func load_today():
 		if saved.has(key):
 			today_totals[key] = saved[key]
 	foods_eaten = data.get("foods", [])
+
+func save_water():
+	var file = FileAccess.open("user://water.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({
+		"date": Time.get_date_string_from_system(),
+		"water_ml": water_ml
+	}))
+	file.close()
+
+func load_water():
+	if not FileAccess.file_exists("user://water.json"): return
+	var file = FileAccess.open("user://water.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data: return
+	# Only load if saved today
+	if data.get("date","") != Time.get_date_string_from_system(): return
+	water_ml = data.get("water_ml", 0.0)

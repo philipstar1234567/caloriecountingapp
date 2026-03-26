@@ -1,9 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://dba6tab5k5v8e"]
+[gd_scene load_steps=13 format=3 uid="uid://dba6tab5k5v8e"]
 
+[ext_resource type="Texture2D" uid="uid://0aqgvuof38hh" path="res://images/apple.png" id="1_2hr5r"]
 [ext_resource type="Script" uid="uid://bpjmipxx1mjsc" path="res://FridgePage.gd" id="1_g7aye"]
 [ext_resource type="Texture2D" uid="uid://b3xhy1nrqbcxj" path="res://Assets/backgrounds/fridge.png" id="2_jrcy7"]
 [ext_resource type="Texture2D" uid="uid://brqyx3p4tcu2n" path="res://Assets/icons/—Pngtree—list icon_3728045.png" id="2_xepse"]
 [ext_resource type="Texture2D" uid="uid://c8q2d58jisr7h" path="res://Assets/icons/ics.png" id="4_2hr5r"]
+
+[sub_resource type="Theme" id="Theme_jrcy7"]
+default_font_size = 40
+TabBar/icons/increment = ExtResource("1_2hr5r")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wvv7q"]
 texture = ExtResource("2_jrcy7")
@@ -33,6 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_jrcy7")
 script = ExtResource("1_g7aye")
 
 [node name="Panel" type="Panel" parent="."]
@@ -113,4 +119,6 @@ offset_right = 980.0
 offset_bottom = 2206.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
 columns = 3

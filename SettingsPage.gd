@@ -314,6 +314,7 @@ func _on_calculate_metrics():
 	var weeks     = panel.get_node("TimeIntervalInput").value
 	var is_female = panel.get_node("GenderOption").selected == 1
 	var height_m  = height_cm / 100.0
+	var adjusted_kcal_goal: float = 0.0
 
 	var bmi = weight / (height_m * height_m)
 	bmi = snappedf(bmi, 0.1)
@@ -343,22 +344,46 @@ func _on_calculate_metrics():
 	else:                    direction = "maintenance"
 	panel.get_node("GoalResult").text = "Daily goal: " + str(daily_goal) + " kcal (" + direction + ")"
 
+	var adj = Global.calculate_adjusted_kcal_goal()
+	var adj_goal = adj.get("adjusted_goal", 0.0)
+	var adj_notes = adj.get("adjustments", [])
+
+	if adj_notes.size() > 0:
+		var adj_text = "⚕️ Adjusted goal: " + str(adj_goal) + " kcal/day\n"
+		for note in adj_notes:
+			adj_text += "• " + note + "\n"
+		panel.get_node("AdjustedGoalResult").text = adj_text
+		panel.get_node("AdjustedGoalResult").visible = true
+		# Update Global so HomePage uses the adjusted goal
+		Global.body_metrics["daily_goal"] = adj_goal
+		Global.body_metrics["adjusted_kcal_goal"] = adj_goal
+	else:
+		panel.get_node("AdjustedGoalResult").visible = false
+		Global.body_metrics["adjusted_kcal_goal"] = daily_goal
+
 	save_body_metrics(weight, height_cm, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text)
 
 func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text):
+	var adj = Global.calculate_adjusted_kcal_goal()
+	var adj_goal = adj.get("adjusted_goal", daily_goal)
+	var adj_notes = adj.get("adjustments", [])
 	var file = FileAccess.open("user://body_metrics.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"weight": weight, "height": height, "age": age,
 		"activity": activity, "goal_weight": goal_w, "weeks": weeks,
 		"is_female": is_female, "bmr": bmr, "tdee": tdee,
+		"adjusted_goal": adj_goal,
+		"adjustment_notes": adj_notes,
 		"daily_goal": daily_goal, "bmi_text": bmi_text
 	}))
 	file.close()
 	Global.body_metrics = {
-		"bmr": bmr, "tdee": tdee, "daily_goal": daily_goal,
+		"bmr": bmr, "tdee": tdee,
+		"daily_goal": adj_goal if adj_notes.size() > 0 else daily_goal,
 		"goal_weight": goal_w, "weight": weight,
 		"bmi_text": bmi_text, "is_female": is_female
 	}
+	Global.body_metrics["adjusted_kcal_goal"] = adj_goal
 
 func load_body_metrics():
 	if not FileAccess.file_exists("user://body_metrics.json"): return
@@ -380,6 +405,27 @@ func load_body_metrics():
 		panel.get_node("BMRResult").text  = "BMR: " + str(data["bmr"]) + " kcal/day"
 		panel.get_node("TDEEResult").text = "TDEE: " + str(data["tdee"]) + " kcal/day"
 		panel.get_node("GoalResult").text = "Daily goal: " + str(data["daily_goal"]) + " kcal"
+
+	if data.has("adjusted_goal") and data["adjusted_goal"] > 0:
+		var adj_notes = data.get("adjustment_notes", [])
+		if adj_notes.size() > 0:
+			var adj_text = "⚕️ Adjusted goal: " + str(data["adjusted_goal"]) + " kcal/day\n"
+			for note in adj_notes:
+				adj_text += "• " + note + "\n"
+			panel.get_node("AdjustedGoalResult").text = adj_text
+			panel.get_node("AdjustedGoalResult").visible = true
+		else:
+			panel.get_node("AdjustedGoalResult").visible = false
+	
+	Global.body_metrics = {
+		"bmr": data.get("bmr", 0.0), "tdee": data.get("tdee", 0.0),
+		"daily_goal": data.get("adjusted_goal", data.get("daily_goal", 0.0)),
+		"goal_weight": data.get("goal_weight", 0.0),
+		"weight": data.get("weight", 0.0),
+		"bmi_text": data.get("bmi_text", "BMI: —"),
+		"is_female": data.get("is_female", false)
+	}
+
 	Global.body_metrics = {
 		"bmr": data.get("bmr", 0.0), "tdee": data.get("tdee", 0.0),
 		"daily_goal": data.get("daily_goal", 0.0),
