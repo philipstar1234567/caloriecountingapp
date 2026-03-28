@@ -7,6 +7,20 @@ var fridge_weights: Dictionary = {}   # food_id → {total_g, remaining_g}
 var shopping_list: Array = []
 var shopping_quantities: Dictionary = {} # food_id → count
 var _long_press_active: bool = false
+var fridge_overrides: Dictionary = {}
+
+# ── Paging ──
+var current_page: int = 0
+const ITEMS_PER_PAGE: int = 15
+const GRID_COLS: int = 3
+
+# ── Swipe detection ──
+var _swipe_start_x: float = 0.0
+var _swipe_threshold: float = 50.0
+var _touch_start_x: float = 0.0
+var _touch_start_y: float = 0.0
+var _is_tracking: bool = false
+var _drag_distance: float = 0.0
 
 # ── Filter state ──
 var active_filters: Array = []   # list of field keys
@@ -64,7 +78,63 @@ func _ready():
 	_build_filter_buttons()
 	_connect_sort_buttons()
 
+# ─────────────────────────────────────────
+#  SWIPE DETECTION
+# ─────────────────────────────────────────
+func _input(event: InputEvent):
+	# Only track input when shopping list is hidden
+	if $Panel/ShoppingListPanel.visible: return
 
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_touch_start_x = event.position.x
+			_touch_start_y = event.position.y
+			_drag_distance = 0.0
+			_is_tracking = true
+		else:
+			if _is_tracking and _drag_distance > _swipe_threshold:
+				var delta = event.position.x - _touch_start_x
+				if delta < -_swipe_threshold:
+					_next_page()
+				elif delta > _swipe_threshold:
+					_prev_page()
+			_is_tracking = false
+
+	elif event is InputEventMouseMotion and _is_tracking:
+		_drag_distance = abs(event.position.x - _touch_start_x)
+
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_touch_start_x = event.position.x
+			_touch_start_y = event.position.y
+			_drag_distance = 0.0
+			_is_tracking = true
+		else:
+			if _is_tracking and _drag_distance > _swipe_threshold:
+				var delta = event.position.x - _touch_start_x
+				if delta < -_swipe_threshold:
+					_next_page()
+				elif delta > _swipe_threshold:
+					_prev_page()
+			_is_tracking = false
+
+	elif event is InputEventScreenDrag and _is_tracking:
+		_drag_distance = abs(event.position.x - _touch_start_x)
+
+func _next_page():
+	var total_pages = _get_total_pages()
+	if current_page < total_pages - 1:
+		current_page += 1
+		build_fridge_ui()
+
+func _prev_page():
+	if current_page > 0:
+		current_page -= 1
+		build_fridge_ui()
+
+func _get_total_pages() -> int:
+	return max(1, int(ceil(float(fridge_foods.size()) / float(ITEMS_PER_PAGE))))
+	
 # ─────────────────────────────────────────
 #  FILTER UI SETUP
 # ─────────────────────────────────────────
@@ -277,65 +347,54 @@ func refresh_shopping_list():
 	var container = $Panel/ShoppingListPanel/VBoxContainer/ShoppingListContainer
 	for child in container.get_children():
 		child.queue_free()
-
 	for food in shopping_list:
-		var fid = food.get("id", "")
-		var qty = shopping_quantities.get(fid, 1)
-
+		var fid = food.get("id","")
+		var qty = shopping_quantities.get(fid,1)
 		var row = HBoxContainer.new()
-		row.custom_minimum_size = Vector2(0, 60)
-
-		# Minus button
+		row.custom_minimum_size = Vector2(0,60)
 		var minus_btn = Button.new()
 		minus_btn.text = "−"
-		minus_btn.custom_minimum_size = Vector2(50, 50)
+		minus_btn.custom_minimum_size = Vector2(50,50)
 		minus_btn.pressed.connect(func(): remove_from_shopping_list(food))
 		row.add_child(minus_btn)
-
-		# Checkbox with quantity
 		var cb = CheckBox.new()
-		cb.text = food.get("name", "") + (" ×" + str(qty) if qty > 1 else "")
-		cb.add_theme_font_size_override("font_size", 28)
-		cb.custom_minimum_size = Vector2(260, 50)
-		cb.toggled.connect(func(checked):
-			if checked:
-				add_to_fridge(food, qty)
-		)
+		cb.text = food.get("name","") + (" ×"+str(qty) if qty > 1 else "")
+		cb.add_theme_font_size_override("font_size",28)
+		cb.custom_minimum_size = Vector2(260,50)
+		cb.toggled.connect(func(checked): if checked: add_to_fridge_multi(food, qty))
 		row.add_child(cb)
-
-		# Warning badge
 		var warnings = Global.get_warnings(food)
 		if warnings.size() > 0:
 			var badge = Label.new()
 			badge.text = "⛔" if warnings[0]["severity"] == "avoid" else "⚠️"
-			badge.tooltip_text = warnings[0]["message"]
 			row.add_child(badge)
-
-		# Plus button
 		var plus_btn = Button.new()
 		plus_btn.text = "+"
-		plus_btn.custom_minimum_size = Vector2(50, 50)
-		plus_btn.z_index = 100
+		plus_btn.custom_minimum_size = Vector2(50,50)
 		plus_btn.pressed.connect(func(): add_to_shopping_list(food))
 		row.add_child(plus_btn)
-
 		container.add_child(row)
 
 # ── Add food to fridge (with quantity) ──
-func add_to_fridge(food: Dictionary, qty: int = 1):
-	var fid = food.get("id", "")
-	if not fridge_foods.any(func(f): return f["id"] == fid):
-		fridge_foods.append(food)
-		fridge_quantities[fid] = qty
-		fridge_weights[fid] = {"total_g": 100.0 * qty, "remaining_g": 100.0 * qty}
-	else:
-		fridge_quantities[fid] = fridge_quantities.get(fid, 0) + qty
-		var w = fridge_weights.get(fid, {"total_g":100.0,"remaining_g":100.0})
-		w["total_g"]     += 100.0 * qty
-		w["remaining_g"] += 100.0 * qty
-		fridge_weights[fid] = w
+func _generate_iid() -> String:
+	return str(Time.get_ticks_usec())
+
+func add_to_fridge_multi(food: Dictionary, qty: int):
+	for i in range(qty):
+		add_to_fridge(food)
+
+func add_to_fridge(food: Dictionary):
+	var iid = _generate_iid()
+	var slot = food.duplicate()
+	slot["_iid"] = iid
+	fridge_foods.append(slot)
+	fridge_weights[iid] = {"total_g": 100.0, "remaining_g": 100.0}
+	# Ensure current page is valid
+	if current_page >= _get_total_pages():
+		current_page = _get_total_pages() - 1
 	save_fridge()
 	build_fridge_ui()
+
 
 # ── Remove one from fridge ──
 #func remove_one_from_fridge(food: Dictionary):
@@ -348,6 +407,8 @@ func add_to_fridge(food: Dictionary, qty: int = 1):
 	#save_fridge()
 	#build_fridge_ui()
 
+
+	
 # ── Build the fridge grid ──
 func build_fridge_ui():
 	var fridge = $Panel/FridgeContainer
@@ -356,11 +417,19 @@ func build_fridge_ui():
 	for child in fridge.get_children():
 		child.queue_free()
 
-	for food in fridge_foods:
-		var fid = food.get("id", "")
-		var qty = fridge_quantities.get(fid, 1)
-		var w   = fridge_weights.get(fid,{"remaining_g":100.0})
+# Clamp page
+	current_page = clamp(current_page, 0, max(0, _get_total_pages() - 1))
+	
+	# Get current page items
+	var start = current_page * ITEMS_PER_PAGE
+	var end   = min(start + ITEMS_PER_PAGE, fridge_foods.size())
+	var page_items = fridge_foods.slice(start, end)
+
+	for slot in page_items:
+		var iid       = slot.get("_iid","")
+		var w         = fridge_weights.get(iid, {"remaining_g":100.0})
 		var remaining = w.get("remaining_g",100.0)
+		var has_override = fridge_overrides.has(iid)
 
 		# Outer container to stack badge over button
 		var container = Control.new()
@@ -371,48 +440,85 @@ func build_fridge_ui():
 		btn.custom_minimum_size = Vector2(220, 220)
 		btn.size = Vector2(220, 220)
 		btn.position = Vector2(0, 0)
-		btn.tooltip_text = food.get("name", "") + " (" + str(snappedf(remaining,0.1)) + "g left)"
+		btn.tooltip_text = slot.get("name","") + "\n" + str(snappedf(remaining,0.1)) + "g remaining"
 
 		var icon = TextureRect.new()
-		icon.custom_minimum_size = Vector2(90, 90)
+		icon.custom_minimum_size = Vector2(90,90)
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		var path = "res://images/" + fid + ".png"
-		if ResourceLoader.exists(path):
-			icon.texture = load(path)
+		var path = "res://images/" + slot.get("id","") + ".png"
+		if ResourceLoader.exists(path): icon.texture = load(path)
 		btn.add_child(icon)
-
 		# Long press timer
 		var timer = Timer.new()
-		timer.wait_time = 1.4
+		timer.wait_time = 3
 		timer.one_shot = true
 		btn.add_child(timer)
 
 		timer.timeout.connect(func():
 			_long_press_active = true
-			_on_info_pressed(food)
+			_on_info_pressed(slot)
 		)
 
-		btn.gui_input.connect(func(event): _handle_fridge_input(event, food, btn, timer))
+		btn.gui_input.connect(func(event): _handle_fridge_input(event, slot, btn, timer))
 		container.add_child(btn)
 
 		# Count badge — only show if qty > 1
-		if qty > 1:
-			var badge = Label.new()
-			badge.text = str(qty)
-			badge.add_theme_font_size_override("font_size", 30)
-			badge.add_theme_color_override("font_color", Color.WHITE)
+		#if qty > 1:
+			#var badge = Label.new()
+			#badge.text = str(qty)
+			#badge.add_theme_font_size_override("font_size", 30)
+			#badge.add_theme_color_override("font_color", Color.WHITE)
 			# Position badge top-right corner
-			badge.position = Vector2(75, 2)
-			badge.custom_minimum_size = Vector2(50, 50)
+			#badge.position = Vector2(75, 2)
+			#badge.custom_minimum_size = Vector2(50, 50)
 			# Add a dark background panel behind badge
-			var badge_bg = ColorRect.new()
-			badge_bg.color = Color(0.1, 0.1, 0.1, 0.85)
-			badge_bg.size = Vector2(50, 50)
-			badge_bg.position = Vector2(75, 2)
-			container.add_child(badge_bg)
-			container.add_child(badge)
+			#var badge_bg = ColorRect.new()
+			#badge_bg.color = Color(0.1, 0.1, 0.1, 0.85)
+			#badge_bg.size = Vector2(50, 50)
+			#badge_bg.position = Vector2(75, 2)
+			#container.add_child(badge_bg)
+			#container.add_child(badge)
+
+		#fridge.add_child(container)
+		
+# Edit override indicator
+		if has_override:
+			var edit_dot = ColorRect.new()
+			edit_dot.color = Color(0.2, 0.6, 1.0, 0.9)
+			edit_dot.size = Vector2(14, 14)
+			edit_dot.position = Vector2(2, 2)
+			container.add_child(edit_dot)
 
 		fridge.add_child(container)
+
+	# Fill empty slots with invisible placeholders to keep grid shape
+	var empty_slots = ITEMS_PER_PAGE - page_items.size()
+	for i in range(empty_slots):
+		var placeholder = Control.new()
+		placeholder.custom_minimum_size = Vector2(110,110)
+		fridge.add_child(placeholder)
+
+	# Build dot indicators
+	_build_page_dots()
+
+func _build_page_dots():
+	var dots_container = $Panel/PageDots
+	if not dots_container: return
+	for child in dots_container.get_children():
+		child.queue_free()
+
+	var total = _get_total_pages()
+	if total <= 1: return
+
+	for i in range(total):
+		var dot = ColorRect.new()
+		dot.custom_minimum_size = Vector2(14, 14)
+		if i == current_page:
+			dot.color = Color.WHITE
+		else:
+			dot.color = Color(0.5, 0.5, 0.5, 0.7)
+		dots_container.add_child(dot)
+
 
 # ── Handle short/long press ──
 func _handle_fridge_input(event: InputEvent, food: Dictionary, _btn: Button, timer: Timer):
@@ -429,7 +535,6 @@ func _handle_fridge_input(event: InputEvent, food: Dictionary, _btn: Button, tim
 	if is_press:
 		_long_press_active = false
 		timer.start()
-
 	if is_release:
 		if timer.time_left > 0:
 			timer.stop()
@@ -461,7 +566,7 @@ func _open_action_popup(food: Dictionary):
 	# Title
 	var title = Label.new()
 	title.text = food.get("name","")
-	title.add_theme_font_size_override("font_size", 26)
+	title.add_theme_font_size_override("font_size", 40)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(title)
 
@@ -469,7 +574,7 @@ func _open_action_popup(food: Dictionary):
 	var weight_lbl = Label.new()
 	weight_lbl.name = "WeightLabel"
 	weight_lbl.text = "Remaining: " + str(snappedf(remaining_g, 0.1)) + " g"
-	weight_lbl.add_theme_font_size_override("font_size", 22)
+	weight_lbl.add_theme_font_size_override("font_size", 40)
 	vbox.add_child(weight_lbl)
 
 	var sep = HSeparator.new()
@@ -484,6 +589,7 @@ func _open_action_popup(food: Dictionary):
 		{"icon":"⚡",  "label":"By Gram",            "key":"gram"},
 		{"icon":"💊",  "label":"By Milligram",       "key":"milligram"},
 		{"icon":"🥛",  "label":"Glass\n(250mL)",     "key":"glass"},
+		{"icon":"✏️", "label":"Edit Nutrition",       "key":"edit_nutrition"},
 		{"icon":"🗑️",  "label":"Throw\nOut",         "key":"throw_out"},
 	]
 
@@ -496,14 +602,13 @@ func _open_action_popup(food: Dictionary):
 	grid.add_theme_constant_override("v_separation", 10)
 	vbox.add_child(grid)
 
-	for i in range(min(actions.size(), max_items)):
-		var action = actions[i]
+	for action in actions:
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(155, 80)
+		btn.custom_minimum_size = Vector2(108, 75)
 		btn.text = action["icon"] + "\n" + action["label"]
+		btn.add_theme_font_size_override("font_size", 40)
 		btn.pressed.connect(func(): _on_action_pressed(action["key"], food, popup, density, remaining_g))
 		grid.add_child(btn)
-
 	# Input area (hidden by default, shown for certain actions)
 	var input_area = VBoxContainer.new()
 	input_area.name = "InputArea"
@@ -514,43 +619,187 @@ func _open_action_popup(food: Dictionary):
 	var close_btn = Button.new()
 	close_btn.text = "✕ Close"
 	close_btn.custom_minimum_size = Vector2(0,55)
-	close_btn.add_theme_font_size_override("font_size",24)
+	close_btn.add_theme_font_size_override("font_size",40)
 	close_btn.pressed.connect(func(): popup.queue_free())
 	vbox.add_child(close_btn)
 
 	popup.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	add_child(popup)
 
-func _on_action_pressed(key: String, food: Dictionary, popup: PanelContainer, density: float, remaining_g: float):
-	var fid = food.get("id","")
-
+func _on_action_pressed(key: String, slot: Dictionary, popup: PanelContainer, density: float, remaining_g: float):
+	var iid = slot.get("_iid","")
 	match key:
-		"eat_whole":
-			_eat_portion(food, remaining_g, popup)
-
+		"eat_whole":      _eat_portion(slot, remaining_g, popup)
 		"throw_out":
-			_remove_food_from_fridge(fid)
+			_remove_slot(iid)
 			popup.queue_free()
-
 		"modify":
-			_show_input_area(popup, food, "modify", "New total weight (g):", 100, 10000, 1, density, remaining_g)
-
+			_show_input_area(popup, slot, "modify", "New total weight (g):", 1, 10000, 1, density, remaining_g)
 		"tablespoon":
-			# 1 tbsp = 15mL
-			var grams_per_tbsp = 15.0 * density
-			_show_input_area(popup, food, "tablespoon", "How many tablespoons?", 1, 50, 1, density, remaining_g)
-
+			_show_input_area(popup, slot, "tablespoon", "How many tablespoons?", 1, 50, 1, density, remaining_g)
 		"teaspoon":
-			_show_input_area(popup, food, "teaspoon", "How many teaspoons?", 1, 50, 1, density, remaining_g)
-
+			_show_input_area(popup, slot, "teaspoon", "How many teaspoons?", 1, 50, 1, density, remaining_g)
 		"gram":
-			_show_input_area(popup, food, "gram", "How many grams?", 1, 2000, 1, density, remaining_g)
-
+			_show_input_area(popup, slot, "gram", "How many grams?", 1, 2000, 1, density, remaining_g)
 		"milligram":
-			_show_input_area(popup, food, "milligram", "How many milligrams?", 100, 500000, 100, density, remaining_g)
-
+			_show_input_area(popup, slot, "milligram", "How many milligrams?", 100, 500000, 100, density, remaining_g)
 		"glass":
-			_show_input_area(popup, food, "glass", "How many glasses (250mL)?", 1, 10, 1, density, remaining_g)
+			_show_input_area(popup, slot, "glass", "How many glasses (250mL)?", 1, 10, 1, density, remaining_g)
+		"edit_nutrition":
+			_show_edit_nutrition(popup, slot)
+			
+# ─────────────────────────────────────────
+#  EDIT NUTRITIONAL CONTENT
+# ─────────────────────────────────────────
+
+# Fields the user can edit, with display labels and units
+const EDITABLE_FIELDS = [
+	{"key":"calories",        "label":"Calories",       "unit":"kcal", "step":0.1,  "max":2000},
+	{"key":"protein_g",       "label":"Protein",        "unit":"g",    "step":0.1,  "max":100},
+	{"key":"fat_g",           "label":"Fat",            "unit":"g",    "step":0.1,  "max":100},
+	{"key":"saturated_fat_g", "label":"Saturated Fat",  "unit":"g",    "step":0.1,  "max":100},
+	{"key":"carbs_g",         "label":"Carbs",          "unit":"g",    "step":0.1,  "max":100},
+	{"key":"sugar_g",         "label":"Sugar",          "unit":"g",    "step":0.1,  "max":100},
+	{"key":"fiber_g",         "label":"Fiber",          "unit":"g",    "step":0.1,  "max":50},
+	{"key":"calcium_mg",      "label":"Calcium",        "unit":"mg",   "step":1,    "max":2000},
+	{"key":"sodium_mg",       "label":"Sodium",         "unit":"mg",   "step":1,    "max":5000},
+	{"key":"iron_mg",         "label":"Iron",           "unit":"mg",   "step":0.1,  "max":50},
+	{"key":"vitamin_c_mg",    "label":"Vitamin C",      "unit":"mg",   "step":0.1,  "max":500},
+	{"key":"vitamin_d_mcg",   "label":"Vitamin D",      "unit":"mcg",  "step":0.1,  "max":100},
+	{"key":"vitamin_b12_mcg", "label":"Vitamin B12",    "unit":"mcg",  "step":0.01, "max":100},
+]
+
+func _show_edit_nutrition(popup: PanelContainer, slot: Dictionary):
+	var input_area = popup.find_child("InputArea", true, false)
+	if not input_area: return
+	for child in input_area.get_children():
+		child.queue_free()
+	input_area.visible = true
+
+	var iid = slot.get("_iid","")
+	var existing_overrides = fridge_overrides.get(iid, {})
+
+	var scroll = ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 350)
+	input_area.add_child(scroll)
+
+	var fields_vbox = VBoxContainer.new()
+	fields_vbox.add_theme_constant_override("separation", 8)
+	scroll.add_child(fields_vbox)
+
+	# Title
+	var title = Label.new()
+	title.text = "Edit nutritional values (per 100g)"
+	title.add_theme_font_size_override("font_size", 40)
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	fields_vbox.add_child(title)
+
+	fields_vbox.add_child(HSeparator.new())
+
+	# Track spinboxes for save
+	var spinboxes: Dictionary = {}
+
+	for field_def in EDITABLE_FIELDS:
+		var key   = field_def["key"]
+		var lbl   = field_def["label"]
+		var unit  = field_def["unit"]
+		var step  = field_def["step"]
+		var max_v = field_def["max"]
+
+		# Current value — use override if exists, else json value
+		var current_val = existing_overrides.get(key, slot.get(key, 0.0))
+		var default_val = slot.get(key, 0.0)
+		var is_overridden = existing_overrides.has(key)
+
+		var row = HBoxContainer.new()
+		row.custom_minimum_size = Vector2(0, 55)
+		fields_vbox.add_child(row)
+
+		var row_lbl = Label.new()
+		row_lbl.text = lbl + " (" + unit + ")"
+		row_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row_lbl.add_theme_font_size_override("font_size", 40)
+		if is_overridden:
+			row_lbl.add_theme_color_override("font_color", Color(0.4, 0.8, 1.0))
+		row.add_child(row_lbl)
+
+		var spin = SpinBox.new()
+		spin.min_value = 0.0
+		spin.max_value = max_v
+		spin.step = step
+		spin.value = current_val
+		spin.custom_minimum_size = Vector2(140, 50)
+		spin.add_theme_font_size_override("font_size", 40)
+		row.add_child(spin)
+		spinboxes[key] = spin
+
+		# Default hint
+		var default_lbl = Label.new()
+		default_lbl.text = "(" + str(snappedf(default_val, 0.01)) + ")"
+		default_lbl.add_theme_font_size_override("font_size", 40)
+		default_lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+		row.add_child(default_lbl)
+
+	fields_vbox.add_child(HSeparator.new())
+
+	# Buttons row
+	var btn_row = HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 10)
+	fields_vbox.add_child(btn_row)
+
+	# Save button
+	var save_btn = Button.new()
+	save_btn.text = "💾 Save"
+	save_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	save_btn.custom_minimum_size = Vector2(0, 55)
+	save_btn.add_theme_font_size_override("font_size", 40)
+	save_btn.pressed.connect(func():
+		# Save only fields that differ from json defaults
+		var overrides = {}
+		for field_def in EDITABLE_FIELDS:
+			var key       = field_def["key"]
+			var spin      = spinboxes[key]
+			var json_val  = slot.get(key, 0.0)
+			var new_val   = spin.value
+			# Save if different from json (tolerance: 0.001)
+			if abs(new_val - json_val) > 0.001:
+				overrides[key] = new_val
+		if overrides.is_empty():
+			fridge_overrides.erase(iid)
+		else:
+			fridge_overrides[iid] = overrides
+		save_fridge()
+		build_fridge_ui()
+		popup.queue_free()
+	)
+	btn_row.add_child(save_btn)
+
+	# Reset button
+	var reset_btn = Button.new()
+	reset_btn.text = "↺ Reset"
+	reset_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	reset_btn.custom_minimum_size = Vector2(0, 55)
+	reset_btn.add_theme_font_size_override("font_size", 40)
+	reset_btn.pressed.connect(func():
+		fridge_overrides.erase(iid)
+		save_fridge()
+		build_fridge_ui()
+		popup.queue_free()
+	)
+	btn_row.add_child(reset_btn)
+
+# ─────────────────────────────────────────
+#  HELPER — get effective food values (overrides applied)
+# ─────────────────────────────────────────
+func _get_effective_slot(slot: Dictionary) -> Dictionary:
+	var iid = slot.get("_iid","")
+	var overrides = fridge_overrides.get(iid, {})
+	if overrides.is_empty(): return slot
+	var effective = slot.duplicate()
+	for key in overrides.keys():
+		effective[key] = overrides[key]
+	return effective
+
 
 func _show_input_area(popup: PanelContainer, food: Dictionary, action_key: String, prompt: String, min_val: float, max_val: float, step: float, density: float, remaining_g: float):
 	var input_area = popup.find_child("InputArea", true, false)
@@ -563,7 +812,7 @@ func _show_input_area(popup: PanelContainer, food: Dictionary, action_key: Strin
 
 	var lbl = Label.new()
 	lbl.text = prompt
-	lbl.add_theme_font_size_override("font_size", 22)
+	lbl.add_theme_font_size_override("font_size", 40)
 	input_area.add_child(lbl)
 
 	var spin = SpinBox.new()
@@ -577,7 +826,7 @@ func _show_input_area(popup: PanelContainer, food: Dictionary, action_key: Strin
 	# Preview label
 	var preview = Label.new()
 	preview.name = "Preview"
-	preview.add_theme_font_size_override("font_size", 20)
+	preview.add_theme_font_size_override("font_size", 40)
 	input_area.add_child(preview)
 
 	# Update preview on value change
@@ -592,7 +841,7 @@ func _show_input_area(popup: PanelContainer, food: Dictionary, action_key: Strin
 	var confirm_btn = Button.new()
 	confirm_btn.text = "✓ Confirm"
 	confirm_btn.custom_minimum_size = Vector2(0, 55)
-	confirm_btn.add_theme_font_size_override("font_size", 24)
+	confirm_btn.add_theme_font_size_override("font_size", 40)
 	confirm_btn.pressed.connect(func():
 		var val = spin.value
 		if action_key == "modify":
@@ -615,21 +864,21 @@ func _calc_portion_g(action_key: String, value: float, density: float) -> float:
 # ─────────────────────────────────────────
 #  EAT PORTION — scales nutrients by grams eaten
 # ─────────────────────────────────────────
-func _eat_portion(food: Dictionary, portion_g: float, popup: PanelContainer):
-	var fid = food.get("id","")
-	var w   = fridge_weights.get(fid, {"total_g":100.0,"remaining_g":100.0})
-	var remaining = w.get("remaining_g", 100.0)
-
-	# Cap portion at remaining
+func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
+	var iid       = slot.get("_iid","")
+	var w         = fridge_weights.get(iid, {"total_g":100.0,"remaining_g":100.0})
+	var remaining = w.get("remaining_g",100.0)
 	portion_g = min(portion_g, remaining)
 	if portion_g <= 0:
 		popup.queue_free()
 		return
 
-	# Scale a food dict to the portion
-	var scaled = food.duplicate()
-	var ratio = portion_g / 100.0
-	var scalable_fields = [
+	# Apply overrides before scaling
+	var effective = _get_effective_slot(slot)
+	var scaled    = effective.duplicate()
+	var ratio     = portion_g / 100.0
+
+	var scalable = [
 		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
 		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
 		"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
@@ -642,27 +891,22 @@ func _eat_portion(food: Dictionary, portion_g: float, popup: PanelContainer):
 		"lutein_zeaxanthin_mcg","quercetin_mg","anthocyanins_mg",
 		"resveratrol_mg","total_polyphenols_mg","oxalate_mg_per_100g"
 	]
-	for field in scalable_fields:
+	for field in scalable:
 		if scaled.has(field):
 			scaled[field] = scaled[field] * ratio
 
-	# Update remaining weight
 	remaining -= portion_g
 	w["remaining_g"] = remaining
-	fridge_weights[fid] = w
+	fridge_weights[iid] = w
 
-	# Remove from fridge if empty
 	if remaining <= 0.1:
-		_remove_food_from_fridge(fid)
+		_remove_slot(iid)
 	else:
-		# Update quantity display (rough: 1 qty per 100g)
-		fridge_quantities[fid] = max(1, int(ceil(remaining / 100.0)))
 		save_fridge()
 		build_fridge_ui()
 
 	popup.queue_free()
 
-	# Log scaled nutrients to HomePage
 	var main = get_tree().root.get_node("Main")
 	var home = main.get_node_or_null("ContentArea/HomePage")
 	if home == null:
@@ -670,55 +914,52 @@ func _eat_portion(food: Dictionary, portion_g: float, popup: PanelContainer):
 	else:
 		home.log_food(scaled)
 
-# ─────────────────────────────────────────
-#  MODIFY WEIGHT — change total package weight
-# ─────────────────────────────────────────
-func _modify_weight(food: Dictionary, new_total_g: float, popup: PanelContainer):
-	var fid = food.get("id","")
-	var w   = fridge_weights.get(fid, {"total_g":100.0,"remaining_g":100.0})
-	var old_total    = w.get("total_g", 100.0)
-	var old_remaining = w.get("remaining_g", 100.0)
-
-	# Scale remaining proportionally
-	var ratio = old_remaining / old_total if old_total > 0 else 1.0
+func _modify_weight(slot: Dictionary, new_total_g: float, popup: PanelContainer):
+	var iid = slot.get("_iid","")
+	var w   = fridge_weights.get(iid,{"total_g":100.0,"remaining_g":100.0})
+	var ratio = w.get("remaining_g",100.0) / w.get("total_g",100.0) if w.get("total_g",100.0) > 0 else 1.0
 	w["total_g"]     = new_total_g
 	w["remaining_g"] = new_total_g * ratio
-	fridge_weights[fid] = w
-	fridge_quantities[fid] = max(1, int(ceil(w["remaining_g"] / 100.0)))
-
+	fridge_weights[iid] = w
 	save_fridge()
 	build_fridge_ui()
 	popup.queue_free()
 
-# ─────────────────────────────────────────
-#  REMOVE FOOD FROM FRIDGE
-# ─────────────────────────────────────────
-func _remove_food_from_fridge(fid: String):
-	fridge_foods = fridge_foods.filter(func(f): return f["id"] != fid)
-	fridge_quantities.erase(fid)
-	fridge_weights.erase(fid)
+func _remove_slot(iid: String):
+	fridge_foods = fridge_foods.filter(func(f): return f.get("_iid","") != iid)
+	fridge_weights.erase(iid)
+	fridge_overrides.erase(iid)
+	# Clamp page
+	if current_page >= _get_total_pages():
+		current_page = max(0, _get_total_pages() - 1)
 	save_fridge()
 	build_fridge_ui()
 
 # ── Show nutritional info bubble ──
 func _on_info_pressed(food: Dictionary):
+	var slot = food
 	var existing = get_node_or_null("InfoBubble")
 	if existing:
 		existing.queue_free()
 
+	var effective = _get_effective_slot(slot)
+	var iid       = slot.get("_iid","")
+	var has_override = fridge_overrides.has(iid)
+
 	var bubble = PanelContainer.new()
 	bubble.name = "InfoBubble"
-	bubble.custom_minimum_size = Vector2(340, 400)
+	bubble.custom_minimum_size = Vector2(340, 420)
 
 	var vbox = VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 40)
 	bubble.add_child(vbox)
 
 	var title = Label.new()
-	title.text = food.get("name", "") + " (per 100g)"
-	title.add_theme_font_size_override("font_size", 50)
+	title.text = slot.get("name","") + " (per 100g)" + (" ✏️" if has_override else "")
+	title.add_theme_font_size_override("font_size", 40)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(title)
+	vbox.add_child(HSeparator.new())
 
 	var separator = HSeparator.new()
 	separator.add_theme_constant_override("h_separation", 30)
@@ -742,17 +983,17 @@ func _on_info_pressed(food: Dictionary):
 		var key_lbl = Label.new()
 		key_lbl.text = pair[0]
 		key_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		key_lbl.add_theme_font_size_override("font_size", 26)
+		key_lbl.add_theme_font_size_override("font_size", 40)
 		var val_lbl = Label.new()
 		val_lbl.text = pair[1]
-		val_lbl.add_theme_font_size_override("font_size", 26)
+		val_lbl.add_theme_font_size_override("font_size", 40)
 		row.add_child(key_lbl)
 		row.add_child(val_lbl)
 		vbox.add_child(row)
 
 	var close_btn = Button.new()
 	close_btn.text = "✕ Close"
-	close_btn.add_theme_font_size_override("font_size", 28)
+	close_btn.add_theme_font_size_override("font_size", 40)
 	close_btn.custom_minimum_size = Vector2(0, 60)
 	close_btn.pressed.connect(func(): bubble.queue_free())
 	vbox.add_child(close_btn)
@@ -817,8 +1058,8 @@ func save_fridge():
 	var file = FileAccess.open("user://fridge.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"fridge": fridge_foods,
-		"quantities": fridge_quantities,
-		"weights": fridge_weights
+		"weights":   fridge_weights,
+		"overrides": fridge_overrides
 	}))
 	file.close()
 
@@ -830,14 +1071,10 @@ func load_fridge():
 	if not data: return
 	if data.has("fridge"):
 		fridge_foods = data["fridge"]
-	if data.has("quantities"):
-		fridge_quantities = data["quantities"]
-	if data.has("weights"):
-		fridge_weights = data["weights"]
-	else:
-		# Migrate old saves — give everything qty 1
-		for food in fridge_foods:
-			var fid = food.get("id","")
-			var qty = fridge_quantities.get(fid,1)
-			fridge_weights[fid] = {"total_g": 100.0 * qty, "remaining_g": 100.0 * qty}
+		# Migrate old saves without _iid
+		for slot in fridge_foods:
+			if not slot.has("_iid"):
+				slot["_iid"] = _generate_iid()
+	if data.has("weights"):   fridge_weights   = data["weights"]
+	if data.has("overrides"): fridge_overrides = data["overrides"]
 	build_fridge_ui()
