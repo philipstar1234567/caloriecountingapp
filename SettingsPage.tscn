@@ -14,25 +14,28 @@ theme = ExtResource("1_shg78")
 script = ExtResource("1_n364n")
 
 [node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(0, 5000)
 layout_mode = 1
-anchors_preset = 15
+anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchor_bottom = 2.917
+offset_top = 2.0
+offset_bottom = 1616.16
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 clip_contents = false
+custom_minimum_size = Vector2(0, 2532)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -12.0
+offset_top = 334.0
+offset_bottom = -6134.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/ScrollContainer"]
-custom_minimum_size = Vector2(1170, 2532)
+custom_minimum_size = Vector2(1170, 9000)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
@@ -40,7 +43,7 @@ theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer"]
-custom_minimum_size = Vector2(0, 6000)
+custom_minimum_size = Vector2(0, 9000)
 layout_mode = 2
 size_flags_horizontal = 7
 size_flags_vertical = 7
@@ -57,18 +60,16 @@ layout_mode = 2
 text = "reset"
 
 [node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 1089)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel"]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 48.0
-offset_bottom = 1088.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
@@ -177,13 +178,16 @@ text = "Daily goal: —"
 layout_mode = 2
 
 [node name="KidneyCarePanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel"]
-layout_mode = 0
-offset_top = 1138.0
-offset_right = 1138.0
-offset_bottom = 1623.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/KidneyCarePanel/VBoxContainer"]
 layout_mode = 2
@@ -242,15 +246,17 @@ text = "eGFR:"
 layout_mode = 2
 text = "-"
 
-[node name="GlycemicPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 200)
+[node name="GlycemicPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 450)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel"]
-layout_mode = 0
-offset_top = 1862.0
-offset_right = 1148.0
-offset_bottom = 2282.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GlycemicPanel/VBoxContainer"]
 layout_mode = 2
@@ -285,15 +291,17 @@ text = "calculate"
 layout_mode = 2
 text = "-"
 
-[node name="NAFLDPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 300)
+[node name="NAFLDPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 600)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel"]
-layout_mode = 0
-offset_top = 2112.0
-offset_right = 1143.0
-offset_bottom = 2638.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/NAFLDPanel/VBoxContainer"]
 layout_mode = 2
@@ -335,15 +343,17 @@ text = "calculate"
 layout_mode = 2
 text = "-"
 
-[node name="LipidPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 400)
+[node name="LipidPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 800)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel"]
-layout_mode = 0
-offset_top = 2376.0
-offset_right = 1144.0
-offset_bottom = 3008.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LipidPanel/VBoxContainer"]
 layout_mode = 2
@@ -396,15 +406,17 @@ text = "calculate"
 layout_mode = 2
 text = "-"
 
-[node name="ThyroidPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 350)
+[node name="ThyroidPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel"]
-layout_mode = 0
-offset_top = 2646.0
-offset_right = 1137.0
-offset_bottom = 3123.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/ThyroidPanel/VBoxContainer"]
 layout_mode = 2
@@ -443,15 +455,17 @@ text = "calculate"
 layout_mode = 2
 text = "-"
 
-[node name="OsteoPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 300)
+[node name="OsteoPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 550)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel"]
-layout_mode = 0
-offset_top = 2813.0
-offset_right = 1240.0
-offset_bottom = 3329.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/OsteoPanel/VBoxContainer"]
 layout_mode = 2
@@ -488,15 +502,17 @@ text = "calculate"
 layout_mode = 2
 text = "-"
 
-[node name="HemoPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 300)
+[node name="HemoPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 450)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel"]
-layout_mode = 0
-offset_top = 3065.0
-offset_right = 1176.0
-offset_bottom = 3485.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel/VBoxContainer"]
 layout_mode = 2
@@ -533,15 +549,17 @@ text = "calculate"
 layout_mode = 2
 text = "-"
 
-[node name="WilsonPanel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 300)
+[node name="WilsonPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 450)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel"]
-layout_mode = 0
-offset_top = 3222.0
-offset_right = 1098.0
-offset_bottom = 3642.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer"]
 layout_mode = 2
@@ -573,5 +591,161 @@ layout_mode = 2
 text = "calculate"
 
 [node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/WilsonPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="GILabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gastrointestinal Health"
+
+[node name="SulfurPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/SulfurPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/SulfurPanel/VBoxContainer"]
+layout_mode = 2
+text = "Sulfur Avoidance"
+
+[node name="KnownSulfur" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/SulfurPanel/VBoxContainer"]
+layout_mode = 2
+text = "Avoid sulfur-containing foods"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/SulfurPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="CrohnsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Crohn's Disease"
+
+[node name="KnownCrohns" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Diagnosed with Crohn's disease"
+
+[node name="ActiveFlare" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel/VBoxContainer"]
+layout_mode = 2
+text = "Currently in active flare"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="CeliacPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CeliacPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CeliacPanel/VBoxContainer"]
+layout_mode = 2
+text = "Celiac Disease"
+
+[node name="KnownCeliac" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CeliacPanel/VBoxContainer"]
+layout_mode = 2
+text = "Diagnosed with celiac disease"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CeliacPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="LactosePanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LactosePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LactosePanel/VBoxContainer"]
+layout_mode = 2
+text = "Lactose Intolerance"
+
+[node name="KnownLactose" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LactosePanel/VBoxContainer"]
+layout_mode = 2
+text = "Lactose intolerant"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/LactosePanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="EPIPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/EPIPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/EPIPanel/VBoxContainer"]
+layout_mode = 2
+text = "Pancreatic Insufficiency (EPI)"
+
+[node name="KnownEPI" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/EPIPanel/VBoxContainer"]
+layout_mode = 2
+text = "Diagnosed with EPI"
+
+[node name="PERTCheckBox" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/EPIPanel/VBoxContainer"]
+layout_mode = 2
+text = "Currently using PERT"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/EPIPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="CholecystPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CholecystPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CholecystPanel/VBoxContainer"]
+layout_mode = 2
+text = "Post-Cholecystectomy"
+
+[node name="KnownCholecyst" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CholecystPanel/VBoxContainer"]
+layout_mode = 2
+text = "Had gallbladder removed"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CholecystPanel/VBoxContainer"]
 layout_mode = 2
 text = "-"

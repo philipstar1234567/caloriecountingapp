@@ -26,6 +26,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 145.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -269,4 +270,161 @@ layout_mode = 2
 text = "0 mg"
 
 [node name="VitABar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitALabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitABar"]
+layout_mode = 2
+text = "Vitamin A"
+
+[node name="VitAValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitABar"]
+layout_mode = 2
+
+[node name="VitCBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitCLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitCBar"]
+layout_mode = 2
+text = "Vitamin C"
+
+[node name="VitCValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitCBar"]
+layout_mode = 2
+
+[node name="VitDBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitDLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitDBar"]
+layout_mode = 2
+text = "Vitamin D"
+
+[node name="VitDValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitDBar"]
+layout_mode = 2
+
+[node name="VitEBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitELabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitEBar"]
+layout_mode = 2
+text = "Vitamin E"
+
+[node name="VitEValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitEBar"]
+layout_mode = 2
+
+[node name="VitK2Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitK2Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitK2Bar"]
+layout_mode = 2
+text = "Vitamin K2"
+
+[node name="VitK2Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitK2Bar"]
+layout_mode = 2
+
+[node name="VitB6Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitB6Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB6Bar"]
+layout_mode = 2
+text = "Vitamin B6"
+
+[node name="VitB6Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB6Bar"]
+layout_mode = 2
+
+[node name="VitB9Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitB9Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB9Bar"]
+layout_mode = 2
+text = "Vitamin B9"
+
+[node name="VitB9Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB9Bar"]
+layout_mode = 2
+
+[node name="VitB12Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VitB12Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB12Bar"]
+layout_mode = 2
+text = "Vitamin B12"
+
+[node name="VitB12Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB12Bar"]
+layout_mode = 2
+
+[node name="MgBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MgLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MgBar"]
+layout_mode = 2
+text = "Mg"
+
+[node name="MgValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MgBar"]
+layout_mode = 2
+
+[node name="KBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="KLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KBar"]
+layout_mode = 2
+text = "K"
+
+[node name="KValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KBar"]
+layout_mode = 2
+
+[node name="ZnBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ZnLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/ZnBar"]
+layout_mode = 2
+text = "Zn"
+
+[node name="ZnValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/ZnBar"]
+layout_mode = 2
+
+[node name="IBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="ILabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IBar"]
+layout_mode = 2
+text = "I"
+
+[node name="IValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IBar"]
+layout_mode = 2
+
+[node name="BetaCarBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="BetaCarLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BetaCarBar"]
+layout_mode = 2
+text = "Beta Car"
+
+[node name="BetaCarValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BetaCarBar"]
+layout_mode = 2
+
+[node name="LycoBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LycoLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/LycoBar"]
+layout_mode = 2
+text = "Lyco"
+
+[node name="LycoValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/LycoBar"]
+layout_mode = 2
+
+[node name="QuercBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="QuercLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/QuercBar"]
+layout_mode = 2
+text = "Querc"
+
+[node name="QuercValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/QuercBar"]
+layout_mode = 2
+
+[node name="PolyphenBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PolyphenLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyphenBar"]
+layout_mode = 2
+text = "Polyphen"
+
+[node name="PolyphenValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyphenBar"]
 layout_mode = 2

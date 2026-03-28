@@ -129,6 +129,40 @@ func calculate_adjusted_kcal_goal() -> Dictionary:
 					adjusted = bmr
 					notes.append("Osteoporosis: minimum BMR (" + str(snappedf(bmr, 0)) + " kcal) to protect bone health")
 
+			"crohns-disease":
+	# REE is 28.8 kcal/kg in active phase vs 25.9 in remission
+	# Add ~600 kcal/day ONS supplement equivalent + high protein needs
+				var extra = weight * 2.9  # difference (28.8 - 25.9) × weight
+				adjusted += extra + 600.0
+				notes.append("Crohn's: +" + str(snappedf(extra + 600.0, 0)) + " kcal for hypermetabolism + nutritional support")
+
+			"celiac-disease":
+	# After GFD, watch for excessive gain from high-calorie GFD foods
+	# If already overweight, apply mild deficit
+				if is_overweight:
+					adjusted -= 200.0
+					notes.append("Celiac: −200 kcal/day to prevent GFD-related weight gain")
+
+			"lactose-intolerance":
+	# Dairy avoidance removes ~150-200 kcal from average diet
+	# Compensate to prevent deficiency
+				adjusted += 150.0
+				notes.append("Lactose intolerance: +150 kcal to compensate dairy exclusion")
+
+			"epi":
+	# High-calorie diet: 30-35 kcal/kg
+				var epi_target = weight * 32.5  # middle of 30-35 range
+				if epi_target > adjusted:
+					adjusted = epi_target
+					notes.append("EPI: goal set to 32.5 kcal/kg = " + str(snappedf(epi_target, 0)) + " kcal (with PERT)")
+
+			"post-cholecystectomy":
+	# Short-term: low fat diet reduces kcal
+	# Long-term: tendency to weight gain → mild deficit if overweight
+				if is_overweight:
+					adjusted -= 200.0
+					notes.append("Post-cholecystectomy: −200 kcal/day to prevent post-surgical BMI increase")
+				notes.append("Post-cholecystectomy: eat 5-6 small meals instead of 3 large ones")
 	# Hard floor — never go below BMR regardless of conditions
 	if adjusted < bmr:
 		adjusted = bmr
@@ -147,6 +181,12 @@ var metabolic_risk_levels: Dictionary = {
 	"osteoporosis": "normal",      # normal / borderline / high-turnover
 	"hemochromatosis": "normal",   # normal / borderline / overload
 	"wilsons-disease": "normal",   # normal / suspicious / likely
+	"sulfur-avoidance": "confirmed",   # checkbox only, no calculator
+	"crohns-disease": "normal",
+	"celiac-disease": "confirmed",     # checkbox only
+	"lactose-intolerance": "confirmed",# checkbox only
+	"epi": "normal",
+	"post-cholecystectomy": "confirmed",# checkbox only
 }
 
 # ── Oxalate/kidney warning thresholds ──
@@ -221,6 +261,48 @@ var metabolic_warnings_data = {
 		"caution": 300.0, "avoid": 600.0,
 		"caution_msg": "Moderate sodium — can increase calcium loss.",
 		"avoid_msg": "High sodium. Avoid — significantly increases calcium loss."
+	},
+		"sulfur-avoidance": {
+		"label": "Sulfur Avoidance",
+		"field": "sulfur_mg",
+		"caution": 80.0, "avoid": 150.0,
+		"caution_msg": "Moderate sulfur content — may cause gas/bloating.",
+		"avoid_msg": "High sulfur food — avoid if sensitive to sulfur compounds."
+	},
+	"crohns-disease-fiber": {
+		"label": "Crohn's Disease",
+		"field": "fiber_g",
+		"caution": 2.0, "avoid": 4.0,
+		"caution_msg": "Moderate fiber — limit during active flares.",
+		"avoid_msg": "High fiber — avoid during Crohn's flares or with strictures."
+	},
+	"celiac-disease": {
+		"label": "Celiac Disease",
+		"field": "contains_gluten",
+		"caution": 0.5, "avoid": 0.5,
+		"caution_msg": "Contains gluten — avoid with celiac disease.",
+		"avoid_msg": "Contains gluten — strictly avoid with celiac disease."
+},
+	"lactose-intolerance": {
+		"label": "Lactose Intolerance",
+		"field": "lactose_g",
+		"caution": 3.0, "avoid": 6.0,
+		"caution_msg": "Contains lactose — may cause discomfort. Limit portion.",
+		"avoid_msg": "High lactose content — avoid or use lactase enzyme."
+	},
+	"epi": {
+		"label": "Pancreatic Insufficiency",
+		"field": "fat_g",
+		"caution": 10.0, "avoid": 20.0,
+		"caution_msg": "Moderate fat — take PERT with this meal.",
+		"avoid_msg": "High fat content — ensure adequate PERT dosing."
+	},
+	"post-cholecystectomy": {
+		"label": "Post-Cholecystectomy",
+		"field": "fat_g",
+		"caution": 8.0, "avoid": 15.0,
+		"caution_msg": "Moderate fat — eat small portions, chew slowly.",
+		"avoid_msg": "High fat — may cause diarrhea post-cholecystectomy. Avoid or split into smaller meals."
 	},
 }
 
@@ -329,6 +411,18 @@ func get_visible_micronutrients() -> Array:
 	if c.has("lipid-health"):
 		for f in ["lycopene_mcg","total_polyphenols_mg"]:
 			if not visible.has(f): visible.append(f)
+	if c.has("crohns-disease"):
+		for f in ["vitamin_b12_mcg","vitamin_d_mcg","zinc_mg","magnesium_mg"]:
+			if not visible.has(f): visible.append(f)
+	if c.has("celiac-disease"):
+		for f in ["vitamin_b9_mcg","vitamin_d_mcg","zinc_mg","iron_mg"]:
+			if not visible.has(f): visible.append(f)
+	if c.has("epi"):
+		for f in ["vitamin_a_mcg","vitamin_d_mcg","vitamin_e_mg","vitamin_k2_mcg"]:
+			if not visible.has(f): visible.append(f)
+	if c.has("post-cholecystectomy"):
+		for f in ["vitamin_d_mcg","vitamin_k2_mcg"]:
+			if not visible.has(f): visible.append(f)
 
 	return visible
 
@@ -370,20 +464,29 @@ func get_warnings(food: Dictionary) -> Array:
 
 	# Metabolic conditions
 	for condition in active_metabolic_conditions:
-		# Some conditions have multiple checks (nafld checks both sugar and fat)
 		var keys_to_check = [condition]
 		if condition == "nafld":
-			keys_to_check = ["nafld", "nafld-fat"]
+			keys_to_check = ["nafld","nafld-fat"]
+		if condition == "crohns-disease":
+			keys_to_check = ["crohns-disease-fiber"]
 
 		for wkey in keys_to_check:
 			if not metabolic_warnings_data.has(wkey): continue
 			var w = metabolic_warnings_data[wkey]
-			var value = food.get(w["field"], 0.0)
+			var field = w["field"]
+
+			# Special case: boolean field (gluten)
+			if field == "contains_gluten":
+				if food.get("contains_gluten", false):
+					warnings.append({"severity":"avoid","message":w["avoid_msg"]})
+				break
+
+			var value = food.get(field, 0.0)
 			if value >= w["avoid"]:
-				warnings.append({"severity": "avoid", "message": w["avoid_msg"]})
-				break  # only one warning per condition
+				warnings.append({"severity":"avoid","message":w["avoid_msg"]})
+				break
 			elif value >= w["caution"]:
-				warnings.append({"severity": "caution", "message": w["caution_msg"]})
+				warnings.append({"severity":"caution","message":w["caution_msg"]})
 				break
 
 	return warnings

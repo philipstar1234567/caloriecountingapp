@@ -50,73 +50,110 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_wvv7q")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -1268.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TopBar" type="HBoxContainer" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(400, 400)
+[node name="TopBar" type="HBoxContainer" parent="Panel"]
+z_index = 1
+custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
+offset_left = 381.0
+offset_top = 330.0
+offset_right = 789.0
+offset_bottom = 738.0
 size_flags_horizontal = 4
-size_flags_vertical = 6
+size_flags_vertical = 4
 
-[node name="ListButton" type="Button" parent="Panel/VBoxContainer/TopBar"]
+[node name="ListButton" type="Button" parent="Panel/TopBar"]
 layout_mode = 2
 icon = ExtResource("2_xepse")
 flat = true
 
-[node name="ShoppingListPanel" type="Panel" parent="Panel/VBoxContainer"]
+[node name="ShoppingListPanel" type="Panel" parent="Panel"]
+top_level = true
+z_index = 1
+custom_minimum_size = Vector2(0, 1800)
 layout_mode = 2
+offset_top = 215.0
+offset_right = 1170.0
+offset_bottom = 2543.0
+mouse_force_pass_scroll_events = false
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ShoppingListPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -802.0
-offset_bottom = 1264.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ShoppingListPanel"]
+layout_mode = 0
+offset_right = 1144.0
+offset_bottom = 1790.0
 theme = SubResource("Theme_xepse")
 
-[node name="TopBar2" type="HBoxContainer" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer"]
+[node name="TopBar2" type="HBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="SearchBar" type="LineEdit" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2"]
-custom_minimum_size = Vector2(900, 150)
+[node name="SearchBar" type="LineEdit" parent="Panel/ShoppingListPanel/VBoxContainer/TopBar2"]
+custom_minimum_size = Vector2(900, 10)
 layout_mode = 2
 theme_override_font_sizes/font_size = 30
 
-[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2"]
+[node name="CloseButton" type="Button" parent="Panel/ShoppingListPanel/VBoxContainer/TopBar2"]
 custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 icon = ExtResource("4_2hr5r")
 flat = true
 
-[node name="TabContainer" type="TabContainer" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer"]
+[node name="FilterPanel" type="Panel" parent="Panel/ShoppingListPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 120)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 7.0
+offset_right = 1167.0
+offset_bottom = 113.0
+
+[node name="FilterScrollH" type="ScrollContainer" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="FilterButtonsRow" type="HBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH"]
+layout_mode = 2
+
+[node name="SortRow" type="HBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="SortLabel" type="Label" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow"]
+layout_mode = 2
+text = "Sort:"
+
+[node name="SortAscBtn" type="Button" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow"]
+layout_mode = 2
+text = "↑ Asc"
+
+[node name="SortDescBtn" type="Button" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow"]
+layout_mode = 2
+text = "↓ Desc"
+
+[node name="ActiveFiltersLabel" type="Label" parent="Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+layout_mode = 2
+text = "No filters active"
+
+[node name="TabContainer" type="TabContainer" parent="Panel/ShoppingListPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 450)
 layout_mode = 2
 theme = SubResource("Theme_vo4mu")
 theme_override_font_sizes/font_size = 50
 
-[node name="ShoppingListContainer" type="VBoxContainer" parent="Panel/VBoxContainer/ShoppingListPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 1400)
+[node name="ShoppingListContainer" type="VBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 1000)
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 0
 
-[node name="FridgeContainer" type="GridContainer" parent="."]
+[node name="FridgeContainer" type="GridContainer" parent="Panel"]
+z_as_relative = false
 custom_minimum_size = Vector2(751, 1377)
 layout_mode = 2
-offset_left = 206.0
-offset_top = 829.0
-offset_right = 980.0
-offset_bottom = 2206.0
+offset_left = 209.0
+offset_top = 887.0
+offset_right = 960.0
+offset_bottom = 2404.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/h_separation = 20

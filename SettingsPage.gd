@@ -10,6 +10,12 @@ const THYR   = BASE + "ThyroidPanel/VBoxContainer/"
 const OSTEO  = BASE + "OsteoPanel/VBoxContainer/"
 const HEMO   = BASE + "HemoPanel/VBoxContainer/"
 const WILS   = BASE + "WilsonPanel/VBoxContainer/"
+const SULF   = BASE + "SulfurPanel/VBoxContainer/"
+const CROHN  = BASE + "CrohnsPanel/VBoxContainer/"
+const CELIAC = BASE + "CeliacPanel/VBoxContainer/"
+const LACT   = BASE + "LactosePanel/VBoxContainer/"
+const EPI    = BASE + "EPIPanel/VBoxContainer/"
+const CHOLE  = BASE + "CholecystPanel/VBoxContainer/"
 
 # ─────────────────────────────────────────
 #  UNIT DEFINITIONS
@@ -142,6 +148,13 @@ func _ready():
 	get_node(OSTEO + "InputFields/CalculateButton").pressed.connect(_on_calculate_osteo)
 	get_node(HEMO  + "InputFields/CalculateButton").pressed.connect(_on_calculate_hemo)
 	get_node(WILS  + "InputFields/CalculateButton").pressed.connect(_on_calculate_wilson)
+	# GI conditions — checkbox only (no blood tests)
+	get_node(SULF  + "KnownSulfur").toggled.connect(func(c):    _on_known_metabolic("sulfur-avoidance", c, SULF))
+	get_node(CROHN + "KnownCrohns").toggled.connect(func(c):   _on_known_gi_crohns(c))
+	get_node(CELIAC + "KnownCeliac").toggled.connect(func(c):  _on_known_metabolic("celiac-disease", c, CELIAC))
+	get_node(LACT  + "KnownLactose").toggled.connect(func(c):  _on_known_metabolic("lactose-intolerance", c, LACT))
+	get_node(EPI   + "KnownEPI").toggled.connect(func(c):      _on_known_gi_epi(c))
+	get_node(CHOLE + "KnownCholecyst").toggled.connect(func(c):_on_known_metabolic("post-cholecystectomy", c, CHOLE))
 
 	get_node(BASE + "ResetButton").pressed.connect(_on_reset)
 
@@ -216,12 +229,28 @@ func _convert(value: float, field_key: String) -> float:
 #  HELPER — known condition checkbox
 # ─────────────────────────────────────────
 func _on_known_metabolic(condition: String, checked: bool, path: String):
-	get_node(path + "InputFields").visible = !checked
+	# Some GI panels have no InputFields — check before accessing
+	var input_node = get_node_or_null(path + "InputFields")
+	if input_node:
+		input_node.visible = !checked
+
 	Global.set_metabolic_condition(condition, checked)
 	Global.set_known_diagnosis(condition, checked)
+
 	if checked:
 		Global.set_metabolic_risk(condition, "confirmed")
-		get_node(path + "ResultLabel").text = "⚠️ " + condition.replace("-", " ").capitalize() + " confirmed."
+		var msg = "⚠️ " + condition.replace("-"," ").capitalize() + " confirmed."
+		# Add condition-specific guidance
+		match condition:
+			"sulfur-avoidance":
+				msg = "✅ Sulfur avoidance active.\nHigh-sulfur foods (garlic, onion, eggs, cruciferous vegetables, meat) will be flagged."
+			"celiac-disease":
+				msg = "⚠️ Celiac disease.\nAll gluten-containing foods will be flagged. Avoid wheat, rye, barley, spelt."
+			"lactose-intolerance":
+				msg = "⚠️ Lactose intolerance.\nHigh-lactose dairy will be flagged. Hard cheeses and lactose-free products are safe."
+			"post-cholecystectomy":
+				msg = "⚠️ Post-cholecystectomy.\nHigh-fat foods flagged. Eat 5–6 small meals daily. Avoid fried/spicy foods."
+		get_node(path + "ResultLabel").text = msg
 	else:
 		Global.set_metabolic_risk(condition, "normal")
 		get_node(path + "ResultLabel").text = "—"
@@ -702,7 +731,47 @@ func _on_calculate_wilson():
 		"urine_cu_unit": _unit_buttons.get("urine_cu", null).selected if _unit_buttons.has("urine_cu") else 0,
 		"result": msg
 	})
+# ─────────────────────────────────────────
+#  GI CONDITIONS
+# ─────────────────────────────────────────
+func _on_known_gi_crohns(checked: bool):
+	Global.set_metabolic_condition("crohns-disease", checked)
+	Global.set_known_diagnosis("crohns-disease", checked)
+	if checked:
+		Global.set_metabolic_risk("crohns-disease", "confirmed")
+		var is_female = Global.body_metrics.get("is_female", false)
+		var weight    = Global.body_metrics.get("weight", 70.0)
+		var extra_kcal = snappedf(weight * 2.9 + 600.0, 0.0)
+		get_node(CROHN + "ResultLabel").text = (
+			"⚠️ Crohn's disease active.\n" +
+			"• REE increased — need ~+" + str(extra_kcal) + " kcal/day extra\n" +
+			"• High protein: 1.2–1.5 g/kg/day\n" +
+			"• Low fiber during flares\n" +
+			"• Small frequent meals recommended"
+		)
+	else:
+		Global.set_metabolic_risk("crohns-disease", "normal")
+		get_node(CROHN + "ResultLabel").text = "—"
+	Global.save_metabolic_conditions()
 
+func _on_known_gi_epi(checked: bool):
+	Global.set_metabolic_condition("epi", checked)
+	Global.set_known_diagnosis("epi", checked)
+	if checked:
+		Global.set_metabolic_risk("epi", "confirmed")
+		var weight   = Global.body_metrics.get("weight", 70.0)
+		var epi_kcal = snappedf(weight * 32.5, 0.0)
+		get_node(EPI + "ResultLabel").text = (
+			"⚠️ Pancreatic insufficiency.\n" +
+			"• Target: 30–35 kcal/kg = ~" + str(epi_kcal) + " kcal/day\n" +
+			"• Take PERT with every meal and snack\n" +
+			"• High protein: 1.2–1.5 g/kg/day\n" +
+			"• Monitor fat intake — watch for steatorrhea"
+		)
+	else:
+		Global.set_metabolic_risk("epi", "normal")
+		get_node(EPI + "ResultLabel").text = "—"
+	Global.save_metabolic_conditions()
 # ─────────────────────────────────────────
 #  SAVE / LOAD METABOLIC INPUTS
 # ─────────────────────────────────────────
@@ -724,6 +793,7 @@ func load_metabolic_ui():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if not data: return
+	var tpo_node = get_node(THYR + "InputFields").find_child("TPOPositive", true, false)
 
 	if data.has("glycemic"):
 		get_node(GLYC + "InputFields/HbA1cInputRow/HbA1cInput").value = data["glycemic"].get("hba1c", 5.0)
@@ -755,10 +825,10 @@ func load_metabolic_ui():
 	if data.has("thyroid"):
 		get_node(THYR + "InputFields/TSHInputRow/TSHInput").value            = data["thyroid"].get("tsh", 2.0)
 		get_node(THYR + "InputFields/FT4InputRow/FT4Input").value            = data["thyroid"].get("ft4", 1.2)
-		get_node(THYR + "InputFields/TPOPositiveRow/TPOPositive").button_pressed = data["thyroid"].get("tpo", false)
 		get_node(THYR + "ResultLabel").text                      = data["thyroid"].get("result", "—")
 		if _unit_buttons.has("tsh"): _unit_buttons["tsh"].selected = data["thyroid"].get("tsh_unit", 0)
 		if _unit_buttons.has("ft4"): _unit_buttons["ft4"].selected = data["thyroid"].get("ft4_unit", 0)
+		if tpo_node: tpo_node.button_pressed = data["thyroid"].get("tpo", false)
 
 	if data.has("osteo"):
 		get_node(OSTEO + "InputFields/CTxInputRow/CTxInput").value  = data["osteo"].get("ctx", 300)
@@ -788,6 +858,17 @@ func load_metabolic_ui():
 	_restore_checkbox(OSTEO, "KnownOsteo",    "osteoporosis",    [])
 	_restore_checkbox(HEMO,  "KnownHemo",     "hemochromatosis", [])
 	_restore_checkbox(WILS,  "KnownWilson",   "wilsons-disease", [])
+	# GI conditions (checkbox only, no inputs)
+	_restore_gi_checkbox(SULF,   "KnownSulfur",    "sulfur-avoidance")
+	_restore_gi_checkbox(CROHN,  "KnownCrohns",    "crohns-disease")
+	_restore_gi_checkbox(CELIAC, "KnownCeliac",    "celiac-disease")
+	_restore_gi_checkbox(LACT,   "KnownLactose",   "lactose-intolerance")
+	_restore_gi_checkbox(EPI,    "KnownEPI",       "epi")
+	_restore_gi_checkbox(CHOLE,  "KnownCholecyst", "post-cholecystectomy")
+
+func _restore_gi_checkbox(path: String, node_name: String, condition: String):
+	var is_known = Global.known_diagnoses.has(condition)
+	get_node(path + node_name).button_pressed = is_known
 
 func _restore_checkbox(path: String, node_name: String, condition: String, _conditions: Array):
 	var is_known = Global.known_diagnoses.has(condition)

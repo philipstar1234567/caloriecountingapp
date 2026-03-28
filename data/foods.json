@@ -48,7 +48,10 @@
 	"quercetin_mg": 4.42,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 218
+	"total_polyphenols_mg": 218,
+	"sulfur_mg": 5,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "apricot",
@@ -99,7 +102,10 @@
 	"quercetin_mg": 2.83,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 34
+	"total_polyphenols_mg": 34,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "dried-fruit",
@@ -150,7 +156,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "avocado",
@@ -201,7 +210,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 167
+	"total_polyphenols_mg": 167,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "banana",
@@ -252,7 +264,10 @@
 	"quercetin_mg": 3.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 95
+	"total_polyphenols_mg": 95,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "blackberry",
@@ -303,7 +318,10 @@
 	"quercetin_mg": 3.58,
 	"anthocyanins_mg": 100.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 260
+	"total_polyphenols_mg": 260,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "blueberry",
@@ -354,7 +372,10 @@
 	"quercetin_mg": 7.67,
 	"anthocyanins_mg": 163.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 560
+	"total_polyphenols_mg": 560,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "breadfruit",
@@ -405,7 +426,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "carambola",
@@ -456,7 +480,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cherry",
@@ -507,7 +534,10 @@
 	"quercetin_mg": 2.26,
 	"anthocyanins_mg": 82.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 274
+	"total_polyphenols_mg": 274,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cranberry",
@@ -558,7 +588,10 @@
 	"quercetin_mg": 14.84,
 	"anthocyanins_mg": 92.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 315
+	"total_polyphenols_mg": 315,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "currant",
@@ -609,7 +642,10 @@
 	"quercetin_mg": 5.1,
 	"anthocyanins_mg": 180.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 758
+	"total_polyphenols_mg": 758,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "dates",
@@ -660,7 +696,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 2496
+	"total_polyphenols_mg": 2496,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "elderberry",
@@ -711,7 +750,10 @@
 	"quercetin_mg": 26.77,
 	"anthocyanins_mg": 500.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1950
+	"total_polyphenols_mg": 1950,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "figs",
@@ -762,7 +804,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 350
+	"total_polyphenols_mg": 350,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "gooseberry",
@@ -813,7 +858,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "goji-berry",
@@ -864,7 +912,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 3290
+	"total_polyphenols_mg": 3290,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "grapefruit",
@@ -915,17 +966,20 @@
 	"quercetin_mg": 2.38,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 56
+	"total_polyphenols_mg": 56,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
-	"id": "grape",
-	"name": "Grape",
+	"id": "green_grape",
+	"name": "Green Grape",
 	"category": "fruits",
 	"oxalate_mg_per_100g": 3,
 	"level": "low",
 	"calories": 67,
 	"protein_g": 0.6,
-	"fat_g": 0.4,
+	"fat_g": 0.1,
 	"carbs_g": 15.5,
 	"fiber_g": 0.9,
 	"calcium_mg": 10,
@@ -964,9 +1018,12 @@
 	"lycopene_mcg": 0,
 	"lutein_zeaxanthin_mcg": 0,
 	"quercetin_mg": 3.54,
-	"anthocyanins_mg": 0,
-	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 101
+	"anthocyanins_mg": 2,
+	"resveratrol_mg": 0.05,
+	"total_polyphenols_mg": 110,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "guava",
@@ -1017,7 +1074,10 @@
 	"quercetin_mg": 3.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 624
+	"total_polyphenols_mg": 624,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "jackfruit",
@@ -1068,7 +1128,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "jujube",
@@ -1119,7 +1182,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 3042
+	"total_polyphenols_mg": 3042,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "kiwi",
@@ -1170,7 +1236,10 @@
 	"quercetin_mg": 2.32,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 89
+	"total_polyphenols_mg": 89,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "kumquat",
@@ -1221,7 +1290,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lemon",
@@ -1272,7 +1344,10 @@
 	"quercetin_mg": 3.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 745
+	"total_polyphenols_mg": 745,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lime",
@@ -1323,7 +1398,10 @@
 	"quercetin_mg": 2.18,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lychee",
@@ -1374,7 +1452,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 381
+	"total_polyphenols_mg": 381,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "mango",
@@ -1425,7 +1506,10 @@
 	"quercetin_mg": 0.86,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 151
+	"total_polyphenols_mg": 151,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "melon",
@@ -1476,7 +1560,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 33
+	"total_polyphenols_mg": 33,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "nectarine",
@@ -1527,7 +1614,10 @@
 	"quercetin_mg": 0.27,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "orange",
@@ -1578,7 +1668,10 @@
 	"quercetin_mg": 2.39,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 245
+	"total_polyphenols_mg": 245,
+	"sulfur_mg": 6,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "mandarin",
@@ -1629,7 +1722,10 @@
 	"quercetin_mg": 0.86,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 159
+	"total_polyphenols_mg": 159,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "papaya",
@@ -1680,7 +1776,10 @@
 	"quercetin_mg": 0.08,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 58
+	"total_polyphenols_mg": 58,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "passion-fruit",
@@ -1731,7 +1830,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 775
+	"total_polyphenols_mg": 775,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "peach",
@@ -1782,7 +1884,10 @@
 	"quercetin_mg": 1.35,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 148
+	"total_polyphenols_mg": 148,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pear",
@@ -1833,7 +1938,10 @@
 	"quercetin_mg": 4.51,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 136
+	"total_polyphenols_mg": 136,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pineapple",
@@ -1884,7 +1992,10 @@
 	"quercetin_mg": 0.43,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 48
+	"total_polyphenols_mg": 48,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "plum",
@@ -1935,7 +2046,10 @@
 	"quercetin_mg": 5.07,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 377
+	"total_polyphenols_mg": 377,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pomegranate",
@@ -1986,7 +2100,10 @@
 	"quercetin_mg": 0.55,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 4479
+	"total_polyphenols_mg": 4479,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "prickly-pear",
@@ -2037,7 +2154,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "prunes",
@@ -2088,7 +2208,10 @@
 	"quercetin_mg": 1.55,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1195
+	"total_polyphenols_mg": 1195,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "raisin",
@@ -2139,7 +2262,10 @@
 	"quercetin_mg": 4.54,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 728
+	"total_polyphenols_mg": 728,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "raspberry",
@@ -2190,7 +2316,64 @@
 	"quercetin_mg": 0.98,
 	"anthocyanins_mg": 83.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 522
+	"total_polyphenols_mg": 522,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
+  },
+{
+	"id": "red_grape",
+	"name": "Red Grape",
+	"category": "fruits",
+	"oxalate_mg_per_100g": 3,
+	"level": "low",
+	"calories": 67,
+	"protein_g": 0.6,
+	"fat_g": 0.1,
+	"carbs_g": 15.5,
+	"fiber_g": 0.9,
+	"calcium_mg": 10,
+	"saturated_fat_g": 0.04,
+	"monounsaturated_fat_g": 0.04,
+	"polyunsaturated_fat_g": 0.12,
+	"sugar_g": 10.8,
+	"sodium_mg": 1,
+	"iron_mg": 0.36,
+	"copper_mg": 0.127,
+	"selenium_mcg": 0.1,
+	"density_g_per_ml": 0.78,
+	"vitamin_a_mcg": 3,
+	"vitamin_b1_mg": 0.069,
+	"vitamin_b2_mg": 0.07,
+	"vitamin_b3_mg": 0.188,
+	"vitamin_b5_mg": 0.05,
+	"vitamin_b6_mg": 0.086,
+	"vitamin_b7_mcg": 0.5,
+	"vitamin_b9_mcg": 2,
+	"vitamin_b12_mcg": 0,
+	"vitamin_c_mg": 3.2,
+	"vitamin_d_mcg": 0,
+	"vitamin_e_mg": 0.19,
+	"vitamin_k1_mcg": 14.6,
+	"vitamin_k2_mcg": 0,
+	"magnesium_mg": 7,
+	"potassium_mg": 191,
+	"zinc_mg": 0.07,
+	"phosphorus_mg": 20,
+	"manganese_mg": 0.071,
+	"chromium_mcg": 0.5,
+	"iodine_mcg": 0.1,
+	"molybdenum_mcg": 1.0,
+	"beta_carotene_mcg": 39,
+	"lycopene_mcg": 0,
+	"lutein_zeaxanthin_mcg": 0,
+	"quercetin_mg": 3.54,
+	"anthocyanins_mg": 0,
+	"resveratrol_mg": 0.5,
+	"total_polyphenols_mg": 600,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "strawberry",
@@ -2241,7 +2424,10 @@
 	"quercetin_mg": 2.11,
 	"anthocyanins_mg": 19.25,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 235
+	"total_polyphenols_mg": 235,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "watermelon",
@@ -2292,7 +2478,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 142
+	"total_polyphenols_mg": 142,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "coconut",
@@ -2343,7 +2532,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 163
+	"total_polyphenols_mg": 163,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "boysenberry",
@@ -2394,7 +2586,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 100.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 350
+	"total_polyphenols_mg": 350,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "feijoa",
@@ -2445,7 +2640,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 8,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "blackberry-b",
@@ -2496,7 +2694,10 @@
 	"quercetin_mg": 3.58,
 	"anthocyanins_mg": 100.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 260
+	"total_polyphenols_mg": 260,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "blueberry-b",
@@ -2547,7 +2748,10 @@
 	"quercetin_mg": 7.67,
 	"anthocyanins_mg": 163.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 560
+	"total_polyphenols_mg": 560,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cranberry-b",
@@ -2598,7 +2802,10 @@
 	"quercetin_mg": 14.84,
 	"anthocyanins_mg": 92.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 315
+	"total_polyphenols_mg": 315,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "currant-b",
@@ -2649,7 +2856,10 @@
 	"quercetin_mg": 5.1,
 	"anthocyanins_mg": 180.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 758
+	"total_polyphenols_mg": 758,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "elderberry-b",
@@ -2700,7 +2910,10 @@
 	"quercetin_mg": 26.77,
 	"anthocyanins_mg": 500.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1950
+	"total_polyphenols_mg": 1950,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "gooseberry-b",
@@ -2751,7 +2964,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "goji-berry-b",
@@ -2802,7 +3018,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 3290
+	"total_polyphenols_mg": 3290,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "raspberry-b",
@@ -2853,7 +3072,10 @@
 	"quercetin_mg": 0.98,
 	"anthocyanins_mg": 83.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 522
+	"total_polyphenols_mg": 522,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "strawberry-b",
@@ -2904,7 +3126,10 @@
 	"quercetin_mg": 2.11,
 	"anthocyanins_mg": 19.25,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 235
+	"total_polyphenols_mg": 235,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "boysenberry-b",
@@ -2955,7 +3180,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 100.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 350
+	"total_polyphenols_mg": 350,
+	"sulfur_mg": 10,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "artichoke",
@@ -3006,7 +3234,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 3421
+	"total_polyphenols_mg": 3421,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "asparagus",
@@ -3057,7 +3288,10 @@
 	"quercetin_mg": 2.15,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 85
+	"total_polyphenols_mg": 85,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "bitter-melon",
@@ -3108,7 +3342,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "bamboo-shoots",
@@ -3159,7 +3396,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "green-beans",
@@ -3210,7 +3450,10 @@
 	"quercetin_mg": 2.71,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 62
+	"total_polyphenols_mg": 62,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "beetroot",
@@ -3261,7 +3504,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1174
+	"total_polyphenols_mg": 1174,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "broad-beans",
@@ -3312,7 +3558,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "broccoli",
@@ -3363,7 +3612,10 @@
 	"quercetin_mg": 3.97,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 101
+	"total_polyphenols_mg": 101,
+	"sulfur_mg": 134,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "brussels-sprouts",
@@ -3414,7 +3666,10 @@
 	"quercetin_mg": 3.74,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 256
+	"total_polyphenols_mg": 256,
+	"sulfur_mg": 130,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cabbage",
@@ -3465,7 +3720,10 @@
 	"quercetin_mg": 1.53,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 44
+	"total_polyphenols_mg": 44,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "red-cabbage",
@@ -3516,7 +3774,10 @@
 	"quercetin_mg": 2.14,
 	"anthocyanins_mg": 50.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 196
+	"total_polyphenols_mg": 196,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "carrot",
@@ -3567,7 +3828,10 @@
 	"quercetin_mg": 0.21,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 33
+	"total_polyphenols_mg": 33,
+	"sulfur_mg": 20,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cassava",
@@ -3618,7 +3882,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cauliflower",
@@ -3669,7 +3936,10 @@
 	"quercetin_mg": 0.24,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 73
+	"total_polyphenols_mg": 73,
+	"sulfur_mg": 90,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chicory",
@@ -3720,7 +3990,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "corn",
@@ -3771,7 +4044,10 @@
 	"quercetin_mg": 0.47,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 37
+	"total_polyphenols_mg": 37,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cucumber",
@@ -3822,7 +4098,10 @@
 	"quercetin_mg": 0.16,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 17
+	"total_polyphenols_mg": 17,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "eggplant",
@@ -3873,7 +4152,10 @@
 	"quercetin_mg": 2.41,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 107
+	"total_polyphenols_mg": 107,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "garlic",
@@ -3924,7 +4206,10 @@
 	"quercetin_mg": 1.74,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1796
+	"total_polyphenols_mg": 1796,
+	"sulfur_mg": 230,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "ginger",
@@ -3975,7 +4260,10 @@
 	"quercetin_mg": 3.25,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1403
+	"total_polyphenols_mg": 1403,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "okra",
@@ -4026,7 +4314,10 @@
 	"quercetin_mg": 21.06,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "onion",
@@ -4077,7 +4368,10 @@
 	"quercetin_mg": 74.0,
 	"anthocyanins_mg": 2.7,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 168
+	"total_polyphenols_mg": 168,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "peas",
@@ -4128,7 +4422,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 68
+	"total_polyphenols_mg": 68,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "bell-pepper",
@@ -4179,7 +4476,10 @@
 	"quercetin_mg": 0.63,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 124
+	"total_polyphenols_mg": 124,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pumpkin",
@@ -4230,7 +4530,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 62
+	"total_polyphenols_mg": 62,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "radish",
@@ -4281,7 +4584,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 25
+	"total_polyphenols_mg": 25,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "sweet-potato",
@@ -4332,7 +4638,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 224
+	"total_polyphenols_mg": 224,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "taro",
@@ -4383,7 +4692,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "tomato",
@@ -4434,7 +4746,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 55
+	"total_polyphenols_mg": 55,
+	"sulfur_mg": 15,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "turnip",
@@ -4485,7 +4800,10 @@
 	"quercetin_mg": 0.34,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "potato",
@@ -4536,7 +4854,10 @@
 	"quercetin_mg": 0.45,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 44
+	"total_polyphenols_mg": 44,
+	"sulfur_mg": 20,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "zucchini",
@@ -4587,7 +4908,10 @@
 	"quercetin_mg": 0.4,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 32
+	"total_polyphenols_mg": 32,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "fennel",
@@ -4638,7 +4962,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chili-pepper",
@@ -4689,7 +5016,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "yam",
@@ -4740,7 +5070,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "spinach",
@@ -4791,7 +5124,10 @@
 	"quercetin_mg": 4.86,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 199
+	"total_polyphenols_mg": 199,
+	"sulfur_mg": 40,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "rhubarb",
@@ -4842,7 +5178,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 799
+	"total_polyphenols_mg": 799,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "collard-greens",
@@ -4893,7 +5232,10 @@
 	"quercetin_mg": 1.97,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "parsley",
@@ -4944,7 +5286,10 @@
 	"quercetin_mg": 8.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 313
+	"total_polyphenols_mg": 313,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "purslane",
@@ -4995,7 +5340,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "dandelion-greens",
@@ -5046,7 +5394,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "thyme",
@@ -5097,7 +5448,10 @@
 	"quercetin_mg": 45.26,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1173
+	"total_polyphenols_mg": 1173,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "dill",
@@ -5148,7 +5502,10 @@
 	"quercetin_mg": 55.15,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "celery",
@@ -5199,7 +5556,10 @@
 	"quercetin_mg": 7.3,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 69
+	"total_polyphenols_mg": 69,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chives",
@@ -5250,7 +5610,10 @@
 	"quercetin_mg": 4.33,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 346
+	"total_polyphenols_mg": 346,
+	"sulfur_mg": 110,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "coriander",
@@ -5301,7 +5664,10 @@
 	"quercetin_mg": 52.9,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "leek",
@@ -5352,7 +5718,10 @@
 	"quercetin_mg": 1.44,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 168
+	"total_polyphenols_mg": 168,
+	"sulfur_mg": 90,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lettuce",
@@ -5403,7 +5772,10 @@
 	"quercetin_mg": 14.67,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 115
+	"total_polyphenols_mg": 115,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "mustard-greens",
@@ -5454,7 +5826,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "watercress",
@@ -5505,7 +5880,10 @@
 	"quercetin_mg": 2.52,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "arugula",
@@ -5556,7 +5934,10 @@
 	"quercetin_mg": 2.69,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 218
+	"total_polyphenols_mg": 218,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "quinoa",
@@ -5607,7 +5988,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "almonds",
@@ -5658,7 +6042,10 @@
 	"quercetin_mg": 1.26,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 187
+	"total_polyphenols_mg": 187,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cashew",
@@ -5709,7 +6096,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 109
+	"total_polyphenols_mg": 109,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "hazelnut",
@@ -5760,7 +6150,10 @@
 	"quercetin_mg": 6.57,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 733
+	"total_polyphenols_mg": 733,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pine-nuts",
@@ -5811,7 +6204,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "mixed-nuts",
@@ -5862,7 +6258,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 200
+	"total_polyphenols_mg": 200,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "peanut",
@@ -5913,7 +6312,10 @@
 	"quercetin_mg": 0.12,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1573
+	"total_polyphenols_mg": 1573,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pistachio",
@@ -5964,7 +6366,10 @@
 	"quercetin_mg": 2.47,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1657
+	"total_polyphenols_mg": 1657,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chestnut",
@@ -6015,7 +6420,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "walnut",
@@ -6066,7 +6474,10 @@
 	"quercetin_mg": 3.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 1.88,
-	"total_polyphenols_mg": 2965
+	"total_polyphenols_mg": 2965,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "almond-butter",
@@ -6117,7 +6528,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 150
+	"total_polyphenols_mg": 150,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pecan",
@@ -6168,7 +6582,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1820
+	"total_polyphenols_mg": 1820,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "macadamia",
@@ -6219,7 +6636,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "ginkgo-nuts",
@@ -6270,7 +6690,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pili-nuts",
@@ -6321,7 +6744,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "watermelon-seeds",
@@ -6372,7 +6798,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "oatmeal",
@@ -6423,7 +6852,10 @@
 	"quercetin_mg": 2.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 860
+	"total_polyphenols_mg": 860,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "oats",
@@ -6474,7 +6906,10 @@
 	"quercetin_mg": 2.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 860
+	"total_polyphenols_mg": 860,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "rice",
@@ -6525,7 +6960,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 15,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "brown-rice",
@@ -6576,7 +7014,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 20,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pasta",
@@ -6627,7 +7068,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "spaghetti",
@@ -6678,7 +7122,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "flour",
@@ -6729,7 +7176,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "sesame",
@@ -6780,7 +7230,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 90,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "buckwheat",
@@ -6831,7 +7284,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 5765
+	"total_polyphenols_mg": 5765,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "amaranth",
@@ -6882,7 +7338,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "couscous",
@@ -6933,7 +7392,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "cornmeal",
@@ -6984,7 +7446,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "millet",
@@ -7035,7 +7500,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "rye",
@@ -7086,7 +7554,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1102
+	"total_polyphenols_mg": 1102,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "chickpeas",
@@ -7137,7 +7608,10 @@
 	"quercetin_mg": 1.68,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1066
+	"total_polyphenols_mg": 1066,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lentil",
@@ -7188,7 +7662,10 @@
 	"quercetin_mg": 0.66,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1798
+	"total_polyphenols_mg": 1798,
+	"sulfur_mg": 85,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "kidney-beans",
@@ -7239,7 +7716,10 @@
 	"quercetin_mg": 2.93,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1456
+	"total_polyphenols_mg": 1456,
+	"sulfur_mg": 75,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "soybean",
@@ -7290,7 +7770,10 @@
 	"quercetin_mg": 1.09,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1500
+	"total_polyphenols_mg": 1500,
+	"sulfur_mg": 120,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "tofu",
@@ -7341,7 +7824,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "hummus",
@@ -7392,7 +7878,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 500
+	"total_polyphenols_mg": 500,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "white-beans",
@@ -7443,7 +7932,10 @@
 	"quercetin_mg": 2.93,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1000
+	"total_polyphenols_mg": 1000,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "black-gram",
@@ -7494,7 +7986,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "sunflower-seeds",
@@ -7545,7 +8040,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 85,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pumpkin-seeds",
@@ -7596,7 +8094,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "flax-seeds",
@@ -7647,7 +8148,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 2234
+	"total_polyphenols_mg": 2234,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "milk",
@@ -7698,7 +8202,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 4.7
   },
   {
 	"id": "yogurt",
@@ -7749,7 +8256,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 3.2
   },
   {
 	"id": "greek-yogurt",
@@ -7800,7 +8310,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": false,
+	"lactose_g": 4.0
   },
   {
 	"id": "cheese",
@@ -7851,7 +8364,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 130,
+	"contains_gluten": false,
+	"lactose_g": 0.1
   },
   {
 	"id": "cottage-cheese",
@@ -7902,7 +8418,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 3.1
   },
   {
 	"id": "cream-cheese",
@@ -7953,7 +8472,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 2.9
   },
   {
 	"id": "butter",
@@ -8004,7 +8526,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 15,
+	"contains_gluten": false,
+	"lactose_g": 0.1
   },
   {
 	"id": "egg",
@@ -8055,7 +8580,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 200,
+	"contains_gluten": false,
+	"lactose_g": 3.0
   },
   {
 	"id": "chocolate-milk",
@@ -8106,7 +8634,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": false,
+	"lactose_g": 4.5
   },
   {
 	"id": "mozzarella",
@@ -8157,7 +8688,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 120,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "feta",
@@ -8208,7 +8742,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 110,
+	"contains_gluten": false,
+	"lactose_g": 0.5
   },
   {
 	"id": "brie",
@@ -8259,7 +8796,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 110,
+	"contains_gluten": false,
+	"lactose_g": 0.5
   },
   {
 	"id": "goat-cheese",
@@ -8310,7 +8850,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 110,
+	"contains_gluten": false,
+	"lactose_g": 0.5
   },
   {
 	"id": "ricotta",
@@ -8361,7 +8904,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 3.0
   },
   {
 	"id": "sour-cream",
@@ -8412,7 +8958,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 25,
+	"contains_gluten": false,
+	"lactose_g": 2.9
   },
   {
 	"id": "coconut-milk",
@@ -8463,7 +9012,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": false,
+	"lactose_g": 0.0
   },
   {
 	"id": "kefir",
@@ -8514,7 +9066,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 3.8
   },
   {
 	"id": "whipped-cream",
@@ -8565,7 +9120,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 20,
+	"contains_gluten": false,
+	"lactose_g": 2.7
   },
   {
 	"id": "chicken-breast",
@@ -8616,7 +9174,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 250,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chicken-thigh",
@@ -8667,7 +9228,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 240,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "whole-chicken",
@@ -8718,7 +9282,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 245,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "turkey",
@@ -8769,7 +9336,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 250,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "duck",
@@ -8820,7 +9390,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 260,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pork-tenderloin",
@@ -8871,7 +9444,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 270,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pork-shoulder",
@@ -8922,7 +9498,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 260,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pork-chop",
@@ -8973,7 +9552,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 265,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "bacon",
@@ -9024,7 +9606,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 220,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "ground-beef",
@@ -9075,7 +9660,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 270,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "beef-steak",
@@ -9126,7 +9714,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 280,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "veal",
@@ -9177,7 +9768,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 265,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lamb",
@@ -9228,7 +9822,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 260,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "reindeer",
@@ -9279,7 +9876,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 270,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "elk",
@@ -9330,7 +9930,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 270,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "sausage",
@@ -9381,7 +9984,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 200,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "meatballs",
@@ -9432,7 +10038,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 230,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "salmon",
@@ -9483,7 +10092,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 210,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cod",
@@ -9534,7 +10146,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 180,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "mackerel",
@@ -9585,7 +10200,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 200,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "herring",
@@ -9636,7 +10254,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 195,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "trout",
@@ -9687,7 +10308,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 205,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "tuna",
@@ -9738,7 +10362,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 220,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "shrimp",
@@ -9789,7 +10416,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 190,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lobster",
@@ -9840,7 +10470,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 185,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "crab",
@@ -9891,7 +10524,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 180,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "scampi",
@@ -9942,7 +10578,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 190,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "tilapia",
@@ -9993,7 +10632,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 175,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "white-bread",
@@ -10044,7 +10686,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "whole-grain-bread",
@@ -10095,7 +10740,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 368
+	"total_polyphenols_mg": 368,
+	"sulfur_mg": 45,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "sourdough-bread",
@@ -10146,7 +10794,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 200
+	"total_polyphenols_mg": 200,
+	"sulfur_mg": 40,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "crispbread",
@@ -10197,7 +10848,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 300
+	"total_polyphenols_mg": 300,
+	"sulfur_mg": 40,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "bread-roll",
@@ -10248,7 +10902,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 40,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "kale",
@@ -10299,7 +10956,10 @@
 	"quercetin_mg": 22.6,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 1021
+	"total_polyphenols_mg": 1021,
+	"sulfur_mg": 120,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pak-choi",
@@ -10350,7 +11010,10 @@
 	"quercetin_mg": 2.53,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "rutabaga",
@@ -10401,7 +11064,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "savoy-cabbage",
@@ -10452,7 +11118,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "iceberg-lettuce",
@@ -10503,7 +11172,10 @@
 	"quercetin_mg": 2.47,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 54
+	"total_polyphenols_mg": 54,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chia-seeds",
@@ -10554,7 +11226,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chinese-cabbage",
@@ -10605,7 +11280,10 @@
 	"quercetin_mg": 2.53,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "celeriac",
@@ -10656,7 +11334,10 @@
 	"quercetin_mg": 1.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "yardlong-beans",
@@ -10707,7 +11388,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "edamame",
@@ -10758,7 +11442,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 90,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "endive",
@@ -10809,7 +11496,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "jerusalem-artichoke",
@@ -10860,7 +11550,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 3500
+	"total_polyphenols_mg": 3500,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "kohlrabi",
@@ -10911,7 +11604,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lotus-root",
@@ -10962,7 +11658,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "parsnip",
@@ -11013,7 +11712,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "sauerkraut",
@@ -11064,7 +11766,10 @@
 	"quercetin_mg": 1.53,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "seaweed",
@@ -11115,7 +11820,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "turnip-greens",
@@ -11166,7 +11874,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "water-chestnuts",
@@ -11217,7 +11928,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "winter-melon",
@@ -11268,7 +11982,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "wax-gourd",
@@ -11319,7 +12036,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "summer-squash",
@@ -11370,7 +12090,10 @@
 	"quercetin_mg": 0.4,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 32
+	"total_polyphenols_mg": 32,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "wakame",
@@ -11421,7 +12144,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "shallot",
@@ -11472,7 +12198,10 @@
 	"quercetin_mg": 3.26,
 	"anthocyanins_mg": 20.0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 169
+	"total_polyphenols_mg": 169,
+	"sulfur_mg": 120,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "arrowroot",
@@ -11523,7 +12252,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pickled-cucumber",
@@ -11574,7 +12306,10 @@
 	"quercetin_mg": 0.16,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 17
+	"total_polyphenols_mg": 17,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "sun-dried-tomato",
@@ -11625,7 +12360,10 @@
 	"quercetin_mg": 10.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 500
+	"total_polyphenols_mg": 500,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "napa-cabbage",
@@ -11676,7 +12414,10 @@
 	"quercetin_mg": 2.53,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 60,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "yautia",
@@ -11727,7 +12468,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "amaranth-leaves",
@@ -11778,7 +12522,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "chrysanthemum",
@@ -11829,7 +12576,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "garden-cress",
@@ -11880,7 +12630,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "drumstick-leaves",
@@ -11931,7 +12684,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lambsquarters",
@@ -11982,7 +12738,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "scallion",
@@ -12033,7 +12792,10 @@
 	"quercetin_mg": 73.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 163
+	"total_polyphenols_mg": 163,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "welsh-onion",
@@ -12084,7 +12846,10 @@
 	"quercetin_mg": 73.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 163
+	"total_polyphenols_mg": 163,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pumpkin-leaves",
@@ -12135,7 +12900,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "sweet-potato-leaves",
@@ -12186,7 +12954,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "taro-leaves",
@@ -12237,7 +13008,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "vine-spinach",
@@ -12288,7 +13062,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lemongrass",
@@ -12339,7 +13116,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "grape-leaves",
@@ -12390,7 +13170,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "spelt",
@@ -12441,7 +13224,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "barley",
@@ -12492,7 +13278,10 @@
 	"quercetin_mg": 2.02,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 943
+	"total_polyphenols_mg": 943,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "bulgur",
@@ -12543,7 +13332,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "lotus-seeds",
@@ -12594,7 +13386,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 55,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "adzuki-bean",
@@ -12645,7 +13440,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "baked-beans",
@@ -12696,7 +13494,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "black-turtle-bean",
@@ -12747,7 +13548,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "french-beans",
@@ -12798,7 +13602,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "great-northern-beans",
@@ -12849,7 +13656,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "navy-beans",
@@ -12900,7 +13710,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pinto-beans",
@@ -12951,7 +13764,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "fava-beans",
@@ -13002,7 +13818,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 80,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "cowpea",
@@ -13053,7 +13872,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 75,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lablab",
@@ -13104,7 +13926,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lima-beans",
@@ -13155,7 +13980,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "lupin-bean",
@@ -13206,7 +14034,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "mung-beans",
@@ -13257,7 +14088,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 75,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "pigeon-pea",
@@ -13308,7 +14142,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 70,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "refried-beans",
@@ -13359,7 +14196,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "tempeh",
@@ -13410,7 +14250,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "winged-beans",
@@ -13461,7 +14304,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "falafel",
@@ -13512,7 +14358,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 500
+	"total_polyphenols_mg": 500,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "arborio-rice",
@@ -13563,7 +14412,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "glutinous-rice",
@@ -13614,7 +14466,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": false,
+	"lactose_g": 0
   },
   {
 	"id": "soba",
@@ -13665,7 +14520,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "semolina",
@@ -13716,7 +14574,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "khorasan-wheat",
@@ -13767,7 +14628,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 35,
+	"contains_gluten": true,
+	"lactose_g": 0
   },
   {
 	"id": "blue-cheese",
@@ -13818,7 +14682,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 120,
+	"contains_gluten": false,
+	"lactose_g": 0.5
   },
   {
 	"id": "camembert",
@@ -13869,7 +14736,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 110,
+	"contains_gluten": false,
+	"lactose_g": 0.5
   },
   {
 	"id": "edam",
@@ -13920,7 +14790,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 120,
+	"contains_gluten": false,
+	"lactose_g": 0.1
   },
   {
 	"id": "brunost",
@@ -13971,7 +14844,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 50,
+	"contains_gluten": false,
+	"lactose_g": 0.1
   },
   {
 	"id": "gouda-cheese",
@@ -14022,7 +14898,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 130,
+	"contains_gluten": false,
+	"lactose_g": 0.1
   },
   {
 	"id": "gruyere",
@@ -14073,7 +14952,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 140,
+	"contains_gluten": false,
+	"lactose_g": 0.1
   },
   {
 	"id": "buttermilk",
@@ -14124,7 +15006,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 4.5
   },
   {
 	"id": "condensed-milk",
@@ -14175,7 +15060,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 25,
+	"contains_gluten": false,
+	"lactose_g": 12.3
   },
   {
 	"id": "goat-milk",
@@ -14226,7 +15114,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 30,
+	"contains_gluten": false,
+	"lactose_g": 4.2
   },
   {
 	"id": "egg-white",
@@ -14277,7 +15168,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 180,
+	"contains_gluten": false,
+	"lactose_g": 3.0
   },
   {
 	"id": "egg-yolk",
@@ -14328,7 +15222,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 220,
+	"contains_gluten": false,
+	"lactose_g": 3.0
   },
   {
 	"id": "fiskesuppe-fjordland",
@@ -14379,7 +15276,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "kjottsuppe-fjordland",
@@ -14430,7 +15330,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "proteinbowl-taco-fjordland",
@@ -14481,7 +15384,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "betasuppe-fjordland",
@@ -14532,7 +15438,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "laks-pasta-fjordland",
@@ -14583,7 +15492,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "proteinbowl-kylling-fjordland",
@@ -14634,7 +15546,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "skogsgryte-fjordland",
@@ -14685,7 +15600,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "butter-chickpeas-fjordland",
@@ -14736,7 +15654,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "butter-chicken-fjordland",
@@ -14787,7 +15708,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "pasta-kjottsaus-fjordland",
@@ -14838,7 +15762,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "pasta-ost-skinke-fjordland",
@@ -14889,7 +15816,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.5
   },
   {
 	"id": "polsegrateng-fjordland",
@@ -14940,7 +15870,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "fiskegrateng-findus",
@@ -14991,7 +15924,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "kyllingsuppe-marokkansk-meremat",
@@ -15042,7 +15978,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "kyllingsuppe-curry-meremat",
@@ -15093,7 +16032,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "gulrotsuppe-meremat",
@@ -15144,7 +16086,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "blomkalsuppe-meremat",
@@ -15195,7 +16140,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "red-curry-suppe-meremat",
@@ -15246,7 +16194,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "tomatsuppe-meremat",
@@ -15297,7 +16248,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "ramen-meremat",
@@ -15348,7 +16302,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "risgrot-fjordland",
@@ -15399,7 +16356,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 1.5
   },
   {
 	"id": "kjottkaker-ertestuing-fjordland",
@@ -15450,7 +16410,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "svenske-kjottboller-fjordland",
@@ -15501,7 +16464,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.5
   },
   {
 	"id": "fettuccine-funghi",
@@ -15552,7 +16518,10 @@
 	"quercetin_mg": 1.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 100
+	"total_polyphenols_mg": 100,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "pulled-pork-fjordland",
@@ -15603,7 +16572,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "torsk-purreloksaus-fjordland",
@@ -15654,7 +16626,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "lammefrikasse-fjordland",
@@ -15705,7 +16680,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "laksefilet-urtesaus-fjordland",
@@ -15756,7 +16734,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 50
+	"total_polyphenols_mg": 50,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "saucy-noodles-teriyaki",
@@ -15807,7 +16788,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "chili-con-carne-waldemars",
@@ -15858,7 +16842,10 @@
 	"quercetin_mg": 2.0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 150
+	"total_polyphenols_mg": 150,
+	"sulfur_mg": 100,
+	"contains_gluten": false,
+	"lactose_g": 0.2
   },
   {
 	"id": "pasta-carbonara-foodcollective",
@@ -15909,7 +16896,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 30
+	"total_polyphenols_mg": 30,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.8
   },
   {
 	"id": "lasagne-bolognese-foodcollective",
@@ -15960,7 +16950,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.3
   },
   {
 	"id": "pizza-grandiosa",
@@ -16011,7 +17004,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "pizza-bigone-classic",
@@ -16062,7 +17058,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "pizza-ristorante-mozzarella",
@@ -16113,7 +17112,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.3
   },
   {
 	"id": "pizza-ristorante-pollo",
@@ -16164,7 +17166,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "pizza-ristorante-pepperoni",
@@ -16215,7 +17220,10 @@
 	"quercetin_mg": 0.5,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 80
+	"total_polyphenols_mg": 80,
+	"sulfur_mg": 100,
+	"contains_gluten": true,
+	"lactose_g": 0.2
   },
   {
 	"id": "risdrikk",
@@ -16266,7 +17274,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 15,
+	"contains_gluten": false,
+	"lactose_g": 0.0
   },
   {
 	"id": "soya-drikk-alpro",
@@ -16317,7 +17328,10 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 15,
+	"contains_gluten": false,
+	"lactose_g": 0.0
   },
   {
 	"id": "mandeldrikk-alpro",
@@ -16368,6 +17382,9 @@
 	"quercetin_mg": 0,
 	"anthocyanins_mg": 0,
 	"resveratrol_mg": 0,
-	"total_polyphenols_mg": 0
+	"total_polyphenols_mg": 0,
+	"sulfur_mg": 15,
+	"contains_gluten": false,
+	"lactose_g": 0.0
   }
 ]

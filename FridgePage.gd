@@ -8,14 +8,129 @@ var shopping_list: Array = []
 var shopping_quantities: Dictionary = {} # food_id → count
 var _long_press_active: bool = false
 
+# ── Filter state ──
+var active_filters: Array = []   # list of field keys
+var sort_ascending: bool = true
+var filter_buttons: Dictionary = {}  # field_key → Button
+
+# ── All filterable nutrients with display labels ──
+# Note: vitamin_k1 is intentionally excluded for safety
+const FILTER_OPTIONS = [
+	{"key":"vitamin_a_mcg",        "label":"Vit A"},
+	{"key":"vitamin_b1_mg",        "label":"B1 (Thiamine)"},
+	{"key":"vitamin_b2_mg",        "label":"B2 (Riboflavin)"},
+	{"key":"vitamin_b3_mg",        "label":"B3 (Niacin)"},
+	{"key":"vitamin_b5_mg",        "label":"B5"},
+	{"key":"vitamin_b6_mg",        "label":"B6"},
+	{"key":"vitamin_b7_mcg",       "label":"B7 (Biotin)"},
+	{"key":"vitamin_b9_mcg",       "label":"B9 (Folate)"},
+	{"key":"vitamin_b12_mcg",      "label":"B12 (Cobalamin)"},
+	{"key":"vitamin_c_mg",         "label":"Vit C"},
+	{"key":"vitamin_d_mcg",        "label":"Vit D"},
+	{"key":"vitamin_e_mg",         "label":"Vit E"},
+	{"key":"vitamin_k2_mcg",       "label":"Vit K2"},
+	{"key":"calcium_mg",           "label":"Calcium"},
+	{"key":"iron_mg",              "label":"Iron"},
+	{"key":"magnesium_mg",         "label":"Magnesium"},
+	{"key":"potassium_mg",         "label":"Potassium"},
+	{"key":"zinc_mg",              "label":"Zinc"},
+	{"key":"phosphorus_mg",        "label":"Phosphorus"},
+	{"key":"selenium_mcg",         "label":"Selenium"},
+	{"key":"iodine_mcg",           "label":"Iodine"},
+	{"key":"copper_mg",            "label":"Copper"},
+	{"key":"manganese_mg",         "label":"Manganese"},
+	{"key":"chromium_mcg",         "label":"Chromium"},
+	{"key":"molybdenum_mcg",       "label":"Molybdenum"},
+	{"key":"beta_carotene_mcg",    "label":"Beta-carotene"},
+	{"key":"lycopene_mcg",         "label":"Lycopene"},
+	{"key":"lutein_zeaxanthin_mcg","label":"Lutein+Zeaxanthin"},
+	{"key":"quercetin_mg",         "label":"Quercetin"},
+	{"key":"anthocyanins_mg",      "label":"Anthocyanins"},
+	{"key":"resveratrol_mg",       "label":"Resveratrol"},
+	{"key":"total_polyphenols_mg", "label":"Polyphenols"},
+	{"key":"fiber_g",              "label":"Fiber"},
+	{"key":"protein_g",            "label":"Protein"},
+	{"key":"calories",             "label":"Calories"},
+]
+
 func _ready():
 	load_foods()
 	load_fridge()
-	$Panel/VBoxContainer/TopBar/ListButton.pressed.connect(_on_list_pressed)
-	$Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2/CloseButton.pressed.connect(_on_close_list)
-	$Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text_changed.connect(func(_t): refresh_current_tab())
-	$Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TabContainer.tab_changed.connect(func(_i): refresh_current_tab())
-	$Panel/VBoxContainer/ShoppingListPanel.hide()
+	$Panel/TopBar/ListButton.pressed.connect(_on_list_pressed)
+	$Panel/ShoppingListPanel/VBoxContainer/TopBar2/CloseButton.pressed.connect(_on_close_list)
+	$Panel/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text_changed.connect(func(_t): refresh_current_tab())
+	$Panel/ShoppingListPanel/VBoxContainer/TabContainer.tab_changed.connect(func(_i): refresh_current_tab())
+	$Panel/ShoppingListPanel.hide()
+	_build_filter_buttons()
+	_connect_sort_buttons()
+
+
+# ─────────────────────────────────────────
+#  FILTER UI SETUP
+# ─────────────────────────────────────────
+func _build_filter_buttons():
+	var row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH/FilterButtonsRow
+	for child in row.get_children():
+		child.queue_free()
+	filter_buttons.clear()
+
+	for opt in FILTER_OPTIONS:
+		var btn = Button.new()
+		btn.text = opt["label"]
+		btn.toggle_mode = true
+		btn.custom_minimum_size = Vector2(0, 50)
+		btn.add_theme_font_size_override("font_size", 22)
+		btn.toggled.connect(func(pressed): _on_filter_toggled(opt["key"], pressed, btn))
+		row.add_child(btn)
+		filter_buttons[opt["key"]] = btn
+
+func _connect_sort_buttons():
+	var sort_row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow
+	sort_row.get_node("SortAscBtn").pressed.connect(func():
+		sort_ascending = true
+		_update_sort_button_states()
+		refresh_current_tab()
+	)
+	sort_row.get_node("SortDescBtn").pressed.connect(func():
+		sort_ascending = false
+		_update_sort_button_states()
+		refresh_current_tab()
+	)
+
+func _update_sort_button_states():
+	var sort_row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow
+	sort_row.get_node("SortAscBtn").button_pressed  = sort_ascending
+	sort_row.get_node("SortDescBtn").button_pressed = not sort_ascending
+
+func _on_filter_toggled(field_key: String, pressed: bool, btn: Button):
+	if pressed:
+		if not active_filters.has(field_key):
+			active_filters.append(field_key)
+		btn.modulate = Color(0.4, 0.9, 0.4)  # green when active
+	else:
+		active_filters.erase(field_key)
+		btn.modulate = Color.WHITE
+	_update_filter_label()
+	refresh_current_tab()
+
+func _update_filter_label():
+	var lbl = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/ActiveFiltersLabel
+	if active_filters.is_empty():
+		lbl.text = "No filters active — showing all foods"
+	elif active_filters.size() == 1:
+		var label = _get_filter_label(active_filters[0])
+		var dir = "↑ Ascending" if sort_ascending else "↓ Descending"
+		lbl.text = "Filter: " + label + " | Sort: " + dir
+	else:
+		var labels = active_filters.map(func(k): return _get_filter_label(k))
+		lbl.text = "Filters: " + ", ".join(labels) + " | Sort: by kcal"
+
+func _get_filter_label(key: String) -> String:
+	for opt in FILTER_OPTIONS:
+		if opt["key"] == key:
+			return opt["label"]
+	return key
+
 
 # ── Load foods.json ──
 func load_foods():
@@ -29,7 +144,7 @@ func load_foods():
 
 # ── Build one tab per category ──
 func build_tabs():
-	var tabs = $Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TabContainer
+	var tabs = $Panel/ShoppingListPanel/VBoxContainer/TabContainer
 	for child in tabs.get_children():
 		child.queue_free()
 
@@ -51,7 +166,7 @@ func build_tabs():
 
 # ── Rebuild food list for active tab + search ──
 func refresh_current_tab():
-	var tabs = $Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TabContainer
+	var tabs = $Panel/ShoppingListPanel/VBoxContainer/TabContainer
 	var scroll = tabs.get_current_tab_control()
 	if not scroll: return
 	var vbox = scroll.get_child(0)
@@ -61,13 +176,32 @@ func refresh_current_tab():
 		child.queue_free()
 
 	var cat    = tabs.get_tab_title(tabs.current_tab).to_lower()
-	var search = $Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text.to_lower()
+	var search = $Panel/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text.to_lower()
 
 	var filtered = all_foods.filter(func(f):
 		var right_cat = f.get("category", "") == cat
 		var matches   = search.is_empty() or f.get("name", "").to_lower().contains(search)
 		return right_cat and matches
 	)
+
+	if not active_filters.is_empty():
+		filtered = filtered.filter(func(f):
+			for key in active_filters:
+				if f.get(key, 0.0) <= 0:
+					return false
+			return true
+		)
+
+	if not active_filters.is_empty():
+		var sort_key = "calories"  # default for multiple filters
+		if active_filters.size() == 1:
+			sort_key = active_filters[0]
+
+		filtered.sort_custom(func(a, b):
+			var va = a.get(sort_key, 0.0)
+			var vb = b.get(sort_key, 0.0)
+			return va < vb if sort_ascending else va > vb
+		)
 
 	for food in filtered:
 		vbox.add_child(make_browse_row(food))
@@ -90,15 +224,25 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(name_label)
 
-	var amount = Label.new()
-	amount.text = str(food.get("oxalate_mg_per_100g", 0)) + "mg"
-	row.add_child(amount)
+	if not active_filters.is_empty():
+		var val_text = ""
+		for key in active_filters:
+			var val = food.get(key, 0.0)
+			var label = _get_filter_label(key)
+			val_text += label + ": " + str(snappedf(val, 0.1)) + " "
+		var val_lbl = Label.new()
+		val_lbl.text = val_text.strip_edges()
+		val_lbl.add_theme_font_size_override("font_size", 20)
+		row.add_child(val_lbl)
+	else:
+		var amount = Label.new()
+		amount.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
+		row.add_child(amount)
 
 	var warnings = Global.get_warnings(food)
 	if warnings.size() > 0:
 		var badge = Label.new()
 		badge.text = "⛔" if warnings[0]["severity"] == "avoid" else "⚠️"
-		badge.tooltip_text = warnings[0]["message"]
 		row.add_child(badge)
 
 	var btn = Button.new()
@@ -130,7 +274,7 @@ func remove_from_shopping_list(food: Dictionary):
 
 # ── Rebuild the shopping list ──
 func refresh_shopping_list():
-	var container = $Panel/VBoxContainer/ShoppingListPanel/VBoxContainer/ShoppingListContainer
+	var container = $Panel/ShoppingListPanel/VBoxContainer/ShoppingListContainer
 	for child in container.get_children():
 		child.queue_free()
 
@@ -206,7 +350,7 @@ func add_to_fridge(food: Dictionary, qty: int = 1):
 
 # ── Build the fridge grid ──
 func build_fridge_ui():
-	var fridge = $FridgeContainer
+	var fridge = $Panel/FridgeContainer
 	fridge.add_theme_constant_override("h_separation", 20)
 	fridge.add_theme_constant_override("v_separation", 20)
 	for child in fridge.get_children():
@@ -344,12 +488,16 @@ func _open_action_popup(food: Dictionary):
 	]
 
 	var grid = GridContainer.new()
-	grid.columns = 2
+	grid.columns = 3
+	var max_rows = 5
+	var columns = 3
+	var max_items = max_rows * columns
 	grid.add_theme_constant_override("h_separation", 10)
 	grid.add_theme_constant_override("v_separation", 10)
 	vbox.add_child(grid)
 
-	for action in actions:
+	for i in range(min(actions.size(), max_items)):
+		var action = actions[i]
 		var btn = Button.new()
 		btn.custom_minimum_size = Vector2(155, 80)
 		btn.text = action["icon"] + "\n" + action["label"]
@@ -619,7 +767,15 @@ func _log_food_to_file(food: Dictionary):
 		"calories":0.0,"protein_g":0.0,"fat_g":0.0,
 		"saturated_fat_g":0.0,"monounsaturated_fat_g":0.0,"polyunsaturated_fat_g":0.0,
 		"carbs_g":0.0,"fiber_g":0.0,"calcium_mg":0.0,"oxalate_mg":0.0,
-		"sugar_g":0.0,"sodium_mg":0.0,"iron_mg":0.0,"copper_mg":0.0,"selenium_mcg":0.0
+		"sugar_g":0.0,"sodium_mg":0.0,"iron_mg":0.0,"copper_mg":0.0,"selenium_mcg":0.0,
+		"vitamin_a_mcg":0.0,"vitamin_b1_mg":0.0,"vitamin_b2_mg":0.0,"vitamin_b3_mg":0.0,
+		"vitamin_b5_mg":0.0,"vitamin_b6_mg":0.0,"vitamin_b7_mcg":0.0,"vitamin_b9_mcg":0.0,
+		"vitamin_b12_mcg":0.0,"vitamin_c_mg":0.0,"vitamin_d_mcg":0.0,"vitamin_e_mg":0.0,
+		"vitamin_k1_mcg":0.0,"vitamin_k2_mcg":0.0,
+		"magnesium_mg":0.0,"potassium_mg":0.0,"zinc_mg":0.0,"phosphorus_mg":0.0,
+		"manganese_mg":0.0,"chromium_mcg":0.0,"iodine_mcg":0.0,"molybdenum_mcg":0.0,
+		"beta_carotene_mcg":0.0,"lycopene_mcg":0.0,"lutein_zeaxanthin_mcg":0.0,
+		"quercetin_mg":0.0,"anthocyanins_mg":0.0,"resveratrol_mg":0.0,"total_polyphenols_mg":0.0
 	}
 	var foods = []
 
@@ -627,26 +783,16 @@ func _log_food_to_file(food: Dictionary):
 		var read_file = FileAccess.open("user://intake.json", FileAccess.READ)
 		var data = JSON.parse_string(read_file.get_as_text())
 		read_file.close()
-		if data and data.get("date", "") == today:
-			totals = data.get("totals", totals)
-			foods  = data.get("foods", [])
+		if data and data.get("date","") == today:
+			var saved = data.get("totals", totals)
+			for key in totals.keys():
+				if saved.has(key): totals[key] = saved[key]
+			foods = data.get("foods",[])
 
-	totals["calories"]             += food.get("calories", 0)
-	totals["protein_g"]            += food.get("protein_g", 0)
-	totals["fat_g"]                += food.get("fat_g", 0)
-	totals["saturated_fat_g"]      += food.get("saturated_fat_g", 0)
-	totals["monounsaturated_fat_g"]+= food.get("monounsaturated_fat_g", 0)
-	totals["polyunsaturated_fat_g"]+= food.get("polyunsaturated_fat_g", 0)
-	totals["carbs_g"]              += food.get("carbs_g", 0)
-	totals["fiber_g"]              += food.get("fiber_g", 0)
-	totals["calcium_mg"]           += food.get("calcium_mg", 0)
-	totals["oxalate_mg"]           += food.get("oxalate_mg_per_100g", 0)
-	totals["sugar_g"]              += food.get("sugar_g", 0)
-	totals["sodium_mg"]            += food.get("sodium_mg", 0)
-	totals["iron_mg"]              += food.get("iron_mg", 0)
-	totals["copper_mg"]            += food.get("copper_mg", 0)
-	totals["selenium_mcg"]         += food.get("selenium_mcg", 0)
-	foods.append(food.get("name", "Unknown"))
+	for key in totals.keys():
+		var food_key = "oxalate_mg_per_100g" if key == "oxalate_mg" else key
+		totals[key] += food.get(food_key, 0.0)
+	foods.append(food.get("name","Unknown"))
 
 	var file = FileAccess.open("user://intake.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({"date": today, "totals": totals, "foods": foods}))
@@ -654,10 +800,17 @@ func _log_food_to_file(food: Dictionary):
 
 # ── Open/close shopping list ──
 func _on_list_pressed():
-	$Panel/VBoxContainer/ShoppingListPanel.show()
+	$Panel/ShoppingListPanel.show()
+	$Panel/ShoppingListPanel.mouse_filter = Control.MOUSE_FILTER_STOP
+	# Also disable fridge buttons while list is open
+	$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func _on_close_list():
-	$Panel/VBoxContainer/ShoppingListPanel.hide()
+	$Panel/ShoppingListPanel.hide()
+	$Panel/ShoppingListPanel.mouse_filter = Control.MOUSE_FILTER_STOP
+	# Re-enable fridge buttons
+	$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_PASS
+
 
 # ── Save/load fridge ──
 func save_fridge():
