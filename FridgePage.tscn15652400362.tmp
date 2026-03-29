@@ -53,10 +53,10 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_wvv7q")
 [node name="TopBar" type="HBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-offset_left = 360.0
-offset_top = 304.0
-offset_right = 768.0
-offset_bottom = 712.0
+offset_left = 381.0
+offset_top = 330.0
+offset_right = 789.0
+offset_bottom = 738.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
@@ -80,9 +80,9 @@ columns = 3
 
 [node name="PageDots" type="HBoxContainer" parent="Panel"]
 layout_mode = 0
-offset_top = 704.0
-offset_right = 1130.0
-offset_bottom = 807.0
+offset_top = 11.0
+offset_right = 1169.0
+offset_bottom = 201.0
 theme_override_constants/separation = 8
 alignment = 1
 

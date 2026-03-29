@@ -11,7 +11,7 @@ var fridge_overrides: Dictionary = {}
 
 # ── Paging ──
 var current_page: int = 0
-const ITEMS_PER_PAGE: int = 15
+const ITEMS_PER_PAGE: int = 18
 const GRID_COLS: int = 3
 
 # ── Swipe detection ──
@@ -149,7 +149,7 @@ func _build_filter_buttons():
 		btn.text = opt["label"]
 		btn.toggle_mode = true
 		btn.custom_minimum_size = Vector2(0, 50)
-		btn.add_theme_font_size_override("font_size", 22)
+		btn.add_theme_font_size_override("font_size", 40)
 		btn.toggled.connect(func(pressed): _on_filter_toggled(opt["key"], pressed, btn))
 		row.add_child(btn)
 		filter_buttons[opt["key"]] = btn
@@ -302,7 +302,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 			val_text += label + ": " + str(snappedf(val, 0.1)) + " "
 		var val_lbl = Label.new()
 		val_lbl.text = val_text.strip_edges()
-		val_lbl.add_theme_font_size_override("font_size", 20)
+		val_lbl.add_theme_font_size_override("font_size", 40)
 		row.add_child(val_lbl)
 	else:
 		var amount = Label.new()
@@ -359,7 +359,7 @@ func refresh_shopping_list():
 		row.add_child(minus_btn)
 		var cb = CheckBox.new()
 		cb.text = food.get("name","") + (" ×"+str(qty) if qty > 1 else "")
-		cb.add_theme_font_size_override("font_size",28)
+		cb.add_theme_font_size_override("font_size",40)
 		cb.custom_minimum_size = Vector2(260,50)
 		cb.toggled.connect(func(checked): if checked: add_to_fridge_multi(food, qty))
 		row.add_child(cb)
@@ -412,7 +412,7 @@ func add_to_fridge(food: Dictionary):
 # ── Build the fridge grid ──
 func build_fridge_ui():
 	var fridge = $Panel/FridgeContainer
-	fridge.add_theme_constant_override("h_separation", 20)
+	fridge.add_theme_constant_override("h_separation", 40)
 	fridge.add_theme_constant_override("v_separation", 20)
 	for child in fridge.get_children():
 		child.queue_free()
@@ -433,12 +433,12 @@ func build_fridge_ui():
 
 		# Outer container to stack badge over button
 		var container = Control.new()
-		container.custom_minimum_size = Vector2(220, 220)
+		container.custom_minimum_size = Vector2(210, 210)
 
 		# Button
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(220, 220)
-		btn.size = Vector2(220, 220)
+		btn.custom_minimum_size = Vector2(210, 210)
+		btn.size = Vector2(210, 210)
 		btn.position = Vector2(0, 0)
 		btn.tooltip_text = slot.get("name","") + "\n" + str(snappedf(remaining,0.1)) + "g remaining"
 
@@ -450,14 +450,14 @@ func build_fridge_ui():
 		btn.add_child(icon)
 		# Long press timer
 		var timer = Timer.new()
-		timer.wait_time = 3
+		timer.wait_time = 1.2
 		timer.one_shot = true
 		btn.add_child(timer)
 
 		timer.timeout.connect(func():
 			_long_press_active = true
-			_on_info_pressed(slot)
-		)
+			_open_dual_popup(slot, btn)
+	)
 
 		btn.gui_input.connect(func(event): _handle_fridge_input(event, slot, btn, timer))
 		container.add_child(btn)
@@ -531,100 +531,194 @@ func _handle_fridge_input(event: InputEvent, food: Dictionary, _btn: Button, tim
 	elif event is InputEventScreenTouch:
 		is_press   = event.pressed
 		is_release = not event.pressed
-
 	if is_press:
 		_long_press_active = false
 		timer.start()
 	if is_release:
-		if timer.time_left > 0:
-			timer.stop()
-			if not _long_press_active:
-				_open_action_popup(food)
+		# Always stop the timer — no short press action
+		timer.stop()
 
 
 
 # ─────────────────────────────────────────
-#  ACTION POPUP — 8 buttons
+#  ACTION POPUP — 9 buttons
 # ─────────────────────────────────────────
-func _open_action_popup(food: Dictionary):
-	var existing = get_node_or_null("ActionPopup")
-	if existing: existing.queue_free()
 
-	var fid = food.get("id","")
-	var w   = fridge_weights.get(fid, {"total_g":100.0,"remaining_g":100.0})
-	var remaining_g = w.get("remaining_g", 100.0)
-	var density = food.get("density_g_per_ml", 1.0)
+func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
+	# Clean up any existing popups
+	var existing_action = get_node_or_null("ActionPopup")
+	if existing_action: existing_action.queue_free()
+	var existing_info = get_node_or_null("InfoBubble")
+	if existing_info: existing_info.queue_free()
 
-	var popup = PanelContainer.new()
-	popup.name = "ActionPopup"
-	popup.custom_minimum_size = Vector2(350, 500)
+	var iid       = slot.get("_iid","")
+	var w         = fridge_weights.get(iid, {"remaining_g":100.0})
+	var remaining = w.get("remaining_g", 100.0)
+	var density   = slot.get("density_g_per_ml", 1.0)
+	var effective = _get_effective_slot(slot)
+	var has_override = fridge_overrides.has(iid)
+
+	# ── NUTRITIONAL INFO POPUP ──
+	# Fixed position: x=0..1170, y=0..215 (in your 390x844 display = scale 0.333)
+	# In display coords: x=0..390, y=0..72
+	var info_popup = PanelContainer.new()
+	info_popup.name = "InfoBubble"
+	# Position at top of screen
+	info_popup.set_anchor_and_offset(SIDE_LEFT,   0, 0)
+	info_popup.set_anchor_and_offset(SIDE_RIGHT,  1, 0)
+	info_popup.set_anchor_and_offset(SIDE_TOP,    0, 0)
+	info_popup.set_anchor_and_offset(SIDE_BOTTOM, 0, 215 * (390.0/1170.0))
+	# 215/1170 * 390 ≈ 72px in display space
+
+	var info_hbox = HBoxContainer.new()
+	info_hbox.add_theme_constant_override("separation", 20)
+	info_popup.add_child(info_hbox)
+
+	# Left column
+	var left_col = VBoxContainer.new()
+	left_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info_hbox.add_child(left_col)
+
+	var food_title = Label.new()
+	food_title.text = slot.get("name","") + (" ✏️" if has_override else "")
+	food_title.add_theme_font_size_override("font_size", 40)
+	food_title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	left_col.add_child(food_title)
+
+	var fields_left = [
+		["  Calories",    str(snappedf(effective.get("calories",0),0.1)) + " kcal"],
+		["  Protein",     str(snappedf(effective.get("protein_g",0),0.1)) + " g"],
+		["  Fat",         str(snappedf(effective.get("fat_g",0),0.1)) + " g"],
+		["  Sat.",      str(snappedf(effective.get("saturated_fat_g",0),0.1)) + " g"],
+		["  Carbs",       str(snappedf(effective.get("carbs_g",0),0.1)) + " g"],
+		["  Sugar",     str(snappedf(effective.get("sugar_g",0),0.1)) + " g"],
+	]
+	for pair in fields_left:
+		var row = HBoxContainer.new()
+		var k = Label.new()
+		k.text = pair[0]
+		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		k.add_theme_font_size_override("font_size", 35)
+		var v = Label.new()
+		v.text = pair[1]
+		v.add_theme_font_size_override("font_size", 35)
+		row.add_child(k)
+		row.add_child(v)
+		left_col.add_child(row)
+
+	# Right column
+	var right_col = VBoxContainer.new()
+	right_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info_hbox.add_child(right_col)
+
+	var remaining_lbl = Label.new()
+	remaining_lbl.text = str(snappedf(remaining,0.1)) + "g left"
+	remaining_lbl.add_theme_font_size_override("font_size", 40)
+	right_col.add_child(remaining_lbl)
+
+	var fields_right = [
+		["Fiber",    str(snappedf(effective.get("fiber_g",0),0.1)) + " g"],
+		["Calcium",  str(snappedf(effective.get("calcium_mg",0),0.1)) + " mg"],
+		["Sodium",   str(snappedf(effective.get("sodium_mg",0),0.1)) + " mg"],
+		["Vit C",    str(snappedf(effective.get("vitamin_c_mg",0),0.1)) + " mg"],
+		["Vit D",    str(snappedf(effective.get("vitamin_d_mcg",0),0.1)) + " mcg"],
+		["B12",      str(snappedf(effective.get("vitamin_b12_mcg",0),0.1)) + " mcg"],
+	]
+	for pair in fields_right:
+		var row = HBoxContainer.new()
+		var k = Label.new()
+		k.text = pair[0]
+		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		k.add_theme_font_size_override("font_size", 35)
+		var v = Label.new()
+		v.text = pair[1]
+		v.add_theme_font_size_override("font_size", 35)
+		row.add_child(k)
+		row.add_child(v)
+		right_col.add_child(row)
+
+	add_child(info_popup)
+
+	# ── ACTION POPUP ──
+	# Position ABOVE the pressed button
+	var btn_global_pos = pressed_btn.get_global_rect()
+	var popup_width  = 1010.0
+	var popup_height = 395.0
+
+	# X: center on button, clamp to screen edges
+	var popup_x = btn_global_pos.position.x + btn_global_pos.size.x / 2.0 - popup_width / 2.0
+	popup_x = clamp(popup_x, 0, get_viewport_rect().size.x - popup_width)
+
+	# Y: above the button with 10px gap, clamp so it doesn't go off screen top
+	var popup_y = btn_global_pos.position.y - popup_height - 70
+	# If it would go above the nutritional info panel (72px), push it below button instead
+	var info_panel_bottom = 150.0 * (390.0 / 1170.0)
+	if popup_y < info_panel_bottom + 2.0:
+		popup_y = btn_global_pos.position.y + btn_global_pos.size.y + 5.0
+
+	var action_popup = PanelContainer.new()
+	action_popup.name = "ActionPopup"
+	action_popup.custom_minimum_size = Vector2(popup_width, 0)
+	action_popup.position = Vector2(popup_x, popup_y)
 
 	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 10)
-	popup.add_child(vbox)
+	vbox.add_theme_constant_override("separation", 8)
+	action_popup.add_child(vbox)
 
-	# Title
 	var title = Label.new()
-	title.text = food.get("name","")
-	title.add_theme_font_size_override("font_size", 40)
+	title.text = slot.get("name","")
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 35)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(title)
 
-	# Remaining weight
-	var weight_lbl = Label.new()
-	weight_lbl.name = "WeightLabel"
-	weight_lbl.text = "Remaining: " + str(snappedf(remaining_g, 0.1)) + " g"
-	weight_lbl.add_theme_font_size_override("font_size", 40)
-	vbox.add_child(weight_lbl)
+	vbox.add_child(HSeparator.new())
 
-	var sep = HSeparator.new()
-	vbox.add_child(sep)
-
-	# 8 action buttons in 2 columns
 	var actions = [
-		{"icon":"⚖️",  "label":"Modify\nWeight",   "key":"modify"},
-		{"icon":"🍽️",  "label":"Eat\nWhole",        "key":"eat_whole"},
-		{"icon":"🥄",  "label":"Tablespoon\n(15mL)", "key":"tablespoon"},
-		{"icon":"🫖",  "label":"Teaspoon\n(5mL)",    "key":"teaspoon"},
-		{"icon":"⚡",  "label":"By Gram",            "key":"gram"},
-		{"icon":"💊",  "label":"By Milligram",       "key":"milligram"},
-		{"icon":"🥛",  "label":"Glass\n(250mL)",     "key":"glass"},
-		{"icon":"✏️", "label":"Edit Nutrition",       "key":"edit_nutrition"},
-		{"icon":"🗑️",  "label":"Throw\nOut",         "key":"throw_out"},
+		# Row 1
+		{"icon":"⚖️", "label":"Modify\nWeight",    "key":"modify"},
+		{"icon":"🍽️", "label":"Eat\nWhole",         "key":"eat_whole"},
+		{"icon":"🥄", "label":"Tablespoon\n(15mL)", "key":"tablespoon"},
+		{"icon":"🫖", "label":"Teaspoon\n(5mL)",    "key":"teaspoon"},
+		{"icon":"⚡", "label":"By Gram",            "key":"gram"},
+		# Row 2
+		{"icon":"💊", "label":"By\nMilligram",      "key":"milligram"},
+		{"icon":"🥛", "label":"Glass\n(250mL)",     "key":"glass"},
+		{"icon":"✕",  "label":"Close",              "key":"close"},
+		{"icon":"✏️", "label":"Edit\nNutrition",    "key":"edit_nutrition"},
+		{"icon":"🗑️", "label":"Throw\nOut",         "key":"throw_out"},
 	]
 
 	var grid = GridContainer.new()
-	grid.columns = 3
-	var max_rows = 5
-	var columns = 3
-	var max_items = max_rows * columns
-	grid.add_theme_constant_override("h_separation", 10)
+	grid.columns = 5
+	grid.add_theme_constant_override("h_separation", 13.5)
 	grid.add_theme_constant_override("v_separation", 10)
 	vbox.add_child(grid)
 
 	for action in actions:
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(108, 75)
+		btn.custom_minimum_size = Vector2(191, 191)
 		btn.text = action["icon"] + "\n" + action["label"]
-		btn.add_theme_font_size_override("font_size", 40)
-		btn.pressed.connect(func(): _on_action_pressed(action["key"], food, popup, density, remaining_g))
+		btn.add_theme_font_size_override("font_size", 30)
+		if action["key"] == "close":
+			# Style close differently so it stands out
+			btn.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
+			btn.pressed.connect(func():
+				action_popup.queue_free()
+				var ib = get_node_or_null("InfoBubble")
+				if ib: ib.queue_free()
+			)
+		else:
+			btn.pressed.connect(func(): _on_action_pressed(action["key"], slot, action_popup, density, remaining))
 		grid.add_child(btn)
-	# Input area (hidden by default, shown for certain actions)
+
 	var input_area = VBoxContainer.new()
 	input_area.name = "InputArea"
 	input_area.visible = false
 	vbox.add_child(input_area)
 
-	# Close button
-	var close_btn = Button.new()
-	close_btn.text = "✕ Close"
-	close_btn.custom_minimum_size = Vector2(0,55)
-	close_btn.add_theme_font_size_override("font_size",40)
-	close_btn.pressed.connect(func(): popup.queue_free())
-	vbox.add_child(close_btn)
-
-	popup.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	add_child(popup)
+	add_child(action_popup)
+	
 
 func _on_action_pressed(key: String, slot: Dictionary, popup: PanelContainer, density: float, remaining_g: float):
 	var iid = slot.get("_iid","")
@@ -936,70 +1030,7 @@ func _remove_slot(iid: String):
 	build_fridge_ui()
 
 # ── Show nutritional info bubble ──
-func _on_info_pressed(food: Dictionary):
-	var slot = food
-	var existing = get_node_or_null("InfoBubble")
-	if existing:
-		existing.queue_free()
 
-	var effective = _get_effective_slot(slot)
-	var iid       = slot.get("_iid","")
-	var has_override = fridge_overrides.has(iid)
-
-	var bubble = PanelContainer.new()
-	bubble.name = "InfoBubble"
-	bubble.custom_minimum_size = Vector2(340, 420)
-
-	var vbox = VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 40)
-	bubble.add_child(vbox)
-
-	var title = Label.new()
-	title.text = slot.get("name","") + " (per 100g)" + (" ✏️" if has_override else "")
-	title.add_theme_font_size_override("font_size", 40)
-	title.autowrap_mode = TextServer.AUTOWRAP_WORD
-	vbox.add_child(title)
-	vbox.add_child(HSeparator.new())
-
-	var separator = HSeparator.new()
-	separator.add_theme_constant_override("h_separation", 30)
-	separator.add_theme_constant_override("v_separation", 30)
-	vbox.add_child(separator)
-
-	var fields = [
-		["Calories",     str(food.get("calories", 0)) + " kcal"],
-		["Protein",      str(food.get("protein_g", 0)) + " g"],
-		["Fat",          str(food.get("fat_g", 0)) + " g"],
-		["  Saturated",  str(food.get("saturated_fat_g", 0)) + " g"],
-		["  Mono",       str(food.get("monounsaturated_fat_g", 0)) + " g"],
-		["  Poly",       str(food.get("polyunsaturated_fat_g", 0)) + " g"],
-		["Carbs",        str(food.get("carbs_g", 0)) + " g"],
-		["  Sugar",      str(food.get("sugar_g", 0)) + " g"],
-		["Fiber",        str(food.get("fiber_g", 0)) + " g"],
-	]
-
-	for pair in fields:
-		var row = HBoxContainer.new()
-		var key_lbl = Label.new()
-		key_lbl.text = pair[0]
-		key_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		key_lbl.add_theme_font_size_override("font_size", 40)
-		var val_lbl = Label.new()
-		val_lbl.text = pair[1]
-		val_lbl.add_theme_font_size_override("font_size", 40)
-		row.add_child(key_lbl)
-		row.add_child(val_lbl)
-		vbox.add_child(row)
-
-	var close_btn = Button.new()
-	close_btn.text = "✕ Close"
-	close_btn.add_theme_font_size_override("font_size", 40)
-	close_btn.custom_minimum_size = Vector2(0, 60)
-	close_btn.pressed.connect(func(): bubble.queue_free())
-	vbox.add_child(close_btn)
-
-	bubble.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	add_child(bubble)
 
 # ── Log food to file when HomePage not loaded ──
 func _log_food_to_file(food: Dictionary):
