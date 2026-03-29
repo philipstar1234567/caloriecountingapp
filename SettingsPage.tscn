@@ -503,7 +503,7 @@ layout_mode = 2
 text = "-"
 
 [node name="HemoPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 450)
+custom_minimum_size = Vector2(0, 500)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HemoPanel"]
@@ -623,7 +623,7 @@ layout_mode = 2
 text = "-"
 
 [node name="CrohnsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 250)
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel"]
@@ -699,7 +699,7 @@ layout_mode = 2
 text = "-"
 
 [node name="EPIPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 250)
+custom_minimum_size = Vector2(0, 400)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/EPIPanel"]

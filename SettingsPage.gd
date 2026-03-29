@@ -243,11 +243,11 @@ func _on_known_metabolic(condition: String, checked: bool, path: String):
 		# Add condition-specific guidance
 		match condition:
 			"sulfur-avoidance":
-				msg = "✅ Sulfur avoidance active.\nHigh-sulfur foods (garlic, onion, eggs, cruciferous vegetables, meat) will be flagged."
+				msg = "✅ Sulfur avoidance active.\nHigh-sulfur foods (garlic, onion, eggs, cruciferous vegetables, meat) \nwill be flagged."
 			"celiac-disease":
 				msg = "⚠️ Celiac disease.\nAll gluten-containing foods will be flagged. Avoid wheat, rye, barley, spelt."
 			"lactose-intolerance":
-				msg = "⚠️ Lactose intolerance.\nHigh-lactose dairy will be flagged. Hard cheeses and lactose-free products are safe."
+				msg = "⚠️ Lactose intolerance.\nHigh-lactose dairy will be flagged.\nHard cheeses and lactose-free products are safe."
 			"post-cholecystectomy":
 				msg = "⚠️ Post-cholecystectomy.\nHigh-fat foods flagged. Eat 5–6 small meals daily. Avoid fried/spicy foods."
 		get_node(path + "ResultLabel").text = msg
@@ -683,10 +683,10 @@ func _on_calculate_hemo():
 
 	if tsat > 45 or ferritin > ferritin_high:
 		risk = "overload"
-		msg  = "🔴 Iron overload markers elevated. Avoid iron-rich foods and vitamin C supplements."
+		msg  = "🔴 Iron overload markers elevated. \nAvoid iron-rich foods and vitamin C supplements."
 	elif tsat > 35 or ferritin > (ferritin_high * 0.7):
 		risk = "borderline"
-		msg  = "🟡 Borderline iron levels. Monitor iron-rich food intake."
+		msg  = "🟡 Borderline iron levels. \nMonitor iron-rich food intake."
 	else:
 		msg  = "✅ Iron levels appear normal."
 
