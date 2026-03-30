@@ -59,6 +59,16 @@ vertical_alignment = 1
 layout_mode = 2
 text = "reset"
 
+[node name="HideRedWarningsRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HideRedLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HideRedWarningsRow"]
+layout_mode = 2
+
+[node name="HideRedCheck" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HideRedWarningsRow"]
+layout_mode = 2
+text = "Hide high-risk foods from shopping list"
+
 [node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 1089)
 layout_mode = 2

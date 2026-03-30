@@ -614,19 +614,19 @@ func _on_calculate_thyroid():
 
 	if tsh > 5.0 and ft4 < 0.7:
 		risk = "hypothyroid"
-		msg  = "🔴 Hypothyroidism detected (TSH > 5.0, FT4 < 0.7 ng/dL). Consult your doctor."
+		msg  = "🔴 Hypothyroidism detected (TSH > 5.0, FT4 < 0.7 ng/dL). \nConsult your doctor."
 	elif tsh > 5.0:
 		risk = "subclinical"
-		msg  = "🟡 Subclinical hypothyroidism (elevated TSH). Monitor closely."
+		msg  = "🟡 Subclinical hypothyroidism (elevated TSH). \nMonitor closely."
 	elif tsh < 0.4:
 		risk = "hyperthyroid"
-		msg  = "🟡 Possible hyperthyroidism (TSH < 0.4). Consult your doctor."
+		msg  = "🟡 Possible hyperthyroidism (TSH < 0.4). \nConsult your doctor."
 	else:
 		msg  = "✅ Thyroid values appear normal."
 
 	if tpo_pos:
 		risk = "hashimotos"
-		msg += "\n⚠️ TPO antibodies positive — Hashimoto's thyroiditis likely."
+		msg += "\n⚠️ TPO antibodies positive \n— Hashimoto's thyroiditis likely."
 		Global.set_metabolic_condition("thyroid-health", true)
 
 	result_lbl.text = msg
