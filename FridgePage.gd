@@ -26,6 +26,7 @@ var _drag_distance: float = 0.0
 var active_filters: Array = []   # list of field keys
 var sort_ascending: bool = true
 var filter_buttons: Dictionary = {}  # field_key → Button
+var warning_filter: String = "all"  # "all", "caution", "avoid", "none"
 
 # ── All filterable nutrients with display labels ──
 # Note: vitamin_k1 is intentionally excluded for safety
@@ -76,6 +77,7 @@ func _ready():
 	$Panel/ShoppingListPanel/VBoxContainer/TabContainer.tab_changed.connect(func(_i): refresh_current_tab())
 	$Panel/ShoppingListPanel.hide()
 	_build_filter_buttons()
+	_build_warning_filter_buttons()
 	_connect_sort_buttons()
 
 # ─────────────────────────────────────────
@@ -138,6 +140,7 @@ func _get_total_pages() -> int:
 # ─────────────────────────────────────────
 #  FILTER UI SETUP
 # ─────────────────────────────────────────
+
 func _build_filter_buttons():
 	var row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH/FilterButtonsRow
 	for child in row.get_children():
@@ -153,6 +156,27 @@ func _build_filter_buttons():
 		btn.toggled.connect(func(pressed): _on_filter_toggled(opt["key"], pressed, btn))
 		row.add_child(btn)
 		filter_buttons[opt["key"]] = btn
+		
+func _build_warning_filter_buttons():
+	var row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/WarningFilterRow
+	var options = [
+		{"label":"All",    "key":"all"},
+		{"label":"⚠️ Only", "key":"caution"},
+		{"label":"⛔ Only", "key":"avoid"},
+		{"label":"✅ Safe", "key":"none"},
+	]
+	for opt in options:
+		var btn = Button.new()
+		btn.text = opt["label"]
+		btn.toggle_mode = true
+		btn.button_pressed = opt["key"] == warning_filter
+		btn.custom_minimum_size = Vector2(80, 45)
+		btn.add_theme_font_size_override("font_size", 22)
+		btn.pressed.connect(func():
+			warning_filter = opt["key"]
+			refresh_current_tab()
+		)
+		row.add_child(btn)
 
 func _connect_sort_buttons():
 	var sort_row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow
@@ -275,6 +299,54 @@ func refresh_current_tab():
 
 	for food in filtered:
 		vbox.add_child(make_browse_row(food))
+		
+# Warning filter
+	if warning_filter != "all" or Global.hide_red_warnings:
+		filtered = filtered.filter(func(f):
+			var warnings = Global.get_warnings(f)
+			
+			# Hide red warnings globally if setting is on
+			if Global.hide_red_warnings:
+				for w in warnings:
+					if w["severity"] == "avoid":
+						return false
+			
+			match warning_filter:
+				"avoid":
+					# Only show foods WITH red warning
+					for w in warnings:
+						if w["severity"] == "avoid": return true
+					return false
+				"caution":
+					# Only show foods WITH yellow warning
+					var has_caution = false
+					var has_avoid   = false
+					for w in warnings:
+						if w["severity"] == "caution": has_caution = true
+						if w["severity"] == "avoid":   has_avoid   = true
+					return has_caution and not has_avoid
+				"none":
+					# Only show foods with NO warnings
+					return warnings.is_empty()
+				_:
+					return true
+		)
+
+	# Sort by warning severity if that's the active sort
+	if warning_filter != "all":
+		filtered.sort_custom(func(a, b):
+			var wa = Global.get_warnings(a)
+			var wb = Global.get_warnings(b)
+			var sa = 0
+			var sb = 0
+			for w in wa:
+				if w["severity"] == "avoid":   sa = 2
+				elif w["severity"] == "caution" and sa < 2: sa = 1
+			for w in wb:
+				if w["severity"] == "avoid":   sb = 2
+				elif w["severity"] == "caution" and sb < 2: sb = 1
+			return sa < sb if sort_ascending else sa > sb
+		)
 
 # ── One row in the browse list ──
 func make_browse_row(food: Dictionary) -> HBoxContainer:
@@ -531,11 +603,17 @@ func _handle_fridge_input(event: InputEvent, food: Dictionary, _btn: Button, tim
 	elif event is InputEventScreenTouch:
 		is_press   = event.pressed
 		is_release = not event.pressed
+
 	if is_press:
+		# Close any existing popups immediately when pressing a new food
+		var existing_action = get_node_or_null("ActionPopup")
+		if existing_action: existing_action.queue_free()
+		var existing_info = get_node_or_null("InfoBubble")
+		if existing_info: existing_info.queue_free()
 		_long_press_active = false
 		timer.start()
+
 	if is_release:
-		# Always stop the timer — no short press action
 		timer.stop()
 
 

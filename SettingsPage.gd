@@ -123,6 +123,13 @@ func _ready():
 	_add_unit_selector(HEMO   + "InputFields/TsatInput",       "tsat")
 	_add_unit_selector(WILS   + "InputFields/CerulInput",      "cerul")
 	_add_unit_selector(WILS   + "InputFields/UrineCuInput",    "urine_cu")
+	
+	# red warning
+	get_node(BASE + "HideRedWarningsRow/HideRedCheck").toggled.connect(func(checked):
+		Global.hide_red_warnings = checked
+		Global.save_profile()
+	)
+	get_node(BASE + "HideRedWarningsRow/HideRedCheck").button_pressed = Global.hide_red_warnings
 
 	# Kidney care
 	get_node(KIDNEY + "KnownDisease").toggled.connect(_on_known_disease_toggled)

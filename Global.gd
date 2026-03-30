@@ -26,6 +26,8 @@ var known_diagnoses: Array = []  # only manually checked boxes
 
 var daily_water_liters: float = 2.5  # default, recalculated based on conditions
 
+var hide_red_warnings: bool = false
+
 func calculate_water_recommendation() -> float:
 	var is_female = body_metrics.get("is_female", false)
 	var weight    = body_metrics.get("weight", 70.0)
@@ -498,7 +500,8 @@ func save_profile():
 	var file = FileAccess.open("user://profile.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"conditions": active_conditions,
-		"kidney_at_risk": kidney_at_risk
+		"kidney_at_risk": kidney_at_risk,
+		"hide_red_warnings": hide_red_warnings
 	}))
 	file.close()
 
@@ -510,6 +513,7 @@ func load_profile():
 	if not data: return
 	active_conditions = data.get("conditions", [])
 	kidney_at_risk = data.get("kidney_at_risk", false)
+	hide_red_warnings   = data.get("hide_red_warnings", false)
 
 # ─────────────────────────────────────────
 #  METABOLIC CONDITIONS
