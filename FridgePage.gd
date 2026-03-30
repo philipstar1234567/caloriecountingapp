@@ -326,25 +326,19 @@ func refresh_current_tab():
 			return va < vb if sort_ascending else va > vb
 		)
 
-	for food in filtered:
-		vbox.add_child(make_browse_row(food))
-		
-# ── Warning filter ──
 	if warning_filter != "all" or Global.hide_red_warnings:
 		filtered = filtered.filter(func(f):
 			var severity = _get_food_severity(f)
-			
 			if Global.hide_red_warnings and severity == "avoid":
 				return false
-			
 			match warning_filter:
 				"avoid":   return severity == "avoid"
 				"caution": return severity == "caution"
 				"none":    return severity == "safe"
 				_:         return true
 		)
-	
-	# ── Warning sort ──
+
+	# ── Warning sort — must come BEFORE building rows ──
 	if warning_filter != "all":
 		filtered.sort_custom(func(a, b):
 			var order = {"avoid":2, "caution":1, "safe":0}
@@ -352,6 +346,10 @@ func refresh_current_tab():
 			var sb = order.get(_get_food_severity(b), 0)
 			return sa < sb if sort_ascending else sa > sb
 		)
+		
+	for food in filtered:
+		vbox.add_child(make_browse_row(food))
+		
 
 # ── One row in the browse list ──
 func make_browse_row(food: Dictionary) -> HBoxContainer:
