@@ -64,14 +64,29 @@ func refresh_display():
 
 	vbox.get_node("DateLabel").text = Time.get_date_string_from_system()
 
-	# ── Always visible ──
-	vbox.get_node("CaloriesBar/CaloriesValue").text = str(snappedf(today_totals["calories"], 0.1)) + " kcal"
-	vbox.get_node("ProteinBar/ProteinValue").text   = str(snappedf(today_totals["protein_g"], 0.1)) + " g"
-	vbox.get_node("FatBar/FatValue").text           = str(snappedf(today_totals["fat_g"], 0.1)) + " g"
-	vbox.get_node("CarbsBar/CarbsValue").text       = str(snappedf(today_totals["carbs_g"], 0.1)) + " g"
-	vbox.get_node("FiberBar/FiberValue").text       = str(snappedf(today_totals["fiber_g"], 0.1)) + " g"
-	vbox.get_node("CalciumBar/CalciumValue").text   = str(snappedf(today_totals["calcium_mg"], 0.1)) + " mg"
-	vbox.get_node("OxalatesBar/OxalatesValue").text = str(snappedf(today_totals["oxalate_mg"], 0.1)) + " mg"
+	# ── Macro goals ──
+	var macro_goals = Global.get_macro_goals()
+	var protein_goal = macro_goals.get("protein_g", 0.0)
+	var fat_min      = macro_goals.get("fat_g_min", 0.0)
+	var fat_max      = macro_goals.get("fat_g_max", 0.0)
+	var carb_min     = macro_goals.get("carbs_g_min", 0.0)
+	var carb_max     = macro_goals.get("carbs_g_max", 0.0)
+	var fiber_goal   = macro_goals.get("fiber_g", 0.0)
+
+	var p_val  = snappedf(today_totals["protein_g"], 0.1)
+	var f_val  = snappedf(today_totals["fat_g"], 0.1)
+	var c_val  = snappedf(today_totals["carbs_g"], 0.1)
+	var fi_val = snappedf(today_totals["fiber_g"], 0.1)
+	
+	var protein_str = str(p_val) + " / " + str(protein_goal) + " g " + _goal_bar(p_val, protein_goal)
+	var fat_str     = str(f_val) + " / " + str(fat_min) + "–" + str(fat_max) + " g"
+	var carb_str    = str(c_val) + " / " + str(carb_min) + "–" + str(carb_max) + " g"
+	var fiber_str   = str(fi_val) + " / " + str(fiber_goal) + " g " + _goal_bar(fi_val, fiber_goal)
+
+	vbox.get_node("ProteinBar/ProteinValue").text = protein_str
+	vbox.get_node("FatBar/FatValue").text         = fat_str
+	vbox.get_node("CarbsBar/CarbsValue").text     = carb_str
+	vbox.get_node("FiberBar/FiberValue").text     = fiber_str
 
 	# ── Condition-specific visibility ──
 	var has_glycemic  = c.has("glycemic-health") or c.has("nafld")
@@ -117,15 +132,44 @@ func refresh_display():
 	else:
 		vbox.get_node("GoalLabel").text = "Set your goal in Settings ⚙️"
 
-	# ── Points ──
-	var kcal_points = calculate_points(kcal, daily_goal, bmr)
+
 	# ── Water display ──
 	refresh_water_display()
 
 	# ── Total points = kcal points + water points ──
+	var kcal_points   = calculate_points(kcal, daily_goal, bmr)
 	var water_goal_ml = Global.daily_water_liters * 1000.0
 	var water_points  = calculate_water_points(water_ml, water_goal_ml)
-	var total_points  = kcal_points + water_points
+	var micro_points  = 0.0  # reserved for future micronutrient scoring
+
+	# ── Oxalate penalty (kidney patients only) ──
+	var oxalate_penalty = 0.0
+	if Global.kidney_at_risk:
+		var oxalate_mg  = today_totals.get("oxalate_mg", 0.0)
+		var calcium_mg  = today_totals.get("calcium_mg", 0.0)
+		# Clinical threshold: >50mg oxalate per 100mg calcium = high risk
+		# Daily safe limit: <100mg oxalate for CKD, or <200mg for kidney-at-risk without CKD
+		var daily_ox_limit = 50.0  # mg/day for CKD
+		var ox_to_ca_ratio = oxalate_mg / max(calcium_mg, 1.0)
+		
+		if oxalate_mg > daily_ox_limit:
+			# -1 point per 50mg over limit
+			var excess = oxalate_mg - daily_ox_limit
+			oxalate_penalty -= floor(excess / 50.0)
+		
+		if ox_to_ca_ratio > 0.5:
+			# Ratio too high — calcium not compensating oxalate
+			# -1 additional point per 0.5 ratio over threshold
+			var ratio_excess = ox_to_ca_ratio - 0.5
+			oxalate_penalty -= floor(ratio_excess / 0.5)
+		
+		if oxalate_penalty < 0:
+			vbox.get_node("OxalatePenaltyLabel").text = "⚠️ Oxalate penalty: " + str(snappedf(oxalate_penalty, 0.1)) + " pts (Ca ratio: " + str(snappedf(ox_to_ca_ratio, 2)) + ")"
+			vbox.get_node("OxalatePenaltyLabel").visible = true
+		else:
+			vbox.get_node("OxalatePenaltyLabel").visible = false
+
+	var total_points = kcal_points + water_points + micro_points + oxalate_penalty
 	vbox.get_node("PointsLabel").text = "⭐ Points today: " + str(snappedf(total_points, 0.1))
 	Global.save_points(Time.get_date_string_from_system(), total_points)
 
@@ -137,6 +181,13 @@ func refresh_display():
 		var lbl = Label.new()
 		lbl.text = "• " + food_name
 		list.add_child(lbl)
+
+func _goal_bar(value: float, goal: float) -> String:
+	if goal <= 0: return ""
+	var pct  = clamp(value / goal, 0.0, 1.0)
+	var fill = int(pct * 5)
+	return "█".repeat(fill) + "░".repeat(5 - fill)
+	
 
 func refresh_water_display():
 	var vbox = $Panel/ScrollContainer/VBoxContainer

@@ -262,6 +262,8 @@ func _on_known_metabolic(condition: String, checked: bool, path: String):
 		Global.set_metabolic_risk(condition, "normal")
 		get_node(path + "ResultLabel").text = "—"
 
+
+	_update_adjusted_goal_label()
 # ─────────────────────────────────────────
 #  KIDNEY CARE
 # ─────────────────────────────────────────
@@ -274,7 +276,7 @@ func _on_known_disease_toggled(checked: bool):
 		get_node(KIDNEY + "RiskLabel").text = ""
 	save_kidney_settings(0.0)
 	Global.save_profile()
-
+	_update_adjusted_goal_label()
 func save_kidney_settings(egfr: float):
 	var risk_text = get_node(KIDNEY + "RiskLabel").text
 	var egfr_text = ""
@@ -400,27 +402,33 @@ func _on_calculate_metrics():
 	save_body_metrics(weight, height_cm, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text)
 
 func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, bmr, tdee, daily_goal, bmi_text):
-	var adj = Global.calculate_adjusted_kcal_goal()
-	var adj_goal = adj.get("adjusted_goal", daily_goal)
+	Global.base_kcal_goal = daily_goal  # save raw goal BEFORE condition adjustment
+	
+	var adj       = Global.calculate_adjusted_kcal_goal()
+	var adj_goal  = adj.get("adjusted_goal", daily_goal)
 	var adj_notes = adj.get("adjustments", [])
+	
 	var file = FileAccess.open("user://body_metrics.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
-		"weight": weight, "height": height, "age": age,
-		"activity": activity, "goal_weight": goal_w, "weeks": weeks,
-		"is_female": is_female, "bmr": bmr, "tdee": tdee,
-		"adjusted_goal": adj_goal,
-		"adjustment_notes": adj_notes,
-		"daily_goal": daily_goal, "bmi_text": bmi_text
+		"weight":weight,"height":height,"age":age,
+		"activity":activity,"goal_weight":goal_w,"weeks":weeks,
+		"is_female":is_female,"bmr":bmr,"tdee":tdee,
+		"daily_goal":daily_goal,      # raw
+		"adjusted_goal":adj_goal,     # condition-adjusted
+		"adjustment_notes":adj_notes,
+		"bmi_text":bmi_text
 	}))
 	file.close()
+	
 	Global.body_metrics = {
-		"bmr": bmr, "tdee": tdee,
+		"bmr":bmr,"tdee":tdee,
 		"daily_goal": adj_goal if adj_notes.size() > 0 else daily_goal,
-		"goal_weight": goal_w, "weight": weight,
-		"bmi_text": bmi_text, "is_female": is_female
+		"goal_weight":goal_w,"weight":weight,
+		"bmi_text":bmi_text,"is_female":is_female
 	}
-	Global.body_metrics["adjusted_kcal_goal"] = adj_goal
-
+	Global.adjusted_kcal_goal = adj_goal
+	_update_adjusted_goal_label()
+	
 func load_body_metrics():
 	if not FileAccess.file_exists("user://body_metrics.json"): return
 	var file = FileAccess.open("user://body_metrics.json", FileAccess.READ)
@@ -470,7 +478,7 @@ func load_body_metrics():
 		"bmi_text": data.get("bmi_text", "BMI: —"),
 		"is_female": data.get("is_female", false)
 	}
-
+	Global.base_kcal_goal = data.get("daily_goal", 0.0)  # raw, not adjusted
 # ─────────────────────────────────────────
 #  GLYCEMIC
 # ─────────────────────────────────────────
@@ -761,6 +769,9 @@ func _on_known_gi_crohns(checked: bool):
 		get_node(CROHN + "ResultLabel").text = "—"
 	Global.save_metabolic_conditions()
 
+
+	_update_adjusted_goal_label()
+
 func _on_known_gi_epi(checked: bool):
 	Global.set_metabolic_condition("epi", checked)
 	Global.set_known_diagnosis("epi", checked)
@@ -779,6 +790,7 @@ func _on_known_gi_epi(checked: bool):
 		Global.set_metabolic_risk("epi", "normal")
 		get_node(EPI + "ResultLabel").text = "—"
 	Global.save_metabolic_conditions()
+	_update_adjusted_goal_label()
 # ─────────────────────────────────────────
 #  SAVE / LOAD METABOLIC INPUTS
 # ─────────────────────────────────────────
@@ -889,3 +901,23 @@ func _on_reset():
 	if FileAccess.file_exists("user://intake.json"):
 		DirAccess.remove_absolute("user://intake.json")
 	print("Daily intake reset")
+
+func _update_adjusted_goal_label():
+	if Global.base_kcal_goal <= 0: return  # metrics not calculated yet
+	var adj       = Global.calculate_adjusted_kcal_goal()
+	var adj_goal  = adj.get("adjusted_goal", 0.0)
+	var adj_notes = adj.get("adjustments", [])
+	var panel     = get_node(BODY)
+	if adj_notes.size() > 0:
+		var text = "⚕️ Adjusted: " + str(adj_goal) + " kcal/day\n"
+		for note in adj_notes:
+			text += "• " + note + "\n"
+		panel.get_node("AdjustedGoalResult").text = text
+		panel.get_node("AdjustedGoalResult").visible = true
+		Global.body_metrics["daily_goal"] = adj_goal
+		Global.adjusted_kcal_goal = adj_goal
+	else:
+		panel.get_node("AdjustedGoalResult").text = ""
+		panel.get_node("AdjustedGoalResult").visible = false
+		Global.body_metrics["daily_goal"] = Global.base_kcal_goal
+		Global.adjusted_kcal_goal = Global.base_kcal_goal

@@ -70,7 +70,7 @@ layout_mode = 2
 text = "Hide high-risk foods from shopping list"
 
 [node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 1089)
+custom_minimum_size = Vector2(0, 1400)
 layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel"]

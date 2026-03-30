@@ -1,5 +1,7 @@
 extends Node
 
+var base_kcal_goal: float = 0.0  # always the raw tdee-adjusted goal, never modified
+var adjusted_kcal_goal: float = 0.0
 # ── Body metrics (set from SettingsPage) ──
 var body_metrics: Dictionary = {
 	"bmr": 0.0,
@@ -83,96 +85,73 @@ func calculate_water_recommendation() -> float:
 	return liters
 
 func calculate_adjusted_kcal_goal() -> Dictionary:
-	var base_goal = body_metrics.get("daily_goal", 0.0)
+	# CRITICAL: always start from the raw base, never from already-adjusted value
+	var base_goal = base_kcal_goal if base_kcal_goal > 0 else body_metrics.get("daily_goal", 0.0)
 	var bmr       = body_metrics.get("bmr", 0.0)
 	var weight    = body_metrics.get("weight", 0.0)
 	var bmi_text  = body_metrics.get("bmi_text", "")
+	var is_female = body_metrics.get("is_female", false)
 
 	if base_goal == 0 or bmr == 0:
 		return {"adjusted_goal": 0.0, "adjustments": []}
 
-	var adjusted  = base_goal
-	var notes     = []
-
-	# Determine BMI category from saved text
+	var adjusted = base_goal  # start fresh every time
+	var notes    = []
 	var is_overweight = bmi_text.contains("Overweight") or bmi_text.contains("Obese")
 
 	for condition in active_metabolic_conditions:
 		match condition:
 			"nafld":
-				# 500-1000 kcal deficit for 7-10% weight loss
 				if is_overweight:
-					var reduction = 750.0  # middle of 500-1000 range
-					adjusted -= reduction
-					notes.append("NAFLD: −750 kcal/day for weight reduction")
-
+					adjusted -= 750.0
+					notes.append("NAFLD: −750 kcal/day")
 			"glycemic-health":
-				# Reduce by 500 kcal if overweight
 				if is_overweight:
 					adjusted -= 500.0
-					notes.append("Glycemic health: −500 kcal/day deficit")
-
+					notes.append("Glycemic health: −500 kcal/day")
 			"lipid-health":
-				# Only adjust if overweight
 				if is_overweight:
 					adjusted -= 300.0
-					notes.append("Lipid health: −300 kcal/day for gradual weight loss")
-
+					notes.append("Lipid health: −300 kcal/day")
 			"thyroid-health":
-				# Never let goal drop below BMR+200 for thyroid patients
-				# Low calorie diets worsen hypothyroidism
-				if adjusted < bmr + 200:
-					adjusted = bmr + 200
-					notes.append("Thyroid health: minimum " + str(snappedf(bmr + 200, 0)) + " kcal to protect metabolism")
-
+				# Hypothyroidism — protect metabolism, floor at BMR+200
+				var thyroid_floor = bmr + 200.0
+				if adjusted < thyroid_floor:
+					adjusted = thyroid_floor
+				notes.append("Thyroid: minimum " + str(snappedf(thyroid_floor, 0)) + " kcal (BMR+200)")
 			"osteoporosis":
-				# Never below BMR — bone health requires adequate nutrition
 				if adjusted < bmr:
 					adjusted = bmr
-					notes.append("Osteoporosis: minimum BMR (" + str(snappedf(bmr, 0)) + " kcal) to protect bone health")
-
+				notes.append("Osteoporosis: minimum BMR (" + str(snappedf(bmr, 0)) + " kcal)")
 			"crohns-disease":
-	# REE is 28.8 kcal/kg in active phase vs 25.9 in remission
-	# Add ~600 kcal/day ONS supplement equivalent + high protein needs
-				var extra = weight * 2.9  # difference (28.8 - 25.9) × weight
-				adjusted += extra + 600.0
-				notes.append("Crohn's: +" + str(snappedf(extra + 600.0, 0)) + " kcal for hypermetabolism + nutritional support")
-
+				var extra = weight * 2.9 + 600.0
+				adjusted += extra
+				notes.append("Crohn's: +" + str(snappedf(extra, 0)) + " kcal hypermetabolism")
 			"celiac-disease":
-	# After GFD, watch for excessive gain from high-calorie GFD foods
-	# If already overweight, apply mild deficit
 				if is_overweight:
 					adjusted -= 200.0
-					notes.append("Celiac: −200 kcal/day to prevent GFD-related weight gain")
-
+					notes.append("Celiac: −200 kcal GFD weight management")
 			"lactose-intolerance":
-	# Dairy avoidance removes ~150-200 kcal from average diet
-	# Compensate to prevent deficiency
 				adjusted += 150.0
-				notes.append("Lactose intolerance: +150 kcal to compensate dairy exclusion")
-
+				notes.append("Lactose intolerance: +150 kcal dairy compensation")
 			"epi":
-	# High-calorie diet: 30-35 kcal/kg
-				var epi_target = weight * 32.5  # middle of 30-35 range
+				var epi_target = weight * 32.5
 				if epi_target > adjusted:
 					adjusted = epi_target
-					notes.append("EPI: goal set to 32.5 kcal/kg = " + str(snappedf(epi_target, 0)) + " kcal (with PERT)")
-
+				notes.append("EPI: " + str(snappedf(adjusted, 0)) + " kcal (32.5 kcal/kg with PERT)")
 			"post-cholecystectomy":
-	# Short-term: low fat diet reduces kcal
-	# Long-term: tendency to weight gain → mild deficit if overweight
 				if is_overweight:
 					adjusted -= 200.0
-					notes.append("Post-cholecystectomy: −200 kcal/day to prevent post-surgical BMI increase")
-				notes.append("Post-cholecystectomy: eat 5-6 small meals instead of 3 large ones")
-	# Hard floor — never go below BMR regardless of conditions
-	if adjusted < bmr:
-		adjusted = bmr
-		notes.append("Floor applied: goal cannot go below BMR (" + str(snappedf(bmr, 0)) + " kcal)")
+					notes.append("Post-cholecystectomy: −200 kcal")
 
-	adjusted = snappedf(adjusted, 1.0)
-	return {"adjusted_goal": adjusted, "adjustments": notes}
+	# Hard floor: never below BMR
+	if adjusted < bmr and bmr > 0:
+		adjusted = bmr
+		notes.append("Floor: BMR minimum (" + str(snappedf(bmr, 0)) + " kcal)")
+
+	return {"adjusted_goal": snappedf(adjusted, 1.0), "adjustments": notes}
 	
+
 # ── Metabolic condition risk levels ──
 # Set by SettingsPage calculators, read by HomePage + FridgePage
 var metabolic_risk_levels: Dictionary = {
@@ -373,13 +352,41 @@ func get_micronutrient_rdas() -> Dictionary:
 		rdas["magnesium_mg"]["rda"]   = 420.0 if is_female else 500.0
 		rdas["vitamin_c_mg"]["rda"]   = 100.0  # collagen synthesis
 
+# Hemochromatosis — cap vitamin C (enhances iron absorption)
 	if c.has("hemochromatosis"):
-		# Iron and vitamin C already tracked, no extra vitamins needed
-		pass
-
+		rdas["vitamin_c_mg"]["rda"]    = 75.0    # lower limit
+		rdas["calcium_mg"]             = {"rda":1200.0, "unit":"mg", "label":"Calcium"}
+		
 	if c.has("wilsons-disease"):
 		# Copper and zinc already tracked
 		rdas["zinc_mg"]["rda"] = 25.0 if is_female else 40.0  # pharmacological zinc blocks copper
+		
+# Crohn's
+	if c.has("crohns-disease"):
+		rdas["vitamin_b12_mcg"]["rda"] = 1000.0  # therapeutic
+		rdas["vitamin_b9_mcg"]["rda"]  = 800.0
+		rdas["vitamin_d_mcg"]["rda"]   = 37.5    # 25-50 mid
+		rdas["calcium_mg"]             = {"rda":1350.0, "unit":"mg", "label":"Calcium"}
+		rdas["zinc_mg"]["rda"]         = 32.5     # 25-40 mid
+		rdas["magnesium_mg"]["rda"]    = 400.0
+
+	# Celiac
+	if c.has("celiac-disease"):
+		rdas["vitamin_d_mcg"]["rda"]   = 37.5
+		rdas["vitamin_b9_mcg"]["rda"]  = 600.0
+		rdas["calcium_mg"]             = {"rda":1350.0, "unit":"mg", "label":"Calcium"}
+		rdas["zinc_mg"]["rda"]         = 32.5
+
+	# EPI
+	if c.has("epi"):
+		rdas["vitamin_a_mcg"]["rda"]   = 1500.0
+		rdas["vitamin_d_mcg"]["rda"]   = 37.5
+		rdas["vitamin_e_mg"]["rda"]    = 250.0   # 100-400 IU converted to mg
+		rdas["vitamin_k1_mcg"]         = {"rda":1000.0, "unit":"mcg", "label":"Vitamin K1"}
+
+	# Lactose intolerance — calcium from non-dairy sources
+	if c.has("lactose-intolerance"):
+		rdas["calcium_mg"]             = {"rda":1200.0, "unit":"mg", "label":"Calcium"}
 
 	if kidney_at_risk:
 		# CKD — restrict potassium and phosphorus
@@ -615,3 +622,85 @@ func get_points_alltime() -> float:
 	for val in points_history.values():
 		total += val
 	return total
+
+func get_macro_goals() -> Dictionary:
+	var weight    = body_metrics.get("weight", 70.0)
+	var is_female = body_metrics.get("is_female", false)
+	var bmi_text  = body_metrics.get("bmi_text", "")
+	var daily_kcal = body_metrics.get("daily_goal", 2000.0)
+	var is_overweight = bmi_text.contains("Overweight") or bmi_text.contains("Obese")
+	var c = active_metabolic_conditions
+
+	# ── Protein (g/day) ──
+	var protein_g_per_kg = 0.8
+	if is_overweight: protein_g_per_kg = 1.0
+	if c.has("crohns-disease"):         protein_g_per_kg = 1.35  # 1.2-1.5 mid
+	if c.has("celiac-disease"):         protein_g_per_kg = 0.9
+	if c.has("glycemic-health"):        protein_g_per_kg = 1.1
+	if c.has("epi"):                    protein_g_per_kg = 1.1
+	if c.has("osteoporosis"):           protein_g_per_kg = 1.1
+	if c.has("thyroid-health"):         protein_g_per_kg = 0.9
+	if c.has("lipid-health"):           protein_g_per_kg = 1.0
+	if c.has("hemochromatosis"):        protein_g_per_kg = 0.8
+	if c.has("post-cholecystectomy"):   protein_g_per_kg = 0.8
+	if c.has("lactose-intolerance"):    protein_g_per_kg = 0.8
+	if kidney_at_risk:                  protein_g_per_kg = 0.6  # CKD stage 3
+	var protein_goal = weight * protein_g_per_kg
+
+	# ── Fat (g/day from % of kcal) ──
+	var fat_pct_min = 0.20
+	var fat_pct_max = 0.35
+	if c.has("nafld"):
+		fat_pct_min = 0.15; fat_pct_max = 0.30
+	if c.has("post-cholecystectomy"):
+		fat_pct_max = 0.25
+	if c.has("epi"):
+		# EPI uses absolute grams, not percentage
+		var fat_goal_g = 40.0  # 30-50g midpoint
+		# fat macro handled separately
+		var fat_goal = fat_goal_g
+		var fat_min  = fat_goal_g
+		var fat_max  = fat_goal_g
+		var carb_pct_min = 0.45; var carb_pct_max = 0.65
+		var carb_min = (daily_kcal * carb_pct_min) / 4.0
+		var carb_max = (daily_kcal * carb_pct_max) / 4.0
+		var fiber_goal = 31.5 if is_female else 31.5
+		return {
+			"protein_g":  snappedf(protein_goal, 0.1),
+			"fat_g_min":  fat_min, "fat_g_max": fat_max,
+			"carbs_g_min":snappedf(carb_min, 0.1), "carbs_g_max": snappedf(carb_max, 0.1),
+			"fiber_g":    fiber_goal
+		}
+	var fat_min_g = snappedf((daily_kcal * fat_pct_min) / 9.0, 0.1)
+	var fat_max_g = snappedf((daily_kcal * fat_pct_max) / 9.0, 0.1)
+
+	# ── Carbs (g/day) ──
+	var carb_pct_min = 0.45
+	var carb_pct_max = 0.65
+	if c.has("glycemic-health"):
+		carb_pct_min = 0.40; carb_pct_max = 0.45
+	if c.has("nafld"):
+		carb_pct_min = 0.40; carb_pct_max = 0.50
+	var carb_min_g = snappedf((daily_kcal * carb_pct_min) / 4.0, 0.1)
+	var carb_max_g = snappedf((daily_kcal * carb_pct_max) / 4.0, 0.1)
+
+	# ── Fiber (g/day) ──
+	var fiber_g = 25.0 if is_female else 38.0
+	if c.has("crohns-disease"): fiber_g = 8.0   # <10 during flare
+	if c.has("glycemic-health"):
+		fiber_g = snappedf(daily_kcal / 1000.0 * 14.0, 0.1)  # 14g per 1000kcal
+	if c.has("nafld"):         fiber_g = 34.0
+	if c.has("lipid-health"):  fiber_g = 34.0
+	if c.has("osteoporosis"):  fiber_g = 31.5
+	if c.has("hemochromatosis"): fiber_g = 34.0
+	if c.has("celiac-disease"):  fiber_g = 31.5
+	if kidney_at_risk:           fiber_g = 25.0
+
+	return {
+		"protein_g":   snappedf(protein_goal, 0.1),
+		"fat_g_min":   fat_min_g,
+		"fat_g_max":   fat_max_g,
+		"carbs_g_min": carb_min_g,
+		"carbs_g_max": carb_max_g,
+		"fiber_g":     fiber_g
+	}

@@ -5,19 +5,18 @@ var fridge_foods: Array = []        # list of unique food dicts
 var fridge_quantities: Dictionary = {} # food_id → count
 var fridge_weights: Dictionary = {}   # food_id → {total_g, remaining_g}
 var shopping_list: Array = []
-var shopping_quantities: Dictionary = {} # food_id → count
 var _long_press_active: bool = false
 var fridge_overrides: Dictionary = {}
+var checked_items: Dictionary = {}  # food_id → bool
 
 # ── Paging ──
 var current_page: int = 0
 const ITEMS_PER_PAGE: int = 18
 const GRID_COLS: int = 3
 var shopping_page: int = 0
-const SHOPPING_ITEMS_PER_PAGE: int = 8
+const SHOPPING_ITEMS_PER_PAGE: int = 10
 
 # ── Swipe detection ──
-var _swipe_start_x: float = 0.0
 var _swipe_threshold: float = 50.0
 var _touch_start_x: float = 0.0
 var _touch_start_y: float = 0.0
@@ -186,7 +185,7 @@ func _build_warning_filter_buttons():
 		btn.toggle_mode = true
 		btn.button_pressed = opt["key"] == warning_filter
 		btn.custom_minimum_size = Vector2(80, 45)
-		btn.add_theme_font_size_override("font_size", 22)
+		btn.add_theme_font_size_override("font_size", 40)
 		btn.pressed.connect(func():
 			warning_filter = opt["key"]
 			refresh_current_tab()
@@ -410,29 +409,56 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 
 	return row
 
+func _generate_sid() -> String:
+	return "s_" + str(Time.get_ticks_usec())
+
 # ── Add food to shopping list ──
 func add_to_shopping_list(food: Dictionary):
-	var fid = food.get("id", "")
-	if not shopping_list.any(func(f): return f["id"] == fid):
-		shopping_list.append(food)
-		shopping_quantities[fid] = 1
-	else:
-		shopping_quantities[fid] = shopping_quantities.get(fid, 1) + 1
-	refresh_shopping_list()
+	# Always create a new entry — never merge with existing
+	# (even same food gets its own entry if added again)
+	var entry = {
+		"_sid":     _generate_sid(),
+		"food":     food,
+		"qty":      1,
+		"_checked": false
+	}
+	shopping_list.append(entry)
 	save_shopping_list()
+	refresh_shopping_list()
 
 # ── Remove one from shopping list ──
-func remove_from_shopping_list(food: Dictionary):
-	var fid = food.get("id", "")
-	if not shopping_quantities.has(fid): return
-	shopping_quantities[fid] -= 1
-	if shopping_quantities[fid] <= 0:
-		shopping_quantities.erase(fid)
-		shopping_list = shopping_list.filter(func(f): return f["id"] != fid)
-	refresh_shopping_list()
+func increment_shopping_entry(sid: String):
+	for entry in shopping_list:
+		if entry["_sid"] == sid:
+			entry["qty"] = entry.get("qty", 1) + 1
+			break
 	save_shopping_list()
+	refresh_shopping_list()
 
-# ── Rebuild the shopping list ──
+func decrement_shopping_entry(sid: String):
+	for i in range(shopping_list.size()):
+		if shopping_list[i]["_sid"] == sid:
+			shopping_list[i]["qty"] -= 1
+			if shopping_list[i]["qty"] <= 0:
+				shopping_list.remove_at(i)
+			break
+	# Clamp page
+	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
+	save_shopping_list()
+	refresh_shopping_list()
+
+func check_shopping_entry(sid: String, checked: bool):
+	for entry in shopping_list:
+		if entry["_sid"] == sid:
+			entry["_checked"] = checked
+			if checked:
+				# Move food to fridge when checked
+				add_to_fridge_multi(entry["food"], entry.get("qty", 1))
+			break
+	save_shopping_list()
+	# Do NOT call refresh_shopping_list() here — 
+	# we handle the visual change directly in the row
+
 func refresh_shopping_list():
 	var paper_vbox = $Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/PaperScrollContainer/PaperItemsVBox
 	for child in paper_vbox.get_children():
@@ -443,64 +469,100 @@ func refresh_shopping_list():
 	var end   = min(start + SHOPPING_ITEMS_PER_PAGE, shopping_list.size())
 	var page_items = shopping_list.slice(start, end)
 
-	for food in page_items:
-		var fid = food.get("id","")
-		var qty = shopping_quantities.get(fid, 1)
+	for entry in page_items:
+		var sid      = entry.get("_sid", "")
+		var food     = entry.get("food", {})
+		var qty      = entry.get("qty", 1)
+		var checked  = entry.get("_checked", false)
 
 		var row = HBoxContainer.new()
 		row.custom_minimum_size = Vector2(0, 52)
-		row.add_theme_constant_override("separation", 6)
+		row.add_theme_constant_override("separation", 8)
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		paper_vbox.add_child(row)
 
-		# Minus
+		# ── Minus button ──
 		var minus_btn = Button.new()
 		minus_btn.text = "−"
-		minus_btn.custom_minimum_size = Vector2(70, 70)
-		minus_btn.add_theme_font_size_override("font_size", 70)
-		minus_btn.pressed.connect(func(): remove_from_shopping_list(food))
+		minus_btn.custom_minimum_size = Vector2(60, 106)
+		minus_btn.add_theme_font_size_override("font_size", 40)
+		minus_btn.disabled = checked  # can't modify checked items
+		minus_btn.pressed.connect(func(): decrement_shopping_entry(sid))
 		row.add_child(minus_btn)
 
-		# Checkbox — ink blue font
-		var cb = CheckBox.new()
-		var display_text = food.get("name","") + (" ×"+str(qty) if qty > 1 else "")
-		var severity = _get_food_severity(food)
-		if severity == "avoid":   display_text += " ⛔"
-		elif severity == "caution": display_text += " ⚠️"
-		cb.text = display_text
-		cb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		cb.add_theme_font_size_override("font_size", 70)
-		cb.add_theme_color_override("font_color", Color(0.08, 0.15, 0.35))         # ink blue
-		cb.add_theme_color_override("font_color_hover", Color(0.08, 0.15, 0.35))
-		cb.add_theme_color_override("font_color_pressed", Color(0.08, 0.15, 0.35))
-		cb.toggled.connect(func(checked):
-			if checked:
-				cb.add_theme_font_size_override("font_size", 70)
-				# Strikethrough — change color to grey and add strikethrough visual
-				cb.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-				cb.add_theme_color_override("font_color_hover", Color(0.08, 0.15, 0.35))
-				cb.add_theme_color_override("font_color_pressed", Color(0.08, 0.15, 0.35))
-				# Strikethrough via RichTextLabel swap
-				_apply_strikethrough(cb, display_text)
-				add_to_fridge_multi(food, qty)
-		)
-		row.add_child(cb)
+		# ── Main content — either RichTextLabel (checked) or CheckBox (unchecked) ──
+		var food_name    = food.get("name", "")
+		var display_text = food_name + (" ×" + str(qty) if qty > 1 else "")
+		var severity     = _get_food_severity(food)
+		if severity == "avoid":
+			display_text += " ⛔"
+		elif severity == "caution":
+			display_text += " ⚠️"
 
-		# Plus
+		if checked:
+			# Permanently strikethrough — use RichTextLabel, no checkbox
+			var rtl = RichTextLabel.new()
+			rtl.bbcode_enabled = true
+			rtl.fit_content = true
+			rtl.text = "[s][color=#50507a]" + display_text + "[/color][/s]"
+			rtl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			rtl.custom_minimum_size = Vector2(0, 44)
+			rtl.add_theme_font_size_override("normal_font_size", 70)
+			rtl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			row.add_child(rtl)
+		else:
+			# Unchecked — show CheckBox
+			var cb = CheckBox.new()
+			cb.text = display_text
+			cb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			cb.add_theme_font_size_override("font_size", 70)
+			cb.add_theme_color_override("font_color",         Color(0.08, 0.15, 0.35))
+			cb.add_theme_color_override("font_color_hover",   Color(0.08, 0.15, 0.35))
+			cb.add_theme_color_override("font_color_pressed",  Color(0.08, 0.15, 0.35))
+			# IMPORTANT: capture sid in local var for lambda
+			var captured_sid = sid
+			cb.toggled.connect(func(is_checked):
+				if is_checked:
+					check_shopping_entry(captured_sid, true)
+					# Replace this row's checkbox with strikethrough immediately
+					# without rebuilding the whole list
+					var parent = cb.get_parent()
+					var idx    = cb.get_index()
+					cb.queue_free()
+					var rtl2 = RichTextLabel.new()
+					rtl2.bbcode_enabled = true
+					rtl2.fit_content = true
+					rtl2.text = "[s][color=#50507a]" + display_text + "[/color][/s]"
+					rtl2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+					rtl2.custom_minimum_size = Vector2(0, 44)
+					rtl2.add_theme_font_size_override("normal_font_size", 70)
+					rtl2.mouse_filter = Control.MOUSE_FILTER_IGNORE
+					parent.add_child(rtl2)
+					parent.move_child(rtl2, idx)
+					# Also disable the minus button in this row
+					if parent.get_child_count() > 0:
+						var mb = parent.get_child(0)
+						if mb is Button: mb.disabled = true
+			)
+			row.add_child(cb)
+
+		# ── Plus button ──
 		var plus_btn = Button.new()
 		plus_btn.text = "+"
-		plus_btn.custom_minimum_size = Vector2(70, 70)
-		plus_btn.add_theme_font_size_override("font_size", 70)
-		plus_btn.pressed.connect(func(): add_to_shopping_list(food))
+		plus_btn.custom_minimum_size = Vector2(60, 106)
+		plus_btn.add_theme_font_size_override("font_size", 40)
+		plus_btn.disabled = checked  # can't add more to checked items
+		var captured_sid2 = sid
+		plus_btn.pressed.connect(func(): increment_shopping_entry(captured_sid2))
 		row.add_child(plus_btn)
 
-	# Update dots
 	_build_shopping_dots()
-	save_shopping_list()
 
 func _apply_strikethrough(cb: CheckBox, original_text: String):
 	# Replace checkbox label with a RichTextLabel showing strikethrough
 	var parent = cb.get_parent()
+	if not parent:
+		return
 	var idx    = cb.get_index()
 	var rtl = RichTextLabel.new()
 	rtl.bbcode_enabled = true
@@ -510,6 +572,7 @@ func _apply_strikethrough(cb: CheckBox, original_text: String):
 	rtl.add_theme_font_size_override("normal_font_size", 70)
 	rtl.fit_content = true
 	parent.remove_child(cb)
+	cb.queue_free()
 	parent.add_child(rtl)
 	parent.move_child(rtl, idx)
 
@@ -530,9 +593,8 @@ func _build_shopping_dots():
 func save_shopping_list():
 	var file = FileAccess.open("user://shopping.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
-		"list":       shopping_list,
-		"quantities": shopping_quantities,
-		"page":       shopping_page
+		"list": shopping_list,
+		"page": shopping_page
 	}))
 	file.close()
 
@@ -542,9 +604,8 @@ func load_shopping_list():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if not data: return
-	shopping_list       = data.get("list", [])
-	shopping_quantities = data.get("quantities", {})
-	shopping_page       = data.get("page", 0)
+	shopping_list = data.get("list", [])
+	shopping_page = data.get("page", 0)
 
 # ── Add food to fridge (with quantity) ──
 func _generate_iid() -> String:
@@ -555,12 +616,33 @@ func add_to_fridge_multi(food: Dictionary, qty: int):
 		add_to_fridge(food)
 
 func add_to_fridge(food: Dictionary):
-	var iid = _generate_iid()
+	var fid = food.get("id","")
+	
+	# Look for an existing slot with same food id AND same remaining weight (within 0.5g tolerance)
+	# that hasn't been edited
+	for slot in fridge_foods:
+		if slot.get("id","") != fid: continue
+		var iid = slot.get("_iid","")
+		if fridge_overrides.has(iid): continue  # edited slots don't merge
+		var w = fridge_weights.get(iid, {})
+		var remaining = w.get("remaining_g", 0.0)
+		var total     = w.get("total_g", 0.0)
+		# Same food, same total weight per unit (100g default), not partially eaten
+		if abs(total - remaining) < 0.5 and abs(total - 100.0) < 0.5:
+			# Merge: increment count on this slot
+			var count: int = slot.get("_count", 1) + 1
+			slot["_count"] = count
+			save_fridge()
+			build_fridge_ui()
+			return
+	
+	# No matching slot — create new
+	var iid  = _generate_iid()
 	var slot = food.duplicate()
-	slot["_iid"] = iid
+	slot["_iid"]   = iid
+	slot["_count"] = 1
 	fridge_foods.append(slot)
 	fridge_weights[iid] = {"total_g": 100.0, "remaining_g": 100.0}
-	# Ensure current page is valid
 	if current_page >= _get_total_pages():
 		current_page = _get_total_pages() - 1
 	save_fridge()
@@ -588,7 +670,8 @@ func build_fridge_ui():
 	for child in fridge.get_children():
 		child.queue_free()
 
-# Clamp page
+
+	# Clamp page
 	current_page = clamp(current_page, 0, max(0, _get_total_pages() - 1))
 	
 	# Get current page items
@@ -611,7 +694,8 @@ func build_fridge_ui():
 		btn.custom_minimum_size = Vector2(210, 210)
 		btn.size = Vector2(210, 210)
 		btn.position = Vector2(0, 0)
-		btn.tooltip_text = slot.get("name","") + "\n" + str(snappedf(remaining,0.1)) + "g remaining"
+		var count = slot.get("_count", 1)
+		btn.tooltip_text = slot.get("name","") + "\n" + str(snappedf(remaining, 0.1)) + "g × " + str(count)
 
 		var icon = TextureRect.new()
 		icon.custom_minimum_size = Vector2(90,90)
@@ -633,6 +717,24 @@ func build_fridge_ui():
 		btn.gui_input.connect(func(event): _handle_fridge_input(event, slot, btn, timer))
 		container.add_child(btn)
 
+# Count badge
+		if count > 1:
+			var badge_bg = ColorRect.new()
+			badge_bg.color = Color(0.1, 0.1, 0.1, 0.9)
+			badge_bg.size = Vector2(55, 55)
+			badge_bg.position = Vector2(container.custom_minimum_size.x - 38, 2)
+			container.add_child(badge_bg)
+			var badge = Label.new()
+			badge.text = str(int(count))
+			badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+			badge.add_theme_font_size_override("font_size", 40)
+			badge.add_theme_color_override("font_color", Color.WHITE)
+			badge.position = Vector2(container.custom_minimum_size.x - 38, 2)
+			badge.custom_minimum_size = Vector2(55, 55)
+			container.add_child(badge)
+			
+			
 		# Count badge — only show if qty > 1
 		#if qty > 1:
 			#var badge = Label.new()
@@ -868,7 +970,7 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 
 	var grid = GridContainer.new()
 	grid.columns = 5
-	grid.add_theme_constant_override("h_separation", 13.5)
+	grid.add_theme_constant_override("h_separation", 13)
 	grid.add_theme_constant_override("v_separation", 10)
 	vbox.add_child(grid)
 
@@ -1138,18 +1240,19 @@ func _calc_portion_g(action_key: String, value: float, density: float) -> float:
 func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 	var iid       = slot.get("_iid","")
 	var w         = fridge_weights.get(iid, {"total_g":100.0,"remaining_g":100.0})
-	var remaining = w.get("remaining_g",100.0)
+	var remaining = w.get("remaining_g", 100.0)
+	var total     = w.get("total_g", 100.0)
+	var count     = slot.get("_count", 1)
+
 	portion_g = min(portion_g, remaining)
 	if portion_g <= 0:
 		popup.queue_free()
 		return
 
-	# Apply overrides before scaling
 	var effective = _get_effective_slot(slot)
 	var scaled    = effective.duplicate()
 	var ratio     = portion_g / 100.0
-
-	var scalable = [
+	var scalable  = [
 		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
 		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
 		"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
@@ -1166,16 +1269,36 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 		if scaled.has(field):
 			scaled[field] = scaled[field] * ratio
 
-	remaining -= portion_g
-	w["remaining_g"] = remaining
-	fridge_weights[iid] = w
+	var new_remaining = remaining - portion_g
 
-	if remaining <= 0.1:
-		_remove_slot(iid)
+	if count > 1 and new_remaining > 0.1:
+		# Split: reduce count on original, create new partial slot
+		slot["_count"] = count - 1
+		# w stays the same for the grouped slot (still full units)
+		
+		# Create the partial slot
+		var new_iid  = _generate_iid()
+		var new_slot = slot.duplicate()
+		new_slot["_iid"]   = new_iid
+		new_slot["_count"] = 1
+		fridge_foods.append(new_slot)
+		fridge_weights[new_iid] = {"total_g": remaining, "remaining_g": new_remaining}
+		
+	elif count == 1 and new_remaining > 0.1:
+		# Single unit partially eaten
+		w["remaining_g"] = new_remaining
+		fridge_weights[iid] = w
+		
+	elif new_remaining <= 0.1 and count > 1:
+		# Ate a full unit from the group
+		slot["_count"] = count - 1
+		
 	else:
-		save_fridge()
-		build_fridge_ui()
+		# Last unit fully eaten
+		_remove_slot(iid)
 
+	save_fridge()
+	build_fridge_ui()
 	popup.queue_free()
 
 	var main = get_tree().root.get_node("Main")
@@ -1253,6 +1376,7 @@ func _on_list_pressed():
 	$Panel/ShoppingListPanel.mouse_filter = Control.MOUSE_FILTER_STOP
 	# Also disable fridge buttons while list is open
 	$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	refresh_shopping_list()
 
 func _on_close_list():
 	$Panel/ShoppingListPanel.hide()
@@ -1291,17 +1415,9 @@ func _get_shopping_pages() -> int:
 	return max(1, int(ceil(float(shopping_list.size()) / float(SHOPPING_ITEMS_PER_PAGE))))
 
 func _rip_shopping_page():
-	# Remove items on current page
 	var start = shopping_page * SHOPPING_ITEMS_PER_PAGE
 	var end   = min(start + SHOPPING_ITEMS_PER_PAGE, shopping_list.size())
-	var to_remove = shopping_list.slice(start, end)
-	for food in to_remove:
-		var fid = food.get("id","")
-		shopping_quantities.erase(fid)
-	shopping_list = shopping_list.filter(func(f):
-		var fid = f.get("id","")
-		return not to_remove.any(func(r): return r.get("id","") == fid)
-	)
+	shopping_list = shopping_list.slice(0, start) + shopping_list.slice(end)
 	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
 	save_shopping_list()
 	refresh_shopping_list()
