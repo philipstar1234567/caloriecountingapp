@@ -1,10 +1,12 @@
-[gd_scene load_steps=15 format=3 uid="uid://dba6tab5k5v8e"]
+[gd_scene load_steps=17 format=3 uid="uid://dba6tab5k5v8e"]
 
 [ext_resource type="Texture2D" uid="uid://0aqgvuof38hh" path="res://images/apple.png" id="1_2hr5r"]
 [ext_resource type="Script" uid="uid://bpjmipxx1mjsc" path="res://FridgePage.gd" id="1_g7aye"]
 [ext_resource type="Texture2D" uid="uid://b3xhy1nrqbcxj" path="res://Assets/backgrounds/fridge.png" id="2_jrcy7"]
 [ext_resource type="Texture2D" uid="uid://brqyx3p4tcu2n" path="res://Assets/icons/—Pngtree—list icon_3728045.png" id="2_xepse"]
 [ext_resource type="Texture2D" uid="uid://c8q2d58jisr7h" path="res://Assets/icons/ics.png" id="4_2hr5r"]
+[ext_resource type="Texture2D" uid="uid://dn1twfphjjbgv" path="res://Assets/icons/meal.png" id="5_3iava"]
+[ext_resource type="Texture2D" uid="uid://c330sfhvh1k20" path="res://images/plate.png" id="7_vo4mu"]
 
 [sub_resource type="Theme" id="Theme_jrcy7"]
 default_font_size = 40
@@ -59,12 +61,17 @@ theme_override_styles/panel = SubResource("StyleBoxTexture_wvv7q")
 [node name="TopBar" type="HBoxContainer" parent="Panel"]
 custom_minimum_size = Vector2(400, 0)
 layout_mode = 2
-offset_left = 360.0
+offset_left = 200.0
 offset_top = 304.0
-offset_right = 768.0
+offset_right = 871.0
 offset_bottom = 712.0
 size_flags_horizontal = 4
 size_flags_vertical = 4
+
+[node name="MealPlannerButton" type="Button" parent="Panel/TopBar"]
+layout_mode = 2
+icon = ExtResource("5_3iava")
+flat = true
 
 [node name="ListButton" type="Button" parent="Panel/TopBar"]
 layout_mode = 2
@@ -93,6 +100,7 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="ShoppingListPanel" type="Panel" parent="Panel"]
+visible = false
 top_level = true
 custom_minimum_size = Vector2(0, 1800)
 layout_mode = 2
@@ -255,3 +263,151 @@ custom_minimum_size = Vector2(0, 1000)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 0
+
+[node name="MealPlannerPanel" type="Panel" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 450.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MealPlannerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -4.0
+offset_right = 2.0
+offset_bottom = 89.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBarMP" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+alignment = 2
+
+[node name="MPSearchBar" type="LineEdit" parent="Panel/MealPlannerPanel/VBoxContainer/TopBarMP"]
+custom_minimum_size = Vector2(1090, 80)
+layout_mode = 2
+placeholder_text = "Search foods..."
+
+[node name="MPCloseBtn" type="Button" parent="Panel/MealPlannerPanel/VBoxContainer/TopBarMP"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+text = "✕"
+
+[node name="FilterPanel" type="Panel" parent="Panel/MealPlannerPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 270)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 7.0
+offset_right = 1172.0
+offset_bottom = 266.0
+
+[node name="FilterScrollH" type="ScrollContainer" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+vertical_scroll_mode = 0
+
+[node name="FilterButtonsRow" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH"]
+layout_mode = 2
+
+[node name="SortRow" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="SortLabel" type="Label" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow"]
+layout_mode = 2
+text = "Sort:"
+
+[node name="SortAscBtn" type="Button" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow"]
+layout_mode = 2
+text = "↑ Asc"
+
+[node name="SortDescBtn" type="Button" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow"]
+layout_mode = 2
+text = "↓ Desc"
+
+[node name="ActiveFiltersLabel" type="Label" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+layout_mode = 2
+text = "No filters active"
+
+[node name="WarningFilterRow" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+
+[node name="TabContainer" type="TabContainer" parent="Panel/MealPlannerPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 2
+theme = SubResource("Theme_vo4mu")
+theme_override_font_sizes/font_size = 50
+
+[node name="FrequencyRow" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="DetailsButton" type="Button" parent="Panel/MealPlannerPanel/VBoxContainer/FrequencyRow"]
+layout_mode = 2
+text = "📊 Details"
+
+[node name="SaveMealNameEdit" type="LineEdit" parent="Panel/MealPlannerPanel/VBoxContainer/FrequencyRow"]
+custom_minimum_size = Vector2(300, 80)
+layout_mode = 2
+placeholder_text = "Meal name..."
+
+[node name="SaveMealBtn" type="Button" parent="Panel/MealPlannerPanel/VBoxContainer/FrequencyRow"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+text = "💾"
+
+[node name="FreqLabel" type="Label" parent="Panel/MealPlannerPanel/VBoxContainer/FrequencyRow"]
+layout_mode = 2
+text = "X Per week:"
+
+[node name="FreqSpin" type="SpinBox" parent="Panel/MealPlannerPanel/VBoxContainer/FrequencyRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+min_value = 1.0
+max_value = 7.0
+value = 1.0
+alignment = 1
+
+[node name="AddToShoppingBtn" type="Button" parent="Panel/MealPlannerPanel/VBoxContainer/FrequencyRow"]
+layout_mode = 2
+text = "➕List"
+
+[node name="MealArea" type="Control" parent="Panel/MealPlannerPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 1300)
+layout_mode = 2
+
+[node name="PlateImage" type="TextureRect" parent="Panel/MealPlannerPanel/VBoxContainer/MealArea"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 38.0
+offset_bottom = 18.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_vo4mu")
+
+[node name="MealGridContainer" type="GridContainer" parent="Panel/MealPlannerPanel/VBoxContainer/MealArea"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 212.0
+offset_top = 223.0
+offset_right = -53.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 20
+columns = 6

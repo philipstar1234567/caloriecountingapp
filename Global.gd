@@ -14,6 +14,7 @@ var body_metrics: Dictionary = {
 	"adjusted_kcal_goal": 0.0
 }
 
+var use_fahrenheit: bool = false
 # ── Kidney/oxalate conditions ──
 var active_conditions: Array = []
 var kidney_at_risk: bool = false

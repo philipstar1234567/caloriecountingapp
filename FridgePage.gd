@@ -8,7 +8,27 @@ var shopping_list: Array = []
 var _long_press_active: bool = false
 var fridge_overrides: Dictionary = {}
 var checked_items: Dictionary = {}  # food_id → bool
+var meal_items: Array = []
+# Each entry: { "slot": Dictionary, "cook_method": String,
+#               "cook_params": Dictionary, "weight_g": float,
+#               "cooked_nutrients": Dictionary }
+var meal_frequency: int = 1
+var suggested_shopping: Array = []
+# Each: { "food": Dictionary, "total_g": float }
+var saved_meals: Array = []
+# Each saved meal: {
+#   "_mid": String,
+#   "name": String,
+#   "items": Array,         ← copy of meal_items at save time
+#   "total_cooked_g": float,
+#   "merged_nutrients": Dictionary  ← summed post-cook nutrients per 100g
+# }
+var editing_meal_mid: String = ""  # empty = new meal, set = editing existing
+var _meal_tabs_built: bool = false
 
+var meal_active_filters: Array = []
+var meal_sort_ascending: bool = true
+var meal_warning_filter: String = "all"
 # ── Paging ──
 var current_page: int = 0
 const ITEMS_PER_PAGE: int = 18
@@ -29,6 +49,94 @@ var sort_ascending: bool = true
 var filter_buttons: Dictionary = {}  # field_key → Button
 var warning_filter: String = "all"  # "all", "caution", "avoid", "none"
 
+const COOK_RETENTION = {
+	"boil": {
+		"calories":      1.00,
+		"protein_g":     0.90,
+		"carbs_g":       0.90,
+		"fiber_g":       0.95,
+		"fat_g":         1.00,
+		"potassium_mg":  0.70,
+		"manganese_mg":  0.80,
+		"vitamin_a_mcg": 0.80,
+		"vitamin_b1_mg": 0.60,
+		"vitamin_b6_mg": 0.70,
+		"vitamin_c_mg":  0.50,
+		"vitamin_e_mg":  0.90,
+		"vitamin_k1_mcg":0.90,
+		# All others default to 0.85
+	},
+	"microwave": {
+		"calories":      1.00,
+		"protein_g":     1.00,
+		"carbs_g":       1.00,
+		"fiber_g":       1.00,
+		"fat_g":         1.00,
+		"potassium_mg":  1.00,
+		"manganese_mg":  1.00,
+		"vitamin_a_mcg": 0.95,
+		"vitamin_b1_mg": 0.90,
+		"vitamin_b6_mg": 0.95,
+		"vitamin_c_mg":  0.85,
+		"vitamin_e_mg":  1.00,
+		"vitamin_k1_mcg":1.00,
+	},
+	"oven": {
+		"calories":      1.00,
+		"protein_g":     0.95,
+		"carbs_g":       1.00,
+		"fiber_g":       0.95,
+		"fat_g":         1.00,
+		"potassium_mg":  0.90,
+		"manganese_mg":  0.90,
+		"vitamin_a_mcg": 0.80,
+		"vitamin_b1_mg": 0.70,
+		"vitamin_b6_mg": 0.80,
+		"vitamin_c_mg":  0.70,
+		"vitamin_e_mg":  0.80,
+		"vitamin_k1_mcg":0.90,
+	},
+	"pan": {
+		"calories":      1.00,
+		"protein_g":     0.95,
+		"carbs_g":       1.00,
+		"fiber_g":       0.90,
+		"fat_g":         1.10,  # fat absorption from pan
+		"potassium_mg":  0.85,
+		"manganese_mg":  0.90,
+		"vitamin_a_mcg": 0.75,
+		"vitamin_b1_mg": 0.75,
+		"vitamin_b6_mg": 0.85,
+		"vitamin_c_mg":  0.65,
+		"vitamin_e_mg":  0.60,
+		"vitamin_k1_mcg":0.80,
+	},
+	"boil_water": {  # same as boil but called from the "boil" button
+		"calories":      1.00,
+		"protein_g":     0.90,
+		"carbs_g":       0.90,
+		"fiber_g":       0.95,
+		"fat_g":         1.00,
+		"potassium_mg":  0.70,
+		"vitamin_c_mg":  0.50,
+		"vitamin_b1_mg": 0.60,
+		"vitamin_b6_mg": 0.70,
+		"vitamin_e_mg":  0.90,
+		"vitamin_k1_mcg":0.90,
+	}
+}
+
+# Weight yield factors (cooked weight / raw weight)
+const COOK_YIELD = {
+	"boil":      1.05,  # fruits absorb slight moisture
+	"microwave": 0.90,  # slight moisture loss
+	"oven":      0.80,  # more moisture loss
+	"pan":       0.85,
+	"boil_water":1.05,
+}
+
+# Fat absorption during frying (g per 100g raw)
+const FRY_FAT_ABSORPTION_G = 6.0
 # ── All filterable nutrients with display labels ──
 # Note: vitamin_k1 is intentionally excluded for safety
 const FILTER_OPTIONS = [
@@ -73,6 +181,7 @@ func _ready():
 	load_foods()
 	load_fridge()
 	load_shopping_list()
+	load_saved_meals()
 	$Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/ShoppingNavRow/ShoppingPrevBtn.pressed.connect(func():
 		if shopping_page > 0:
 			shopping_page -= 1
@@ -90,6 +199,29 @@ func _ready():
 	$Panel/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text_changed.connect(func(_t): refresh_current_tab())
 	$Panel/ShoppingListPanel/VBoxContainer/TabContainer.tab_changed.connect(func(_i): refresh_current_tab())
 	$Panel/ShoppingListPanel.hide()
+	$Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealBtn.pressed.connect(_on_save_meal_pressed)
+	$Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/AddToShoppingBtn.pressed.connect(func():
+		if meal_items.is_empty(): return
+		add_suggested_to_shopping()
+	)
+	$Panel/TopBar/MealPlannerButton.pressed.connect(_on_meal_planner_pressed)
+	$Panel/MealPlannerPanel/VBoxContainer/TopBarMP/MPCloseBtn.pressed.connect(func():
+		$Panel/MealPlannerPanel.hide()
+		$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_PASS
+	# Show NavBar again
+		get_tree().root.get_node("Main/NavBar").show()
+	)
+	var details_btn = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/DetailsButton
+	details_btn.button_down.connect(_show_meal_details)
+	details_btn.button_up.connect(func():
+		var existing = get_node_or_null("MealDetailsPopup")
+		if existing and is_instance_valid(existing): existing.queue_free()
+	)
+	$Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/FreqSpin.value_changed.connect(func(v):
+		meal_frequency = int(v)
+		_update_suggested_shopping()
+	)
+	$Panel/MealPlannerPanel.hide()
 	_build_filter_buttons()
 	_build_warning_filter_buttons()
 	_connect_sort_buttons()
@@ -514,9 +646,16 @@ func refresh_shopping_list():
 			cb.text = display_text
 			cb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			cb.add_theme_font_size_override("font_size", 70)
-			cb.add_theme_color_override("font_color",         Color(0.08, 0.15, 0.35))
-			cb.add_theme_color_override("font_color_hover",   Color(0.08, 0.15, 0.35))
-			cb.add_theme_color_override("font_color_pressed",  Color(0.08, 0.15, 0.35))
+			if entry.get("_suggested", false):
+				var suggested_g = entry.get("_suggested_g", 0.0)
+				cb.text = display_text + " (" + str(snappedf(suggested_g, 0.1)) + "g)"
+				cb.add_theme_color_override("font_color",         Color(0.7, 0.1, 0.1))
+				cb.add_theme_color_override("font_color_hover",   Color(0.7, 0.1, 0.1))
+				cb.add_theme_color_override("font_color_pressed", Color(0.7, 0.1, 0.1))
+			else:
+				cb.add_theme_color_override("font_color",         Color(0.08, 0.15, 0.35))
+				cb.add_theme_color_override("font_color_hover",   Color(0.08, 0.15, 0.35))
+				cb.add_theme_color_override("font_color_pressed", Color(0.08, 0.15, 0.35))
 			# IMPORTANT: capture sid in local var for lambda
 			var captured_sid = sid
 			cb.toggled.connect(func(is_checked):
@@ -761,6 +900,22 @@ func build_fridge_ui():
 			container.add_child(edit_dot)
 
 		fridge.add_child(container)
+
+# Empty warning
+		if remaining <= 0.0:
+			var warn_bg = ColorRect.new()
+			warn_bg.color = Color(0.9, 0.3, 0.1, 0.92)
+			warn_bg.size = Vector2(container.custom_minimum_size.x, 40)
+			warn_bg.position = Vector2(0, container.custom_minimum_size.y - 40)
+			container.add_child(warn_bg)
+
+			var warn_lbl = Label.new()
+			warn_lbl.text = "⚠️ 0 g\nleft"
+			warn_lbl.add_theme_font_size_override("font_size", 40)
+			warn_lbl.add_theme_color_override("font_color", Color.WHITE)
+			warn_lbl.position = Vector2(4, container.custom_minimum_size.y - 40)
+			warn_lbl.custom_minimum_size = Vector2(container.custom_minimum_size.x - 8, 40)
+			container.add_child(warn_lbl)
 
 	# Fill empty slots with invisible placeholders to keep grid shape
 	var empty_slots = ITEMS_PER_PAGE - page_items.size()
@@ -1239,7 +1394,6 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 	var iid       = slot.get("_iid","")
 	var w         = fridge_weights.get(iid, {"total_g":100.0,"remaining_g":100.0})
 	var remaining = w.get("remaining_g", 100.0)
-	var total     = w.get("total_g", 100.0)
 	var count     = slot.get("_count", 1)
 
 	portion_g = min(portion_g, remaining)
@@ -1270,30 +1424,30 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 	var new_remaining = remaining - portion_g
 
 	if count > 1 and new_remaining > 0.1:
-		# Split: reduce count on original, create new partial slot
+		# Partially ate one unit from a group — split it off
 		slot["_count"] = count - 1
-		# w stays the same for the grouped slot (still full units)
-		
-		# Create the partial slot
 		var new_iid  = _generate_iid()
 		var new_slot = slot.duplicate()
 		new_slot["_iid"]   = new_iid
 		new_slot["_count"] = 1
 		fridge_foods.append(new_slot)
 		fridge_weights[new_iid] = {"total_g": remaining, "remaining_g": new_remaining}
-		
+
+	elif count > 1 and new_remaining <= 0.1:
+		# Fully ate one unit from a group
+		slot["_count"] = count - 1
+		w["remaining_g"] = 0.0
+		fridge_weights[iid] = w
+
 	elif count == 1 and new_remaining > 0.1:
 		# Single unit partially eaten
 		w["remaining_g"] = new_remaining
 		fridge_weights[iid] = w
-		
-	elif new_remaining <= 0.1 and count > 1:
-		# Ate a full unit from the group
-		slot["_count"] = count - 1
-		
+
 	else:
-		# Last unit fully eaten
-		_remove_slot(iid)
+		# Single unit fully eaten — show 0g warning, no removal
+		w["remaining_g"] = 0.0
+		fridge_weights[iid] = w
 
 	save_fridge()
 	build_fridge_ui()
@@ -1419,3 +1573,1425 @@ func _rip_shopping_page():
 	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
 	save_shopping_list()
 	refresh_shopping_list()
+
+func _on_meal_planner_pressed():
+	$Panel/MealPlannerPanel.show()
+	$Panel/MealPlannerPanel.mouse_filter = Control.MOUSE_FILTER_STOP
+	$Panel/FridgeContainer.mouse_filter  = Control.MOUSE_FILTER_IGNORE
+	# Hide NavBar
+	get_tree().root.get_node("Main/NavBar").hide()
+
+	if not _meal_tabs_built:
+		_build_meal_tabs()
+		_meal_tabs_built = true
+
+	# Always default to Fruits tab on open
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	var fruits_idx = _get_fruits_tab_index()
+	tabs.current_tab = fruits_idx
+	_refresh_meal_tab()
+	_refresh_my_meals_tab()
+	_refresh_meal_grid()
+
+func _get_fruits_tab_index() -> int:
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	for i in range(tabs.get_tab_count()):
+		if tabs.get_tab_title(i).to_lower() == "fruits":
+			return i
+	return 1  # fallback
+
+func _build_meal_tabs():
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	for child in tabs.get_children():
+		child.queue_free()
+
+	# My Meals — always first
+	var my_meals_scroll = ScrollContainer.new()
+	my_meals_scroll.name = "My Meals"
+	var my_meals_vbox = VBoxContainer.new()
+	my_meals_vbox.name = "MyMealsVBox"
+	my_meals_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	my_meals_scroll.add_child(my_meals_vbox)
+	tabs.add_child(my_meals_scroll)
+
+	# Food category tabs
+	var categories = []
+	for food in all_foods:
+		var cat = food.get("category","other")
+		if not categories.has(cat):
+			categories.append(cat)
+
+	for cat in categories:
+		var scroll = ScrollContainer.new()
+		scroll.name = cat.capitalize()
+		var vbox = VBoxContainer.new()
+		vbox.name = cat.capitalize() + "Vbox"
+		vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		scroll.add_child(vbox)
+		tabs.add_child(scroll)
+
+	# Connect signal once
+	tabs.tab_changed.connect(_on_meal_tab_changed)
+	_build_meal_filter_buttons()
+
+func _build_meal_filter_buttons():
+	var row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH/FilterButtonsRow
+	if not row: return
+	for child in row.get_children():
+		child.queue_free()
+
+	for opt in FILTER_OPTIONS:
+		var btn = Button.new()
+		btn.text = opt["label"]
+		btn.toggle_mode = true
+		btn.custom_minimum_size = Vector2(0, 50)
+		btn.add_theme_font_size_override("font_size", 40)
+		btn.toggled.connect(func(pressed): _on_meal_filter_toggled(opt["key"], pressed, btn))
+		row.add_child(btn)
+
+	# Sort buttons
+	var sort_row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow
+	if sort_row:
+		sort_row.get_node("SortAscBtn").pressed.connect(func():
+			meal_sort_ascending = true
+			_refresh_meal_tab()
+		)
+		sort_row.get_node("SortDescBtn").pressed.connect(func():
+			meal_sort_ascending = false
+			_refresh_meal_tab()
+		)
+
+	# Warning filter row
+	var warn_row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/WarningFilterRow
+	if not warn_row: return
+	for child in warn_row.get_children():
+		child.queue_free()
+
+	var warn_options = [
+		{"label":"All",     "key":"all"},
+		{"label":"⚠️ Only", "key":"caution"},
+		{"label":"⛔ Only", "key":"avoid"},
+		{"label":"✅ Safe", "key":"none"},
+	]
+	for opt in warn_options:
+		var btn = Button.new()
+		btn.text = opt["label"]
+		btn.toggle_mode = true
+		btn.button_pressed = (opt["key"] == meal_warning_filter)
+		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		btn.custom_minimum_size = Vector2(0, 50)
+		btn.add_theme_font_size_override("font_size", 40)
+		var key = opt["key"]
+		btn.toggled.connect(func(pressed):
+			if pressed:
+				meal_warning_filter = key
+				for child in warn_row.get_children():
+					if child != btn: child.button_pressed = false
+				_refresh_meal_tab()
+		)
+		warn_row.add_child(btn)
+
+func _on_meal_tab_changed(idx: int):
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	var tab_name = tabs.get_tab_title(idx)
+	if tab_name == "My Meals" or idx == 0:
+		_refresh_my_meals_tab()
+	else:
+		_refresh_meal_tab()
+
+func _refresh_meal_tab():
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	var scroll = tabs.get_current_tab_control()
+	if not scroll: return
+	if scroll.get_child_count() == 0: return
+	var vbox = scroll.get_child(0)
+	if not vbox: return
+	for child in vbox.get_children():
+		child.queue_free()
+
+	var cat = tabs.get_tab_title(tabs.current_tab).to_lower().strip_edges()
+	if cat == "my meals": return
+
+	var search_text = ""
+	var search_bar = $Panel/MealPlannerPanel/VBoxContainer/TopBarMP/MPSearchBar
+	if search_bar: search_text = search_bar.text.to_lower()
+
+	var filtered = all_foods.filter(func(f):
+		if f.get("category","") != cat: return false
+		if not search_text.is_empty() and not f.get("name","").to_lower().contains(search_text):
+			return false
+		return true
+	)
+
+	# Nutrient filters
+	if not meal_active_filters.is_empty():
+		filtered = filtered.filter(func(f):
+			for key in meal_active_filters:
+				if f.get(key, 0.0) <= 0: return false
+			return true
+		)
+
+	# Warning filter
+	if meal_warning_filter != "all":
+		filtered = filtered.filter(func(f):
+			var severity = _get_food_severity(f)
+			match meal_warning_filter:
+				"avoid":   return severity == "avoid"
+				"caution": return severity == "caution"
+				"none":    return severity == "safe"
+			return true
+		)
+
+	# Sort
+	if not meal_active_filters.is_empty():
+		var sort_key = "calories" if meal_active_filters.size() > 1 else meal_active_filters[0]
+		filtered.sort_custom(func(a, b):
+			return a.get(sort_key,0.0) < b.get(sort_key,0.0) if meal_sort_ascending \
+				else a.get(sort_key,0.0) > b.get(sort_key,0.0)
+		)
+
+	for food in filtered:
+		vbox.add_child(_make_meal_browse_row(food))
+
+func _refresh_my_meals_tab():
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	if tabs.get_tab_count() == 0: return
+	var scroll = tabs.get_tab_control(0)
+	if not scroll: return
+	var vbox = scroll.find_child("MyMealsVBox", true, false)
+	if not vbox: return
+	for child in vbox.get_children():
+		child.queue_free()
+	if saved_meals.is_empty():
+		var empty_lbl = Label.new()
+		empty_lbl.text = "No saved meals yet.\nBuild a meal and tap 'Add to My Meals'."
+		empty_lbl.add_theme_font_size_override("font_size", 40)
+		empty_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		vbox.add_child(empty_lbl)
+		return
+	for meal in saved_meals:
+		vbox.add_child(_make_saved_meal_row(meal))
+
+func _make_saved_meal_row(meal: Dictionary) -> VBoxContainer:
+	var card = VBoxContainer.new()
+	card.add_theme_constant_override("separation", 4)
+
+	var panel = PanelContainer.new()
+	var inner = VBoxContainer.new()
+	inner.add_theme_constant_override("separation", 6)
+	panel.add_child(inner)
+	card.add_child(panel)
+
+	# Name + total weight
+	var name_lbl = Label.new()
+	name_lbl.text = meal.get("name","Meal") + \
+		"  ·  " + str(meal.get("total_cooked_g",0.0)) + "g total"
+	name_lbl.add_theme_font_size_override("font_size", 40)
+	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	inner.add_child(name_lbl)
+
+	# Ingredient summary
+	var items = meal.get("items",[])
+	var ingredients_text = ""
+	for entry in items:
+		var method_icons = {
+			"raw":"🥗","boil":"💧","microwave":"📡",
+			"oven":"🔥","pan":"🍳","boil_water":"♨️"
+		}
+		var icon      = method_icons.get(entry.get("cook_method","raw"),"🥗")
+		var raw_g     = entry.get("weight_g", 100.0)
+		var method    = entry.get("cook_method","raw")
+		var yf        = COOK_YIELD.get(method, 1.0)
+		var cooked_g  = snappedf(raw_g * yf, 0.1)
+		var food_name = entry.get("food",{}).get("name","?")
+		
+		if method == "raw":
+			ingredients_text += icon + " " + food_name + " " + str(raw_g) + "g  "
+		else:
+			ingredients_text += icon + " " + food_name + \
+				" " + str(raw_g) + "g→" + str(cooked_g) + "g  "
+	var ing_lbl = Label.new()
+	ing_lbl.text = ingredients_text.strip_edges()
+	ing_lbl.add_theme_font_size_override("font_size", 40)
+	ing_lbl.add_theme_color_override("font_color", Color(0.6,0.6,0.6))
+	ing_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	inner.add_child(ing_lbl)
+
+	# Key nutrients summary
+	var merged = meal.get("merged_nutrients",{})
+	var nutrients_lbl = Label.new()
+	nutrients_lbl.text = str(snappedf(merged.get("calories",0),0.1)) + " kcal  |  " + \
+		"P: " + str(snappedf(merged.get("protein_g",0),0.1)) + "g  |  " + \
+		"F: " + str(snappedf(merged.get("fat_g",0),0.1)) + "g  |  " + \
+		"C: " + str(snappedf(merged.get("carbs_g",0),0.1)) + "g  (per 100g)"
+	nutrients_lbl.add_theme_font_size_override("font_size", 40)
+	inner.add_child(nutrients_lbl)
+
+	# Buttons row
+	var btn_row = HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 40)
+	inner.add_child(btn_row)
+
+	# + Fridge button
+	var fridge_btn = Button.new()
+	fridge_btn.text = "🧊 + Fridge"
+	fridge_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	fridge_btn.custom_minimum_size = Vector2(0, 55)
+	fridge_btn.add_theme_font_size_override("font_size", 40)
+	fridge_btn.pressed.connect(func(): _add_meal_to_fridge(meal))
+	btn_row.add_child(fridge_btn)
+
+	# Edit button
+	var edit_btn = Button.new()
+	edit_btn.text = "✏️ Edit"
+	edit_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	edit_btn.custom_minimum_size = Vector2(0, 55)
+	edit_btn.add_theme_font_size_override("font_size", 40)
+	edit_btn.pressed.connect(func(): _edit_saved_meal(meal))
+	btn_row.add_child(edit_btn)
+
+	# Delete button
+	var del_btn = Button.new()
+	del_btn.text = "🗑"
+	del_btn.custom_minimum_size = Vector2(55, 55)
+	del_btn.add_theme_font_size_override("font_size", 40)
+	del_btn.add_theme_color_override("font_color", Color(0.9,0.3,0.3))
+	del_btn.pressed.connect(func(): _delete_saved_meal(meal.get("_mid","")))
+	btn_row.add_child(del_btn)
+
+	# Separator
+	card.add_child(HSeparator.new())
+	return card
+
+func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
+	var row = HBoxContainer.new()
+	row.custom_minimum_size = Vector2(0, 60)
+	row.add_theme_constant_override("separation", 8)
+
+	# Icon — same as shopping list
+	var icon = TextureRect.new()
+	icon.custom_minimum_size = Vector2(50, 50)
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var path = "res://images/" + food.get("id","") + ".png"
+	if ResourceLoader.exists(path): icon.texture = load(path)
+	row.add_child(icon)
+
+	var name_lbl = Label.new()
+	name_lbl.text = food.get("name","")
+	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(name_lbl)
+
+	# Show active filter values
+	if not meal_active_filters.is_empty():
+		var val_text = ""
+		for key in meal_active_filters:
+			val_text += _get_filter_label(key) + ": " + str(snappedf(food.get(key,0.0),0.1)) + " "
+		var val_lbl = Label.new()
+		val_lbl.text = val_text.strip_edges()
+		val_lbl.add_theme_font_size_override("font_size", 40)
+		row.add_child(val_lbl)
+	else:
+		var ox_lbl = Label.new()
+		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
+		row.add_child(ox_lbl)
+
+	# Warning badge
+	var severity = _get_food_severity(food)
+	if severity == "avoid":
+		var badge = Label.new(); badge.text = "⛔"; row.add_child(badge)
+	elif severity == "caution":
+		var badge = Label.new(); badge.text = "⚠️"; row.add_child(badge)
+
+	var add_btn = Button.new()
+	add_btn.text = "+ Meal"
+	add_btn.pressed.connect(func(): _add_to_meal(food))
+	row.add_child(add_btn)
+	return row
+
+func _add_to_meal(food: Dictionary):
+	if meal_items.size() >= 12:
+		_show_limit_warning()
+		return
+	var entry = {
+		"food":             food.duplicate(),
+		"cook_method":      "raw",
+		"cook_params":      {},
+		"weight_g":         100.0,
+		"cooked_nutrients": food.duplicate()
+	}
+	meal_items.append(entry)
+	_refresh_meal_grid()
+	_update_suggested_shopping()
+
+func _show_limit_warning():
+	var existing = get_node_or_null("LimitWarning")
+	if existing: existing.queue_free()
+
+	var lbl = Label.new()
+	lbl.text = "⚠️ Max 12 items"
+	lbl.add_theme_font_size_override("font_size", 40)
+	lbl.add_theme_color_override("font_color", Color.WHITE)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.vertical_alignment   = VERTICAL_ALIGNMENT_CENTER
+
+	var panel = PanelContainer.new()
+	panel.name = "LimitWarning"
+	panel.custom_minimum_size = Vector2(280, 100)
+	panel.modulate.a = 0.0
+	panel.add_child(lbl)
+	add_child(panel)
+	# Center it after adding to scene tree
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.position.y += 100
+
+	# Fade in then fade out using a tween
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(1.4)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.3)
+	tween.tween_callback(func():
+		if is_instance_valid(panel): panel.queue_free()
+	)
+	
+func _refresh_meal_grid():
+	var grid = $Panel/MealPlannerPanel/VBoxContainer/MealArea/MealGridContainer
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 60)
+	grid.add_theme_constant_override("v_separation", 40)
+	for child in grid.get_children():
+		child.queue_free()
+	var page_size = 12  # 3 cols × 4 rows
+	var start = 0       # add paging later if needed
+	var end   = min(start + page_size, meal_items.size())
+	
+	for i in range(meal_items.size()):
+		var entry = meal_items[i]
+		var food  = entry["food"]
+
+		var container = Control.new()
+		container.custom_minimum_size = Vector2(200, 200)
+
+		var btn = Button.new()
+		btn.custom_minimum_size = Vector2(200, 200)
+		btn.size = Vector2(200, 200)
+		btn.position = Vector2(0, 0)
+		btn.tooltip_text = food.get("name","") + "\n" + \
+			entry.get("cook_method","raw") + "\n" + \
+			str(entry.get("weight_g",100.0)) + "g"
+
+		var icon = TextureRect.new()
+		icon.custom_minimum_size = Vector2(200,200)
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		var path = "res://images/" + food.get("id","") + ".png"
+		if ResourceLoader.exists(path): icon.texture = load(path)
+		btn.add_child(icon)
+
+		# Cook method badge
+		if entry.get("cook_method","raw") != "raw":
+			var method_icons = {
+				"boil":"💧","microwave":"📡","oven":"🔥",
+				"pan":"🍳","boil_water":"♨️"
+			}
+			var cook_lbl = Label.new()
+			cook_lbl.text = method_icons.get(entry["cook_method"],"🍳")
+			cook_lbl.add_theme_font_size_override("font_size", 40)
+			cook_lbl.position = Vector2(2, 2)
+			container.add_child(cook_lbl)
+
+		var timer = Timer.new()
+		timer.wait_time = 1.4
+		timer.one_shot  = true
+		btn.add_child(timer)
+
+		var idx = i
+		timer.timeout.connect(func():
+			_long_press_active = true
+			_open_meal_dual_popup(entry, idx, btn)
+		)
+		btn.gui_input.connect(func(event):
+			_handle_meal_input(event, entry, idx, timer)
+		)
+		container.add_child(btn)
+		grid.add_child(container)
+
+func _handle_meal_input(event: InputEvent, entry: Dictionary, idx: int, timer: Timer):
+	var is_press   = false
+	var is_release = false
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		is_press   = event.pressed
+		is_release = not event.pressed
+	elif event is InputEventScreenTouch:
+		is_press   = event.pressed
+		is_release = not event.pressed
+
+	if is_press:
+		# Close any existing meal popups immediately
+		var existing_action = get_node_or_null("MealItemPopup")
+		if existing_action: existing_action.queue_free()
+		var existing_info = get_node_or_null("MealInfoBubble")
+		if existing_info: existing_info.queue_free()
+		_long_press_active = false
+		timer.start()
+
+	if is_release:
+		timer.stop()
+
+func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
+	# Clean up existing
+	var existing_action = get_node_or_null("MealItemPopup")
+	if existing_action: existing_action.queue_free()
+	var existing_info = get_node_or_null("MealInfoBubble")
+	if existing_info: existing_info.queue_free()
+
+	var food      = entry["food"]
+	var effective = entry.get("cooked_nutrients", food)
+	var method    = entry.get("cook_method","raw")
+	var weight_g  = entry.get("weight_g", 100.0)
+
+	# ── NUTRITIONAL INFO — fixed strip at top ──
+	var info_popup = PanelContainer.new()
+	info_popup.name = "MealInfoBubble"
+	info_popup.set_anchor_and_offset(SIDE_LEFT,   0, 0)
+	info_popup.set_anchor_and_offset(SIDE_RIGHT,  1, 0)
+	info_popup.set_anchor_and_offset(SIDE_TOP,    0, 0)
+	info_popup.set_anchor_and_offset(SIDE_BOTTOM, 0, 600 * (390.0/1170.0))
+
+	var info_hbox = HBoxContainer.new()
+	info_hbox.add_theme_constant_override("separation", 20)
+	info_popup.add_child(info_hbox)
+
+	var method_display = {
+		"raw":"Raw","boil":"Boiled","microwave":"Microwaved",
+		"oven":"Oven-roasted","pan":"Pan-fried","boil_water":"Boiled"
+	}
+
+	# Left column
+	var left_col = VBoxContainer.new()
+	left_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info_hbox.add_child(left_col)
+
+	var food_title = Label.new()
+	food_title.text = food.get("name","") + \
+		"  [" + method_display.get(method,"Raw") + "  " + str(weight_g) + "g]"
+	food_title.add_theme_font_size_override("font_size", 40)
+	food_title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	left_col.add_child(food_title)
+
+	var fields_left = [
+		["Calories", str(snappedf(effective.get("calories",0),0.1)) + " kcal"],
+		["Protein",  str(snappedf(effective.get("protein_g",0),0.1)) + " g"],
+		["Fat",      str(snappedf(effective.get("fat_g",0),0.1)) + " g"],
+		["Carbs",    str(snappedf(effective.get("carbs_g",0),0.1)) + " g"],
+		["Sugar",    str(snappedf(effective.get("sugar_g",0),0.1)) + " g"],
+		["Fiber",    str(snappedf(effective.get("fiber_g",0),0.1)) + " g"],
+	]
+	for pair in fields_left:
+		var row = HBoxContainer.new()
+		var k = Label.new()
+		k.text = pair[0]
+		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		k.add_theme_font_size_override("font_size", 40)
+		var v = Label.new()
+		v.text = pair[1]
+		v.add_theme_font_size_override("font_size", 35)
+		row.add_child(k)
+		row.add_child(v)
+		left_col.add_child(row)
+
+	# Right column
+	var right_col = VBoxContainer.new()
+	right_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	info_hbox.add_child(right_col)
+
+	var fields_right = [
+		["Calcium",  str(snappedf(effective.get("calcium_mg",0),0.1)) + " mg"],
+		["Sodium",   str(snappedf(effective.get("sodium_mg",0),0.1)) + " mg"],
+		["Vit C",    str(snappedf(effective.get("vitamin_c_mg",0),0.1)) + " mg"],
+		["Vit D",    str(snappedf(effective.get("vitamin_d_mcg",0),0.1)) + " mcg"],
+		["Vit E",    str(snappedf(effective.get("vitamin_e_mg",0),0.1)) + " mg"],
+		["B12",      str(snappedf(effective.get("vitamin_b12_mcg",0),0.1)) + " mcg"],
+	]
+	for pair in fields_right:
+		var row = HBoxContainer.new()
+		var k = Label.new()
+		k.text = pair[0]
+		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		k.add_theme_font_size_override("font_size", 40)
+		var v = Label.new()
+		v.text = pair[1]
+		v.add_theme_font_size_override("font_size", 35)
+		row.add_child(k)
+		row.add_child(v)
+		right_col.add_child(row)
+
+	add_child(info_popup)
+
+	# ── ACTION POPUP — positioned above pressed button ──
+	var btn_rect     = pressed_btn.get_global_rect()
+	var viewport     = get_viewport_rect().size
+	var popup_width  = min(370.0, viewport.x - 20.0)  # never wider than screen
+	var popup_height = 260.0
+	var margin       = 8.0  # minimum distance from screen edge
+
+	# X: center on button then shift slightly left, clamp to screen
+	var popup_x = btn_rect.position.x + btn_rect.size.x / 2.0 - popup_width / 2.0
+	popup_x -= 267.0                                          # ← shift left here
+	popup_x = clamp(popup_x, margin, viewport.x - popup_width - margin)
+
+	# Y: above button, push down if not enough room above info strip
+	var info_bottom = 215.0 * (390.0 / 1170.0)
+	var popup_y = btn_rect.position.y - popup_height - 1.0
+	popup_y = 1220.0
+	#if popup_y < info_bottom + margin:
+		#popup_y = btn_rect.position.y + btn_rect.size.y + 1.0
+	popup_y = clamp(popup_y, info_bottom + margin, viewport.y - popup_height - margin)
+
+	var action_popup = PanelContainer.new()
+	action_popup.name = "MealItemPopup"
+	action_popup.custom_minimum_size = Vector2(popup_width, 0)
+	action_popup.position = Vector2(popup_x, popup_y)
+	
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	action_popup.add_child(vbox)
+
+	var title_row = HBoxContainer.new()
+	title_row.add_theme_constant_override("separation", 8)
+	vbox.add_child(title_row)
+
+	var title = Label.new()
+	title.text = food.get("name","") + "  —  " + \
+		method_display.get(method,"Raw") + "  ·  " + str(weight_g) + "g"
+	title.add_theme_font_size_override("font_size", 40)
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	title_row.add_child(title)
+
+	# 4×2 grid — 8 buttons including Close
+	var actions = [
+		{"icon":"🗑️", "label":"",         "key":"remove"},
+		{"icon":"⚖️", "label":"Edit g",          "key":"edit_g"},
+		{"icon":"📡", "label":"Micro\nwave",       "key":"microwave"},
+		{"icon":"🔥", "label":"Oven",            "key":"oven"},
+		{"icon":"🍳", "label":"Pan",             "key":"pan"},
+		{"icon":"♨️", "label":"Boil",            "key":"boil"},
+		{"icon":"📝", "label":"Edit\nVal","key":"edit_raw"},
+		{"icon":"✕",  "label":"Close",           "key":"close"},
+	]
+
+	var grid = GridContainer.new()
+	grid.columns = 8
+	grid.add_theme_constant_override("h_separation", 8)
+	grid.add_theme_constant_override("v_separation", 8)
+	vbox.add_child(grid)
+
+	for action in actions:
+		var btn = Button.new()
+		btn.custom_minimum_size = Vector2(82, 68)
+		btn.text = action["icon"] + "\n" + action["label"]
+		btn.add_theme_font_size_override("font_size", 35)
+
+		if action["key"] == "close":
+			btn.add_theme_color_override("font_color", Color(1.0,0.4,0.4))
+			btn.pressed.connect(func():
+				action_popup.queue_free()
+				var ib = get_node_or_null("MealInfoBubble")
+				if ib: ib.queue_free()
+			)
+		elif action["key"] == "remove":
+			btn.add_theme_color_override("font_color", Color(1.0,0.4,0.4))
+			btn.pressed.connect(func():
+				meal_items.remove_at(idx)
+				_refresh_meal_grid()
+				_update_suggested_shopping()
+				action_popup.queue_free()
+				var ib = get_node_or_null("MealInfoBubble")
+				if ib: ib.queue_free()
+			)
+		elif action["key"] == "edit_g":
+			btn.pressed.connect(func():
+				_show_meal_weight_editor(action_popup, entry, idx)
+			)
+		elif action["key"] == "edit_raw":
+			btn.pressed.connect(func():
+				_show_meal_edit_raw(action_popup, entry, idx)
+			)
+		else:
+			btn.pressed.connect(func():
+				_on_meal_action(action["key"], entry, idx,
+					entry.get("weight_g",100.0), action_popup)
+			)
+		grid.add_child(btn)
+
+	var params_area = VBoxContainer.new()
+	params_area.name = "CookParamsArea"
+	params_area.visible = false
+	vbox.add_child(params_area)
+
+	add_child(action_popup)
+
+func _show_meal_weight_editor(popup: PanelContainer, entry: Dictionary, idx: int):
+	var params_area = popup.find_child("CookParamsArea", true, false)
+	if not params_area: return
+	for child in params_area.get_children():
+		child.queue_free()
+	params_area.visible = true
+
+	var lbl = Label.new()
+	lbl.text = "Weight (g):"
+	lbl.add_theme_font_size_override("font_size", 40)
+	params_area.add_child(lbl)
+
+	var spin = SpinBox.new()
+	spin.min_value = 1
+	spin.max_value = 5000
+	spin.step = 1
+	spin.value = entry.get("weight_g", 100.0)
+	spin.custom_minimum_size = Vector2(180, 50)
+	params_area.add_child(spin)
+
+	var confirm = Button.new()
+	confirm.text = "✓ Apply"
+	confirm.custom_minimum_size = Vector2(0, 50)
+	confirm.add_theme_font_size_override("font_size", 40)
+	confirm.pressed.connect(func():
+		entry["weight_g"] = spin.value
+		_apply_cook_to_entry(entry, entry.get("cook_method","raw"), entry.get("cook_params",{}))
+		_refresh_meal_grid()
+		_update_suggested_shopping()
+		popup.queue_free()
+	)
+	params_area.add_child(confirm)
+
+
+func _on_meal_action(key: String, entry: Dictionary, idx: int, weight_g: float, popup: PanelContainer):
+	entry["weight_g"] = weight_g
+
+	match key:
+		"remove":
+			meal_items.remove_at(idx)
+			_refresh_meal_grid()
+			_update_suggested_shopping()
+			popup.queue_free()
+
+		"edit_g":
+			_apply_cook_to_entry(entry, "raw", {})
+			_refresh_meal_grid()
+			popup.queue_free()
+
+		"microwave":
+			_show_cook_params(popup, entry, idx, "microwave")
+
+		"oven":
+			_show_cook_params(popup, entry, idx, "oven")
+
+		"pan":
+			_show_cook_params(popup, entry, idx, "pan")
+
+		"boil":
+			# Boil is always 100°C, no extra params needed
+			_apply_cook_to_entry(entry, "boil", {"temperature": 100})
+			_refresh_meal_grid()
+			_update_suggested_shopping()
+			popup.queue_free()
+			var ib = get_node_or_null("MealInfoBubble")
+			if ib: ib.queue_free()
+
+func _show_cook_params(popup: PanelContainer, entry: Dictionary, idx: int, method: String):
+	var params_area = popup.find_child("CookParamsArea", true, false)
+	if not params_area: return
+	for child in params_area.get_children():
+		child.queue_free()
+	params_area.visible = true
+
+	if method == "microwave":
+		var power_row = HBoxContainer.new()
+		var plbl = Label.new()
+		plbl.text = "Power:"
+		plbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		power_row.add_child(plbl)
+		var power_opt = OptionButton.new()
+		var powers = [100, 200, 300, 450, 600, 700, 800, 1000, 1200]
+		for p in powers:
+			power_opt.add_item(str(p) + "W")
+		power_opt.selected = 4  # default 600W
+		power_opt.custom_minimum_size = Vector2(120, 45)
+		power_row.add_child(power_opt)
+		params_area.add_child(power_row)
+
+		var time_row = HBoxContainer.new()
+		var tlbl = Label.new()
+		tlbl.text = "Time (min):"
+		tlbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		time_row.add_child(tlbl)
+		var tspin = SpinBox.new()
+		tspin.min_value = 0.5
+		tspin.max_value = 30
+		tspin.step = 0.5
+		tspin.value = 3.0
+		tspin.custom_minimum_size = Vector2(100, 45)
+		time_row.add_child(tspin)
+		params_area.add_child(time_row)
+
+		var confirm = Button.new()
+		confirm.text = "✓ Apply"
+		confirm.custom_minimum_size = Vector2(0, 50)
+		confirm.add_theme_font_size_override("font_size", 40)
+		confirm.pressed.connect(func():
+			var power_vals = [100, 200, 300, 450, 600, 700, 800, 1000, 1200]
+			_apply_cook_to_entry(entry, "microwave", {
+				"power_w": power_vals[power_opt.selected],
+				"time_min": tspin.value
+			})
+			_refresh_meal_grid()
+			_update_suggested_shopping()
+			popup.queue_free()
+			var ib = get_node_or_null("MealInfoBubble")
+			if ib: ib.queue_free()
+		)
+		params_area.add_child(confirm)
+
+		
+	elif method == "oven":
+		var temp_row = HBoxContainer.new()
+		var tlbl = Label.new()
+		tlbl.text = "Temperature:"
+		tlbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		temp_row.add_child(tlbl)
+		var temp_opt = OptionButton.new()
+		var temps_c = [50, 100, 150, 200, 220, 250, 275, 300]
+		for t in temps_c:
+			if Global.use_fahrenheit:
+				var f = int(t * 9.0 / 5.0 + 32)
+				temp_opt.add_item(str(f) + "°F")
+			else:
+				temp_opt.add_item(str(t) + "°C")
+		temp_opt.selected = 3  # default 200°C
+		temp_opt.custom_minimum_size = Vector2(130, 45)
+		temp_row.add_child(temp_opt)
+		params_area.add_child(temp_row)
+
+		var time_row = HBoxContainer.new()
+		var timelbl = Label.new()
+		timelbl.text = "Time (min):"
+		timelbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		time_row.add_child(timelbl)
+		var tspin = SpinBox.new()
+		tspin.min_value = 5
+		tspin.max_value = 180
+		tspin.step = 5
+		tspin.value = 20
+		tspin.custom_minimum_size = Vector2(100, 45)
+		time_row.add_child(tspin)
+		params_area.add_child(time_row)
+
+		var confirm = Button.new()
+		confirm.text = "✓ Apply"
+		confirm.custom_minimum_size = Vector2(0, 50)
+		confirm.add_theme_font_size_override("font_size", 40)
+		confirm.pressed.connect(func():
+			var temps_c2 = [50, 100, 150, 200, 220, 250, 275, 300]
+			_apply_cook_to_entry(entry, "oven", {
+				"temp_c": temps_c2[temp_opt.selected],
+				"time_min": tspin.value
+			})
+			_refresh_meal_grid()
+			_update_suggested_shopping()
+			popup.queue_free()
+			var ib = get_node_or_null("MealInfoBubble")
+			if ib: ib.queue_free()
+		)
+		params_area.add_child(confirm)
+		
+		
+	elif method == "pan":
+		var temp_row = HBoxContainer.new()
+		var tlbl = Label.new()
+		tlbl.text = "Temperature:"
+		tlbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		temp_row.add_child(tlbl)
+		var temp_opt = OptionButton.new()
+		var temps_c = [100, 150, 180, 200, 220]
+		for t in temps_c:
+			if Global.use_fahrenheit:
+				temp_opt.add_item(str(int(t * 9.0/5.0+32)) + "°F")
+			else:
+				temp_opt.add_item(str(t) + "°C")
+		temp_opt.selected = 2  # default 180°C
+		temp_opt.custom_minimum_size = Vector2(130, 45)
+		temp_row.add_child(temp_opt)
+		params_area.add_child(temp_row)
+
+		var time_row = HBoxContainer.new()
+		var timelbl = Label.new()
+		timelbl.text = "Time (min):"
+		timelbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		time_row.add_child(timelbl)
+		var tspin = SpinBox.new()
+		tspin.min_value = 1
+		tspin.max_value = 60
+		tspin.step = 1
+		tspin.value = 10
+		tspin.custom_minimum_size = Vector2(100, 45)
+		time_row.add_child(tspin)
+		params_area.add_child(time_row)
+
+		var confirm = Button.new()
+		confirm.text = "✓ Apply"
+		confirm.custom_minimum_size = Vector2(0, 50)
+		confirm.add_theme_font_size_override("font_size", 40)
+		confirm.pressed.connect(func():
+			var temps2 = [100, 150, 180, 200, 220]
+			_apply_cook_to_entry(entry, "pan", {
+				"temp_c": temps2[temp_opt.selected],
+				"time_min": tspin.value
+			})
+			_refresh_meal_grid()
+			_update_suggested_shopping()
+			popup.queue_free()
+			var ib = get_node_or_null("MealInfoBubble")
+			if ib: ib.queue_free()
+		)
+		params_area.add_child(confirm)
+
+
+
+func _apply_cook_to_entry(entry: Dictionary, method: String, params: Dictionary):
+	entry["cook_method"] = method
+	entry["cook_params"] = params
+
+	if method == "raw":
+		entry["cooked_nutrients"] = entry["food"].duplicate()
+		return
+
+	var raw    = entry["food"]
+	var weight = entry.get("weight_g", 100.0)
+	var rf     = COOK_RETENTION.get(method, {})
+	var yf     = COOK_YIELD.get(method, 1.0)
+
+	var cooked_weight = weight * yf
+
+	var cooked = {}
+	var all_nutrient_keys = [
+		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
+		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
+		"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
+		"vitamin_a_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
+		"vitamin_b5_mg","vitamin_b6_mg","vitamin_b7_mcg","vitamin_b9_mcg",
+		"vitamin_b12_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_e_mg",
+		"vitamin_k1_mcg","vitamin_k2_mcg","magnesium_mg","potassium_mg",
+		"zinc_mg","phosphorus_mg","manganese_mg","chromium_mcg",
+		"iodine_mcg","molybdenum_mcg","beta_carotene_mcg","lycopene_mcg",
+		"lutein_zeaxanthin_mcg","quercetin_mg","anthocyanins_mg",
+		"resveratrol_mg","total_polyphenols_mg"
+	]
+
+	for key in all_nutrient_keys:
+		if not raw.has(key): continue
+		var raw_val = raw[key] * (weight / 100.0)
+		var factor  = rf.get(key, 0.85)  # default 0.85 for unspecified nutrients
+		var cooked_val = raw_val * factor
+		# Convert back to per-100g of cooked weight
+		cooked[key] = snappedf(cooked_val / (cooked_weight / 100.0), 0.01)
+
+	# Copy non-nutrient fields
+	for key in raw.keys():
+		if not cooked.has(key):
+			cooked[key] = raw[key]
+
+	cooked["_cooked_weight_g"] = snappedf(cooked_weight, 0.1)
+	entry["cooked_nutrients"] = cooked
+
+func _update_suggested_shopping():
+	suggested_shopping.clear()
+	for entry in meal_items:
+		var food   = entry["food"]
+		var weight = entry.get("weight_g", 100.0)
+		var total  = weight * meal_frequency
+		var found  = false
+		for s in suggested_shopping:
+			if s["food"].get("id","") == food.get("id",""):
+				s["total_g"] += total
+				found = true
+				break
+		if not found:
+			suggested_shopping.append({"food": food, "total_g": total})
+
+func add_suggested_to_shopping():
+	for suggestion in suggested_shopping:
+		# Add as a special red-ink entry
+		var entry = {
+			"_sid":     _generate_sid(),
+			"food":     suggestion["food"],
+			"qty":      1,
+			"_checked": false,
+			"_suggested": true,   # flag for red ink
+			"_suggested_g": suggestion["total_g"]
+		}
+		shopping_list.append(entry)
+	save_shopping_list()
+	refresh_shopping_list()
+
+func _show_meal_details():
+	var existing = get_node_or_null("MealDetailsPopup")
+	if existing: existing.queue_free()
+	if meal_items.is_empty(): return
+
+	var popup = PanelContainer.new()
+	popup.name = "MealDetailsPopup"
+	popup.set_anchor_and_offset(SIDE_LEFT,   0, 10)
+	popup.set_anchor_and_offset(SIDE_RIGHT,  1, -10)
+	popup.set_anchor_and_offset(SIDE_TOP,    0, 10)
+	popup.set_anchor_and_offset(SIDE_BOTTOM, 1, -10)
+
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 5)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(vbox)
+	popup.add_child(scroll)
+
+	# Title
+	#var title = Label.new()
+	#title.text = "📊 Meal — " + str(meal_frequency) + "×/week"
+	#title.add_theme_font_size_override("font_size", 40)
+	#vbox.add_child(title)
+
+	var total_g = _get_total_cooked_weight()
+	var weight_lbl = Label.new()
+	weight_lbl.text = "Total cooked weight: " + str(total_g) + "g"
+	weight_lbl.add_theme_font_size_override("font_size", 40)
+	vbox.add_child(weight_lbl)
+
+	vbox.add_child(HSeparator.new())
+
+	# Get merged nutrients (totals for whole meal, per 100g)
+	var merged = _merge_meal_nutrients()
+
+	# ── Macros ──
+	var macro_title = Label.new()
+	macro_title.text = "Macronutrients (per 100g of meal)"
+	macro_title.add_theme_font_size_override("font_size",40)
+	macro_title.add_theme_color_override("font_color", Color(0.8, 0.8, 0.4))
+	vbox.add_child(macro_title)
+
+	var macro_fields = [
+		["Calories",       "calories",              "kcal"],
+		["Protein",        "protein_g",             "g"],
+		["Fat",            "fat_g",                 "g"],
+		["  Saturated",    "saturated_fat_g",       "g"],
+		["  Mono",         "monounsaturated_fat_g", "g"],
+		["  Poly",         "polyunsaturated_fat_g", "g"],
+		["Carbohydrates",  "carbs_g",               "g"],
+		["  Sugar",        "sugar_g",               "g"],
+		["Fiber",          "fiber_g",               "g"],
+	]
+
+	_add_detail_rows(vbox, merged, macro_fields)
+
+	vbox.add_child(HSeparator.new())
+
+	# ── Minerals ──
+	var min_title = Label.new()
+	min_title.text = "Minerals"
+	min_title.add_theme_font_size_override("font_size", 40)
+	min_title.add_theme_color_override("font_color", Color(0.4, 0.8, 0.8))
+	vbox.add_child(min_title)
+
+	var mineral_fields = [
+		["Calcium",    "calcium_mg",    "mg"],
+		["Sodium",     "sodium_mg",     "mg"],
+		["Iron",       "iron_mg",       "mg"],
+		["Magnesium",  "magnesium_mg",  "mg"],
+		["Potassium",  "potassium_mg",  "mg"],
+		["Zinc",       "zinc_mg",       "mg"],
+		["Phosphorus", "phosphorus_mg", "mg"],
+		["Copper",     "copper_mg",     "mg"],
+		["Selenium",   "selenium_mcg",  "mcg"],
+		["Iodine",     "iodine_mcg",    "mcg"],
+		["Manganese",  "manganese_mg",  "mg"],
+	]
+	_add_detail_rows(vbox, merged, mineral_fields)
+
+	vbox.add_child(HSeparator.new())
+
+	# ── Vitamins ──
+	var vit_title = Label.new()
+	vit_title.text = "Vitamins"
+	vit_title.add_theme_font_size_override("font_size", 40)
+	vit_title.add_theme_color_override("font_color", Color(0.6, 0.8, 0.4))
+	vbox.add_child(vit_title)
+
+	var vitamin_fields = [
+		["Vitamin A",   "vitamin_a_mcg",  "mcg"],
+		["Vitamin B1",  "vitamin_b1_mg",  "mg"],
+		["Vitamin B2",  "vitamin_b2_mg",  "mg"],
+		["Vitamin B3",  "vitamin_b3_mg",  "mg"],
+		["Vitamin B5",  "vitamin_b5_mg",  "mg"],
+		["Vitamin B6",  "vitamin_b6_mg",  "mg"],
+		["Vitamin B7",  "vitamin_b7_mcg", "mcg"],
+		["Folate B9",   "vitamin_b9_mcg", "mcg"],
+		["Vitamin B12", "vitamin_b12_mcg","mcg"],
+		["Vitamin C",   "vitamin_c_mg",   "mg"],
+		["Vitamin D",   "vitamin_d_mcg",  "mcg"],
+		["Vitamin E",   "vitamin_e_mg",   "mg"],
+		["Vitamin K1",  "vitamin_k1_mcg", "mcg"],
+		["Vitamin K2",  "vitamin_k2_mcg", "mcg"],
+	]
+
+	_add_detail_rows(vbox, merged, vitamin_fields)
+
+	vbox.add_child(HSeparator.new())
+
+	# ── Antioxidants ──
+	var aox_title = Label.new()
+	aox_title.text = "Antioxidants"
+	aox_title.add_theme_font_size_override("font_size", 40)
+	aox_title.add_theme_color_override("font_color", Color(0.8, 0.5, 0.8))
+	vbox.add_child(aox_title)
+
+	var aox_fields = [
+		["Beta-carotene",    "beta_carotene_mcg",     "mcg"],
+		["Lycopene",         "lycopene_mcg",           "mcg"],
+		["Lutein+Zeaxanthin","lutein_zeaxanthin_mcg",  "mcg"],
+		["Quercetin",        "quercetin_mg",           "mg"],
+		["Anthocyanins",     "anthocyanins_mg",        "mg"],
+		["Resveratrol",      "resveratrol_mg",         "mg"],
+		["Polyphenols",      "total_polyphenols_mg",   "mg"],
+	]
+	_add_detail_rows(vbox, merged, aox_fields)
+
+	vbox.add_child(HSeparator.new())
+
+	# ── Suggested shopping ──
+	#var sug_title = Label.new()
+	#sug_title.text = "Shopping list for " + str(meal_frequency) + " meals/week:"
+	#sug_title.add_theme_font_size_override("font_size", 30)
+	#vbox.add_child(sug_title)
+
+	#for s in suggested_shopping:
+		#var s_lbl = Label.new()
+		#s_lbl.text = "• " + s["food"].get("name","") + \
+			#": " + str(snappedf(s["total_g"],0.1)) + "g"
+		#s_lbl.add_theme_font_size_override("font_size", 30)
+		#vbox.add_child(s_lbl)
+
+	#var add_btn = Button.new()
+	#add_btn.text = "➕ Add to Shopping List"
+	#add_btn.custom_minimum_size = Vector2(0, 55)
+	#add_btn.add_theme_font_size_override("font_size", 30)
+	#add_btn.pressed.connect(func():
+		#add_suggested_to_shopping()
+		#var d = get_node_or_null("MealDetailsPopup")
+		#if d: d.queue_free()
+	#)
+	#vbox.add_child(add_btn)
+
+	add_child(popup)
+
+func save_saved_meals():
+	var file = FileAccess.open("user://saved_meals.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(saved_meals))
+	file.close()
+
+func load_saved_meals():
+	if not FileAccess.file_exists("user://saved_meals.json"): return
+	var file = FileAccess.open("user://saved_meals.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data and data is Array:
+		saved_meals = data
+
+func _merge_meal_nutrients() -> Dictionary:
+	var nutrient_keys = [
+		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
+		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
+		"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
+		"vitamin_a_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
+		"vitamin_b5_mg","vitamin_b6_mg","vitamin_b7_mcg","vitamin_b9_mcg",
+		"vitamin_b12_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_e_mg",
+		"vitamin_k1_mcg","vitamin_k2_mcg","magnesium_mg","potassium_mg",
+		"zinc_mg","phosphorus_mg","manganese_mg","chromium_mcg",
+		"iodine_mcg","molybdenum_mcg","beta_carotene_mcg","lycopene_mcg",
+		"lutein_zeaxanthin_mcg","quercetin_mg","anthocyanins_mg",
+		"resveratrol_mg","total_polyphenols_mg","oxalate_mg_per_100g",
+		"sulfur_mg","lactose_g"
+	]
+
+	# Total cooked weight of all ingredients
+	var total_cooked_weight = 0.0
+	for entry in meal_items:
+		var method = entry.get("cook_method","raw")
+		var weight = entry.get("weight_g", 100.0)
+		var yf     = COOK_YIELD.get(method, 1.0)
+		total_cooked_weight += weight * yf
+
+	if total_cooked_weight <= 0:
+		return {}
+
+	# Sum all nutrients in absolute amounts (not per 100g)
+	var totals: Dictionary = {}
+	for key in nutrient_keys:
+		totals[key] = 0.0
+
+	for entry in meal_items:
+		var cooked = entry.get("cooked_nutrients", entry.get("food",{}))
+		var method = entry.get("cook_method","raw")
+		var weight = entry.get("weight_g", 100.0)
+		var yf     = COOK_YIELD.get(method, 1.0)
+		var cooked_weight = weight * yf
+		for key in nutrient_keys:
+			if cooked.has(key):
+				# cooked nutrients are per 100g of cooked food
+				totals[key] += cooked[key] * (cooked_weight / 100.0)
+
+	# Convert back to per 100g of total meal
+	var merged: Dictionary = {}
+	for key in nutrient_keys:
+		merged[key] = snappedf(totals[key] / (total_cooked_weight / 100.0), 0.01)
+
+	merged["_total_cooked_weight_g"] = snappedf(total_cooked_weight, 0.1)
+	return merged
+
+func _get_total_cooked_weight() -> float:
+	var total = 0.0
+	for entry in meal_items:
+		var method = entry.get("cook_method","raw")
+		var weight = entry.get("weight_g", 100.0)
+		total += weight * COOK_YIELD.get(method, 1.0)
+	return snappedf(total, 0.1)
+
+func _on_save_meal_pressed():
+	if meal_items.is_empty():
+		return
+
+	var old_banner = $Panel/MealPlannerPanel/VBoxContainer.get_node_or_null("EditingBanner")
+	if old_banner: old_banner.queue_free()
+
+	var name_edit = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealNameEdit
+	var meal_name = name_edit.text.strip_edges()
+	if meal_name.is_empty():
+		meal_name = "My Meal " + str(saved_meals.size() + 1)
+
+	var merged      = _merge_meal_nutrients()
+	var total_g     = _get_total_cooked_weight()
+
+	if editing_meal_mid != "":
+		# Overwrite existing meal
+		for i in range(saved_meals.size()):
+			if saved_meals[i].get("_mid","") == editing_meal_mid:
+				saved_meals[i] = {
+					"_mid":             editing_meal_mid,
+					"name":             meal_name,
+					"items":            meal_items.duplicate(true),
+					"total_cooked_g":   total_g,
+					"merged_nutrients": merged
+				}
+				break
+		editing_meal_mid = ""
+	else:
+		# New meal
+		var mid = "meal_" + str(Time.get_ticks_usec())
+		saved_meals.append({
+			"_mid":             mid,
+			"name":             meal_name,
+			"items":            meal_items.duplicate(true),
+			"total_cooked_g":   total_g,
+			"merged_nutrients": merged
+		})
+
+	save_saved_meals()
+	name_edit.text = ""
+	meal_items.clear()
+	editing_meal_mid = ""
+	_refresh_meal_grid()
+	_refresh_my_meals_tab()
+
+func _add_meal_to_fridge(meal: Dictionary):
+	var merged   = meal.get("merged_nutrients",{})
+	var total_g  = meal.get("total_cooked_g", 100.0)
+	var meal_name = meal.get("name","My Meal")
+
+	# Build a food-like dict from merged nutrients
+	var food_entry = merged.duplicate()
+	food_entry["id"]       = "meal_" + meal.get("_mid","0")
+	food_entry["name"]     = meal_name
+	food_entry["category"] = "meals"
+	food_entry["level"]    = "low"  # no oxalate level concern for composite meal
+	food_entry["density_g_per_ml"]  = 1.0
+	food_entry["contains_gluten"]   = _meal_contains_gluten(meal)
+	food_entry["oxalate_mg_per_100g"] = merged.get("oxalate_mg_per_100g",0.0)
+
+	# Add as a fridge slot with the actual total cooked weight
+	var iid  = _generate_iid()
+	var slot = food_entry.duplicate()
+	slot["_iid"]   = iid
+	slot["_count"] = 1
+	fridge_foods.append(slot)
+	fridge_weights[iid] = {
+		"total_g":     total_g,
+		"remaining_g": total_g
+	}
+
+	if current_page >= _get_total_pages():
+		current_page = _get_total_pages() - 1
+	save_fridge()
+	build_fridge_ui()
+
+func _meal_contains_gluten(meal: Dictionary) -> bool:
+	for entry in meal.get("items",[]):
+		if entry.get("food",{}).get("contains_gluten", false):
+			return true
+	return false
+	
+func _edit_saved_meal(meal: Dictionary):
+	editing_meal_mid = meal.get("_mid","")
+	meal_items.clear()
+	meal_items = meal.get("items",[]).duplicate(true)
+
+	var name_edit = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealNameEdit
+	name_edit.text = meal.get("name","")
+
+	_refresh_meal_grid()
+	_update_suggested_shopping()
+
+	# Remove any existing banner first
+	var old_banner = $Panel/MealPlannerPanel/VBoxContainer.get_node_or_null("EditingBanner")
+	if old_banner: old_banner.queue_free()
+
+	var banner = Label.new()
+	banner.name = "EditingBanner"
+	banner.text = "✏️ Editing: " + meal.get("name","") + " — save when done"
+	banner.add_theme_font_size_override("font_size", 40)
+	banner.add_theme_color_override("font_color", Color(0.3, 0.7, 1.0))
+	banner.autowrap_mode = TextServer.AUTOWRAP_WORD
+
+	var mp_vbox = $Panel/MealPlannerPanel/VBoxContainer
+	mp_vbox.add_child(banner)
+	mp_vbox.move_child(banner, 0)
+
+func _delete_saved_meal(mid: String):
+	saved_meals = saved_meals.filter(func(m): return m.get("_mid","") != mid)
+	save_saved_meals()
+	_refresh_my_meals_tab()
+
+func _show_meal_edit_raw(popup: PanelContainer, entry: Dictionary, idx: int):
+	var params_area = popup.find_child("CookParamsArea", true, false)
+	if not params_area: return
+	for child in params_area.get_children():
+		child.queue_free()
+	params_area.visible = true
+
+	var scroll = ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(0, 300)
+	params_area.add_child(scroll)
+
+	var fields_vbox = VBoxContainer.new()
+	fields_vbox.add_theme_constant_override("separation", 6)
+	scroll.add_child(fields_vbox)
+
+	var header = Label.new()
+	header.text = "Edit raw values (per 100g)"
+	header.add_theme_font_size_override("font_size", 40)
+	fields_vbox.add_child(header)
+	fields_vbox.add_child(HSeparator.new())
+
+	var food = entry["food"]
+	var spinboxes: Dictionary = {}
+
+	for field_def in EDITABLE_FIELDS:
+		var key   = field_def["key"]
+		var row   = HBoxContainer.new()
+		row.custom_minimum_size = Vector2(0, 50)
+		fields_vbox.add_child(row)
+
+		var lbl = Label.new()
+		lbl.text = field_def["label"] + " (" + field_def["unit"] + ")"
+		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		lbl.add_theme_font_size_override("font_size", 40)
+		row.add_child(lbl)
+
+		var spin = SpinBox.new()
+		spin.min_value = 0.0
+		spin.max_value = field_def["max"]
+		spin.step      = field_def["step"]
+		spin.value     = food.get(key, 0.0)
+		spin.custom_minimum_size = Vector2(130, 45)
+		row.add_child(spin)
+		spinboxes[key] = spin
+
+		# Show json default in grey
+		var def_lbl = Label.new()
+		def_lbl.text = "(" + str(snappedf(food.get(key,0.0),0.01)) + ")"
+		def_lbl.add_theme_font_size_override("font_size", 40)
+		def_lbl.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
+		row.add_child(def_lbl)
+
+	fields_vbox.add_child(HSeparator.new())
+
+	var btn_row = HBoxContainer.new()
+	fields_vbox.add_child(btn_row)
+
+	var save_btn = Button.new()
+	save_btn.text = "💾 Save"
+	save_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	save_btn.custom_minimum_size = Vector2(0, 50)
+	save_btn.add_theme_font_size_override("font_size", 40)
+	save_btn.pressed.connect(func():
+		# Apply raw overrides directly to the food dict in this entry
+		for field_def in EDITABLE_FIELDS:
+			var key = field_def["key"]
+			entry["food"][key] = spinboxes[key].value
+		# Reapply cooking with updated raw values
+		_apply_cook_to_entry(entry, entry.get("cook_method","raw"), entry.get("cook_params",{}))
+		_refresh_meal_grid()
+		_update_suggested_shopping()
+		popup.queue_free()
+	)
+	btn_row.add_child(save_btn)
+
+	var reset_btn = Button.new()
+	reset_btn.text = "↺ Reset"
+	reset_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	reset_btn.custom_minimum_size = Vector2(0, 50)
+	reset_btn.add_theme_font_size_override("font_size", 40)
+	reset_btn.pressed.connect(func():
+		# Find the original food in all_foods and restore
+		var fid = entry["food"].get("id","")
+		for f in all_foods:
+			if f.get("id","") == fid:
+				entry["food"] = f.duplicate()
+				break
+		_apply_cook_to_entry(entry, entry.get("cook_method","raw"), entry.get("cook_params",{}))
+		_refresh_meal_grid()
+		popup.queue_free()
+	)
+	btn_row.add_child(reset_btn)
+
+func _on_meal_filter_toggled(field_key: String, pressed: bool, btn: Button):
+	if pressed:
+		if not meal_active_filters.has(field_key):
+			meal_active_filters.append(field_key)
+		btn.modulate = Color(0.4, 0.9, 0.4)
+	else:
+		meal_active_filters.erase(field_key)
+		btn.modulate = Color.WHITE
+	_refresh_meal_tab()
+
+func _add_detail_rows(vbox: VBoxContainer, merged: Dictionary, fields: Array):
+	for cf in fields:
+		var val = merged.get(cf[1], 0.0)
+		if val <= 0.0: continue  # skip zero values to save space
+		var row = HBoxContainer.new()
+		var k = Label.new()
+		k.text = cf[0]
+		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		k.add_theme_font_size_override("font_size", 37)
+		var v = Label.new()
+		v.text = str(snappedf(val, 0.01)) + " " + cf[2]
+		v.add_theme_font_size_override("font_size", 37)
+		row.add_child(k)
+		row.add_child(v)
+		vbox.add_child(row)

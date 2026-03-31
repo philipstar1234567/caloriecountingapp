@@ -55,9 +55,32 @@ text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ResetButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+[node name="ResetIntakeButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "reset"
+text = "🔄 Reset Today's Intake"
+
+[node name="ResetAllButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "⚠️ Reset All Configurations"
+
+[node name="ResetFridgeButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "🧊 Reset Fridge"
+
+[node name="TempUnitRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TempUnitLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/TempUnitRow"]
+layout_mode = 2
+text = "Temperature unit:"
+
+[node name="TempUnitOption" type="OptionButton" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/TempUnitRow"]
+layout_mode = 2
+item_count = 2
+popup/item_0/text = "Celsius (°C)"
+popup/item_0/id = 0
+popup/item_1/text = "Fahrenheit (°F)"
+popup/item_1/id = 1
 
 [node name="HideRedWarningsRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2

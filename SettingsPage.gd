@@ -163,8 +163,40 @@ func _ready():
 	get_node(EPI   + "KnownEPI").toggled.connect(func(c):      _on_known_gi_epi(c))
 	get_node(CHOLE + "KnownCholecyst").toggled.connect(func(c):_on_known_metabolic("post-cholecystectomy", c, CHOLE))
 
-	get_node(BASE + "ResetButton").pressed.connect(_on_reset)
+	get_node(BASE + "ResetIntakeButton").pressed.connect(_on_reset_intake)
+	get_node(BASE + "ResetAllButton").pressed.connect(_on_reset_all)
+	get_node(BASE + "ResetFridgeButton").pressed.connect(_on_reset_fridge_from_settings)
 
+	get_node(BASE + "TempUnitRow/TempUnitOption").item_selected.connect(func(idx):
+		Global.use_fahrenheit = (idx == 1)
+		Global.save_profile()
+	)
+
+	_add_panel_reset_button(GLYC, "glycemic-health", {
+		"HbA1cInput": 5.0, "FPGInput": 90.0
+	})
+	_add_panel_reset_button(NAFLD, "nafld", {
+		"ALTInput": 20.0, "ASTInput": 20.0, "TriglInput": 100.0
+	})
+	_add_panel_reset_button(LIPID, "lipid-health", {
+		"TotalCholInput": 150.0, "LDLInput": 100.0, "HDLInput": 60.0, "TriglInput": 100.0
+	})
+	_add_panel_reset_button(THYR, "thyroid-health", {
+		"TSHInput": 2.0, "FT4Input": 1.2
+	})
+	_add_panel_reset_button(OSTEO, "osteoporosis", {
+		"CTxInput": 300.0, "P1NPInput": 40.0
+	})
+	_add_panel_reset_button(HEMO, "hemochromatosis", {
+		"TsatInput": 30.0, "FerritinInput": 100.0
+	})
+	_add_panel_reset_button(WILS, "wilsons-disease", {
+		"CerulInput": 25.0, "UrineCuInput": 20.0
+	})
+	_add_panel_reset_button(KIDNEY, "kidney", {
+		"CreatinineInput": 0.9
+	})
+	
 	load_kidney_settings()
 	load_body_metrics()
 	load_metabolic_ui()
@@ -921,3 +953,109 @@ func _update_adjusted_goal_label():
 		panel.get_node("AdjustedGoalResult").visible = false
 		Global.body_metrics["daily_goal"] = Global.base_kcal_goal
 		Global.adjusted_kcal_goal = Global.base_kcal_goal
+
+func _on_reset_intake():
+	if FileAccess.file_exists("user://intake.json"):
+		DirAccess.remove_absolute("user://intake.json")
+	if FileAccess.file_exists("user://water.json"):
+		DirAccess.remove_absolute("user://water.json")
+	print("Today's intake reset")
+
+func _on_reset_all():
+	# Delete all save files
+	var files = [
+		"user://profile.json",
+		"user://metabolic.json",
+		"user://metabolic_inputs.json",
+		"user://body_metrics.json",
+		"user://points.json",
+		"user://water.json",
+		"user://intake.json",
+		"user://fridge.json",
+		"user://shopping.json",
+		"user://settings.cfg"
+	]
+	for path in files:
+		if FileAccess.file_exists(path):
+			DirAccess.remove_absolute(path)
+
+	# Reset all Global state
+	Global.active_conditions.clear()
+	Global.active_metabolic_conditions.clear()
+	Global.known_diagnoses.clear()
+	Global.kidney_at_risk = false
+	Global.hide_red_warnings = false
+	Global.body_metrics = {}
+	Global.base_kcal_goal = 0.0
+	Global.adjusted_kcal_goal = 0.0
+	Global.daily_water_liters = 2.5
+
+	# Reload the settings page from scratch
+	get_tree().reload_current_scene()
+	
+func _on_reset_fridge_from_settings():
+	if FileAccess.file_exists("user://fridge.json"):
+		DirAccess.remove_absolute("user://fridge.json")
+	# Also clear Global fridge state if FridgePage is loaded
+	var main = get_tree().root.get_node("Main")
+	var fridge_page = main.get_node_or_null("ContentArea/FridgePage")
+	if fridge_page:
+		fridge_page.fridge_foods.clear()
+		fridge_page.fridge_weights.clear()
+		fridge_page.fridge_overrides.clear()
+		fridge_page.current_page = 0
+		fridge_page.build_fridge_ui()
+		
+func _add_panel_reset_button(path: String, condition: String, default_values: Dictionary):
+	var result_label = get_node_or_null(path + "ResultLabel")
+	if not result_label: return
+	var parent = result_label.get_parent()
+	
+	# Check if already added
+	if parent.get_node_or_null("ResetPanelBtn"): return
+	
+	var btn = Button.new()
+	btn.name = "ResetPanelBtn"
+	btn.text = "Not you? Reset to default values"
+	btn.add_theme_font_size_override("font_size", 20)
+	btn.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+	btn.pressed.connect(func():
+		# Clear condition
+		Global.set_metabolic_condition(condition, false)
+		Global.set_known_diagnosis(condition, false)
+		Global.set_metabolic_risk(condition, "normal")
+		
+		# Reset ResultLabel
+		result_label.text = "—"
+		
+		# Reset input spinboxes to default values
+		var input_fields = get_node_or_null(path + "InputFields")
+		if input_fields:
+			for field_name in default_values.keys():
+				var node = input_fields.find_child(field_name, true, false)
+				if node and node is SpinBox:
+					node.value = default_values[field_name]
+				elif node and node is CheckBox:
+					node.button_pressed = false
+		
+		# Reset known checkbox
+		var known_node = get_node_or_null(path + "KnownDiabetes")
+		if not known_node: known_node = get_node_or_null(path + "KnownNAFLD")
+		if not known_node: known_node = get_node_or_null(path + "KnownLipid")
+		if not known_node: known_node = get_node_or_null(path + "KnownThyroid")
+		if not known_node: known_node = get_node_or_null(path + "KnownOsteo")
+		if not known_node: known_node = get_node_or_null(path + "KnownHemo")
+		if not known_node: known_node = get_node_or_null(path + "KnownWilson")
+		if known_node: known_node.button_pressed = false
+		
+		if input_fields: input_fields.visible = true
+		
+		_update_adjusted_goal_label()
+		_save_metabolic_inputs(condition.replace("-",""), {})
+	)
+	
+	parent.add_child(btn)
+	parent.move_child(btn, result_label.get_index() + 1)
+
+func _celsius_to_f(c: float) -> float:
+	return c * 9.0 / 5.0 + 32.0
