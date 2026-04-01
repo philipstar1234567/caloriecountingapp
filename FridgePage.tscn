@@ -265,6 +265,7 @@ size_flags_vertical = 3
 mouse_filter = 0
 
 [node name="MealPlannerPanel" type="Panel" parent="Panel"]
+z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

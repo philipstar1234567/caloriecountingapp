@@ -209,7 +209,7 @@ func _ready():
 		$Panel/MealPlannerPanel.hide()
 		$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_PASS
 	# Show NavBar again
-		get_tree().root.get_node("Main/NavBar").show()
+		#get_tree().root.get_node("Main/NavBar").show()
 	)
 	var details_btn = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/DetailsButton
 	details_btn.button_down.connect(_show_meal_details)
@@ -402,6 +402,7 @@ func build_tabs():
 		scroll.add_child(vbox)
 		tabs.add_child(scroll)
 
+	_apply_tab_arrow_theme(tabs)
 	refresh_current_tab()
 
 
@@ -1579,7 +1580,7 @@ func _on_meal_planner_pressed():
 	$Panel/MealPlannerPanel.mouse_filter = Control.MOUSE_FILTER_STOP
 	$Panel/FridgeContainer.mouse_filter  = Control.MOUSE_FILTER_IGNORE
 	# Hide NavBar
-	get_tree().root.get_node("Main/NavBar").hide()
+	#get_tree().root.get_node("Main/NavBar").hide()
 
 	if not _meal_tabs_built:
 		_build_meal_tabs()
@@ -1630,6 +1631,7 @@ func _build_meal_tabs():
 		scroll.add_child(vbox)
 		tabs.add_child(scroll)
 
+	_apply_tab_arrow_theme(tabs)
 	# Connect signal once
 	tabs.tab_changed.connect(_on_meal_tab_changed)
 	_build_meal_filter_buttons()
@@ -2995,3 +2997,13 @@ func _add_detail_rows(vbox: VBoxContainer, merged: Dictionary, fields: Array):
 		row.add_child(k)
 		row.add_child(v)
 		vbox.add_child(row)
+
+func _apply_tab_arrow_theme(tabs: TabContainer):
+	var left_tex  = load("res://images/tab_arrow_left.png")
+	var right_tex = load("res://images/tab_arrow_right.png")
+	if left_tex:
+		tabs.add_theme_icon_override("decrement",           left_tex)
+		tabs.add_theme_icon_override("decrement_highlight", left_tex)
+	if right_tex:
+		tabs.add_theme_icon_override("increment",           right_tex)
+		tabs.add_theme_icon_override("increment_highlight", right_tex)
