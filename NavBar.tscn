@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bcsu7eukfw7lh" path="res://Assets/icons/settings_3507142.png" id="5_duhwy"]
 
 [node name="NavBar" type="GridContainer"]
+z_index = -1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0

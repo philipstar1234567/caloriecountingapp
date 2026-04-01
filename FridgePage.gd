@@ -1682,7 +1682,7 @@ func _build_meal_filter_buttons():
 		btn.button_pressed = (opt["key"] == meal_warning_filter)
 		btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		btn.custom_minimum_size = Vector2(0, 50)
-		btn.add_theme_font_size_override("font_size", 40)
+		btn.add_theme_font_size_override("font_size", 35)
 		var key = opt["key"]
 		btn.toggled.connect(func(pressed):
 			if pressed:
@@ -2143,7 +2143,7 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 	# Y: above button, push down if not enough room above info strip
 	var info_bottom = 215.0 * (390.0 / 1170.0)
 	var popup_y = btn_rect.position.y - popup_height - 1.0
-	popup_y = 1220.0
+	popup_y = 1225.0
 	#if popup_y < info_bottom + margin:
 		#popup_y = btn_rect.position.y + btn_rect.size.y + 1.0
 	popup_y = clamp(popup_y, info_bottom + margin, viewport.y - popup_height - margin)
@@ -2552,6 +2552,7 @@ func _show_meal_details():
 	var vbox = VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 5)
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	#vbox.size_flags_vertical = 2000.0
 	scroll.add_child(vbox)
 	popup.add_child(scroll)
 
@@ -2769,8 +2770,9 @@ func _on_save_meal_pressed():
 	if meal_items.is_empty():
 		return
 
-	var old_banner = $Panel/MealPlannerPanel/VBoxContainer.get_node_or_null("EditingBanner")
-	if old_banner: old_banner.queue_free()
+	var banner = $Panel/MealPlannerPanel/EditingBanner
+	banner.hide()
+	banner.text = ""
 
 	var name_edit = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealNameEdit
 	var meal_name = name_edit.text.strip_edges()
@@ -2860,19 +2862,19 @@ func _edit_saved_meal(meal: Dictionary):
 	_update_suggested_shopping()
 
 	# Remove any existing banner first
-	var old_banner = $Panel/MealPlannerPanel/VBoxContainer.get_node_or_null("EditingBanner")
-	if old_banner: old_banner.queue_free()
+	#var old_banner = $Panel/MealPlannerPanel/VBoxContainer.get_node_or_null("EditingBanner")
+	#if old_banner: old_banner.queue_free()
 
-	var banner = Label.new()
-	banner.name = "EditingBanner"
+	var banner = $Panel/MealPlannerPanel/EditingBanner
 	banner.text = "✏️ Editing: " + meal.get("name","") + " — save when done"
+	banner.show()
 	banner.add_theme_font_size_override("font_size", 40)
 	banner.add_theme_color_override("font_color", Color(0.3, 0.7, 1.0))
 	banner.autowrap_mode = TextServer.AUTOWRAP_WORD
 
-	var mp_vbox = $Panel/MealPlannerPanel/VBoxContainer
-	mp_vbox.add_child(banner)
-	mp_vbox.move_child(banner, 0)
+	#var mp_vbox = $Panel/MealPlannerPanel/VBoxContainer
+	#mp_vbox.add_child(banner)
+	#mp_vbox.move_child(banner, 0)
 
 func _delete_saved_meal(mid: String):
 	saved_meals = saved_meals.filter(func(m): return m.get("_mid","") != mid)

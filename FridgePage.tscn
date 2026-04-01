@@ -265,27 +265,37 @@ size_flags_vertical = 3
 mouse_filter = 0
 
 [node name="MealPlannerPanel" type="Panel" parent="Panel"]
-z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 450.0
-offset_bottom = 96.0
+offset_top = 412.0
+offset_bottom = 224.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="EditingBanner" type="Label" parent="Panel/MealPlannerPanel"]
+layout_mode = 0
+offset_top = -10.0
+offset_right = 1167.0
+offset_bottom = 55.0
+
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/MealPlannerPanel"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -2.0
-offset_top = -4.0
-offset_right = 2.0
-offset_bottom = 89.0
+anchors_preset = -1
+anchor_left = 0.02
+anchor_right = 0.981
+anchor_bottom = 0.902
+offset_left = -25.4
+offset_right = 24.23
+offset_bottom = 1.12378
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 5
+alignment = 2
+
+[node name="EditingBannerClone" type="Label" parent="Panel/MealPlannerPanel/VBoxContainer"]
+layout_mode = 2
 
 [node name="TopBarMP" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 100)
@@ -293,7 +303,7 @@ layout_mode = 2
 alignment = 2
 
 [node name="MPSearchBar" type="LineEdit" parent="Panel/MealPlannerPanel/VBoxContainer/TopBarMP"]
-custom_minimum_size = Vector2(1090, 80)
+custom_minimum_size = Vector2(1090, 70)
 layout_mode = 2
 placeholder_text = "Search foods..."
 
@@ -341,7 +351,7 @@ layout_mode = 2
 text = "No filters active"
 
 [node name="WarningFilterRow" type="HBoxContainer" parent="Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 70)
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="Panel/MealPlannerPanel/VBoxContainer"]
@@ -384,7 +394,7 @@ layout_mode = 2
 text = "➕List"
 
 [node name="MealArea" type="Control" parent="Panel/MealPlannerPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 1300)
+custom_minimum_size = Vector2(0, 1120)
 layout_mode = 2
 
 [node name="PlateImage" type="TextureRect" parent="Panel/MealPlannerPanel/VBoxContainer/MealArea"]
@@ -392,8 +402,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 38.0
-offset_bottom = 18.0
+offset_top = 79.0
+offset_bottom = 171.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("7_vo4mu")
@@ -403,10 +413,10 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 212.0
-offset_top = 223.0
-offset_right = -53.0
-offset_bottom = -26.0
+offset_left = 225.0
+offset_top = 227.0
+offset_right = -44.0
+offset_bottom = 36.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 20
