@@ -31,6 +31,8 @@ var daily_water_liters: float = 2.5  # default, recalculated based on conditions
 
 var hide_red_warnings: bool = false
 
+signal any_button_pressed
+
 func calculate_water_recommendation() -> float:
 	var is_female = body_metrics.get("is_female", false)
 	var weight    = body_metrics.get("weight", 70.0)

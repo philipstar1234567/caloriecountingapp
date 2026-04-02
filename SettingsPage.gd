@@ -194,7 +194,7 @@ func _ready():
 		"CerulInput": 25.0, "UrineCuInput": 20.0
 	})
 	_add_panel_reset_button(KIDNEY, "kidney", {
-		"CreatinineInput": 0.9
+		"CreatinineInput": 0.9, "OxalateInput": 0.0
 	})
 	
 	load_kidney_settings()
@@ -1016,8 +1016,8 @@ func _add_panel_reset_button(path: String, condition: String, default_values: Di
 	
 	var btn = Button.new()
 	btn.name = "ResetPanelBtn"
-	btn.text = "Not you? Reset to default values"
-	btn.add_theme_font_size_override("font_size", 20)
+	btn.text = "Mistake? Reset to default values"
+	btn.add_theme_font_size_override("font_size", 35)
 	btn.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 	btn.pressed.connect(func():
 		# Clear condition

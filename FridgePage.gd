@@ -49,6 +49,13 @@ var sort_ascending: bool = true
 var filter_buttons: Dictionary = {}  # field_key → Button
 var warning_filter: String = "all"  # "all", "caution", "avoid", "none"
 
+#Z index
+const Z_INFO_BUBBLE    = 10
+const Z_ACTION_POPUP   = 20
+const Z_COOK_PARAMS    = 25   # shows above action popup
+const Z_DETAILS_POPUP  = 15
+const Z_LIMIT_WARNING  = 30   # highest — must be seen above everything
+
 const COOK_RETENTION = {
 	"boil": {
 		"calories":      1.00,
@@ -206,13 +213,32 @@ func _ready():
 	)
 	$Panel/TopBar/MealPlannerButton.pressed.connect(_on_meal_planner_pressed)
 	$Panel/MealPlannerPanel/VBoxContainer/TopBarMP/MPCloseBtn.pressed.connect(func():
+		# Clear any active editing
+		meal_items.clear()
+		editing_meal_mid = ""
+		var banner = $Panel/MealPlannerPanel/EditingBanner
+		banner.hide()
+		banner.text = ""
+		var name_edit = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealNameEdit
+		name_edit.text = ""
+		_refresh_meal_grid()
+	# Close any open popups
+		var ap = get_node_or_null("MealItemPopup")
+		if ap: ap.queue_free()
+		var ib = get_node_or_null("MealInfoBubble")
+		if ib: ib.queue_free()
+		var dp = get_node_or_null("MealDetailsPopup")
+		if dp: dp.queue_free()
 		$Panel/MealPlannerPanel.hide()
 		$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_PASS
 	# Show NavBar again
 		#get_tree().root.get_node("Main/NavBar").show()
 	)
 	var details_btn = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/DetailsButton
-	details_btn.button_down.connect(_show_meal_details)
+	details_btn.button_down.connect(func():
+		Global.any_button_pressed.emit() 
+		_show_meal_details()
+		)
 	details_btn.button_up.connect(func():
 		var existing = get_node_or_null("MealDetailsPopup")
 		if existing and is_instance_valid(existing): existing.queue_free()
@@ -221,7 +247,17 @@ func _ready():
 		meal_frequency = int(v)
 		_update_suggested_shopping()
 	)
+	$Panel/MealPlannerPanel/ClearPlateBtn.pressed.connect(_on_clear_plate)
+	$Panel/MealPlannerPanel/EatPlateBtn.pressed.connect(func():
+	# Create a temporary meal dict from current meal_items
+		var temp_meal = {
+			"name": "Current Meal",
+			"items": meal_items.duplicate(true)
+		}
+		_eat_meal(temp_meal)
+	)
 	$Panel/MealPlannerPanel.hide()
+	Global.any_button_pressed.connect(_on_any_button_pressed)
 	_build_filter_buttons()
 	_build_warning_filter_buttons()
 	_connect_sort_buttons()
@@ -230,8 +266,13 @@ func _ready():
 #  SWIPE DETECTION
 # ─────────────────────────────────────────
 func _input(event: InputEvent):
+	if get_node_or_null("ActionPopup"): return
+	if get_node_or_null("InfoBubble"): return
+	if get_node_or_null("MealItemPopup"): return
+	if get_node_or_null("MealInfoBubble"): return
 	# Only track input when shopping list is hidden
 	if $Panel/ShoppingListPanel.visible: return
+	if $Panel/MealPlannerPanel.visible: return
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
@@ -996,6 +1037,7 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	# In display coords: x=0..390, y=0..72
 	var info_popup = PanelContainer.new()
 	info_popup.name = "InfoBubble"
+	info_popup.mouse_filter = Control.MOUSE_FILTER_STOP
 	# Position at top of screen
 	info_popup.set_anchor_and_offset(SIDE_LEFT,   0, 0)
 	info_popup.set_anchor_and_offset(SIDE_RIGHT,  1, 0)
@@ -1070,8 +1112,6 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 		row.add_child(v)
 		right_col.add_child(row)
 
-	add_child(info_popup)
-
 	# ── ACTION POPUP ──
 	# Position ABOVE the pressed button
 	var btn_global_pos = pressed_btn.get_global_rect()
@@ -1089,8 +1129,12 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	if popup_y < info_panel_bottom + 2.0:
 		popup_y = btn_global_pos.position.y + btn_global_pos.size.y + 5.0
 
+	add_child(info_popup)
+	info_popup.z_index = Z_INFO_BUBBLE
+	
 	var action_popup = PanelContainer.new()
 	action_popup.name = "ActionPopup"
+	action_popup.mouse_filter = Control.MOUSE_FILTER_STOP
 	action_popup.custom_minimum_size = Vector2(popup_width, 0)
 	action_popup.position = Vector2(popup_x, popup_y)
 
@@ -1104,6 +1148,8 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	title.add_theme_font_size_override("font_size", 35)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(title)
+	
+	add_child(action_popup)
 
 	vbox.add_child(HSeparator.new())
 
@@ -1138,8 +1184,8 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 			btn.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
 			btn.pressed.connect(func():
 				action_popup.queue_free()
-				var ib = get_node_or_null("InfoBubble")
-				if ib: ib.queue_free()
+				var ib = get_node_or_null("InfoBubble") 
+				if ib: ib.queue_free() 
 			)
 		else:
 			btn.pressed.connect(func(): _on_action_pressed(action["key"], slot, action_popup, density, remaining))
@@ -1151,7 +1197,7 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	vbox.add_child(input_area)
 
 	add_child(action_popup)
-	
+	action_popup.z_index = Z_ACTION_POPUP
 
 func _on_action_pressed(key: String, slot: Dictionary, popup: PanelContainer, density: float, remaining_g: float):
 	var iid = slot.get("_iid","")
@@ -1463,14 +1509,26 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 
 func _modify_weight(slot: Dictionary, new_total_g: float, popup: PanelContainer):
 	var iid = slot.get("_iid","")
-	var w   = fridge_weights.get(iid,{"total_g":100.0,"remaining_g":100.0})
-	var ratio = w.get("remaining_g",100.0) / w.get("total_g",100.0) if w.get("total_g",100.0) > 0 else 1.0
-	w["total_g"]     = new_total_g
-	w["remaining_g"] = new_total_g * ratio
+	var w   = fridge_weights.get(iid, {"total_g":100.0,"remaining_g":100.0})
+	var old_remaining = w.get("remaining_g", 100.0)
+	var old_total     = w.get("total_g", 100.0)
+
+	# If food is at 0g, treat modify as a full restock to new weight
+	if old_remaining <= 0.0:
+		w["total_g"]     = new_total_g
+		w["remaining_g"] = new_total_g
+	else:
+		# Scale remaining proportionally as before
+		var ratio = old_remaining / old_total if old_total > 0 else 1.0
+		w["total_g"]     = new_total_g
+		w["remaining_g"] = snappedf(new_total_g * ratio, 0.1)
+
 	fridge_weights[iid] = w
 	save_fridge()
 	build_fridge_ui()
 	popup.queue_free()
+	var ib = get_node_or_null("InfoBubble")
+	if ib: ib.queue_free()
 
 func _remove_slot(iid: String):
 	fridge_foods = fridge_foods.filter(func(f): return f.get("_iid","") != iid)
@@ -1599,7 +1657,7 @@ func _get_fruits_tab_index() -> int:
 	for i in range(tabs.get_tab_count()):
 		if tabs.get_tab_title(i).to_lower() == "fruits":
 			return i
-	return 1  # fallback
+	return 2  # fallback
 
 func _build_meal_tabs():
 	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
@@ -1614,6 +1672,15 @@ func _build_meal_tabs():
 	my_meals_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	my_meals_scroll.add_child(my_meals_vbox)
 	tabs.add_child(my_meals_scroll)
+
+# Tab 1: From Fridge
+	var fridge_scroll = ScrollContainer.new()
+	fridge_scroll.name = "From Fridge"
+	var fridge_vbox = VBoxContainer.new()
+	fridge_vbox.name = "FromFridgeVBox"
+	fridge_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	fridge_scroll.add_child(fridge_vbox)
+	tabs.add_child(fridge_scroll)
 
 	# Food category tabs
 	var categories = []
@@ -1633,8 +1700,13 @@ func _build_meal_tabs():
 
 	_apply_tab_arrow_theme(tabs)
 	# Connect signal once
-	tabs.tab_changed.connect(_on_meal_tab_changed)
+	tabs.tab_changed.connect(func(idx):
+		Global.any_button_pressed.emit()
+		_on_meal_tab_changed(idx)
+	)
 	_build_meal_filter_buttons()
+	
+
 
 func _build_meal_filter_buttons():
 	var row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH/FilterButtonsRow
@@ -1648,18 +1720,25 @@ func _build_meal_filter_buttons():
 		btn.toggle_mode = true
 		btn.custom_minimum_size = Vector2(0, 50)
 		btn.add_theme_font_size_override("font_size", 40)
-		btn.toggled.connect(func(pressed): _on_meal_filter_toggled(opt["key"], pressed, btn))
+		btn.toggled.connect(func(pressed):
+			Global.any_button_pressed.emit()
+			_on_meal_filter_toggled(opt["key"], pressed, btn)
+		)
 		row.add_child(btn)
 
 	# Sort buttons
 	var sort_row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/SortRow
 	if sort_row:
 		sort_row.get_node("SortAscBtn").pressed.connect(func():
+			Global.any_button_pressed.emit()
 			meal_sort_ascending = true
+			_update_meal_filter_label()
 			_refresh_meal_tab()
 		)
 		sort_row.get_node("SortDescBtn").pressed.connect(func():
+			Global.any_button_pressed.emit()
 			meal_sort_ascending = false
+			_update_meal_filter_label()
 			_refresh_meal_tab()
 		)
 
@@ -1686,7 +1765,9 @@ func _build_meal_filter_buttons():
 		var key = opt["key"]
 		btn.toggled.connect(func(pressed):
 			if pressed:
+				Global.any_button_pressed.emit()
 				meal_warning_filter = key
+				_update_meal_filter_label()
 				for child in warn_row.get_children():
 					if child != btn: child.button_pressed = false
 				_refresh_meal_tab()
@@ -1696,10 +1777,10 @@ func _build_meal_filter_buttons():
 func _on_meal_tab_changed(idx: int):
 	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
 	var tab_name = tabs.get_tab_title(idx)
-	if tab_name == "My Meals" or idx == 0:
-		_refresh_my_meals_tab()
-	else:
-		_refresh_meal_tab()
+	match tab_name:
+		"My Meals":    _refresh_my_meals_tab()
+		"From Fridge": _refresh_from_fridge_tab()
+		_:             _refresh_meal_tab()
 
 func _refresh_meal_tab():
 	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
@@ -1843,13 +1924,28 @@ func _make_saved_meal_row(meal: Dictionary) -> VBoxContainer:
 	fridge_btn.pressed.connect(func(): _add_meal_to_fridge(meal))
 	btn_row.add_child(fridge_btn)
 
+	# Eat button — only show if meal has source fridge items
+	var has_fridge_sources = meal.get("items",[]).any(func(e): return e.has("_source_iid"))
+	if has_fridge_sources:
+		var eat_btn = Button.new()
+		eat_btn.text = "🍽 Eat"
+		eat_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		eat_btn.custom_minimum_size = Vector2(0, 55)
+		eat_btn.add_theme_font_size_override("font_size", 40)
+		eat_btn.add_theme_color_override("font_color", Color(0.2, 0.8, 0.2))
+		eat_btn.pressed.connect(func(): _eat_meal(meal))
+		btn_row.add_child(eat_btn)
+
 	# Edit button
 	var edit_btn = Button.new()
 	edit_btn.text = "✏️ Edit"
 	edit_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	edit_btn.custom_minimum_size = Vector2(0, 55)
 	edit_btn.add_theme_font_size_override("font_size", 40)
-	edit_btn.pressed.connect(func(): _edit_saved_meal(meal))
+	edit_btn.pressed.connect(func():
+		Global.any_button_pressed.emit()
+		_edit_saved_meal(meal)
+	)
 	btn_row.add_child(edit_btn)
 
 	# Delete button
@@ -1906,7 +2002,9 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 
 	var add_btn = Button.new()
 	add_btn.text = "+ Meal"
-	add_btn.pressed.connect(func(): _add_to_meal(food))
+	add_btn.pressed.connect(func():
+		Global.any_button_pressed.emit()
+		_add_to_meal(food))
 	row.add_child(add_btn)
 	return row
 
@@ -1942,6 +2040,7 @@ func _show_limit_warning():
 	panel.modulate.a = 0.0
 	panel.add_child(lbl)
 	add_child(panel)
+	panel.z_index = Z_LIMIT_WARNING
 	# Center it after adding to scene tree
 	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	panel.position.y += 100
@@ -2085,7 +2184,6 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 		["Fat",      str(snappedf(effective.get("fat_g",0),0.1)) + " g"],
 		["Carbs",    str(snappedf(effective.get("carbs_g",0),0.1)) + " g"],
 		["Sugar",    str(snappedf(effective.get("sugar_g",0),0.1)) + " g"],
-		["Fiber",    str(snappedf(effective.get("fiber_g",0),0.1)) + " g"],
 	]
 	for pair in fields_left:
 		var row = HBoxContainer.new()
@@ -2106,6 +2204,7 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 	info_hbox.add_child(right_col)
 
 	var fields_right = [
+		["Fiber",    str(snappedf(effective.get("fiber_g",0),0.1)) + " g"],
 		["Calcium",  str(snappedf(effective.get("calcium_mg",0),0.1)) + " mg"],
 		["Sodium",   str(snappedf(effective.get("sodium_mg",0),0.1)) + " mg"],
 		["Vit C",    str(snappedf(effective.get("vitamin_c_mg",0),0.1)) + " mg"],
@@ -2127,7 +2226,8 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 		right_col.add_child(row)
 
 	add_child(info_popup)
-
+	info_popup.z_index = Z_INFO_BUBBLE
+	
 	# ── ACTION POPUP — positioned above pressed button ──
 	var btn_rect     = pressed_btn.get_global_rect()
 	var viewport     = get_viewport_rect().size
@@ -2136,9 +2236,10 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 	var margin       = 8.0  # minimum distance from screen edge
 
 	# X: center on button then shift slightly left, clamp to screen
-	var popup_x = btn_rect.position.x + btn_rect.size.x / 2.0 - popup_width / 2.0
-	popup_x -= 267.0                                          # ← shift left here
-	popup_x = clamp(popup_x, margin, viewport.x - popup_width - margin)
+	#var popup_x = btn_rect.position.x + btn_rect.size.x / 2.0 - popup_width / 2.0
+	var popup_x = btn_rect.size.x / 2.0 - popup_width / 2.0
+	popup_x = 192.0                                          # ← shift left here
+	#popup_x = clamp(popup_x, margin, viewport.x - popup_width - margin)
 
 	# Y: above button, push down if not enough room above info strip
 	var info_bottom = 215.0 * (390.0 / 1170.0)
@@ -2231,6 +2332,7 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 	vbox.add_child(params_area)
 
 	add_child(action_popup)
+	action_popup.z_index = Z_ACTION_POPUP
 
 func _show_meal_weight_editor(popup: PanelContainer, entry: Dictionary, idx: int):
 	var params_area = popup.find_child("CookParamsArea", true, false)
@@ -2693,6 +2795,7 @@ func _show_meal_details():
 	#vbox.add_child(add_btn)
 
 	add_child(popup)
+	popup.z_index = Z_DETAILS_POPUP
 
 func save_saved_meals():
 	var file = FileAccess.open("user://saved_meals.json", FileAccess.WRITE)
@@ -2982,6 +3085,7 @@ func _on_meal_filter_toggled(field_key: String, pressed: bool, btn: Button):
 	else:
 		meal_active_filters.erase(field_key)
 		btn.modulate = Color.WHITE
+	_update_meal_filter_label()
 	_refresh_meal_tab()
 
 func _add_detail_rows(vbox: VBoxContainer, merged: Dictionary, fields: Array):
@@ -3009,3 +3113,502 @@ func _apply_tab_arrow_theme(tabs: TabContainer):
 	if right_tex:
 		tabs.add_theme_icon_override("increment",           right_tex)
 		tabs.add_theme_icon_override("increment_highlight", right_tex)
+
+func _on_clear_plate():
+	meal_items.clear()
+	editing_meal_mid = ""
+	var banner = $Panel/MealPlannerPanel/EditingBanner
+	banner.hide()
+	banner.text = ""
+	var name_edit = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealNameEdit
+	name_edit.text = ""
+	_refresh_meal_grid()
+	_update_suggested_shopping()
+
+func _update_meal_filter_label():
+	var lbl = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/ActiveFiltersLabel
+	if not lbl: return
+	var dir = "↑ Asc" if meal_sort_ascending else "↓ Desc"
+	if meal_active_filters.is_empty() and meal_warning_filter == "all":
+		lbl.text = "No filters active"
+	elif meal_active_filters.size() == 1 and meal_warning_filter == "all":
+		lbl.text = "Filter: " + _get_filter_label(meal_active_filters[0]) + " | Sort: " + dir
+	elif not meal_active_filters.is_empty():
+		var labels = meal_active_filters.map(func(k): return _get_filter_label(k))
+		lbl.text = "Filters: " + ", ".join(labels) + " | Sort: " + dir
+	elif meal_warning_filter != "all":
+		lbl.text = "Warning filter: " + meal_warning_filter + " | Sort: " + dir
+
+func _on_any_button_pressed():
+	# Close meal popups if they exist
+	var ap = get_node_or_null("MealItemPopup")
+	if ap: ap.queue_free()
+	var ib = get_node_or_null("MealInfoBubble")
+	if ib: ib.queue_free()
+
+func _refresh_from_fridge_tab():
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	# Find the From Fridge tab
+	var fridge_vbox: VBoxContainer = null
+	for i in range(tabs.get_tab_count()):
+		if tabs.get_tab_title(i) == "From Fridge":
+			var scroll = tabs.get_tab_control(i)
+			if scroll and scroll.get_child_count() > 0:
+				fridge_vbox = scroll.get_child(0)
+			break
+	if not fridge_vbox: return
+	for child in fridge_vbox.get_children():
+		child.queue_free()
+
+	if fridge_foods.is_empty():
+		var empty = Label.new()
+		empty.text = "Your fridge is empty.\nAdd foods from the Shopping List first."
+		empty.add_theme_font_size_override("font_size", 22)
+		empty.autowrap_mode = TextServer.AUTOWRAP_WORD
+		fridge_vbox.add_child(empty)
+		return
+
+	for slot in fridge_foods:
+		fridge_vbox.add_child(_make_from_fridge_row(slot))
+
+func _make_from_fridge_row(slot: Dictionary) -> HBoxContainer:
+	var iid       = slot.get("_iid","")
+	var w         = fridge_weights.get(iid, {"remaining_g":100.0})
+	var remaining = w.get("remaining_g", 100.0)
+	var count     = slot.get("_count", 1)
+
+	var row = HBoxContainer.new()
+	row.custom_minimum_size = Vector2(0, 60)
+	row.add_theme_constant_override("separation", 8)
+
+	# Icon
+	var icon = TextureRect.new()
+	icon.custom_minimum_size = Vector2(50, 50)
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	var path = "res://images/" + slot.get("id","") + ".png"
+	if ResourceLoader.exists(path): icon.texture = load(path)
+	row.add_child(icon)
+
+	# Name + remaining
+	var name_lbl = Label.new()
+	name_lbl.text = slot.get("name","") + \
+		"\n" + str(snappedf(remaining, 0.1)) + "g" + \
+		(" ×" + str(count) if count > 1 else "") + " remaining"
+	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_lbl.add_theme_font_size_override("font_size", 22)
+	row.add_child(name_lbl)
+
+	# 0g warning
+	if remaining <= 0.0:
+		var warn = Label.new()
+		warn.text = "⚠️ 0g"
+		warn.add_theme_color_override("font_color", Color(1.0, 0.4, 0.1))
+		row.add_child(warn)
+
+	# + Meal button opens portion selector popup
+	var add_btn = Button.new()
+	add_btn.text = "+ Meal"
+	add_btn.custom_minimum_size = Vector2(90, 50)
+	add_btn.add_theme_font_size_override("font_size", 22)
+	add_btn.pressed.connect(func():
+		Global.any_button_pressed.emit()
+		_open_from_fridge_portion_popup(slot)
+	)
+	row.add_child(add_btn)
+	return row
+
+func _open_from_fridge_portion_popup(slot: Dictionary):
+	var existing = get_node_or_null("FridgePortionPopup")
+	if existing: existing.queue_free()
+	var existing_action = get_node_or_null("MealItemPopup")
+	if existing_action: existing_action.queue_free()
+	var existing_info = get_node_or_null("MealInfoBubble")
+	if existing_info: existing_info.queue_free()
+
+	var iid       = slot.get("_iid","")
+	var w         = fridge_weights.get(iid, {"remaining_g":100.0})
+	var remaining = w.get("remaining_g", 100.0)
+	var density   = slot.get("density_g_per_ml", 1.0)
+
+	var popup = PanelContainer.new()
+	popup.name = "FridgePortionPopup"
+	popup.z_index = Z_ACTION_POPUP
+	popup.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	popup.custom_minimum_size = Vector2(360, 0)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	popup.add_child(vbox)
+
+	var title = Label.new()
+	title.text = slot.get("name","") + "  ·  " + str(snappedf(remaining,0.1)) + "g remaining"
+	title.add_theme_font_size_override("font_size", 22)
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(title)
+	vbox.add_child(HSeparator.new())
+
+	var portion_actions = [
+		{"icon":"🍽️", "label":"Whole\n(" + str(snappedf(remaining,0.1)) + "g)", "key":"whole"},
+		{"icon":"🥄", "label":"Tablespoon\n(15mL)",  "key":"tablespoon"},
+		{"icon":"🫖", "label":"Teaspoon\n(5mL)",     "key":"teaspoon"},
+		{"icon":"⚡", "label":"By Gram",             "key":"gram"},
+		{"icon":"💊", "label":"By\nMilligram",       "key":"milligram"},
+		{"icon":"🥛", "label":"Glass\n(250mL)",      "key":"glass"},
+		{"icon":"✕",  "label":"Close",               "key":"close"},
+	]
+
+	var grid = GridContainer.new()
+	grid.columns = 4
+	grid.add_theme_constant_override("h_separation", 6)
+	grid.add_theme_constant_override("v_separation", 6)
+	vbox.add_child(grid)
+
+	for action in portion_actions:
+		var btn = Button.new()
+		btn.custom_minimum_size = Vector2(82, 70)
+		btn.text = action["icon"] + "\n" + action["label"]
+		btn.add_theme_font_size_override("font_size", 17)
+		if action["key"] == "close":
+			btn.add_theme_color_override("font_color", Color(1.0,0.4,0.4))
+			btn.pressed.connect(func(): popup.queue_free())
+		elif action["key"] == "whole":
+			btn.pressed.connect(func():
+				_add_fridge_slot_to_meal(slot, remaining)
+				popup.queue_free()
+			)
+		else:
+			btn.pressed.connect(func():
+				_show_fridge_portion_input(popup, vbox, slot, action["key"], density, remaining)
+			)
+		grid.add_child(btn)
+
+	var input_area = VBoxContainer.new()
+	input_area.name = "PortionInputArea"
+	vbox.add_child(input_area)
+
+	add_child(popup)
+
+func _show_fridge_portion_input(popup: PanelContainer, vbox: VBoxContainer, slot: Dictionary, action_key: String, density: float, remaining: float):
+	var input_area = vbox.get_node_or_null("PortionInputArea")
+	if not input_area: return
+	for child in input_area.get_children():
+		child.queue_free()
+
+	var prompts = {
+		"tablespoon": ["How many tablespoons?", 1, 50, 1],
+		"teaspoon":   ["How many teaspoons?",   1, 50, 1],
+		"gram":       ["How many grams?",        1, 2000, 1],
+		"milligram":  ["How many milligrams?",   100, 500000, 100],
+		"glass":      ["How many glasses?",      1, 10, 1],
+	}
+	var p = prompts.get(action_key, ["Amount:", 1, 1000, 1])
+
+	var lbl = Label.new()
+	lbl.text = p[0]
+	lbl.add_theme_font_size_override("font_size", 22)
+	input_area.add_child(lbl)
+
+	var spin = SpinBox.new()
+	spin.min_value = p[1]
+	spin.max_value = p[2]
+	spin.step      = p[3]
+	spin.value     = p[1]
+	spin.custom_minimum_size = Vector2(180, 50)
+	input_area.add_child(spin)
+
+	var preview = Label.new()
+	preview.add_theme_font_size_override("font_size", 20)
+	var initial_g = _calc_portion_g(action_key, p[1], density)
+	preview.text = "≈ " + str(snappedf(initial_g, 0.1)) + " g"
+	input_area.add_child(preview)
+
+	spin.value_changed.connect(func(val):
+		preview.text = "≈ " + str(snappedf(_calc_portion_g(action_key, val, density), 0.1)) + " g"
+	)
+
+	var confirm = Button.new()
+	confirm.text = "✓ Add to Plate"
+	confirm.custom_minimum_size = Vector2(0, 55)
+	confirm.add_theme_font_size_override("font_size", 22)
+	confirm.pressed.connect(func():
+		var portion_g = _calc_portion_g(action_key, spin.value, density)
+		portion_g = min(portion_g, remaining)
+		_add_fridge_slot_to_meal(slot, portion_g)
+		popup.queue_free()
+	)
+	input_area.add_child(confirm)
+
+func _add_fridge_slot_to_meal(slot: Dictionary, portion_g: float):
+	if meal_items.size() >= 12:
+		_show_limit_warning()
+		return
+
+	# Scale nutrients to portion_g
+	var scaled = slot.duplicate()
+	var ratio  = portion_g / 100.0
+	var scalable = [
+		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
+		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
+		"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
+		"vitamin_a_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
+		"vitamin_b5_mg","vitamin_b6_mg","vitamin_b7_mcg","vitamin_b9_mcg",
+		"vitamin_b12_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_e_mg",
+		"vitamin_k1_mcg","vitamin_k2_mcg","magnesium_mg","potassium_mg",
+		"zinc_mg","phosphorus_mg","manganese_mg","chromium_mcg",
+		"iodine_mcg","molybdenum_mcg","beta_carotene_mcg","lycopene_mcg",
+		"lutein_zeaxanthin_mcg","quercetin_mg","anthocyanins_mg",
+		"resveratrol_mg","total_polyphenols_mg","oxalate_mg_per_100g"
+	]
+	for field in scalable:
+		if scaled.has(field):
+			scaled[field] = scaled[field] * ratio
+
+	# Store the _iid so Eat button knows which fridge slot to subtract from
+	var entry = {
+		"food":             scaled,
+		"_source_iid":      slot.get("_iid",""),   # link back to fridge slot
+		"_source_portion_g":portion_g,
+		"cook_method":      "raw",
+		"cook_params":      {},
+		"weight_g":         portion_g,
+		"cooked_nutrients": scaled.duplicate()
+	}
+	meal_items.append(entry)
+	_refresh_meal_grid()
+	_update_suggested_shopping()
+	# Refresh From Fridge tab so remaining shows correctly
+	_refresh_from_fridge_tab()
+	
+func _eat_meal(meal: Dictionary):
+	var items = meal.get("items", meal_items)
+
+	# Check if any fridge-sourced items are at 0g
+	var zero_g_foods: Array = []
+	for entry in items:
+		var source_iid = entry.get("_source_iid","")
+		if source_iid == "": continue
+		var fw = fridge_weights.get(source_iid, {})
+		if fw.get("remaining_g", 1.0) <= 0.0:
+			zero_g_foods.append(entry.get("food",{}).get("name","Unknown"))
+
+	if not zero_g_foods.is_empty():
+		_show_zero_g_warning(zero_g_foods, meal)
+		return
+
+	_do_eat_meal(meal)
+
+func _do_eat_meal(meal: Dictionary):
+	var items = meal.get("items", meal_items)
+
+	var nutrient_keys = [
+		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
+		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
+		"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
+		"vitamin_a_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
+		"vitamin_b5_mg","vitamin_b6_mg","vitamin_b7_mcg","vitamin_b9_mcg",
+		"vitamin_b12_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_e_mg",
+		"vitamin_k1_mcg","vitamin_k2_mcg","magnesium_mg","potassium_mg",
+		"zinc_mg","phosphorus_mg","manganese_mg","chromium_mcg",
+		"iodine_mcg","molybdenum_mcg","beta_carotene_mcg","lycopene_mcg",
+		"lutein_zeaxanthin_mcg","quercetin_mg","anthocyanins_mg",
+		"resveratrol_mg","total_polyphenols_mg","oxalate_mg_per_100g"
+	]
+
+	var total_nutrients: Dictionary = {}
+	for k in nutrient_keys:
+		total_nutrients[k] = 0.0
+
+	for entry in items:
+		var cooked   = entry.get("cooked_nutrients", entry.get("food",{}))
+		var method   = entry.get("cook_method","raw")
+		var weight   = entry.get("weight_g", 100.0)
+		var yf       = COOK_YIELD.get(method, 1.0)
+		var cooked_w = weight * yf
+		var ratio    = cooked_w / 100.0
+
+		for k in nutrient_keys:
+			total_nutrients[k] += cooked.get(k, 0.0) * ratio
+
+		# Subtract from fridge if this item came from the From Fridge tab
+		var source_iid     = entry.get("_source_iid","")
+		var source_portion = entry.get("_source_portion_g", weight)
+
+		if source_iid != "":
+			var fw = fridge_weights.get(source_iid, {})
+			if not fw.is_empty():
+				var new_remaining = fw.get("remaining_g", 0.0) - source_portion
+				fw["remaining_g"] = max(new_remaining, 0.0)
+				fridge_weights[source_iid] = fw
+
+				# If a unit in a group is fully consumed, decrement count
+				# and restore remaining to full unit weight for next unit
+				if fw["remaining_g"] <= 0.0:
+					for slot in fridge_foods:
+						if slot.get("_iid","") == source_iid:
+							var count = slot.get("_count", 1)
+							if count > 1:
+								slot["_count"] = count - 1
+								fw["remaining_g"] = fw.get("total_g", 100.0)
+								fridge_weights[source_iid] = fw
+							break
+
+	save_fridge()
+	build_fridge_ui()
+
+	# Build a combined food dict and log to HomePage
+	var meal_food = total_nutrients.duplicate()
+	meal_food["name"] = meal.get("name", "Meal")
+	meal_food["id"]   = "meal_eaten"
+
+	var main = get_tree().root.get_node("Main")
+	var home = main.get_node_or_null("ContentArea/HomePage")
+	if home == null:
+		_log_food_to_file(meal_food)
+	else:
+		home.log_food(meal_food)
+
+	# Clear the plate if eating from the current unsaved plate
+	if items == meal_items:
+		meal_items.clear()
+		editing_meal_mid = ""
+		var banner = $Panel/MealPlannerPanel/EditingBanner
+		banner.hide()
+		banner.text = ""
+		_refresh_meal_grid()
+
+	_refresh_from_fridge_tab()
+
+	# Confirmation toast
+	_show_eat_confirmation()
+
+func _show_eat_confirmation():
+	var existing = get_node_or_null("EatConfirmation")
+	if existing: existing.queue_free()
+
+	var panel = PanelContainer.new()
+	panel.name = "EatConfirmation"
+	panel.z_index = Z_LIMIT_WARNING
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(300, 80)
+	panel.modulate.a = 0.0
+
+	var lbl = Label.new()
+	lbl.text = "✅ Meal logged to today's intake!"
+	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.add_theme_color_override("font_color", Color.WHITE)
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	panel.add_child(lbl)
+	add_child(panel)
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(1.5)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.3)
+	tween.tween_callback(func(): panel.queue_free())
+
+func _process(_delta: float) -> void:
+	var action_popup = get_node_or_null("ActionPopup")
+	var info_bubble  = get_node_or_null("InfoBubble")
+	if info_bubble and not action_popup:
+		info_bubble.queue_free()
+
+func _show_zero_g_warning(food_names: Array, meal: Dictionary):
+	var existing = get_node_or_null("ZeroGWarning")
+	if existing: existing.queue_free()
+
+	var panel = PanelContainer.new()
+	panel.name = "ZeroGWarning"
+	panel.z_index = Z_LIMIT_WARNING
+	panel.set_anchor_and_offset(SIDE_LEFT,   0, 20)
+	panel.set_anchor_and_offset(SIDE_RIGHT,  1, -20)
+	panel.set_anchor_and_offset(SIDE_TOP,    0.3, 950)
+	panel.set_anchor_and_offset(SIDE_BOTTOM, 0.7, -150)
+	
+	#STYLEEE
+	var style = StyleBoxTexture.new()
+	style.texture = load("res://images/warning-panel.png")
+	panel.add_theme_stylebox_override("panel", style)
+	
+	var btn_texture = load("res://images/your_button_texture.png")
+
+
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 16)
+	panel.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "⚠️ Out of stock in fridge"
+	title.add_theme_font_size_override("font_size", 40)
+	title.add_theme_color_override("font_color", Color(1.0, 0.6, 0.1))
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+
+	var names_joined = ", ".join(food_names)
+	var msg = Label.new()
+	msg.text = "Aren't you out of " + names_joined + "? " + \
+		"They are on 0g in your app Fridge.\n\n" + \
+		"Please adjust their weight in the fridge before eating this meal."
+	msg.add_theme_font_size_override("font_size", 40)
+	msg.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(msg)
+
+	vbox.add_child(HSeparator.new())
+
+	var btn_row = HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 12)
+	vbox.add_child(btn_row)
+
+	var ok_btn = Button.new()
+	ok_btn.text = "Ok!"
+	ok_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ok_btn.custom_minimum_size = Vector2(0, 55)
+	ok_btn.add_theme_font_size_override("font_size", 41)
+	ok_btn.pressed.connect(func(): panel.queue_free())
+	btn_row.add_child(ok_btn)
+#STYLEEE
+	var ok_style = StyleBoxTexture.new()
+	ok_style.texture = load("res://images/ok_button.png")
+	ok_btn.add_theme_stylebox_override("normal",  ok_style)
+	ok_btn.add_theme_stylebox_override("hover",   ok_style)
+	ok_btn.add_theme_stylebox_override("pressed", ok_style)
+	btn_row.add_child(ok_btn)
+
+
+	var adjust_btn = Button.new()
+	adjust_btn.text = "Adjust now\nwith meal's values\nand eat!"
+	adjust_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	adjust_btn.custom_minimum_size = Vector2(0, 55)
+	adjust_btn.add_theme_font_size_override("font_size", 41)
+	adjust_btn.add_theme_color_override("font_color", Color(0.2, 0.9, 0.4))
+	adjust_btn.pressed.connect(func():
+		panel.queue_free()
+		_adjust_zero_g_and_eat(meal)
+	)
+	btn_row.add_child(adjust_btn)
+#STYLEEE
+	var adjust_style = StyleBoxTexture.new()
+	adjust_style.texture = load("res://images/adjust_button.png")
+	adjust_btn.add_theme_stylebox_override("normal",  adjust_style)
+	adjust_btn.add_theme_stylebox_override("hover",   adjust_style)
+	adjust_btn.add_theme_stylebox_override("pressed", adjust_style)
+	btn_row.add_child(adjust_btn)
+
+	add_child(panel)
+
+func _adjust_zero_g_and_eat(meal: Dictionary):
+	var items = meal.get("items", meal_items)
+	# Set all 0g fridge items back to their meal portion weight
+	# so _do_eat_meal can subtract correctly
+	for entry in items:
+		var source_iid     = entry.get("_source_iid","")
+		var source_portion = entry.get("_source_portion_g", entry.get("weight_g", 100.0))
+		if source_iid == "":
+			continue
+		var fw = fridge_weights.get(source_iid, {})
+		if fw.get("remaining_g", 1.0) <= 0.0:
+			fw["remaining_g"] = source_portion
+			fw["total_g"]     = source_portion
+			fridge_weights[source_iid] = fw
+	save_fridge()
+	_do_eat_meal(meal)

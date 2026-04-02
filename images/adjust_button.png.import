@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coaiobss1xqwp"
-path="res://.godot/imported/tab_arrow_right.png-1c7d1e4483262e6839397a471a857dfb.ctex"
+uid="uid://dy4k16paff3rk"
+path="res://.godot/imported/adjust_button.png-03f879e2e4413056b96ad3b0c42b8c47.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/tab_arrow_right.png"
-dest_files=["res://.godot/imported/tab_arrow_right.png-1c7d1e4483262e6839397a471a857dfb.ctex"]
+source_file="res://images/adjust_button.png"
+dest_files=["res://.godot/imported/adjust_button.png-03f879e2e4413056b96ad3b0c42b8c47.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coaiobss1xqwp"
-path="res://.godot/imported/tab_arrow_right.png-1c7d1e4483262e6839397a471a857dfb.ctex"
+uid="uid://bbctl7h0sjakt"
+path="res://.godot/imported/warning-panel.png-c44d0694077c90214d155271997ec436.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/tab_arrow_right.png"
-dest_files=["res://.godot/imported/tab_arrow_right.png-1c7d1e4483262e6839397a471a857dfb.ctex"]
+source_file="res://images/warning-panel.png"
+dest_files=["res://.godot/imported/warning-panel.png-c44d0694077c90214d155271997ec436.ctex"]
 
 [params]
 
