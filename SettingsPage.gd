@@ -16,6 +16,178 @@ const CELIAC = BASE + "CeliacPanel/VBoxContainer/"
 const LACT   = BASE + "LactosePanel/VBoxContainer/"
 const EPI    = BASE + "EPIPanel/VBoxContainer/"
 const CHOLE  = BASE + "CholecystPanel/VBoxContainer/"
+const GRAVES  = BASE + "GravesPanel/VBoxContainer/"
+
+
+
+const FOODS_TO_AVOID = {
+	"graves-disease": {
+		"strict_avoid": [
+			"Seaweed (all: kelp, nori, wakame, spirulina, kombu)",
+			"Iodine supplements of any kind",
+			"Iodized salt in excess",
+			"High-iodine seafood in large amounts (oysters, shrimp)",
+			"Excessive caffeine (>2 cups coffee/day)",
+			"All alcohol",
+			"Soy in excess if on antithyroid drugs",
+		],
+		"limit": [
+			"Raw cruciferous vegetables (large amounts)",
+			"Very high-fiber foods if diarrhea present",
+			"Excessive refined sugar",
+		]
+	},
+	"thyroid-health": {  # Hashimoto's
+		"strict_avoid": [
+			"Seaweed/kelp supplements (excess iodine worsens autoimmunity)",
+			"Iodine supplements >300 mcg/day",
+			"Ultra-processed foods",
+			"Millet in large amounts (goitrogenic)",
+			"Cassava in large amounts",
+			"All alcohol",
+		],
+		"limit": [
+			"Raw cruciferous vegetables in very large amounts",
+			"Soy near levothyroxine dose (separate by 4 hours)",
+			"High omega-6 oils (corn, soybean, sunflower) in excess",
+			"Refined sugar and simple carbohydrates",
+			"Selenium >400 mcg/day (selenosis risk)",
+		]
+	},
+	"celiac-disease": {
+		"strict_avoid": [
+			"ALL wheat (durum, spelt, kamut, einkorn, emmer, farro)",
+			"Barley — all forms",
+			"Rye — all forms",
+			"Triticale",
+			"Conventional oats (cross-contamination; use certified GF oats only)",
+			"Malt, malt vinegar, malt flavoring, brewer's yeast",
+			"Regular beer, ale, lager, malt beverages",
+			"Traditional soy sauce (wheat-based)",
+			"Shared fryers / cooking surfaces with gluten foods",
+		],
+		"limit": [
+			"GF processed products (often high sugar/fat; nutritionally inferior)",
+			"Gluten-containing medications/supplements (check all labels)",
+		]
+	},
+	"hemochromatosis": {
+		"strict_avoid": [
+			"Red meat in excess (beef, lamb, venison, pork) — highest heme iron",
+			"Organ meats (liver, kidney, heart, blood pudding)",
+			"Raw shellfish (Vibrio vulnificus risk; lethal with iron overload)",
+			"Vitamin C supplements >250 mg",
+			"Iron-containing multivitamins and supplements",
+			"Cast iron cookware for acidic foods (tomatoes, citrus)",
+			"Iron-fortified cereals and breads",
+			"Excess alcohol (liver damage; enhances iron absorption)",
+		],
+		"inhibitors_to_use_with_meals": [
+			"Tea (black or green) — reduces iron absorption 40–60%",
+			"Coffee — chlorogenic acid reduces absorption",
+			"Dairy/calcium with meals — competes with iron",
+			"Whole grains and legumes (phytates bind iron)",
+			"Eggs with iron-rich meals (phosvitin binds iron)",
+		]
+	},
+	"crohns-disease": {
+		"strict_avoid": [
+			"Raw vegetables during flares (carrots, celery, corn, raw cruciferous)",
+			"Whole nuts and seeds during flares",
+			"Fried and fatty foods",
+			"All alcohol (pro-inflammatory; increases permeability)",
+			"Ultra-processed foods and emulsifiers (CMC, polysorbate-80)",
+			"Red and processed meats",
+			"Raw shellfish (infection risk during immunosuppression)",
+		],
+		"limit": [
+			"Lactose if intolerant (25–40% of CD patients)",
+			"Spicy foods",
+			"Caffeinated beverages if diarrhea present",
+			"High-FODMAP foods if IBS-CD overlap",
+			"Oxalate-rich foods if ileal disease (kidney stone risk)",
+			"Refined sugars (promote dysbiosis)",
+		]
+	},
+	"nafld": {
+		"strict_avoid": [
+			"All alcohol (directly hepatotoxic; accelerates fibrosis)",
+			"Added fructose and HFCS (sugary beverages, pastries)",
+			"Trans fats (commercially baked goods, fried fast food)",
+			"Ultra-processed foods",
+			"Sugary beverages (even one soda/day increases NAFLD risk)",
+		],
+		"limit": [
+			"Saturated fat (fatty meats, full-fat dairy)",
+			"Red and processed meats (heme iron causes oxidative stress in liver)",
+			"Refined carbohydrates",
+			"Excess omega-6 oils (corn, soybean, sunflower)",
+			"Large high-calorie meals in one sitting",
+		]
+	},
+	"glycemic-health": {
+		"strict_avoid": [
+			"Sugary beverages (soda, fruit juice, energy drinks)",
+			"Trans fats (commercial baked goods)",
+			"Ultra-processed foods",
+			"Heavy alcohol use",
+		],
+		"limit": [
+			"High GI foods (white bread, white rice, instant oatmeal, potatoes)",
+			"Added sugars (white sugar, honey, agave)",
+			"Saturated fat in excess (worsens insulin resistance)",
+			"Dried fruits in large amounts",
+			"Refined white flour products",
+		]
+	},
+	"lipid-health": {
+		"strict_avoid": [
+			"Trans fats — NO safe level (partially hydrogenated oils, stick margarine, fried fast food)",
+			"Tropical oils in excess (coconut oil 93% SFA, palm kernel oil 82% SFA)",
+		],
+		"limit": [
+			"Saturated fats (butter, lard, fatty meats, full-fat dairy)",
+			"Refined carbohydrates (raise TG dramatically)",
+			"Added sugars and fructose (elevate VLDL and TG)",
+			"Alcohol (>1 drink F / >2 drinks M): dramatically elevates TG",
+			"Processed meats (salami, hot dogs: high SFA + sodium)",
+		]
+	},
+	"epi": {
+		"strict_avoid": [
+			"All alcohol (primary cause of chronic pancreatitis)",
+			"Very high-fat single meals WITHOUT adequate PERT",
+		],
+		"limit": [
+			"High-sugar foods (risk of pancreatogenic diabetes)",
+			"Carbonated beverages (exacerbate bloating)",
+			"Raw vegetables in large amounts (increase gas)",
+			"Excessive caffeine",
+		],
+		"important_note": "FAT MUST NOT BE RESTRICTED when PERT is used. Fat restriction worsens malnutrition."
+	},
+	"post-cholecystectomy": {
+		"strict_avoid": [
+			"High-fat meals in early phase (>13 g fat/meal for first 3 months)",
+			"Fried and deep-fried foods",
+			"All alcohol (stimulates bile, worsens reflux)",
+			"Trans fats",
+		],
+		"limit": [
+			"Full-fat dairy",
+			"Processed meats",
+			"Cream-based sauces",
+			"Carbonated beverages (if causing reflux)",
+			"Caffeinated beverages (if reflux present)",
+			"Chocolate",
+			"Raw onions and garlic",
+			"Tomato-based foods if reflux",
+			"Spicy foods",
+			"Mint (relaxes LES, worsens reflux)",
+		]
+	},
+}
+
 
 # ─────────────────────────────────────────
 #  UNIT DEFINITIONS
@@ -92,6 +264,14 @@ const UNITS = {
 		"options": ["mg/dL", "µmol/L"],
 		"multipliers": [1.0, 0.01131]
 	},
+	"trab": {
+		"options": ["IU/L", "U/L"],
+		"multipliers": [1.0, 1.0]  # same value, different lab notation
+	},
+	"ft3": {
+		"options": ["pg/mL", "pmol/L"],
+		"multipliers": [1.0, 0.651]  # pmol/L → pg/mL: × 0.651
+},
 }
 
 # Stores references to unit OptionButtons: { "field_key": OptionButton }
@@ -123,6 +303,10 @@ func _ready():
 	_add_unit_selector(HEMO   + "InputFields/TsatInput",       "tsat")
 	_add_unit_selector(WILS   + "InputFields/CerulInput",      "cerul")
 	_add_unit_selector(WILS   + "InputFields/UrineCuInput",    "urine_cu")
+	_add_unit_selector(GRAVES + "InputFields/TRAbInput", "trab")
+	_add_unit_selector(GRAVES + "InputFields/FT4InputRow/FT4Input",  "ft4")   # reuse existing ft4 key
+	_add_unit_selector(GRAVES + "InputFields/FT3Input",  "ft3")
+	_add_unit_selector(GRAVES + "InputFields/TSHInput",  "tsh")   # reuse existing tsh key
 	
 	# red warning
 	get_node(BASE + "HideRedWarningsRow/HideRedCheck").toggled.connect(func(checked):
@@ -171,6 +355,9 @@ func _ready():
 		Global.use_fahrenheit = (idx == 1)
 		Global.save_profile()
 	)
+	
+	get_node(GRAVES + "KnownGraves").toggled.connect(func(c): _on_known_metabolic("graves-disease", c, GRAVES))
+	get_node(GRAVES + "InputFields/CalculateButton").pressed.connect(_on_calculate_graves)
 
 	_add_panel_reset_button(GLYC, "glycemic-health", {
 		"HbA1cInput": 5.0, "FPGInput": 90.0
@@ -196,6 +383,9 @@ func _ready():
 	_add_panel_reset_button(KIDNEY, "kidney", {
 		"CreatinineInput": 0.9, "OxalateInput": 0.0
 	})
+	_add_panel_reset_button(GRAVES, "graves-disease", {
+	"TRAbInput": 0.5, "FT4Input": 1.2, "FT3Input": 3.0, "TSHInput": 1.5
+})
 	
 	load_kidney_settings()
 	load_body_metrics()
@@ -368,6 +558,7 @@ func _on_calculate_egfr():
 		get_node(KIDNEY + "RiskLabel").text = "✅ eGFR > 60 — kidney function normal."
 		Global.kidney_at_risk = false
 
+
 	save_kidney_settings(egfr)
 	Global.save_profile()
 
@@ -456,7 +647,7 @@ func save_body_metrics(weight, height, age, activity, goal_w, weeks, is_female, 
 		"bmr":bmr,"tdee":tdee,
 		"daily_goal": adj_goal if adj_notes.size() > 0 else daily_goal,
 		"goal_weight":goal_w,"weight":weight,
-		"bmi_text":bmi_text,"is_female":is_female
+		"bmi_text":bmi_text,"is_female":is_female,
 	}
 	Global.adjusted_kcal_goal = adj_goal
 	_update_adjusted_goal_label()
@@ -502,14 +693,6 @@ func load_body_metrics():
 		"is_female": data.get("is_female", false)
 	}
 
-	Global.body_metrics = {
-		"bmr": data.get("bmr", 0.0), "tdee": data.get("tdee", 0.0),
-		"daily_goal": data.get("daily_goal", 0.0),
-		"goal_weight": data.get("goal_weight", 0.0),
-		"weight": data.get("weight", 0.0),
-		"bmi_text": data.get("bmi_text", "BMI: —"),
-		"is_female": data.get("is_female", false)
-	}
 	Global.base_kcal_goal = data.get("daily_goal", 0.0)  # raw, not adjusted
 # ─────────────────────────────────────────
 #  GLYCEMIC
@@ -523,10 +706,10 @@ func _on_calculate_glycemic():
 
 	if hba1c >= 6.5 or fpg >= 126:
 		risk = "diabetes"
-		msg  = "🔴 Diabetes range (HbA1c ≥ 6.5% or FPG ≥ 126 mg/dL). Consult your doctor."
+		msg  = "🔴 Diabetes range (HbA1c ≥ 6.5% or FPG ≥ 126 mg/dL).\n Consult your doctor."
 	elif hba1c >= 5.7 or fpg >= 100:
 		risk = "prediabetes"
-		msg  = "🟡 Prediabetes range (HbA1c 5.7–6.4% or FPG 100–125 mg/dL). Reduce sugar."
+		msg  = "🟡 Prediabetes range (HbA1c 5.7–6.4% or FPG 100–125 mg/dL).\n Reduce sugar."
 	else:
 		msg  = "✅ Glycemic values appear normal."
 
@@ -748,6 +931,86 @@ func _on_calculate_hemo():
 		"result": msg
 	})
 
+func _on_calculate_graves():
+	var trab_raw = _get_input(GRAVES, "TRAbInput").value
+	var ft4_raw  = _get_input(GRAVES, "FT4Input").value
+	var ft3_raw  = _get_input(GRAVES, "FT3Input").value
+	var tsh_raw  = _get_input(GRAVES, "TSHInput").value
+
+	# Convert to standard units
+	var trab = _convert(trab_raw, "trab")
+	var ft4  = _convert(ft4_raw,  "ft4")
+	var ft3  = _convert(ft3_raw,  "ft3")
+	var tsh  = _convert(tsh_raw,  "tsh")
+
+	var result_lbl = get_node(GRAVES + "ResultLabel")
+	var risk = "normal"
+	var msg  = ""
+
+	# Clinical interpretation — ETA/ATA guidelines
+	if tsh < 0.01 and (ft4 > 1.8 or ft3 > 4.4) and trab > 1.75:
+		risk = "active"
+		msg  = "🔴 Active Graves' disease detected.\n" + \
+			"TSH suppressed, T4/T3 elevated, TRAb positive.\n" + \
+			"• Strict iodine avoidance (seaweed, supplements)\n" + \
+			"• Caloric needs +20–40% above normal\n" + \
+			"• Selenium 200 mcg/day (ETA Grade A evidence)\n" + \
+			"• Consult endocrinologist immediately."
+
+	elif tsh < 0.01 and (ft4 > 1.8 or ft3 > 4.4) and trab <= 1.75:
+		risk = "hyperthyroid-other"
+		msg  = "🔴 Overt hyperthyroidism (TSH suppressed, T4/T3 elevated).\n" + \
+			"TRAb not significantly elevated — may not be Graves'.\n" + \
+			"Other causes: toxic nodule, thyroiditis.\n" + \
+			"• Consult your doctor for differential diagnosis.\n" + \
+			"• Caloric needs elevated — avoid iodine excess."
+
+	elif tsh < 0.1 and (ft4 > 1.5 or ft3 > 4.0):
+		risk = "mild"
+		msg  = "🟡 Mild/subclinical hyperthyroidism.\n" + \
+			"TSH suppressed, T4/T3 borderline elevated.\n" + \
+			"• Caloric needs +10–20% above normal\n" + \
+			"• Monitor closely — avoid excess iodine\n" + \
+			"• Selenium 100–200 mcg/day may help"
+
+	elif trab > 1.75 and tsh >= 0.4:
+		risk = "trab-positive-controlled"
+		msg  = "🟡 TRAb positive but thyroid function currently controlled.\n" + \
+			"Possible early Graves' or post-treatment monitoring.\n" + \
+			"• Maintain iodine restriction\n" + \
+			"• Selenium 200 mcg/day (ETA Grade A)\n" + \
+			"• Regular TSH monitoring every 3–6 months"
+
+	elif tsh < 0.4 and ft4 <= 1.5 and ft3 <= 4.0:
+		risk = "subclinical"
+		msg  = "🟡 Subclinical hyperthyroidism (TSH mildly suppressed, T4/T3 normal).\n" + \
+			"• Monitor every 6 months\n" + \
+			"• Limit iodine supplementation\n" + \
+			"• Bone and heart monitoring recommended if persistent"
+
+	else:
+		msg = "✅ Graves'/thyroid markers appear within normal range.\n" + \
+			"TSH: " + str(tsh_raw) + " | FT4: " + str(ft4_raw) + \
+			" | FT3: " + str(ft3_raw) + " | TRAb: " + str(trab_raw)
+
+	result_lbl.text = msg
+	Global.set_metabolic_risk("graves-disease", risk)
+
+	if risk != "normal":
+		Global.set_metabolic_condition("graves-disease", true)
+		_update_adjusted_goal_label()
+
+	_save_metabolic_inputs("graves", {
+		"trab":     trab_raw,
+		"ft4":      ft4_raw,
+		"ft3":      ft3_raw,
+		"tsh":      tsh_raw,
+		"trab_unit": _unit_buttons.get("trab", null).selected if _unit_buttons.has("trab") else 0,
+		"ft4_unit":  _unit_buttons.get("ft4",  null).selected if _unit_buttons.has("ft4")  else 0,
+		"ft3_unit":  _unit_buttons.get("ft3",  null).selected if _unit_buttons.has("ft3")  else 0,
+		"tsh_unit":  _unit_buttons.get("tsh",  null).selected if _unit_buttons.has("tsh")  else 0,
+		"result": msg
+	})
 # ─────────────────────────────────────────
 #  WILSON'S DISEASE
 # ─────────────────────────────────────────
@@ -901,6 +1164,26 @@ func load_metabolic_ui():
 		if _unit_buttons.has("cerul"):    _unit_buttons["cerul"].selected    = data["wilson"].get("cerul_unit", 0)
 		if _unit_buttons.has("urine_cu"): _unit_buttons["urine_cu"].selected = data["wilson"].get("urine_cu_unit", 0)
 
+	if data.has("graves"):
+		var g = data["graves"]
+		# Use find_child since _add_unit_selector wraps in Row containers
+		var trab_node = get_node(GRAVES + "InputFields").find_child("TRAbInput", true, false)
+		var ft4g_node = get_node(GRAVES + "InputFields").find_child("FT4Input",  true, false)
+		var ft3_node  = get_node(GRAVES + "InputFields").find_child("FT3Input",  true, false)
+		var tshg_node = get_node(GRAVES + "InputFields").find_child("TSHInput",  true, false)
+		if trab_node: trab_node.value = g.get("trab", 0.5)
+		if ft4g_node: ft4g_node.value = g.get("ft4",  1.2)
+		if ft3_node:  ft3_node.value  = g.get("ft3",  3.0)
+		if tshg_node: tshg_node.value = g.get("tsh",  1.5)
+		get_node(GRAVES + "ResultLabel").text = g.get("result","—")
+		if _unit_buttons.has("trab"): _unit_buttons["trab"].selected = g.get("trab_unit", 0)
+		if _unit_buttons.has("ft3"):  _unit_buttons["ft3"].selected  = g.get("ft3_unit",  0)
+		# ft4 and tsh unit buttons are shared with thyroid panel —
+		# only restore from graves if thyroid data is missing
+		if not data.has("thyroid"):
+			if _unit_buttons.has("ft4"): _unit_buttons["ft4"].selected = g.get("ft4_unit", 0)
+			if _unit_buttons.has("tsh"): _unit_buttons["tsh"].selected = g.get("tsh_unit", 0)
+
 	# Restore checkboxes
 	_restore_checkbox(GLYC,  "KnownDiabetes", "glycemic-health", [])
 	_restore_checkbox(NAFLD, "KnownNAFLD",    "nafld",           [])
@@ -909,6 +1192,7 @@ func load_metabolic_ui():
 	_restore_checkbox(OSTEO, "KnownOsteo",    "osteoporosis",    [])
 	_restore_checkbox(HEMO,  "KnownHemo",     "hemochromatosis", [])
 	_restore_checkbox(WILS,  "KnownWilson",   "wilsons-disease", [])
+	_restore_checkbox(GRAVES, "KnownGraves", "graves-disease", [])
 	# GI conditions (checkbox only, no inputs)
 	_restore_gi_checkbox(SULF,   "KnownSulfur",    "sulfur-avoidance")
 	_restore_gi_checkbox(CROHN,  "KnownCrohns",    "crohns-disease")

@@ -20,7 +20,7 @@ anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 2.917
 offset_top = 2.0
-offset_bottom = 1616.16
+offset_bottom = 2690.16
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 clip_contents = false
@@ -29,13 +29,13 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 334.0
+offset_top = 12.0
 offset_bottom = -6134.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/ScrollContainer"]
-custom_minimum_size = Vector2(1170, 9000)
+custom_minimum_size = Vector2(1170, 11000)
 layout_mode = 2
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
@@ -780,5 +780,76 @@ layout_mode = 2
 text = "Had gallbladder removed"
 
 [node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CholecystPanel/VBoxContainer"]
+layout_mode = 2
+text = "-"
+
+[node name="GravesPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer"]
+layout_mode = 2
+text = "Graves' disease"
+
+[node name="KnownGraves" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer"]
+layout_mode = 2
+text = "I have Graves."
+
+[node name="InputFields" type="VBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "TRAB value"
+
+[node name="TRAbInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+max_value = 50.0
+step = 0.01
+value = 0.5
+
+[node name="Label2" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "FT4 values"
+
+[node name="FT4Input" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+max_value = 10.0
+step = 0.01
+value = 1.2
+
+[node name="Label3" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "FT3 values"
+
+[node name="FT3Input" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+max_value = 20.0
+step = 0.01
+value = 3.0
+
+[node name="Label4" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "TSH values"
+
+[node name="TSHInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+max_value = 10.0
+step = 0.01
+value = 1.5
+
+[node name="CalculateButton" type="Button" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer/InputFields"]
+layout_mode = 2
+text = "calculate"
+
+[node name="ResultLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/GravesPanel/VBoxContainer"]
 layout_mode = 2
 text = "-"
