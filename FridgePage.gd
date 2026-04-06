@@ -1,5 +1,8 @@
 extends Control
 
+var shopping_page_titles: Dictionary = {}
+var _shopping_undo_stack: Array = []  # max 10 snapshots
+const UNDO_MAX = 10
 var all_foods: Array = []
 var fridge_foods: Array = []        # list of unique food dicts
 var fridge_quantities: Dictionary = {} # food_id → count
@@ -34,7 +37,7 @@ var current_page: int = 0
 const ITEMS_PER_PAGE: int = 18
 const GRID_COLS: int = 3
 var shopping_page: int = 0
-const SHOPPING_ITEMS_PER_PAGE: int = 10
+const SHOPPING_ITEMS_PER_PAGE: int = 9
 
 # ── Swipe detection ──
 var _swipe_threshold: float = 50.0
@@ -142,6 +145,72 @@ const COOK_YIELD = {
 	"boil_water":1.05,
 }
 
+# Maps field key → { "unit": display string, "display_multiplier": float }
+# display_multiplier converts the stored value to the display value
+# For most fields it's 1.0 (show as-is)
+# For fields stored in mcg that you want shown as mcg: 1.0
+# This avoids any conversion — just shows the right label
+const FIELD_UNITS: Dictionary = {
+	# Macros — stored in g
+	"calories":                {"unit": "kcal", "mult": 1.0},
+	"protein_g":               {"unit": "g",    "mult": 1.0},
+	"fat_g":                   {"unit": "g",    "mult": 1.0},
+	"saturated_fat_g":         {"unit": "g",    "mult": 1.0},
+	"monounsaturated_fat_g":   {"unit": "g",    "mult": 1.0},
+	"polyunsaturated_fat_g":   {"unit": "g",    "mult": 1.0},
+	"carbs_g":                 {"unit": "g",    "mult": 1.0},
+	"sugar_g":                 {"unit": "g",    "mult": 1.0},
+	"fiber_g":                 {"unit": "g",    "mult": 1.0},
+	"lactose_g":               {"unit": "g",    "mult": 1.0},
+	# Minerals — stored in mg
+	"calcium_mg":              {"unit": "mg",   "mult": 1.0},
+	"sodium_mg":               {"unit": "mg",   "mult": 1.0},
+	"iron_mg":                 {"unit": "mg",   "mult": 1.0},
+	"copper_mg":               {"unit": "mg",   "mult": 1.0},
+	"magnesium_mg":            {"unit": "mg",   "mult": 1.0},
+	"potassium_mg":            {"unit": "mg",   "mult": 1.0},
+	"zinc_mg":                 {"unit": "mg",   "mult": 1.0},
+	"phosphorus_mg":           {"unit": "mg",   "mult": 1.0},
+	"manganese_mg":            {"unit": "mg",   "mult": 1.0},
+	"sulfur_mg":               {"unit": "mg",   "mult": 1.0},
+	"quercetin_mg":            {"unit": "mg",   "mult": 1.0},
+	"anthocyanins_mg":         {"unit": "mg",   "mult": 1.0},
+	"resveratrol_mg":          {"unit": "mg",   "mult": 1.0},
+	"total_polyphenols_mg":    {"unit": "mg",   "mult": 1.0},
+	# Trace minerals — stored in mcg
+	"selenium_mcg":            {"unit": "mcg",  "mult": 1.0},
+	"iodine_mcg":              {"unit": "mcg",  "mult": 1.0},
+	"chromium_mcg":            {"unit": "mcg",  "mult": 1.0},
+	"molybdenum_mcg":          {"unit": "mcg",  "mult": 1.0},
+	# Vitamins — stored in mcg or mg depending on vitamin
+	"vitamin_a_mcg":           {"unit": "mcg",  "mult": 1.0},
+	"vitamin_b1_mg":           {"unit": "mg",   "mult": 1.0},
+	"vitamin_b2_mg":           {"unit": "mg",   "mult": 1.0},
+	"vitamin_b3_mg":           {"unit": "mg",   "mult": 1.0},
+	"vitamin_b5_mg":           {"unit": "mg",   "mult": 1.0},
+	"vitamin_b6_mg":           {"unit": "mg",   "mult": 1.0},
+	"vitamin_b7_mcg":          {"unit": "mcg",  "mult": 1.0},
+	"vitamin_b9_mcg":          {"unit": "mcg",  "mult": 1.0},
+	"vitamin_b12_mcg":         {"unit": "mcg",  "mult": 1.0},
+	"vitamin_c_mg":            {"unit": "mg",   "mult": 1.0},
+	"vitamin_d_mcg":           {"unit": "mcg",  "mult": 1.0},
+	"vitamin_e_mg":            {"unit": "mg",   "mult": 1.0},
+	"vitamin_k1_mcg":          {"unit": "mcg",  "mult": 1.0},
+	"vitamin_k2_mcg":          {"unit": "mcg",  "mult": 1.0},
+	# Antioxidants — stored in mcg
+	"beta_carotene_mcg":       {"unit": "mcg",  "mult": 1.0},
+	"lycopene_mcg":            {"unit": "mcg",  "mult": 1.0},
+	"lutein_zeaxanthin_mcg":   {"unit": "mcg",  "mult": 1.0},
+	# Oxalate
+	"oxalate_mg_per_100g":     {"unit": "mg",   "mult": 1.0},
+	"soluble_fiber_pct":    {"unit": "%",  "mult": 1.0},
+	"insoluble_fiber_pct":  {"unit": "%",  "mult": 1.0},
+	"glycemic_index":       {"unit": "GI", "mult": 1.0},
+	"resistant_starch_pct": {"unit": "%",  "mult": 1.0},
+	"rapid_starch_pct":     {"unit": "%",  "mult": 1.0},
+	"slow_starch_pct":      {"unit": "%",  "mult": 1.0},
+}
+
 # Fat absorption during frying (g per 100g raw)
 const FRY_FAT_ABSORPTION_G = 6.0
 # ── All filterable nutrients with display labels ──
@@ -182,6 +251,12 @@ const FILTER_OPTIONS = [
 	{"key":"fiber_g",              "label":"Fiber"},
 	{"key":"protein_g",            "label":"Protein"},
 	{"key":"calories",             "label":"Calories"},
+	{"key":"soluble_fiber_pct",   "label":"Soluble Fiber %"},
+	{"key":"insoluble_fiber_pct", "label":"Insoluble Fiber %"},
+	{"key":"glycemic_index",      "label":"Glycemic Index"},
+	{"key":"resistant_starch_pct","label":"Resistant Starch %"},
+	{"key":"rapid_starch_pct",    "label":"Fast Starch %"},
+	{"key":"slow_starch_pct",     "label":"Slow Starch %"},
 ]
 
 func _ready():
@@ -189,6 +264,7 @@ func _ready():
 	load_fridge()
 	load_shopping_list()
 	load_saved_meals()
+	$Panel/ShoppingListPanel/UndoBtn.pressed.connect(_undo_shopping)
 	$Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/ShoppingNavRow/ShoppingPrevBtn.pressed.connect(func():
 		if shopping_page > 0:
 			shopping_page -= 1
@@ -499,7 +575,30 @@ func refresh_current_tab():
 			var vb = b.get(sort_key, 0.0)
 			return va < vb if sort_ascending else va > vb
 		)
-
+		
+	if active_filters.has("soluble_fiber_pct"):
+		filtered = filtered.filter(func(f):
+			# Only show foods where soluble fiber is majority (>=50%)
+			# AND food actually has fiber
+			return f.get("fiber_g", 0.0) > 0.3 and f.get("soluble_fiber_pct", 0) >= 50
+		)
+	if active_filters.has("insoluble_fiber_pct"):
+		filtered = filtered.filter(func(f):
+			return f.get("fiber_g", 0.0) > 0.3 and f.get("insoluble_fiber_pct", 0) >= 50
+		)
+	if active_filters.has("resistant_starch_pct"):
+		filtered = filtered.filter(func(f):
+			return f.get("carbs_g", 0.0) > 1.0 and f.get("resistant_starch_pct", 0) >= 10
+		)
+	if active_filters.has("rapid_starch_pct"):
+		filtered = filtered.filter(func(f):
+			return f.get("carbs_g", 0.0) > 1.0 and f.get("rapid_starch_pct", 0) >= 50
+		)
+	if active_filters.has("slow_starch_pct"):
+		filtered = filtered.filter(func(f):
+			return f.get("carbs_g", 0.0) > 1.0 and f.get("slow_starch_pct", 0) >= 40
+		)
+		
 	if warning_filter != "all" or Global.hide_red_warnings:
 		filtered = filtered.filter(func(f):
 			var severity = _get_food_severity(f)
@@ -531,13 +630,10 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	row.custom_minimum_size = Vector2(0, 60)
 
 	var severity = _get_food_severity(food)
-	if severity == "avoid":
+	if severity != "safe":
 		var badge = Label.new()
-		badge.text = "⛔"
-		row.add_child(badge)
-	elif severity == "caution":
-		var badge = Label.new()
-		badge.text = "⚠️"
+		badge.text = "⛔" if severity == "avoid" else "⚠️"
+		badge.add_theme_font_size_override("font_size", 24)
 		row.add_child(badge)
 
 	var icon = TextureRect.new()
@@ -568,11 +664,18 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 		amount.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
 		row.add_child(amount)
 
-	var warnings = Global.get_warnings(food)
-	if warnings.size() > 0:
-		var badge = Label.new()
-		badge.text = "⛔" if warnings[0]["severity"] == "avoid" else "⚠️"
-		row.add_child(badge)
+		var warnings = Global.get_warnings(food)
+		if warnings.size() > 0:
+			var info_btn = Button.new()
+			info_btn.text = "ℹ️"
+			info_btn.flat = true
+			info_btn.custom_minimum_size = Vector2(44, 44)
+			info_btn.add_theme_font_size_override("font_size", 22)
+			info_btn.pressed.connect(func():
+				Global.any_button_pressed.emit()
+				_show_warning_detail_panel(food)
+			)
+			row.add_child(info_btn)
 
 	var btn = Button.new()
 	btn.text = "+ List"
@@ -586,6 +689,7 @@ func _generate_sid() -> String:
 
 # ── Add food to shopping list ──
 func add_to_shopping_list(food: Dictionary):
+	_shopping_snapshot() 
 	# Always create a new entry — never merge with existing
 	# (even same food gets its own entry if added again)
 	var entry = {
@@ -600,6 +704,7 @@ func add_to_shopping_list(food: Dictionary):
 
 # ── Remove one from shopping list ──
 func increment_shopping_entry(sid: String):
+	_shopping_snapshot()
 	for entry in shopping_list:
 		if entry["_sid"] == sid:
 			entry["qty"] = entry.get("qty", 1) + 1
@@ -608,6 +713,7 @@ func increment_shopping_entry(sid: String):
 	refresh_shopping_list()
 
 func decrement_shopping_entry(sid: String):
+	_shopping_snapshot()
 	for i in range(shopping_list.size()):
 		if shopping_list[i]["_sid"] == sid:
 			shopping_list[i]["qty"] -= 1
@@ -620,6 +726,7 @@ func decrement_shopping_entry(sid: String):
 	refresh_shopping_list()
 
 func check_shopping_entry(sid: String, checked: bool):
+	_shopping_snapshot()
 	for entry in shopping_list:
 		if entry["_sid"] == sid:
 			entry["_checked"] = checked
@@ -635,6 +742,29 @@ func refresh_shopping_list():
 	var paper_vbox = $Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/PaperScrollContainer/PaperItemsVBox
 	for child in paper_vbox.get_children():
 		child.queue_free()
+
+# ── Page title row ──
+	var title_row = HBoxContainer.new()
+	title_row.add_theme_constant_override("separation", 8)
+	paper_vbox.add_child(title_row)
+
+	var prefix = Label.new()
+	prefix.text = "Title: "
+	prefix.add_theme_font_size_override("font_size", 69)
+	prefix.add_theme_color_override("font_color", Color(0.4, 0.3, 0.2))
+	title_row.add_child(prefix)
+
+	var title_edit = LineEdit.new()
+	title_edit.placeholder_text = "e.g. Mom's list, Tikka Masala recipe..."
+	title_edit.text = shopping_page_titles.get(str(shopping_page), "")
+	title_edit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_edit.add_theme_font_size_override("font_size", 59)
+	var captured_page = shopping_page
+	title_edit.text_changed.connect(func(new_text):
+		shopping_page_titles[str(captured_page)] = new_text
+		save_shopping_list()
+	)
+	title_row.add_child(title_edit)
 
 	# Page slice
 	var start = shopping_page * SHOPPING_ITEMS_PER_PAGE
@@ -682,6 +812,22 @@ func refresh_shopping_list():
 			rtl.add_theme_font_size_override("normal_font_size", 70)
 			rtl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			row.add_child(rtl)
+			var uncheck_btn = Button.new()
+			uncheck_btn.text = "↩️"
+			uncheck_btn.flat = true
+			uncheck_btn.custom_minimum_size = Vector2(60, 60)
+			uncheck_btn.add_theme_font_size_override("font_size", 36)
+			uncheck_btn.tooltip_text = "Uncheck — I haven't bought this yet"
+			var captured_sid = sid
+			uncheck_btn.pressed.connect(func():
+				for e in shopping_list:
+					if e["_sid"] == captured_sid:
+						e["_checked"] = false
+						break
+				save_shopping_list()
+				refresh_shopping_list()
+			)
+			row.add_child(uncheck_btn)
 		else:
 			# Unchecked — show CheckBox
 			var cb = CheckBox.new()
@@ -773,7 +919,8 @@ func save_shopping_list():
 	var file = FileAccess.open("user://shopping.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"list": shopping_list,
-		"page": shopping_page
+		"page": shopping_page,
+		"titles": shopping_page_titles
 	}))
 	file.close()
 
@@ -785,6 +932,7 @@ func load_shopping_list():
 	if not data: return
 	shopping_list = data.get("list", [])
 	shopping_page = data.get("page", 0)
+	shopping_page_titles = data.get("titles", {})
 
 # ── Add food to fridge (with quantity) ──
 func _generate_iid() -> String:
@@ -1626,6 +1774,7 @@ func _get_shopping_pages() -> int:
 	return max(1, int(ceil(float(shopping_list.size()) / float(SHOPPING_ITEMS_PER_PAGE))))
 
 func _rip_shopping_page():
+	_shopping_snapshot()
 	var start = shopping_page * SHOPPING_ITEMS_PER_PAGE
 	var end   = min(start + SHOPPING_ITEMS_PER_PAGE, shopping_list.size())
 	shopping_list = shopping_list.slice(0, start) + shopping_list.slice(end)
@@ -1995,10 +2144,24 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 
 	# Warning badge
 	var severity = _get_food_severity(food)
-	if severity == "avoid":
-		var badge = Label.new(); badge.text = "⛔"; row.add_child(badge)
-	elif severity == "caution":
-		var badge = Label.new(); badge.text = "⚠️"; row.add_child(badge)
+	if severity != "safe":
+		var badge = Label.new()
+		badge.text = "⛔" if severity == "avoid" else "⚠️"
+		badge.add_theme_font_size_override("font_size", 36)
+		row.add_child(badge)
+
+		var warnings = Global.get_warnings(food)
+		if warnings.size() > 0:
+			var info_btn = Button.new()
+			info_btn.text = "ℹ️"
+			info_btn.flat = true
+			info_btn.custom_minimum_size = Vector2(44, 44)
+			info_btn.add_theme_font_size_override("font_size", 36)
+			info_btn.pressed.connect(func():
+				Global.any_button_pressed.emit()
+				_show_warning_detail_panel(food)
+			)
+			row.add_child(info_btn)
 
 	var add_btn = Button.new()
 	add_btn.text = "+ Meal"
@@ -3612,3 +3775,103 @@ func _adjust_zero_g_and_eat(meal: Dictionary):
 			fridge_weights[source_iid] = fw
 	save_fridge()
 	_do_eat_meal(meal)
+
+func _format_field_value(key: String, value: float) -> String:
+	if FIELD_UNITS.has(key):
+		var info = FIELD_UNITS[key]
+		var display_val = snappedf(value * info["mult"], 0.01)
+		return str(display_val) + " " + info["unit"]
+	return str(snappedf(value, 0.01))
+
+func _show_warning_detail_panel(food: Dictionary):
+	var existing = get_node_or_null("WarningDetailOverlay")
+	if existing: existing.queue_free()
+
+	var warnings = Global.get_warnings(food)
+	if warnings.is_empty(): return
+
+	# ── Full-screen backdrop — MOUSE_FILTER_STOP blocks everything below ──
+	var backdrop = ColorRect.new()
+	backdrop.name = "WarningDetailOverlay"
+	backdrop.color = Color(0.0, 0.0, 0.0, 0.55)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.z_index = 4000                            # ← high z-index
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP # ← blocks ALL clicks below
+
+	# Close on any press anywhere on the backdrop
+	backdrop.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed:
+			backdrop.queue_free()
+		elif event is InputEventScreenTouch and event.pressed:
+			backdrop.queue_free()
+	)
+	add_child(backdrop)
+
+	# ── Warning panel — centered, fixed width ──
+	var panel = PanelContainer.new()
+	panel.z_index = 101
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP    # ← panel itself also blocks
+
+	# Center it: anchor to center, then offset by half the panel size
+	var panel_width  = 360.0
+	var viewport     = get_viewport_rect().size
+	panel.set_anchor_and_offset(SIDE_LEFT,   0, viewport.x / 2.0 - panel_width / 2.0)
+	panel.set_anchor_and_offset(SIDE_RIGHT,  0, viewport.x / 2.0 + panel_width / 2.0)
+	panel.set_anchor_and_offset(SIDE_TOP,    0, 100)   # 100px from top
+	panel.set_anchor_and_offset(SIDE_BOTTOM, 1, -100)  # 100px from bottom
+	backdrop.add_child(panel)
+
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+	panel.add_child(scroll)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 14)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "⚠️ Warnings for " + food.get("name","")
+	title.add_theme_font_size_override("font_size", 36)
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(title)
+	vbox.add_child(HSeparator.new())
+
+	for w in warnings:
+		var row = HBoxContainer.new()
+		row.add_theme_constant_override("separation", 8)
+		vbox.add_child(row)
+
+		var icon = Label.new()
+		icon.text = "⛔" if w["severity"] == "avoid" else "⚠️"
+		icon.add_theme_font_size_override("font_size", 36)
+		row.add_child(icon)
+
+		var msg = Label.new()
+		msg.text = w["message"]
+		msg.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		msg.add_theme_font_size_override("font_size", 36)
+		msg.autowrap_mode = TextServer.AUTOWRAP_WORD
+		row.add_child(msg)
+
+	vbox.add_child(HSeparator.new())
+
+	var hint = Label.new()
+	hint.text = "Tap anywhere to close"
+	hint.add_theme_font_size_override("font_size", 36)
+	hint.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(hint)
+
+func _shopping_snapshot():
+	_shopping_undo_stack.append(shopping_list.duplicate(true))
+	if _shopping_undo_stack.size() > UNDO_MAX:
+		_shopping_undo_stack.pop_front()
+
+func _undo_shopping():
+	if _shopping_undo_stack.is_empty(): return
+	shopping_list = _shopping_undo_stack.pop_back()
+	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
+	save_shopping_list()
+	refresh_shopping_list()

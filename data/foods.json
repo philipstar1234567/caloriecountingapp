@@ -51,7 +51,13 @@
 	"total_polyphenols_mg": 218,
 	"sulfur_mg": 5,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 36,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "apricot",
@@ -105,7 +111,13 @@
 	"total_polyphenols_mg": 34,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 34,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "dried-fruit",
@@ -159,7 +171,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 64,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "avocado",
@@ -213,7 +231,13 @@
 	"total_polyphenols_mg": 167,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "banana",
@@ -267,7 +291,13 @@
 	"total_polyphenols_mg": 95,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 51,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 27
   },
   {
 	"id": "blackberry",
@@ -321,7 +351,13 @@
 	"total_polyphenols_mg": 260,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "blueberry",
@@ -375,7 +411,13 @@
 	"total_polyphenols_mg": 560,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 53,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "breadfruit",
@@ -429,7 +471,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 68,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 25
   },
   {
 	"id": "carambola",
@@ -483,7 +531,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "cherry",
@@ -537,7 +591,13 @@
 	"total_polyphenols_mg": 274,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 22,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "cranberry",
@@ -591,7 +651,13 @@
 	"total_polyphenols_mg": 315,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "currant",
@@ -645,7 +711,13 @@
 	"total_polyphenols_mg": 758,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "dates",
@@ -699,7 +771,13 @@
 	"total_polyphenols_mg": 2496,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 62,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 78,
+	"slow_starch_pct": 20
   },
   {
 	"id": "elderberry",
@@ -753,7 +831,13 @@
 	"total_polyphenols_mg": 1950,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "figs",
@@ -807,7 +891,13 @@
 	"total_polyphenols_mg": 350,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 61,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "gooseberry",
@@ -861,7 +951,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "goji-berry",
@@ -915,7 +1011,13 @@
 	"total_polyphenols_mg": 3290,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 29,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "grapefruit",
@@ -969,17 +1071,23 @@
 	"total_polyphenols_mg": 56,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
-	"id": "green_grape",
-	"name": "Green Grape",
+	"id": "grape",
+	"name": "Grape",
 	"category": "fruits",
 	"oxalate_mg_per_100g": 3,
 	"level": "low",
 	"calories": 67,
 	"protein_g": 0.6,
-	"fat_g": 0.1,
+	"fat_g": 0.4,
 	"carbs_g": 15.5,
 	"fiber_g": 0.9,
 	"calcium_mg": 10,
@@ -1018,12 +1126,18 @@
 	"lycopene_mcg": 0,
 	"lutein_zeaxanthin_mcg": 0,
 	"quercetin_mg": 3.54,
-	"anthocyanins_mg": 2,
-	"resveratrol_mg": 0.05,
-	"total_polyphenols_mg": 110,
+	"anthocyanins_mg": 0,
+	"resveratrol_mg": 0,
+	"total_polyphenols_mg": 101,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 46,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "guava",
@@ -1077,7 +1191,13 @@
 	"total_polyphenols_mg": 624,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 12,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "jackfruit",
@@ -1131,7 +1251,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 75,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 68,
+	"slow_starch_pct": 27
   },
   {
 	"id": "jujube",
@@ -1185,7 +1311,13 @@
 	"total_polyphenols_mg": 3042,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 79,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "kiwi",
@@ -1239,7 +1371,13 @@
 	"total_polyphenols_mg": 89,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 52,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "kumquat",
@@ -1293,7 +1431,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "lemon",
@@ -1347,7 +1491,13 @@
 	"total_polyphenols_mg": 745,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 45,
+	"insoluble_fiber_pct": 55,
+	"glycemic_index": 20,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "lime",
@@ -1401,7 +1551,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 20,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "lychee",
@@ -1455,7 +1611,13 @@
 	"total_polyphenols_mg": 381,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "mango",
@@ -1509,7 +1671,13 @@
 	"total_polyphenols_mg": 151,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 51,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 25
   },
   {
 	"id": "melon",
@@ -1563,7 +1731,13 @@
 	"total_polyphenols_mg": 33,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 65,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "nectarine",
@@ -1617,7 +1791,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 43,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "orange",
@@ -1671,7 +1851,13 @@
 	"total_polyphenols_mg": 245,
 	"sulfur_mg": 6,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 45,
+	"insoluble_fiber_pct": 55,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "mandarin",
@@ -1725,7 +1911,13 @@
 	"total_polyphenols_mg": 159,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 42,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "papaya",
@@ -1779,7 +1971,13 @@
 	"total_polyphenols_mg": 58,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 59,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "passion-fruit",
@@ -1833,7 +2031,13 @@
 	"total_polyphenols_mg": 775,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "peach",
@@ -1887,7 +2091,13 @@
 	"total_polyphenols_mg": 148,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 42,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "pear",
@@ -1941,7 +2151,13 @@
 	"total_polyphenols_mg": 136,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 38,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "pineapple",
@@ -1995,7 +2211,13 @@
 	"total_polyphenols_mg": 48,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 66,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "plum",
@@ -2049,7 +2271,13 @@
 	"total_polyphenols_mg": 377,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 39,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "pomegranate",
@@ -2103,7 +2331,13 @@
 	"total_polyphenols_mg": 4479,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "prickly-pear",
@@ -2157,7 +2391,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "prunes",
@@ -2211,7 +2451,13 @@
 	"total_polyphenols_mg": 1195,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 29,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "raisin",
@@ -2265,7 +2511,13 @@
 	"total_polyphenols_mg": 728,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 64,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "raspberry",
@@ -2319,61 +2571,13 @@
 	"total_polyphenols_mg": 522,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
-  },
-{
-	"id": "red_grape",
-	"name": "Red Grape",
-	"category": "fruits",
-	"oxalate_mg_per_100g": 3,
-	"level": "low",
-	"calories": 67,
-	"protein_g": 0.6,
-	"fat_g": 0.1,
-	"carbs_g": 15.5,
-	"fiber_g": 0.9,
-	"calcium_mg": 10,
-	"saturated_fat_g": 0.04,
-	"monounsaturated_fat_g": 0.04,
-	"polyunsaturated_fat_g": 0.12,
-	"sugar_g": 10.8,
-	"sodium_mg": 1,
-	"iron_mg": 0.36,
-	"copper_mg": 0.127,
-	"selenium_mcg": 0.1,
-	"density_g_per_ml": 0.78,
-	"vitamin_a_mcg": 3,
-	"vitamin_b1_mg": 0.069,
-	"vitamin_b2_mg": 0.07,
-	"vitamin_b3_mg": 0.188,
-	"vitamin_b5_mg": 0.05,
-	"vitamin_b6_mg": 0.086,
-	"vitamin_b7_mcg": 0.5,
-	"vitamin_b9_mcg": 2,
-	"vitamin_b12_mcg": 0,
-	"vitamin_c_mg": 3.2,
-	"vitamin_d_mcg": 0,
-	"vitamin_e_mg": 0.19,
-	"vitamin_k1_mcg": 14.6,
-	"vitamin_k2_mcg": 0,
-	"magnesium_mg": 7,
-	"potassium_mg": 191,
-	"zinc_mg": 0.07,
-	"phosphorus_mg": 20,
-	"manganese_mg": 0.071,
-	"chromium_mcg": 0.5,
-	"iodine_mcg": 0.1,
-	"molybdenum_mcg": 1.0,
-	"beta_carotene_mcg": 39,
-	"lycopene_mcg": 0,
-	"lutein_zeaxanthin_mcg": 0,
-	"quercetin_mg": 3.54,
-	"anthocyanins_mg": 0,
-	"resveratrol_mg": 0.5,
-	"total_polyphenols_mg": 600,
-	"sulfur_mg": 8,
-	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 32,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "strawberry",
@@ -2427,7 +2631,13 @@
 	"total_polyphenols_mg": 235,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "watermelon",
@@ -2481,7 +2691,13 @@
 	"total_polyphenols_mg": 142,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 72,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "coconut",
@@ -2535,7 +2751,13 @@
 	"total_polyphenols_mg": 163,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "boysenberry",
@@ -2589,7 +2811,13 @@
 	"total_polyphenols_mg": 350,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "feijoa",
@@ -2643,7 +2871,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 8,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "blackberry-b",
@@ -2697,7 +2931,13 @@
 	"total_polyphenols_mg": 260,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "blueberry-b",
@@ -2751,7 +2991,13 @@
 	"total_polyphenols_mg": 560,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 53,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "cranberry-b",
@@ -2805,7 +3051,13 @@
 	"total_polyphenols_mg": 315,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "currant-b",
@@ -2859,7 +3111,13 @@
 	"total_polyphenols_mg": 758,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "elderberry-b",
@@ -2913,7 +3171,13 @@
 	"total_polyphenols_mg": 1950,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "gooseberry-b",
@@ -2967,7 +3231,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "goji-berry-b",
@@ -3021,7 +3291,13 @@
 	"total_polyphenols_mg": 3290,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 29,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "raspberry-b",
@@ -3075,7 +3351,13 @@
 	"total_polyphenols_mg": 522,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 32,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "strawberry-b",
@@ -3129,7 +3411,13 @@
 	"total_polyphenols_mg": 235,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "boysenberry-b",
@@ -3183,7 +3471,13 @@
 	"total_polyphenols_mg": 350,
 	"sulfur_mg": 10,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "artichoke",
@@ -3237,7 +3531,13 @@
 	"total_polyphenols_mg": 3421,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 55,
+	"insoluble_fiber_pct": 45,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "asparagus",
@@ -3291,7 +3591,13 @@
 	"total_polyphenols_mg": 85,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "bitter-melon",
@@ -3345,7 +3651,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 18,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "bamboo-shoots",
@@ -3399,7 +3711,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 20,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "green-beans",
@@ -3453,7 +3771,13 @@
 	"total_polyphenols_mg": 62,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "beetroot",
@@ -3507,7 +3831,13 @@
 	"total_polyphenols_mg": 1174,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 64,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 32
   },
   {
 	"id": "broad-beans",
@@ -3561,7 +3891,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 58
   },
   {
 	"id": "broccoli",
@@ -3615,7 +3951,13 @@
 	"total_polyphenols_mg": 101,
 	"sulfur_mg": 134,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "brussels-sprouts",
@@ -3669,7 +4011,13 @@
 	"total_polyphenols_mg": 256,
 	"sulfur_mg": 130,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "cabbage",
@@ -3723,7 +4071,13 @@
 	"total_polyphenols_mg": 44,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 10,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "red-cabbage",
@@ -3777,7 +4131,13 @@
 	"total_polyphenols_mg": 196,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 10,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "carrot",
@@ -3831,7 +4191,13 @@
 	"total_polyphenols_mg": 33,
 	"sulfur_mg": 20,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 47,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 32
   },
   {
 	"id": "cassava",
@@ -3885,7 +4251,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 46,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 22
   },
   {
 	"id": "cauliflower",
@@ -3939,7 +4311,13 @@
 	"total_polyphenols_mg": 73,
 	"sulfur_mg": 90,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "chicory",
@@ -3993,7 +4371,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 60,
+	"insoluble_fiber_pct": 40,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "corn",
@@ -4047,7 +4431,13 @@
 	"total_polyphenols_mg": 37,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 52,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 25
   },
   {
 	"id": "cucumber",
@@ -4101,7 +4491,13 @@
 	"total_polyphenols_mg": 17,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "eggplant",
@@ -4155,7 +4551,13 @@
 	"total_polyphenols_mg": 107,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "garlic",
@@ -4209,7 +4611,13 @@
 	"total_polyphenols_mg": 1796,
 	"sulfur_mg": 230,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "ginger",
@@ -4263,7 +4671,13 @@
 	"total_polyphenols_mg": 1403,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "okra",
@@ -4317,7 +4731,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 20,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "onion",
@@ -4371,7 +4791,13 @@
 	"total_polyphenols_mg": 168,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 45,
+	"insoluble_fiber_pct": 55,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "peas",
@@ -4425,7 +4851,13 @@
 	"total_polyphenols_mg": 68,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 51,
+	"resistant_starch_pct": 12,
+	"rapid_starch_pct": 40,
+	"slow_starch_pct": 48
   },
   {
 	"id": "bell-pepper",
@@ -4479,7 +4911,13 @@
 	"total_polyphenols_mg": 124,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "pumpkin",
@@ -4533,7 +4971,13 @@
 	"total_polyphenols_mg": 62,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 75,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "radish",
@@ -4587,7 +5031,13 @@
 	"total_polyphenols_mg": 25,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "sweet-potato",
@@ -4641,7 +5091,13 @@
 	"total_polyphenols_mg": 224,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 61,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 35
   },
   {
 	"id": "taro",
@@ -4695,7 +5151,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "tomato",
@@ -4749,7 +5211,13 @@
 	"total_polyphenols_mg": 55,
 	"sulfur_mg": 15,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "turnip",
@@ -4803,7 +5271,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "potato",
@@ -4857,7 +5331,13 @@
 	"total_polyphenols_mg": 44,
 	"sulfur_mg": 20,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 78,
+	"resistant_starch_pct": 7,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 23
   },
   {
 	"id": "zucchini",
@@ -4911,7 +5391,13 @@
 	"total_polyphenols_mg": 32,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "fennel",
@@ -4965,7 +5451,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "chili-pepper",
@@ -5019,7 +5511,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "yam",
@@ -5073,7 +5571,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 54,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 37
   },
   {
 	"id": "spinach",
@@ -5127,7 +5631,13 @@
 	"total_polyphenols_mg": 199,
 	"sulfur_mg": 40,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "rhubarb",
@@ -5181,7 +5691,13 @@
 	"total_polyphenols_mg": 799,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "collard-greens",
@@ -5235,7 +5751,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "parsley",
@@ -5289,7 +5811,13 @@
 	"total_polyphenols_mg": 313,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "purslane",
@@ -5343,7 +5871,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "dandelion-greens",
@@ -5397,7 +5931,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "thyme",
@@ -5451,7 +5991,13 @@
 	"total_polyphenols_mg": 1173,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "dill",
@@ -5505,7 +6051,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "celery",
@@ -5559,7 +6111,13 @@
 	"total_polyphenols_mg": 69,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "chives",
@@ -5613,7 +6171,13 @@
 	"total_polyphenols_mg": 346,
 	"sulfur_mg": 110,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "coriander",
@@ -5667,7 +6231,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "leek",
@@ -5721,7 +6291,13 @@
 	"total_polyphenols_mg": 168,
 	"sulfur_mg": 90,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 45,
+	"insoluble_fiber_pct": 55,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "lettuce",
@@ -5775,7 +6351,13 @@
 	"total_polyphenols_mg": 115,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "mustard-greens",
@@ -5829,7 +6411,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "watercress",
@@ -5883,7 +6471,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "arugula",
@@ -5937,7 +6531,13 @@
 	"total_polyphenols_mg": 218,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "quinoa",
@@ -5991,7 +6591,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 53,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "almonds",
@@ -6045,7 +6651,13 @@
 	"total_polyphenols_mg": 187,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "cashew",
@@ -6099,7 +6711,13 @@
 	"total_polyphenols_mg": 109,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 22,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "hazelnut",
@@ -6153,7 +6771,13 @@
 	"total_polyphenols_mg": 733,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "pine-nuts",
@@ -6207,7 +6831,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "mixed-nuts",
@@ -6261,7 +6891,13 @@
 	"total_polyphenols_mg": 200,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 12,
+	"insoluble_fiber_pct": 88,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "peanut",
@@ -6315,7 +6951,13 @@
 	"total_polyphenols_mg": 1573,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 14,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "pistachio",
@@ -6369,7 +7011,13 @@
 	"total_polyphenols_mg": 1657,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "chestnut",
@@ -6423,7 +7071,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 60,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "walnut",
@@ -6477,7 +7131,13 @@
 	"total_polyphenols_mg": 2965,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "almond-butter",
@@ -6531,7 +7191,13 @@
 	"total_polyphenols_mg": 150,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "pecan",
@@ -6585,7 +7251,13 @@
 	"total_polyphenols_mg": 1820,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "macadamia",
@@ -6639,7 +7311,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "ginkgo-nuts",
@@ -6693,7 +7371,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "pili-nuts",
@@ -6747,7 +7431,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "watermelon-seeds",
@@ -6801,7 +7491,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "oatmeal",
@@ -6855,7 +7551,13 @@
 	"total_polyphenols_mg": 860,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 55,
+	"insoluble_fiber_pct": 45,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 10,
+	"rapid_starch_pct": 45,
+	"slow_starch_pct": 45
   },
   {
 	"id": "oats",
@@ -6909,7 +7611,13 @@
 	"total_polyphenols_mg": 860,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 55,
+	"insoluble_fiber_pct": 45,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 10,
+	"rapid_starch_pct": 45,
+	"slow_starch_pct": 45
   },
   {
 	"id": "rice",
@@ -6963,7 +7671,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 15,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 5,
+	"insoluble_fiber_pct": 95,
+	"glycemic_index": 73,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 82,
+	"slow_starch_pct": 15
   },
   {
 	"id": "brown-rice",
@@ -7017,7 +7731,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 20,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 66,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "pasta",
@@ -7071,7 +7791,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 30,
+	"slow_starch_pct": 65
   },
   {
 	"id": "spaghetti",
@@ -7125,7 +7851,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 30,
+	"slow_starch_pct": 65
   },
   {
 	"id": "flour",
@@ -7179,7 +7911,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 70,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 23
   },
   {
 	"id": "sesame",
@@ -7233,7 +7971,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 90,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 42
   },
   {
 	"id": "buckwheat",
@@ -7287,7 +8031,13 @@
 	"total_polyphenols_mg": 5765,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 54,
+	"resistant_starch_pct": 12,
+	"rapid_starch_pct": 38,
+	"slow_starch_pct": 50
   },
   {
 	"id": "amaranth",
@@ -7341,7 +8091,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 42,
+	"slow_starch_pct": 50
   },
   {
 	"id": "couscous",
@@ -7395,7 +8151,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 65,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "cornmeal",
@@ -7449,7 +8211,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 68,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 72,
+	"slow_starch_pct": 25
   },
   {
 	"id": "millet",
@@ -7503,7 +8271,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 71,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "rye",
@@ -7557,7 +8331,13 @@
 	"total_polyphenols_mg": 1102,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 41,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 30,
+	"slow_starch_pct": 62
   },
   {
 	"id": "chickpeas",
@@ -7611,7 +8391,13 @@
 	"total_polyphenols_mg": 1066,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 28,
+	"resistant_starch_pct": 25,
+	"rapid_starch_pct": 20,
+	"slow_starch_pct": 55
   },
   {
 	"id": "lentil",
@@ -7665,7 +8451,13 @@
 	"total_polyphenols_mg": 1798,
 	"sulfur_mg": 85,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 29,
+	"resistant_starch_pct": 22,
+	"rapid_starch_pct": 20,
+	"slow_starch_pct": 58
   },
   {
 	"id": "kidney-beans",
@@ -7719,7 +8511,13 @@
 	"total_polyphenols_mg": 1456,
 	"sulfur_mg": 75,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 29,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 20,
+	"slow_starch_pct": 60
   },
   {
 	"id": "soybean",
@@ -7773,7 +8571,13 @@
 	"total_polyphenols_mg": 1500,
 	"sulfur_mg": 120,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 18,
+	"resistant_starch_pct": 15,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 60
   },
   {
 	"id": "tofu",
@@ -7827,7 +8631,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 40,
+	"slow_starch_pct": 55
   },
   {
 	"id": "hummus",
@@ -7881,7 +8691,13 @@
 	"total_polyphenols_mg": 500,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "white-beans",
@@ -7935,7 +8751,13 @@
 	"total_polyphenols_mg": 1000,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 31,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 58
   },
   {
 	"id": "black-gram",
@@ -7989,7 +8811,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 43,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "sunflower-seeds",
@@ -8043,7 +8871,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 85,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 42
   },
   {
 	"id": "pumpkin-seeds",
@@ -8097,7 +8931,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 42
   },
   {
 	"id": "flax-seeds",
@@ -8151,7 +8991,13 @@
 	"total_polyphenols_mg": 2234,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 42
   },
   {
 	"id": "milk",
@@ -8205,7 +9051,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 4.7
+	"lactose_g": 4.7,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 27,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 100,
+	"slow_starch_pct": 0
   },
   {
 	"id": "yogurt",
@@ -8259,7 +9111,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 3.2
+	"lactose_g": 3.2,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 36,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 100,
+	"slow_starch_pct": 0
   },
   {
 	"id": "greek-yogurt",
@@ -8313,7 +9171,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": false,
-	"lactose_g": 4.0
+	"lactose_g": 4.0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 11,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "cheese",
@@ -8367,7 +9231,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 130,
 	"contains_gluten": false,
-	"lactose_g": 0.1
+	"lactose_g": 0.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "cottage-cheese",
@@ -8421,7 +9291,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 3.1
+	"lactose_g": 3.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "cream-cheese",
@@ -8475,7 +9351,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 2.9
+	"lactose_g": 2.9,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "butter",
@@ -8529,7 +9411,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 15,
 	"contains_gluten": false,
-	"lactose_g": 0.1
+	"lactose_g": 0.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "egg",
@@ -8583,7 +9471,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 200,
 	"contains_gluten": false,
-	"lactose_g": 3.0
+	"lactose_g": 3.0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "chocolate-milk",
@@ -8637,7 +9531,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": false,
-	"lactose_g": 4.5
+	"lactose_g": 4.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 34,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "mozzarella",
@@ -8691,7 +9591,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 120,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "feta",
@@ -8745,7 +9651,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 110,
 	"contains_gluten": false,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "brie",
@@ -8799,7 +9711,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 110,
 	"contains_gluten": false,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "goat-cheese",
@@ -8853,7 +9771,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 110,
 	"contains_gluten": false,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "ricotta",
@@ -8907,7 +9831,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 3.0
+	"lactose_g": 3.0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "sour-cream",
@@ -8961,7 +9891,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 25,
 	"contains_gluten": false,
-	"lactose_g": 2.9
+	"lactose_g": 2.9,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "coconut-milk",
@@ -9015,7 +9951,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": false,
-	"lactose_g": 0.0
+	"lactose_g": 0.0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 38,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "kefir",
@@ -9069,7 +10011,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 3.8
+	"lactose_g": 3.8,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 36,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "whipped-cream",
@@ -9123,7 +10071,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 20,
 	"contains_gluten": false,
-	"lactose_g": 2.7
+	"lactose_g": 2.7,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "chicken-breast",
@@ -9177,7 +10131,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 250,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "chicken-thigh",
@@ -9231,7 +10191,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 240,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "whole-chicken",
@@ -9285,7 +10251,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 245,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "turkey",
@@ -9339,7 +10311,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 250,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "duck",
@@ -9393,7 +10371,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 260,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "pork-tenderloin",
@@ -9447,7 +10431,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 270,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "pork-shoulder",
@@ -9501,7 +10491,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 260,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "pork-chop",
@@ -9555,7 +10551,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 265,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "bacon",
@@ -9609,7 +10611,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 220,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "ground-beef",
@@ -9663,7 +10671,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 270,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "beef-steak",
@@ -9717,7 +10731,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 280,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "veal",
@@ -9771,7 +10791,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 265,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "lamb",
@@ -9825,7 +10851,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 260,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "reindeer",
@@ -9879,7 +10911,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 270,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "elk",
@@ -9933,7 +10971,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 270,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "sausage",
@@ -9987,7 +11031,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 200,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "meatballs",
@@ -10041,7 +11091,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 230,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "salmon",
@@ -10095,7 +11151,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 210,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "cod",
@@ -10149,7 +11211,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 180,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "mackerel",
@@ -10203,7 +11271,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 200,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "herring",
@@ -10257,7 +11331,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 195,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "trout",
@@ -10311,7 +11391,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 205,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "tuna",
@@ -10365,7 +11451,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 220,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "shrimp",
@@ -10419,7 +11511,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 190,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "lobster",
@@ -10473,7 +11571,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 185,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "crab",
@@ -10527,7 +11631,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 180,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "scampi",
@@ -10581,7 +11691,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 190,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "tilapia",
@@ -10635,7 +11751,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 175,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "white-bread",
@@ -10689,7 +11811,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 71,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 78,
+	"slow_starch_pct": 20
   },
   {
 	"id": "whole-grain-bread",
@@ -10743,7 +11871,13 @@
 	"total_polyphenols_mg": 368,
 	"sulfur_mg": 45,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 56,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 45
   },
   {
 	"id": "sourdough-bread",
@@ -10797,7 +11931,13 @@
 	"total_polyphenols_mg": 200,
 	"sulfur_mg": 40,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 54,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 45,
+	"slow_starch_pct": 47
   },
   {
 	"id": "crispbread",
@@ -10851,7 +11991,13 @@
 	"total_polyphenols_mg": 300,
 	"sulfur_mg": 40,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 65,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 45
   },
   {
 	"id": "bread-roll",
@@ -10905,7 +12051,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 40,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 70,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 75,
+	"slow_starch_pct": 23
   },
   {
 	"id": "kale",
@@ -10959,7 +12111,13 @@
 	"total_polyphenols_mg": 1021,
 	"sulfur_mg": 120,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "pak-choi",
@@ -11013,7 +12171,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "rutabaga",
@@ -11067,7 +12231,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 72,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "savoy-cabbage",
@@ -11121,7 +12291,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 10,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "iceberg-lettuce",
@@ -11175,7 +12351,13 @@
 	"total_polyphenols_mg": 54,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "chia-seeds",
@@ -11229,7 +12411,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 50,
+	"slow_starch_pct": 42
   },
   {
 	"id": "chinese-cabbage",
@@ -11283,7 +12471,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 10,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "celeriac",
@@ -11337,7 +12531,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "yardlong-beans",
@@ -11391,7 +12591,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "edamame",
@@ -11445,7 +12651,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 90,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 18,
+	"resistant_starch_pct": 10,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 55
   },
   {
 	"id": "endive",
@@ -11499,7 +12711,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "jerusalem-artichoke",
@@ -11553,7 +12771,13 @@
 	"total_polyphenols_mg": 3500,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 70,
+	"insoluble_fiber_pct": 30,
+	"glycemic_index": 32,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "kohlrabi",
@@ -11607,7 +12831,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "lotus-root",
@@ -11661,7 +12891,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 30
   },
   {
 	"id": "parsnip",
@@ -11715,7 +12951,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 52,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "sauerkraut",
@@ -11769,7 +13011,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 10,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "seaweed",
@@ -11823,7 +13071,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "turnip-greens",
@@ -11877,7 +13131,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "water-chestnuts",
@@ -11931,7 +13191,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 60,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 25
   },
   {
 	"id": "winter-melon",
@@ -11985,7 +13251,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "wax-gourd",
@@ -12039,7 +13311,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "summer-squash",
@@ -12093,7 +13371,13 @@
 	"total_polyphenols_mg": 32,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "wakame",
@@ -12147,7 +13431,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "shallot",
@@ -12201,7 +13491,13 @@
 	"total_polyphenols_mg": 169,
 	"sulfur_mg": 120,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "arrowroot",
@@ -12255,7 +13551,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 65,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 25
   },
   {
 	"id": "pickled-cucumber",
@@ -12309,7 +13611,13 @@
 	"total_polyphenols_mg": 17,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "sun-dried-tomato",
@@ -12363,7 +13671,13 @@
 	"total_polyphenols_mg": 500,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "napa-cabbage",
@@ -12417,7 +13731,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 60,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 10,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "yautia",
@@ -12471,7 +13791,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 70,
+	"slow_starch_pct": 27
   },
   {
 	"id": "amaranth-leaves",
@@ -12525,7 +13851,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "chrysanthemum",
@@ -12579,7 +13911,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "garden-cress",
@@ -12633,7 +13971,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "drumstick-leaves",
@@ -12687,7 +14031,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "lambsquarters",
@@ -12741,7 +14091,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "scallion",
@@ -12795,7 +14151,13 @@
 	"total_polyphenols_mg": 163,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "welsh-onion",
@@ -12849,7 +14211,13 @@
 	"total_polyphenols_mg": 163,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "pumpkin-leaves",
@@ -12903,7 +14271,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "sweet-potato-leaves",
@@ -12957,7 +14331,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "taro-leaves",
@@ -13011,7 +14391,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "vine-spinach",
@@ -13065,7 +14451,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "lemongrass",
@@ -13119,7 +14511,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "grape-leaves",
@@ -13173,7 +14571,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 15
   },
   {
 	"id": "spelt",
@@ -13227,7 +14631,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 40,
+	"slow_starch_pct": 55
   },
   {
 	"id": "barley",
@@ -13281,7 +14691,13 @@
 	"total_polyphenols_mg": 943,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 28,
+	"resistant_starch_pct": 12,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 63
   },
   {
 	"id": "bulgur",
@@ -13335,7 +14751,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 46,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 57
   },
   {
 	"id": "lotus-seeds",
@@ -13389,7 +14811,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 55,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 60,
+	"slow_starch_pct": 40
   },
   {
 	"id": "adzuki-bean",
@@ -13443,7 +14871,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 20,
+	"slow_starch_pct": 60
   },
   {
 	"id": "baked-beans",
@@ -13497,7 +14931,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 15,
+	"rapid_starch_pct": 30,
+	"slow_starch_pct": 55
   },
   {
 	"id": "black-turtle-bean",
@@ -13551,7 +14991,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 58
   },
   {
 	"id": "french-beans",
@@ -13605,7 +15051,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 40,
+	"slow_starch_pct": 55
   },
   {
 	"id": "great-northern-beans",
@@ -13659,7 +15111,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 31,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 60
   },
   {
 	"id": "navy-beans",
@@ -13713,7 +15171,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 31,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 60
   },
   {
 	"id": "pinto-beans",
@@ -13767,7 +15231,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 39,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 60
   },
   {
 	"id": "fava-beans",
@@ -13821,7 +15291,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 80,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 22,
+	"slow_starch_pct": 58
   },
   {
 	"id": "cowpea",
@@ -13875,7 +15351,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 75,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 42,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "lablab",
@@ -13929,7 +15411,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "lima-beans",
@@ -13983,7 +15471,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 32,
+	"resistant_starch_pct": 20,
+	"rapid_starch_pct": 20,
+	"slow_starch_pct": 60
   },
   {
 	"id": "lupin-bean",
@@ -14037,7 +15531,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 15,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 60
   },
   {
 	"id": "mung-beans",
@@ -14091,7 +15591,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 75,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 31,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "pigeon-pea",
@@ -14145,7 +15651,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 70,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "refried-beans",
@@ -14199,7 +15711,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 40,
+	"insoluble_fiber_pct": 60,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 12,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 53
   },
   {
 	"id": "tempeh",
@@ -14253,7 +15771,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 15,
+	"resistant_starch_pct": 8,
+	"rapid_starch_pct": 42,
+	"slow_starch_pct": 50
   },
   {
 	"id": "winged-beans",
@@ -14307,7 +15831,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 15,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 60
   },
   {
 	"id": "falafel",
@@ -14361,7 +15891,13 @@
 	"total_polyphenols_mg": 500,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 25,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 25,
+	"slow_starch_pct": 57
   },
   {
 	"id": "arborio-rice",
@@ -14415,7 +15951,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 5,
+	"insoluble_fiber_pct": 95,
+	"glycemic_index": 69,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 85,
+	"slow_starch_pct": 13
   },
   {
 	"id": "glutinous-rice",
@@ -14469,7 +16011,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": false,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 5,
+	"insoluble_fiber_pct": 95,
+	"glycemic_index": 86,
+	"resistant_starch_pct": 1,
+	"rapid_starch_pct": 92,
+	"slow_starch_pct": 7
   },
   {
 	"id": "soba",
@@ -14523,7 +16071,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 54,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 45,
+	"slow_starch_pct": 50
   },
   {
 	"id": "semolina",
@@ -14577,7 +16131,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 32
   },
   {
 	"id": "khorasan-wheat",
@@ -14631,7 +16191,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 35,
 	"contains_gluten": true,
-	"lactose_g": 0
+	"lactose_g": 0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 40,
+	"slow_starch_pct": 55
   },
   {
 	"id": "blue-cheese",
@@ -14685,7 +16251,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 120,
 	"contains_gluten": false,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "camembert",
@@ -14739,7 +16311,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 110,
 	"contains_gluten": false,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "edam",
@@ -14793,7 +16371,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 120,
 	"contains_gluten": false,
-	"lactose_g": 0.1
+	"lactose_g": 0.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "brunost",
@@ -14847,7 +16431,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 50,
 	"contains_gluten": false,
-	"lactose_g": 0.1
+	"lactose_g": 0.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "gouda-cheese",
@@ -14901,7 +16491,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 130,
 	"contains_gluten": false,
-	"lactose_g": 0.1
+	"lactose_g": 0.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "gruyere",
@@ -14955,7 +16551,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 140,
 	"contains_gluten": false,
-	"lactose_g": 0.1
+	"lactose_g": 0.1,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "buttermilk",
@@ -15009,7 +16611,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 4.5
+	"lactose_g": 4.5,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "condensed-milk",
@@ -15063,7 +16671,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 25,
 	"contains_gluten": false,
-	"lactose_g": 12.3
+	"lactose_g": 12.3,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 61,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 100,
+	"slow_starch_pct": 0
   },
   {
 	"id": "goat-milk",
@@ -15117,7 +16731,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 30,
 	"contains_gluten": false,
-	"lactose_g": 4.2
+	"lactose_g": 4.2,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 27,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "egg-white",
@@ -15171,7 +16791,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 180,
 	"contains_gluten": false,
-	"lactose_g": 3.0
+	"lactose_g": 3.0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "egg-yolk",
@@ -15225,7 +16851,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 220,
 	"contains_gluten": false,
-	"lactose_g": 3.0
+	"lactose_g": 3.0,
+	"soluble_fiber_pct": 50,
+	"insoluble_fiber_pct": 50,
+	"glycemic_index": 0,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 95,
+	"slow_starch_pct": 5
   },
   {
 	"id": "fiskesuppe-fjordland",
@@ -15279,7 +16911,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "kjottsuppe-fjordland",
@@ -15333,7 +16971,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "proteinbowl-taco-fjordland",
@@ -15387,7 +17031,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "betasuppe-fjordland",
@@ -15441,7 +17091,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "laks-pasta-fjordland",
@@ -15495,7 +17151,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 60
   },
   {
 	"id": "proteinbowl-kylling-fjordland",
@@ -15549,7 +17211,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "skogsgryte-fjordland",
@@ -15603,7 +17271,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "butter-chickpeas-fjordland",
@@ -15657,7 +17331,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 18,
+	"rapid_starch_pct": 30,
+	"slow_starch_pct": 52
   },
   {
 	"id": "butter-chicken-fjordland",
@@ -15711,7 +17391,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "pasta-kjottsaus-fjordland",
@@ -15765,7 +17451,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 32,
+	"slow_starch_pct": 63
   },
   {
 	"id": "pasta-ost-skinke-fjordland",
@@ -15819,7 +17511,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 32,
+	"slow_starch_pct": 63
   },
   {
 	"id": "polsegrateng-fjordland",
@@ -15873,7 +17571,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "fiskegrateng-findus",
@@ -15927,7 +17631,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "kyllingsuppe-marokkansk-meremat",
@@ -15981,7 +17691,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "kyllingsuppe-curry-meremat",
@@ -16035,7 +17751,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "gulrotsuppe-meremat",
@@ -16089,7 +17811,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "blomkalsuppe-meremat",
@@ -16143,7 +17871,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "red-curry-suppe-meremat",
@@ -16197,7 +17931,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "tomatsuppe-meremat",
@@ -16251,7 +17991,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 30,
+	"insoluble_fiber_pct": 70,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "ramen-meremat",
@@ -16305,7 +18051,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 32
   },
   {
 	"id": "risgrot-fjordland",
@@ -16359,7 +18111,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 1.5
+	"lactose_g": 1.5,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 70,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 80,
+	"slow_starch_pct": 18
   },
   {
 	"id": "kjottkaker-ertestuing-fjordland",
@@ -16413,7 +18171,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "svenske-kjottboller-fjordland",
@@ -16467,7 +18231,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.5
+	"lactose_g": 0.5,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "fettuccine-funghi",
@@ -16521,7 +18291,13 @@
 	"total_polyphenols_mg": 100,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 60
   },
   {
 	"id": "pulled-pork-fjordland",
@@ -16575,7 +18351,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "torsk-purreloksaus-fjordland",
@@ -16629,7 +18411,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "lammefrikasse-fjordland",
@@ -16683,7 +18471,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 45,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "laksefilet-urtesaus-fjordland",
@@ -16737,7 +18531,13 @@
 	"total_polyphenols_mg": 50,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 40,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 55,
+	"slow_starch_pct": 40
   },
   {
 	"id": "saucy-noodles-teriyaki",
@@ -16791,7 +18591,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 60,
+	"resistant_starch_pct": 3,
+	"rapid_starch_pct": 65,
+	"slow_starch_pct": 32
   },
   {
 	"id": "chili-con-carne-waldemars",
@@ -16845,7 +18651,13 @@
 	"total_polyphenols_mg": 150,
 	"sulfur_mg": 100,
 	"contains_gluten": false,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 35,
+	"insoluble_fiber_pct": 65,
+	"glycemic_index": 35,
+	"resistant_starch_pct": 15,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 50
   },
   {
 	"id": "pasta-carbonara-foodcollective",
@@ -16899,7 +18711,13 @@
 	"total_polyphenols_mg": 30,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.8
+	"lactose_g": 0.8,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 55,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 60
   },
   {
 	"id": "lasagne-bolognese-foodcollective",
@@ -16953,7 +18771,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.3
+	"lactose_g": 0.3,
+	"soluble_fiber_pct": 15,
+	"insoluble_fiber_pct": 85,
+	"glycemic_index": 50,
+	"resistant_starch_pct": 5,
+	"rapid_starch_pct": 35,
+	"slow_starch_pct": 60
   },
   {
 	"id": "pizza-grandiosa",
@@ -17007,7 +18831,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 65,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 72,
+	"slow_starch_pct": 26
   },
   {
 	"id": "pizza-bigone-classic",
@@ -17061,7 +18891,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 65,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 72,
+	"slow_starch_pct": 26
   },
   {
 	"id": "pizza-ristorante-mozzarella",
@@ -17115,7 +18951,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.3
+	"lactose_g": 0.3,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 62,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 72,
+	"slow_starch_pct": 26
   },
   {
 	"id": "pizza-ristorante-pollo",
@@ -17169,7 +19011,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 62,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 72,
+	"slow_starch_pct": 26
   },
   {
 	"id": "pizza-ristorante-pepperoni",
@@ -17223,7 +19071,13 @@
 	"total_polyphenols_mg": 80,
 	"sulfur_mg": 100,
 	"contains_gluten": true,
-	"lactose_g": 0.2
+	"lactose_g": 0.2,
+	"soluble_fiber_pct": 10,
+	"insoluble_fiber_pct": 90,
+	"glycemic_index": 63,
+	"resistant_starch_pct": 2,
+	"rapid_starch_pct": 72,
+	"slow_starch_pct": 26
   },
   {
 	"id": "risdrikk",
@@ -17277,7 +19131,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 15,
 	"contains_gluten": false,
-	"lactose_g": 0.0
+	"lactose_g": 0.0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 90,
+	"slow_starch_pct": 10
   },
   {
 	"id": "soya-drikk-alpro",
@@ -17331,7 +19191,13 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 15,
 	"contains_gluten": false,
-	"lactose_g": 0.0
+	"lactose_g": 0.0,
+	"soluble_fiber_pct": 25,
+	"insoluble_fiber_pct": 75,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   },
   {
 	"id": "mandeldrikk-alpro",
@@ -17385,6 +19251,12 @@
 	"total_polyphenols_mg": 0,
 	"sulfur_mg": 15,
 	"contains_gluten": false,
-	"lactose_g": 0.0
+	"lactose_g": 0.0,
+	"soluble_fiber_pct": 20,
+	"insoluble_fiber_pct": 80,
+	"glycemic_index": 30,
+	"resistant_starch_pct": 0,
+	"rapid_starch_pct": 0,
+	"slow_starch_pct": 0
   }
 ]

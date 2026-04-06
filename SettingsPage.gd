@@ -304,7 +304,7 @@ func _ready():
 	_add_unit_selector(WILS   + "InputFields/CerulInput",      "cerul")
 	_add_unit_selector(WILS   + "InputFields/UrineCuInput",    "urine_cu")
 	_add_unit_selector(GRAVES + "InputFields/TRAbInput", "trab")
-	_add_unit_selector(GRAVES + "InputFields/FT4InputRow/FT4Input",  "ft4")   # reuse existing ft4 key
+	_add_unit_selector(GRAVES + "InputFields/FT4Input",  "ft4")   # reuse existing ft4 key
 	_add_unit_selector(GRAVES + "InputFields/FT3Input",  "ft3")
 	_add_unit_selector(GRAVES + "InputFields/TSHInput",  "tsh")   # reuse existing tsh key
 	
@@ -603,6 +603,10 @@ func _on_calculate_metrics():
 	if goal_w < weight:      direction = "deficit to lose weight"
 	elif goal_w > weight:    direction = "surplus to gain weight"
 	else:                    direction = "maintenance"
+	panel.get_node("GoalResult").text = "Daily goal: " + str(daily_goal) + " kcal (" + direction + ")"
+	if bmr > 0 and daily_goal < bmr:
+		daily_goal = bmr
+		direction = "minimum safe intake (BMR floor)"
 	panel.get_node("GoalResult").text = "Daily goal: " + str(daily_goal) + " kcal (" + direction + ")"
 
 	var adj = Global.calculate_adjusted_kcal_goal()

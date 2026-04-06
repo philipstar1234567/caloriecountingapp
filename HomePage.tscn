@@ -1,7 +1,43 @@
-[gd_scene load_steps=3 format=3 uid="uid://dip2lxuhdo4s8"]
+[gd_scene load_steps=9 format=3 uid="uid://dip2lxuhdo4s8"]
 
 [ext_resource type="Script" uid="uid://3wt6iiyy6kkq" path="res://HomePage.gd" id="1_1h7vm"]
 [ext_resource type="Theme" uid="uid://6bg4j0jgclno" path="res://themeHomePagefont32.tres" id="1_k1fio"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_k1fio"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_b8wn7"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hhlmr"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ctv2x"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d4t8q"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_i8ueo"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
 
 [node name="HomePage" type="Control"]
 layout_mode = 3
@@ -29,405 +65,71 @@ anchor_bottom = 1.0
 offset_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 2
+horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 3
 
-[node name="TitleLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="StreakRow" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "Today's Nutrition"
+alignment = 1
 
-[node name="DateLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="StreakLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
 
-[node name="CaloriesBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="FreezesLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
 layout_mode = 2
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
 
-[node name="CaloriesLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CaloriesBar"]
+[node name="PYLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
 layout_mode = 2
-text = "Calories"
+theme_override_font_sizes/font_size = 48
+horizontal_alignment = 1
 
-[node name="CaloriesValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CaloriesBar"]
+[node name="QuestsCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "0 kcal"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_k1fio")
 
-[node name="ProteinBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/QuestsCard"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="ProteinLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/ProteinBar"]
+[node name="MealHistoryCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "Protein"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_b8wn7")
 
-[node name="ProteinValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/ProteinBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/MealHistoryCard"]
 layout_mode = 2
-text = "0 g"
 
-[node name="FatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="MacroCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hhlmr")
 
-[node name="FatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/FatBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/MacroCard"]
 layout_mode = 2
-text = "Fat"
 
-[node name="FatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/FatBar"]
+[node name="MicroCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "0 g"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ctv2x")
 
-[node name="SaturatedFatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/MicroCard"]
 layout_mode = 2
 
-[node name="SaturatedFatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SaturatedFatBar"]
+[node name="WaterCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-text = "Saturated"
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d4t8q")
 
-[node name="SaturatedFatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SaturatedFatBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/WaterCard"]
 layout_mode = 2
-text = "0 g"
 
-[node name="MonoFatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
+[node name="TipsCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_i8ueo")
 
-[node name="MonoFatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MonoFatBar"]
-layout_mode = 2
-text = "Mono"
-
-[node name="MonoFatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MonoFatBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="PolyFatBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PolyFatLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyFatBar"]
-layout_mode = 2
-text = "Poly"
-
-[node name="PolyFatValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyFatBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="CarbsBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CarbsLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CarbsBar"]
-layout_mode = 2
-text = "Carbs"
-
-[node name="CarbsValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CarbsBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="FiberBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="FiberLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/FiberBar"]
-layout_mode = 2
-text = "Fiber"
-
-[node name="FiberValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/FiberBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="CalciumBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CalciumLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CalciumBar"]
-layout_mode = 2
-text = "Calcium"
-
-[node name="CalciumValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CalciumBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="OxalatesBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="OxalatesLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/OxalatesBar"]
-layout_mode = 2
-text = "Oxalates"
-
-[node name="OxalatesValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/OxalatesBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="OxalatePenaltyLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="GoalLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PointsLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HSeparator" type="HSeparator" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="WaterTitle" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "💧 Water Intake"
-
-[node name="WaterGoalLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Goal: 2.5 L"
-
-[node name="WaterBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="WaterProgress" type="Label" parent="Panel/ScrollContainer/VBoxContainer/WaterBar"]
-layout_mode = 2
-text = "0.0 / 2.5 L"
-
-[node name="WaterPoints" type="Label" parent="Panel/ScrollContainer/VBoxContainer/WaterBar"]
-layout_mode = 2
-text = "💧 +0 pts"
-
-[node name="WaterButtonsRow" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Water100Btn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
-layout_mode = 2
-text = "+100 mL"
-
-[node name="Water250Btn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
-layout_mode = 2
-text = "+250 mL"
-
-[node name="Water500Btn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
-layout_mode = 2
-text = "+500 mL"
-
-[node name="WaterResetBtn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/WaterButtonsRow"]
-layout_mode = 2
-text = "Reset"
-
-[node name="Divider" type="HSeparator" parent="Panel/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 37.47)
-layout_mode = 2
-
-[node name="FoodsEatenTitle" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-text = "Foods eaten today:"
-
-[node name="FoodsEatenList" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 572.49)
-layout_mode = 2
-theme = ExtResource("1_k1fio")
-
-[node name="SugarBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="SugarLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SugarBar"]
-layout_mode = 2
-text = "Sugar"
-
-[node name="SugarValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SugarBar"]
-layout_mode = 2
-text = "0 g"
-
-[node name="IronBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="IronLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IronBar"]
-layout_mode = 2
-text = "Iron"
-
-[node name="IronValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IronBar"]
-layout_mode = 2
-text = "0 mg"
-
-[node name="CopperBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="CopperLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CopperBar"]
-layout_mode = 2
-text = "Copper"
-
-[node name="CopperValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/CopperBar"]
-layout_mode = 2
-text = "0 mg"
-
-[node name="SeleniumBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="SeleniumLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SeleniumBar"]
-layout_mode = 2
-text = "Selenium"
-
-[node name="SeleniumValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SeleniumBar"]
-layout_mode = 2
-text = "0 mcg"
-
-[node name="SodiumBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="SodiumLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SodiumBar"]
-layout_mode = 2
-text = "Sodium"
-
-[node name="SodiumValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/SodiumBar"]
-layout_mode = 2
-text = "0 mg"
-
-[node name="VitABar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitALabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitABar"]
-layout_mode = 2
-text = "Vitamin A"
-
-[node name="VitAValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitABar"]
-layout_mode = 2
-
-[node name="VitCBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitCLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitCBar"]
-layout_mode = 2
-text = "Vitamin C"
-
-[node name="VitCValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitCBar"]
-layout_mode = 2
-
-[node name="VitDBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitDLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitDBar"]
-layout_mode = 2
-text = "Vitamin D"
-
-[node name="VitDValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitDBar"]
-layout_mode = 2
-
-[node name="VitEBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitELabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitEBar"]
-layout_mode = 2
-text = "Vitamin E"
-
-[node name="VitEValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitEBar"]
-layout_mode = 2
-
-[node name="VitK2Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitK2Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitK2Bar"]
-layout_mode = 2
-text = "Vitamin K2"
-
-[node name="VitK2Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitK2Bar"]
-layout_mode = 2
-
-[node name="VitB6Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitB6Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB6Bar"]
-layout_mode = 2
-text = "Vitamin B6"
-
-[node name="VitB6Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB6Bar"]
-layout_mode = 2
-
-[node name="VitB9Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitB9Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB9Bar"]
-layout_mode = 2
-text = "Vitamin B9"
-
-[node name="VitB9Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB9Bar"]
-layout_mode = 2
-
-[node name="VitB12Bar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="VitB12Label" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB12Bar"]
-layout_mode = 2
-text = "Vitamin B12"
-
-[node name="VitB12Value" type="Label" parent="Panel/ScrollContainer/VBoxContainer/VitB12Bar"]
-layout_mode = 2
-
-[node name="MgBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="MgLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MgBar"]
-layout_mode = 2
-text = "Mg"
-
-[node name="MgValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/MgBar"]
-layout_mode = 2
-
-[node name="KBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="KLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KBar"]
-layout_mode = 2
-text = "K"
-
-[node name="KValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/KBar"]
-layout_mode = 2
-
-[node name="ZnBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ZnLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/ZnBar"]
-layout_mode = 2
-text = "Zn"
-
-[node name="ZnValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/ZnBar"]
-layout_mode = 2
-
-[node name="IBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="ILabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IBar"]
-layout_mode = 2
-text = "I"
-
-[node name="IValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/IBar"]
-layout_mode = 2
-
-[node name="BetaCarBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="BetaCarLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BetaCarBar"]
-layout_mode = 2
-text = "Beta Car"
-
-[node name="BetaCarValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/BetaCarBar"]
-layout_mode = 2
-
-[node name="LycoBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="LycoLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/LycoBar"]
-layout_mode = 2
-text = "Lyco"
-
-[node name="LycoValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/LycoBar"]
-layout_mode = 2
-
-[node name="QuercBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="QuercLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/QuercBar"]
-layout_mode = 2
-text = "Querc"
-
-[node name="QuercValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/QuercBar"]
-layout_mode = 2
-
-[node name="PolyphenBar" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PolyphenLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyphenBar"]
-layout_mode = 2
-text = "Polyphen"
-
-[node name="PolyphenValue" type="Label" parent="Panel/ScrollContainer/VBoxContainer/PolyphenBar"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/TipsCard"]
 layout_mode = 2

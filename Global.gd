@@ -1,5 +1,16 @@
 extends Node
 
+signal any_button_pressed
+signal py_awarded(amount: int, reason: String)
+signal streak_milestone_reached(days: int)
+signal quest_completed(quest: Dictionary)
+
+var py_currency: int = 0
+var today_quests: Array = []      # [{id, description, target, progress, completed, pts, gems}]
+var completed_quest_ids: Array = []
+var quest_date: String = ""
+var gems: int = 0                 # accumulated gem currency
+
 var base_kcal_goal: float = 0.0  # always the raw tdee-adjusted goal, never modified
 var adjusted_kcal_goal: float = 0.0
 # ── Body metrics (set from SettingsPage) ──
@@ -33,6 +44,12 @@ var hide_red_warnings: bool = false
 
 var metabolic_risk_levels: Dictionary = {}
 var conditions_data: Dictionary = {}
+
+var daily_streak: int = 0
+var last_streak_date: String = ""
+var streak_freeze_count: int = 1  # starts with 1 free freeze
+var _last_celebrated_milestone: int = 0
+
 
 var metabolic_warnings_data = {
 
@@ -235,7 +252,6 @@ var metabolic_warnings_data = {
 	},
 }
 
-signal any_button_pressed
 
 func calculate_water_recommendation() -> float:
 	var is_female = body_metrics.get("is_female", false)
@@ -472,7 +488,7 @@ func calculate_adjusted_kcal_goal() -> Dictionary:
 	# ── Hard floor: never below BMR ───────────────────────────────────────
 	if adjusted < bmr and bmr > 0:
 		adjusted = bmr
-		notes.append("Floor: BMR minimum (" + str(snappedf(bmr, 0)) + " kcal)")
+		notes.append("⚠️ Floor enforced: goal cannot go below BMR (" + str(snappedf(bmr,0)) + " kcal) — this is your minimum safe intake")
 
 	return {"adjusted_goal": snappedf(adjusted, 1.0), "adjustments": notes}
 
@@ -888,6 +904,9 @@ func get_visible_micronutrients() -> Array:
 #  STARTUP
 # ─────────────────────────────────────────
 func _ready():
+	load_streak()
+	load_currency()
+	load_quests()
 	load_profile()
 	load_points()
 	load_body_metrics_from_file()
@@ -1317,3 +1336,427 @@ func get_condition_clinical_notes() -> Dictionary:
 		]
  
 	return notes
+
+func check_and_update_streak():
+	var today = Time.get_date_string_from_system()
+	var yesterday = _get_yesterday_string()
+
+	if last_streak_date == today:
+		return  # already logged today, streak intact
+
+	if last_streak_date == yesterday:
+		# Consecutive day — increment
+		daily_streak += 1
+	elif last_streak_date == "" or _days_between(last_streak_date, today) == 2:
+		# Missed exactly one day — check for freeze
+		if streak_freeze_count > 0:
+			streak_freeze_count -= 1
+			daily_streak += 1
+		else:
+			daily_streak = 1  # reset
+	else:
+		daily_streak = 1  # reset after long absence
+	
+	var milestones = [3, 7, 14, 30, 60, 100, 200, 365]
+	for m in milestones:
+		if daily_streak == m and _last_celebrated_milestone < m:
+			_last_celebrated_milestone = m
+			streak_milestone_reached.emit(m)
+
+
+	last_streak_date = today
+	save_streak()
+
+func save_streak():
+	var file = FileAccess.open("user://streak.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({
+		"daily_streak":              daily_streak,
+		"last_streak_date":          last_streak_date,
+		"streak_freeze_count":       streak_freeze_count,
+		"last_celebrated_milestone": _last_celebrated_milestone
+	}))
+	file.close()
+
+func load_streak():
+	if not FileAccess.file_exists("user://streak.json"): return
+	var file = FileAccess.open("user://streak.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data: return
+	daily_streak              = data.get("daily_streak", 0)
+	last_streak_date          = data.get("last_streak_date", "")
+	streak_freeze_count       = data.get("streak_freeze_count", 1)
+	_last_celebrated_milestone = data.get("last_celebrated_milestone", 0)
+
+func _get_yesterday_string() -> String:
+	var unix = Time.get_unix_time_from_system() - 86400
+	var dt   = Time.get_datetime_dict_from_unix_time(unix)
+	return "%04d-%02d-%02d" % [dt.year, dt.month, dt.day]
+
+func _days_between(date_a: String, date_b: String) -> int:
+	# Parse both strings and compute difference in days
+	var a = date_a.split("-")
+	var b = date_b.split("-")
+	var unix_a = Time.get_unix_time_from_datetime_dict({
+		"year":int(a[0]),"month":int(a[1]),"day":int(a[2]),
+		"hour":12,"minute":0,"second":0
+	})
+	var unix_b = Time.get_unix_time_from_datetime_dict({
+		"year":int(b[0]),"month":int(b[1]),"day":int(b[2]),
+		"hour":12,"minute":0,"second":0
+	})
+	return int(abs(unix_b - unix_a) / 86400)
+	
+func save_currency():
+	var file = FileAccess.open("user://currency.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({
+		"py": py_currency,
+		"last_streak_milestone": _last_celebrated_milestone
+	}))
+	file.close()
+
+func load_currency():
+	if not FileAccess.file_exists("user://currency.json"): return
+	var file = FileAccess.open("user://currency.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data: return
+	py_currency = data.get("py", 0)
+	_last_celebrated_milestone = data.get("last_streak_milestone", 0)
+
+func award_py(amount: int, reason: String = ""):
+	py_currency += amount
+	save_currency()
+	py_awarded.emit(amount, reason)
+
+
+func generate_daily_quests():
+	var today = Time.get_date_string_from_system()
+	# Use date as seed so quests are deterministic for a given day
+	seed(today.hash())
+	var all_quests = _get_all_quest_definitions()
+	all_quests.shuffle()
+	today_quests = all_quests.slice(0, 3)
+
+func _get_all_quest_definitions() -> Array:
+	return [
+		{"id":"water_2l",   "desc":"Drink 2L of water",           "field":"water_ml",     "target":2000, "pts":2, "gems":5},
+		{"id":"vit_d",      "desc":"Eat a food with Vitamin D",   "field":"vitamin_d_mcg","target":5,    "pts":1, "gems":3},
+		{"id":"fiber",      "desc":"Hit your fiber goal",         "field":"fiber_g",      "target":-1,   "pts":1, "gems":3},
+		{"id":"lycopene",   "desc":"Eat a lycopene-rich food",    "field":"lycopene_mcg", "target":1000, "pts":1, "gems":3},
+		{"id":"vegetables", "desc":"Eat 3 different vegetables",  "field":"veg_count",    "target":3,    "pts":2, "gems":5},
+		{"id":"kcal_goal",  "desc":"Stay within 10% of kcal goal","field":"kcal_ratio",   "target":1,    "pts":3, "gems":8},
+		{"id":"5_micros",   "desc":"Hit 5 micronutrient RDAs",    "field":"micro_count",  "target":5,    "pts":5, "gems":15},
+		{"id":"streak",     "desc":"Maintain your streak",        "field":"streak",       "target":1,    "pts":1, "gems":10},
+		{"id":"shopping",   "desc":"Add 5 items to shopping list","field":"shop_count",   "target":5,    "pts":1, "gems":2},
+		{"id":"meal_plan",  "desc":"Plan a meal",                 "field":"meal_planned", "target":1,    "pts":2, "gems":5},
+	]
+	
+func get_personalized_quests() -> Array:
+	var today = Time.get_date_string_from_system()
+	if quest_date == today and not today_quests.is_empty():
+		return today_quests
+
+	quest_date = today
+	completed_quest_ids.clear()
+	seed(today.hash() + daily_streak)  # seed varies by streak so quests feel fresh
+
+	var pool = _build_quest_pool()
+	pool.shuffle()
+
+	# Separate into tiers
+	var core_quests   = pool.filter(func(q): return q.get("tier") == "core")
+	var bonus_quests  = pool.filter(func(q): return q.get("tier") == "bonus")
+
+	# Always give 3 core + 2 bonus
+	today_quests = core_quests.slice(0, 3) + bonus_quests.slice(0, 2)
+	save_quests()
+	return today_quests
+
+func _build_quest_pool() -> Array:
+	var c   = active_metabolic_conditions
+	var bm  = body_metrics
+	var is_female = bm.get("is_female", false)
+	var weight    = bm.get("weight", 70.0)
+	var water_goal_ml = daily_water_liters * 1000.0
+	var pool: Array = []
+
+	# ── UNIVERSAL CORE QUESTS (everyone gets these in pool) ──
+	pool.append({
+		"id": "streak_maintain",
+		"desc": "Log at least one meal today",
+		"tier": "core", "py": 10,
+		"check": func(totals): return totals.get("calories", 0.0) > 50
+	})
+	pool.append({
+		"id": "water_goal",
+		"desc": "Reach your daily water goal (" + str(snappedf(daily_water_liters,1)) + "L)",
+		"tier": "core", "py": 10,
+		"check": func(totals): return totals.get("water_ml", 0.0) >= water_goal_ml
+	})
+	pool.append({
+		"id": "kcal_goal",
+		"desc": "Stay within 15% of your calorie goal",
+		"tier": "core", "py": 10,
+		"check": func(totals):
+			var goal = bm.get("daily_goal", 0.0)
+			if goal <= 0: return false
+			var kcal = totals.get("calories", 0.0)
+			return kcal >= goal * 0.85 and kcal <= goal * 1.15
+	})
+	pool.append({
+		"id": "fiber_goal",
+		"desc": "Hit your fiber goal",
+		"tier": "core", "py": 10,
+		"check": func(totals):
+			var goal = 25.0 if is_female else 38.0
+			return totals.get("fiber_g", 0.0) >= goal
+	})
+	pool.append({
+		"id": "protein_goal",
+		"desc": "Hit your protein goal (" + str(snappedf(weight * 0.8, 0)) + "g)",
+		"tier": "core", "py": 10,
+		"check": func(totals):
+			return totals.get("protein_g", 0.0) >= weight * 0.8
+	})
+	pool.append({
+		"id": "vit_c",
+		"desc": "Eat a food rich in Vitamin C",
+		"tier": "core", "py": 10,
+		"check": func(totals): return totals.get("vitamin_c_mg", 0.0) >= 30.0
+	})
+	pool.append({
+		"id": "eat_3_categories",
+		"desc": "Eat foods from 3 different categories",
+		"tier": "core", "py": 10,
+		"check": func(totals): return totals.get("_category_count", 0) >= 3
+	})
+
+	# ── CONDITION-SPECIFIC CORE QUESTS ──
+	if kidney_at_risk:
+		pool.append({
+			"id": "kidney_oxalate",
+			"desc": "Keep daily oxalates under 50mg",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("oxalate_mg", 0.0) < 50.0
+		})
+		pool.append({
+			"id": "kidney_water",
+			"desc": "Drink 2.5L+ of water today",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("water_ml", 0.0) >= 2500.0
+		})
+
+	if c.has("glycemic-health"):
+		pool.append({
+			"id": "glycemic_sugar",
+			"desc": "Keep added sugar under 25g",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("sugar_g", 0.0) < 25.0
+		})
+		pool.append({
+			"id": "glycemic_fiber",
+			"desc": "Eat 14g fiber per 1000 kcal",
+			"tier": "core", "py": 10,
+			"check": func(totals):
+				var kcal = totals.get("calories", 1.0)
+				var fiber = totals.get("fiber_g", 0.0)
+				return fiber >= (kcal / 1000.0) * 14.0
+		})
+
+	if c.has("nafld"):
+		pool.append({
+			"id": "nafld_no_alcohol",
+			"desc": "Avoid all alcohol today",
+			"tier": "core", "py": 10,
+			"check": func(totals): return true  # trust-based — no alcohol field
+		})
+		pool.append({
+			"id": "nafld_sat_fat",
+			"desc": "Keep saturated fat under 10g",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("saturated_fat_g", 0.0) < 10.0
+		})
+
+	if c.has("lipid-health"):
+		pool.append({
+			"id": "lipid_fiber",
+			"desc": "Eat 30g+ of fiber (heart-protective)",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("fiber_g", 0.0) >= 30.0
+		})
+
+	if c.has("osteoporosis"):
+		pool.append({
+			"id": "osteo_calcium",
+			"desc": "Hit 1200mg of calcium today",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("calcium_mg", 0.0) >= 1200.0
+		})
+		pool.append({
+			"id": "osteo_vit_d",
+			"desc": "Eat a food with Vitamin D",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("vitamin_d_mcg", 0.0) >= 5.0
+		})
+
+	if c.has("thyroid-health") or c.has("graves-disease"):
+		pool.append({
+			"id": "thyroid_selenium",
+			"desc": "Eat a selenium-rich food",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("selenium_mcg", 0.0) >= 30.0
+		})
+
+	if c.has("crohns-disease"):
+		pool.append({
+			"id": "crohns_small_meals",
+			"desc": "Log 4+ separate meals/snacks today",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("_meal_count", 0) >= 4
+		})
+
+	if c.has("epi"):
+		pool.append({
+			"id": "epi_kcal",
+			"desc": "Hit 32.5 kcal/kg target (" + str(snappedf(weight * 32.5, 0)) + " kcal)",
+			"tier": "core", "py": 10,
+			"check": func(totals):
+				return totals.get("calories", 0.0) >= weight * 30.0
+		})
+
+	if c.has("hemochromatosis"):
+		pool.append({
+			"id": "hemo_no_vit_c",
+			"desc": "Keep Vitamin C under 75mg today",
+			"tier": "core", "py": 10,
+			"check": func(totals): return totals.get("vitamin_c_mg", 0.0) <= 75.0
+		})
+
+	# ── BONUS QUESTS (optional, 30 PY) ──
+	pool.append({
+		"id": "bonus_vit_d",
+		"desc": "Hit your full Vitamin D RDA",
+		"tier": "bonus", "py": 30,
+		"check": func(totals): return totals.get("vitamin_d_mcg", 0.0) >= 15.0
+	})
+	pool.append({
+		"id": "bonus_rainbow",
+		"desc": "Eat 5+ different food categories",
+		"tier": "bonus", "py": 30,
+		"check": func(totals): return totals.get("_category_count", 0) >= 5
+	})
+	pool.append({
+		"id": "bonus_polyphenols",
+		"desc": "Eat 500mg+ of polyphenols",
+		"tier": "bonus", "py": 30,
+		"check": func(totals): return totals.get("total_polyphenols_mg", 0.0) >= 500.0
+	})
+	pool.append({
+		"id": "bonus_lycopene",
+		"desc": "Eat a lycopene-rich food (tomato, watermelon)",
+		"tier": "bonus", "py": 30,
+		"check": func(totals): return totals.get("lycopene_mcg", 0.0) >= 2000.0
+	})
+	pool.append({
+		"id": "bonus_b12",
+		"desc": "Hit your Vitamin B12 RDA",
+		"tier": "bonus", "py": 30,
+		"check": func(totals): return totals.get("vitamin_b12_mcg", 0.0) >= 2.4
+	})
+	pool.append({
+		"id": "bonus_magnesium",
+		"desc": "Hit your magnesium goal",
+		"tier": "bonus", "py": 30,
+		"check": func(totals):
+			var goal = 310.0 if is_female else 400.0
+			return totals.get("magnesium_mg", 0.0) >= goal
+	})
+	pool.append({
+		"id": "bonus_water_extra",
+		"desc": "Drink 500mL beyond your water goal",
+		"tier": "bonus", "py": 30,
+		"check": func(totals): return totals.get("water_ml", 0.0) >= water_goal_ml + 500.0
+	})
+
+	# ── CONDITION-SPECIFIC BONUS QUESTS ──
+	if c.has("nafld"):
+		pool.append({
+			"id": "bonus_nafld_vit_e",
+			"desc": "Eat 15mg+ Vitamin E today (NAFLD support)",
+			"tier": "bonus", "py": 30,
+			"check": func(totals): return totals.get("vitamin_e_mg", 0.0) >= 15.0
+		})
+
+	if c.has("glycemic-health"):
+		pool.append({
+			"id": "bonus_glycemic_quercetin",
+			"desc": "Eat quercetin-rich foods (10mg+)",
+			"tier": "bonus", "py": 30,
+			"check": func(totals): return totals.get("quercetin_mg", 0.0) >= 10.0
+		})
+
+	if c.has("lipid-health"):
+		pool.append({
+			"id": "bonus_lipid_lycopene",
+			"desc": "Eat 8000mcg+ lycopene (cardioprotective)",
+			"tier": "bonus", "py": 30,
+			"check": func(totals): return totals.get("lycopene_mcg", 0.0) >= 8000.0
+		})
+
+	if c.has("osteoporosis"):
+		pool.append({
+			"id": "bonus_osteo_k2",
+			"desc": "Eat a food with Vitamin K2",
+			"tier": "bonus", "py": 30,
+			"check": func(totals): return totals.get("vitamin_k2_mcg", 0.0) >= 10.0
+		})
+
+	return pool
+
+func check_quests(today_totals: Dictionary):
+	for quest in today_quests:
+		var qid = quest.get("id","")
+		if completed_quest_ids.has(qid): continue
+		var check_fn = quest.get("check", null)
+		if check_fn == null: continue
+		if check_fn.call(today_totals):
+			completed_quest_ids.append(qid)
+			var py = quest.get("py", 10)
+			award_py(py, quest.get("desc",""))
+			quest_completed.emit(quest)
+	save_quests()
+
+func save_quests():
+	var saveable = []
+	for quest in today_quests:
+		var q = quest.duplicate()
+		q.erase("check")  # Callables can't be serialized
+		saveable.append(q)
+	var file = FileAccess.open("user://quests.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({
+		"date": quest_date,
+		"quests": today_quests,
+		"completed": completed_quest_ids
+	}))
+	file.close()
+
+func load_quests():
+	if not FileAccess.file_exists("user://quests.json"): return
+	var file = FileAccess.open("user://quests.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data: return
+	var today = Time.get_date_string_from_system()
+	if data.get("date","") != today: return  # stale — regenerate
+	quest_date = data.get("date","")
+	today_quests = data.get("quests",[])
+	completed_quest_ids = data.get("completed",[])
+	var pool = _build_quest_pool()
+	var pool_by_id: Dictionary = {}
+	for q in pool:
+		pool_by_id[q["id"]] = q
+	for quest in today_quests:
+		var qid = quest.get("id","")
+		if pool_by_id.has(qid) and pool_by_id[qid].has("check"):
+			quest["check"] = pool_by_id[qid]["check"]
