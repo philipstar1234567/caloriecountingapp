@@ -21,97 +21,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-custom_minimum_size = Vector2(400, 400)
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -588.0
-offset_right = 581.0
-offset_bottom = 715.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer"]
+custom_minimum_size = Vector2(1170, 1000)
 layout_mode = 2
-text = "Leaderboard"
+
+[node name="SeasonLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PeriodTabs" type="TabContainer" parent="Panel/VBoxContainer"]
+[node name="LeagueName" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LevelLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StreakLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PYLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeagueBar" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BadgesLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/ScrollContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LeaderboardTabs" type="TabContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
 tab_alignment = 1
-current_tab = 1
+current_tab = 2
 
-[node name="TodayPanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
+[node name="TodayScroll" type="ScrollContainer" parent="Panel/ScrollContainer/VBoxContainer/LeaderboardTabs"]
 visible = false
-custom_minimum_size = Vector2(0, 119.39)
+custom_minimum_size = Vector2(0, 1000)
 layout_mode = 2
 metadata/_tab_index = 0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/TodayPanel"]
-layout_mode = 0
-offset_left = 285.0
-offset_top = 3.0
-offset_right = 712.0
-offset_bottom = 197.0
-
-[node name="PointsLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/TodayPanel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/LeaderboardTabs/TodayScroll"]
+custom_minimum_size = Vector2(1170, 1000)
 layout_mode = 2
-text = "⭐ 0 points"
 
-[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/TodayPanel/VBoxContainer"]
-layout_mode = 2
-text = "stay healthy? get healthy?"
-
-[node name="WeekPanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
-custom_minimum_size = Vector2(0, 585.465)
+[node name="WeekScroll" type="ScrollContainer" parent="Panel/ScrollContainer/VBoxContainer/LeaderboardTabs"]
+visible = false
+custom_minimum_size = Vector2(0, 1000)
 layout_mode = 2
 metadata/_tab_index = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel"]
-layout_mode = 0
-offset_left = 4.0
-offset_top = 12.0
-offset_right = 1172.0
-offset_bottom = 391.0
-
-[node name="PointsLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel/VBoxContainer"]
-layout_mode = 2
-text = "⭐ 0 points"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="DaysList" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 281.24)
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/LeaderboardTabs/WeekScroll"]
+custom_minimum_size = Vector2(1170, 1000)
 layout_mode = 2
 
-[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/WeekPanel/VBoxContainer"]
-layout_mode = 2
-
-[node name="AllTimePanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
-visible = false
-custom_minimum_size = Vector2(0, 180.93)
+[node name="AllTimeScroll" type="ScrollContainer" parent="Panel/ScrollContainer/VBoxContainer/LeaderboardTabs"]
+custom_minimum_size = Vector2(0, 1000)
 layout_mode = 2
 metadata/_tab_index = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel"]
-layout_mode = 0
-offset_left = 383.0
-offset_right = 1169.0
-offset_bottom = 173.0
-
-[node name="PointsLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel/VBoxContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/ScrollContainer/VBoxContainer/LeaderboardTabs/AllTimeScroll"]
+custom_minimum_size = Vector2(1170, 1000)
 layout_mode = 2
-text = "⭐ 0 points"
-horizontal_alignment = 1
-
-[node name="BestDayLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel/VBoxContainer"]
-layout_mode = 2
-text = "Best day: X pts"
-horizontal_alignment = 1
-
-[node name="MessageLabel" type="Label" parent="Panel/VBoxContainer/PeriodTabs/AllTimePanel/VBoxContainer"]
-layout_mode = 2
-text = ":P"
-horizontal_alignment = 1

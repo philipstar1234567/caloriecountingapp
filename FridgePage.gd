@@ -661,15 +661,16 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	row.add_child(name_label)
 
 	if not active_filters.is_empty():
-		var val_text = ""
+		var val_vbox = VBoxContainer.new()  # ← VBox instead of inline text
+		val_vbox.add_theme_constant_override("separation", 2)
+		row.add_child(val_vbox)
 		for key in active_filters:
-			var val = food.get(key, 0.0)
-			var label = _get_filter_label(key)
-			val_text += label + ": " + str(snappedf(val, 0.1)) + " "
-		var val_lbl = Label.new()
-		val_lbl.text = val_text.strip_edges()
-		val_lbl.add_theme_font_size_override("font_size", 40)
-		row.add_child(val_lbl)
+			var val    = food.get(key, 0.0)
+			var lbl_text = _get_filter_label(key) + ": " + _format_field_value(key, val)
+			var val_lbl = Label.new()
+			val_lbl.text = lbl_text
+			val_lbl.add_theme_font_size_override("font_size", 30)
+			val_vbox.add_child(val_lbl)
 	else:
 		var amount = Label.new()
 		amount.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
@@ -1195,19 +1196,69 @@ func _build_page_dots():
 		dots_container.add_child(dot)
 
 func _throw_out_current_page():
+	var existing = get_node_or_null("ThrowOutConfirm")
+	if existing: existing.queue_free()
+
+	var backdrop = ColorRect.new()
+	backdrop.name = "ThrowOutConfirm"
+	backdrop.color = Color(0.0, 0.0, 0.0, 0.6)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.z_index = 100
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(backdrop)
+
+	var panel = PanelContainer.new()
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_LEFT)
+	panel.custom_minimum_size = Vector2(900, 350)
+	backdrop.add_child(panel)
+	panel.position.x += 130
+	panel.position.y -= 150
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 80)
+	panel.add_child(vbox)
+
+	var msg = Label.new()
+	msg.text = " Are you sure you want to throw\n out all the empty items on this page?"
+	msg.add_theme_font_size_override("font_size", 48)
+	msg.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(msg)
+
+	var btn_row = HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 12)
+	vbox.add_child(btn_row)
+
+	var yes_btn = Button.new()
+	yes_btn.text = "Yes, throw out"
+	yes_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	yes_btn.custom_minimum_size = Vector2(0, 130)
+	yes_btn.add_theme_font_size_override("font_size", 48)
+	yes_btn.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+	yes_btn.pressed.connect(func():
+		backdrop.queue_free()
+		_do_throw_out_current_page()
+	)
+	btn_row.add_child(yes_btn)
+
+	var no_btn = Button.new()
+	no_btn.text = "No, keep them"
+	no_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	no_btn.custom_minimum_size = Vector2(0, 130)
+	no_btn.add_theme_font_size_override("font_size", 48)
+	no_btn.pressed.connect(func(): backdrop.queue_free())
+	btn_row.add_child(no_btn)
+
+func _do_throw_out_current_page():
 	var start = current_page * ITEMS_PER_PAGE
 	var end   = min(start + ITEMS_PER_PAGE, fridge_foods.size())
 	var page_items = fridge_foods.slice(start, end)
-
 	for slot in page_items:
 		var iid = slot.get("_iid","")
 		var w   = fridge_weights.get(iid, {})
-		# Only throw out items that are at 0g — they are already consumed
 		if w.get("remaining_g", 1.0) <= 0.0:
 			fridge_foods = fridge_foods.filter(func(f): return f.get("_iid","") != iid)
 			fridge_weights.erase(iid)
 			fridge_overrides.erase(iid)
-
 	if current_page >= _get_total_pages():
 		current_page = max(0, _get_total_pages() - 1)
 	save_fridge()
@@ -2264,13 +2315,16 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 
 	# Show active filter values
 	if not meal_active_filters.is_empty():
-		var val_text = ""
+		var val_vbox = VBoxContainer.new()
+		val_vbox.add_theme_constant_override("separation", 2)
+		row.add_child(val_vbox)
 		for key in meal_active_filters:
-			val_text += _get_filter_label(key) + ": " + str(snappedf(food.get(key,0.0),0.1)) + " "
-		var val_lbl = Label.new()
-		val_lbl.text = val_text.strip_edges()
-		val_lbl.add_theme_font_size_override("font_size", 40)
-		row.add_child(val_lbl)
+			var val    = food.get(key, 0.0)
+			var lbl_text = _get_filter_label(key) + ": " + _format_field_value(key, val)
+			var val_lbl = Label.new()
+			val_lbl.text = lbl_text
+			val_lbl.add_theme_font_size_override("font_size", 30)
+			val_vbox.add_child(val_lbl)
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"

@@ -77,6 +77,9 @@ layout_mode = 2
 theme_override_constants/separation = 60
 alignment = 1
 
+[node name="LevelLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
+layout_mode = 2
+
 [node name="StreakLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 48

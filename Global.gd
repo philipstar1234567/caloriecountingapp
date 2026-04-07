@@ -1451,6 +1451,7 @@ func check_and_update_streak():
 			streak_milestone_reached.emit(m)
 
 
+
 	last_streak_date = today
 	load_badges()
 	save_streak()

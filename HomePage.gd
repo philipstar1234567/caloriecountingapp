@@ -20,7 +20,7 @@ func _ready():
 	refresh_display()
 	Global.quest_completed.connect(func(_q): refresh_display())
 	Global.py_awarded.connect(func(_a, _r): _refresh_streak_row())
-
+	Global.streak_milestone_reached.connect(_on_streak_milestone)
 	
 func _notification(what):
 	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
@@ -91,6 +91,21 @@ func refresh_display():
 func _refresh_streak_row():
 	var row = $Panel/ScrollContainer/VBoxContainer/StreakRow
 	if not row: return
+
+	# Load level from LeaderboardPage if available, else from file
+	var level = 0
+	var lb = get_tree().root.get_node_or_null("Main/ContentArea/LeaderboardPage")
+	if lb: level = lb.user_level
+	else:
+		if FileAccess.file_exists("user://level.json"):
+			var f = FileAccess.open("user://level.json", FileAccess.READ)
+			var d = JSON.parse_string(f.get_as_text())
+			f.close()
+			if d: level = d.get("level", 0)
+
+	var level_lbl = row.get_node_or_null("LevelLabel")
+	if level_lbl:
+		level_lbl.text = "⚡ Lv." + str(level)
 
 	var streak = Global.daily_streak
 	var flame_color = Color.GRAY
@@ -1330,3 +1345,52 @@ func _get_week_averages() -> Dictionary:
 	for key in totals.keys():
 		totals[key] = totals[key] / days_found
 	return totals
+
+func _on_streak_milestone(days: int):
+	var milestone_names = {
+		3: "Spark 🔥", 7: "Flame 🔥🔥", 14: "Blaze 🌋",
+		30: "Inferno 🌋", 60: "Solar ☀️", 100: "Legendary 🏆",
+		200: "Mythic 💫", 365: "Eternal ✨"
+	}
+	var name = milestone_names.get(days, str(days) + " days")
+	_show_milestone_popup(name, days)
+
+func _show_milestone_popup(name: String, days: int):
+	var panel = PanelContainer.new()
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(320, 200)
+	panel.modulate.a = 0.0
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	panel.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "🎉 Streak Milestone!"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 28)
+	vbox.add_child(title)
+
+	var streak_lbl = Label.new()
+	streak_lbl.text = str(days) + " Days — " + name
+	streak_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	streak_lbl.add_theme_font_size_override("font_size", 32)
+	streak_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
+	vbox.add_child(streak_lbl)
+
+	var reward_lbl = Label.new()
+	reward_lbl.text = "+ " + str(days * 5) + " PY 💰"
+	reward_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	reward_lbl.add_theme_font_size_override("font_size", 26)
+	reward_lbl.add_theme_color_override("font_color", Color(0.4, 1.0, 0.4))
+	vbox.add_child(reward_lbl)
+
+	add_child(panel)
+	Global.py_currency += days * 5
+	Global.save_currency()
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.4)
+	tween.tween_interval(2.5)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): panel.queue_free())

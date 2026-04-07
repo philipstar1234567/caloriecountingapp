@@ -1398,9 +1398,10 @@ func _on_calculate_homa_ir():
 	homa_ir = snappedf(homa_ir, 0.01)
 
 	var result_lbl = get_node(GLYC + "ResultLabel")
+	var existing = result_lbl.text
 	var msg  = ""
 	var risk = ""
-
+	var homa_section = "━━ HOMA-IR ━━\n" + msg
 	if homa_ir >= 2.5:
 		risk = "insulin-resistant"
 		msg  = "🔴 HOMA-IR: " + str(homa_ir) + "\n" + \
@@ -1423,11 +1424,14 @@ func _on_calculate_homa_ir():
 		msg  = "✅ HOMA-IR: " + str(homa_ir) + " — Insulin sensitivity appears normal."
 
 	# Append to existing glycemic result label
-	var existing = result_lbl.text
+	if "━━ HOMA-IR ━━" in existing:
+		var parts = existing.split("━━ HOMA-IR ━━")
+		existing = parts[0].strip_edges()
+
 	if existing.is_empty() or existing == "—":
-		result_lbl.text = msg
+		result_lbl.text = homa_section
 	else:
-		result_lbl.text = existing + "\n\n" + msg
+		result_lbl.text = existing + "\n\n" + homa_section
 
 	_save_metabolic_inputs("glycemic", {
 		"hba1c":    _get_input(GLYC, "HbA1cInput").value,
