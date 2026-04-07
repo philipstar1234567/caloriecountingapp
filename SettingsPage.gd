@@ -277,6 +277,32 @@ const UNITS = {
 # Stores references to unit OptionButtons: { "field_key": OptionButton }
 var _unit_buttons: Dictionary = {}
 
+var _shared_field_values: Dictionary = {}
+# Keys: "tsh", "ft4", "ft3", "trab", "creatinine", etc.
+
+func _set_shared_value(key: String, value: float):
+	_shared_field_values[key] = value
+
+func _apply_shared_values():
+	# Map field key → all SpinBox node paths that use it
+	var field_map = {
+		"tsh":        [THYR + "InputFields/TSHInput", GRAVES + "InputFields/TSHInput"],
+		"ft4":        [THYR + "InputFields/FT4Input",  GRAVES + "InputFields/FT4Input"],
+		"ft3":        [GRAVES + "InputFields/FT3Input"],
+		"trigl":      [NAFLD + "InputFields/TriglInput", LIPID + "InputFields/TriglInput"],
+		"creatinine": [KIDNEY + "InputFields/CreatinineInput"],
+	}
+	for key in _shared_field_values.keys():
+		if not field_map.has(key): continue
+		var val = _shared_field_values[key]
+		for path in field_map[key]:
+			var node = get_node_or_null(path)
+			if not node: continue
+			var spin = node if node is SpinBox else node.find_child("", true, false)
+			if spin and spin is SpinBox:
+				spin.value = val
+
+
 func _get_input(path: String, node_name: String) -> SpinBox:
 	return get_node(path + "InputFields").find_child(node_name, true, false)
 
@@ -308,6 +334,7 @@ func _ready():
 	_add_unit_selector(GRAVES + "InputFields/FT3Input",  "ft3")
 	_add_unit_selector(GRAVES + "InputFields/TSHInput",  "tsh")   # reuse existing tsh key
 	
+	get_node(GLYC + "InputFields/InsulinResistanceRow/IRCalculateBtn").pressed.connect(_on_calculate_homa_ir)
 	# red warning
 	get_node(BASE + "HideRedWarningsRow/HideRedCheck").toggled.connect(func(checked):
 		Global.hide_red_warnings = checked
@@ -391,6 +418,9 @@ func _ready():
 	load_body_metrics()
 	load_metabolic_ui()
 
+	var temp_opt = get_node(BASE + "TempUnitRow/TempUnitOption")
+	if temp_opt:
+		temp_opt.selected = 1 if Global.use_fahrenheit else 0
 # ─────────────────────────────────────────
 #  UNIT SELECTOR — adds OptionButton next to SpinBox
 # ─────────────────────────────────────────
@@ -736,11 +766,13 @@ func _on_calculate_nafld():
 	var alt        = _convert(_get_input(NAFLD, "ALTInput").value, "alt")
 	var ast        = _convert(_get_input(NAFLD, "ASTInput").value, "ast")
 	var trigl      = _convert(_get_input(NAFLD, "TriglInput").value, "trigl")
+	_set_shared_value("trigl", _get_input(NAFLD, "TriglInput").value)
 	var is_female  = Global.body_metrics.get("is_female", false)
 	var result_lbl = get_node(NAFLD + "ResultLabel")
 	var alt_upper  = 30.0 if is_female else 63.0
 	var risk = "normal"
 	var msg  = ""
+	_apply_shared_values()
 
 	if alt > alt_upper * 2 or ast > 60 or trigl > 150:
 		risk = "elevated"
@@ -753,7 +785,7 @@ func _on_calculate_nafld():
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("nafld", risk)
-	if risk != "normal":
+	if risk == "elevated" or risk == "borderline":
 		Global.set_metabolic_condition("nafld", true)
 	_save_metabolic_inputs("nafld", {
 		"alt": _get_input(NAFLD, "ALTInput").value,
@@ -814,7 +846,7 @@ func _on_calculate_lipid():
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("lipid-health", risk)
-	if risk != "normal":
+	if risk == "high" or risk == "borderline":
 		Global.set_metabolic_condition("lipid-health", true)
 	_save_metabolic_inputs("lipid", {
 		"tchol": _get_input(LIPID, "TotalCholInput").value,
@@ -833,11 +865,14 @@ func _on_calculate_lipid():
 # ─────────────────────────────────────────
 func _on_calculate_thyroid():
 	var tsh        = _convert(_get_input(THYR, "TSHInput").value, "tsh")
+	_set_shared_value("tsh", _get_input(THYR, "TSHInput").value)
 	var ft4        = _convert(_get_input(THYR, "FT4Input").value, "ft4")
+	_set_shared_value("ft4", _get_input(THYR, "FT4Input").value)
 	var tpo_pos    = get_node(THYR + "InputFields").find_child("TPOPositive", true, false).button_pressed
 	var result_lbl = get_node(THYR + "ResultLabel")
 	var risk = "normal"
 	var msg  = ""
+	_apply_shared_values()
 
 	if tsh > 5.0 and ft4 < 0.7:
 		risk = "hypothyroid"
@@ -893,7 +928,7 @@ func _on_calculate_osteo():
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("osteoporosis", risk)
-	if risk != "normal":
+	if risk == "high-turnover" or risk == "borderline":
 		Global.set_metabolic_condition("osteoporosis", true)
 	_save_metabolic_inputs("osteo", {
 		"ctx": _get_input(OSTEO, "CTxInput").value,
@@ -926,7 +961,7 @@ func _on_calculate_hemo():
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("hemochromatosis", risk)
-	if risk != "normal":
+	if risk == "overload" or risk == "borderline":
 		Global.set_metabolic_condition("hemochromatosis", true)
 	_save_metabolic_inputs("hemo", {
 		"tsat": _get_input(HEMO, "TsatInput").value,
@@ -938,8 +973,12 @@ func _on_calculate_hemo():
 func _on_calculate_graves():
 	var trab_raw = _get_input(GRAVES, "TRAbInput").value
 	var ft4_raw  = _get_input(GRAVES, "FT4Input").value
+	_set_shared_value("ft4", _get_input(GRAVES, "FT4Input").value)
 	var ft3_raw  = _get_input(GRAVES, "FT3Input").value
+	_set_shared_value("ft3", _get_input(GRAVES, "FT3Input").value)
 	var tsh_raw  = _get_input(GRAVES, "TSHInput").value
+	_set_shared_value("tsh", _get_input(GRAVES, "TSHInput").value)
+	_apply_shared_values()
 
 	# Convert to standard units
 	var trab = _convert(trab_raw, "trab")
@@ -1036,7 +1075,7 @@ func _on_calculate_wilson():
 
 	result_lbl.text = msg
 	Global.set_metabolic_risk("wilsons-disease", risk)
-	if risk != "normal":
+	if risk == "likely" or risk == "suspicious":
 		Global.set_metabolic_condition("wilsons-disease", true)
 	_save_metabolic_inputs("wilson", {
 		"cerul": _get_input(WILS, "CerulInput").value,
@@ -1204,6 +1243,7 @@ func load_metabolic_ui():
 	_restore_gi_checkbox(LACT,   "KnownLactose",   "lactose-intolerance")
 	_restore_gi_checkbox(EPI,    "KnownEPI",       "epi")
 	_restore_gi_checkbox(CHOLE,  "KnownCholecyst", "post-cholecystectomy")
+	_apply_shared_values()
 
 func _restore_gi_checkbox(path: String, node_name: String, condition: String):
 	var is_known = Global.known_diagnoses.has(condition)
@@ -1347,3 +1387,53 @@ func _add_panel_reset_button(path: String, condition: String, default_values: Di
 
 func _celsius_to_f(c: float) -> float:
 	return c * 9.0 / 5.0 + 32.0
+
+func _on_calculate_homa_ir():
+	var insulin_raw = get_node(GLYC + "InputFields/InsulinResistanceRow/InsulinInputRow/InsulinInput").value
+	var glucose_raw = _get_input(GLYC, "FPGInput").value
+	var glucose_mgdl = _convert(glucose_raw, "fpg")  # convert to mg/dL
+
+	# HOMA-IR = (fasting insulin µIU/mL × fasting glucose mg/dL) / 405
+	var homa_ir = (insulin_raw * glucose_mgdl) / 405.0
+	homa_ir = snappedf(homa_ir, 0.01)
+
+	var result_lbl = get_node(GLYC + "ResultLabel")
+	var msg  = ""
+	var risk = ""
+
+	if homa_ir >= 2.5:
+		risk = "insulin-resistant"
+		msg  = "🔴 HOMA-IR: " + str(homa_ir) + "\n" + \
+			"Insulin resistance detected (≥2.5).\n" + \
+			"• Increase dietary fiber and reduce refined carbohydrates.\n" + \
+			"• Prioritise low GI foods and resistant starch.\n" + \
+			"• Physical activity improves insulin sensitivity.\n" + \
+			"• Consider chromium picolinate 400 mcg/day.\n" + \
+			"Consult your doctor."
+		Global.set_metabolic_condition("glycemic-health", true)
+		Global.set_metabolic_risk("glycemic-health", "insulin-resistant")
+	elif homa_ir >= 1.7:
+		risk = "borderline"
+		msg  = "🟡 HOMA-IR: " + str(homa_ir) + "\n" + \
+			"Borderline insulin resistance (1.7–2.5).\n" + \
+			"• Reduce sugar and refined carbohydrates.\n" + \
+			"• Increase soluble fiber intake.\n" + \
+			"• 30 min of moderate exercise daily."
+	else:
+		msg  = "✅ HOMA-IR: " + str(homa_ir) + " — Insulin sensitivity appears normal."
+
+	# Append to existing glycemic result label
+	var existing = result_lbl.text
+	if existing.is_empty() or existing == "—":
+		result_lbl.text = msg
+	else:
+		result_lbl.text = existing + "\n\n" + msg
+
+	_save_metabolic_inputs("glycemic", {
+		"hba1c":    _get_input(GLYC, "HbA1cInput").value,
+		"fpg":      glucose_raw,
+		"insulin":  insulin_raw,
+		"homa_ir":  homa_ir,
+		"result":   result_lbl.text
+	})
+	_update_adjusted_goal_label()

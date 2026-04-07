@@ -4,12 +4,17 @@ signal any_button_pressed
 signal py_awarded(amount: int, reason: String)
 signal streak_milestone_reached(days: int)
 signal quest_completed(quest: Dictionary)
+signal badge_earned(badge: Dictionary)
+
+var last_report_date: String = ""
 
 var py_currency: int = 0
 var today_quests: Array = []      # [{id, description, target, progress, completed, pts, gems}]
 var completed_quest_ids: Array = []
 var quest_date: String = ""
 var gems: int = 0                 # accumulated gem currency
+
+var earned_badges: Array = []   # list of badge ids
 
 var base_kcal_goal: float = 0.0  # always the raw tdee-adjusted goal, never modified
 var adjusted_kcal_goal: float = 0.0
@@ -50,6 +55,82 @@ var last_streak_date: String = ""
 var streak_freeze_count: int = 1  # starts with 1 free freeze
 var _last_celebrated_milestone: int = 0
 
+#const ALL_BADGES = [
+	# ── Streak badges ──
+	#{"id":"streak_3",    "name":"Spark 🔥",        "desc":"3-day streak",            "tier":"bronze", "check": func(g): return g.daily_streak >= 3},
+	#{"id":"streak_7",    "name":"Flame 🔥🔥",      "desc":"7-day streak",            "tier":"silver", "check": func(g): return g.daily_streak >= 7},
+	#{"id":"streak_30",   "name":"Inferno 🌋",       "desc":"30-day streak",           "tier":"gold",   "check": func(g): return g.daily_streak >= 30},
+	#{"id":"streak_100",  "name":"Solar ☀️",         "desc":"100-day streak",          "tier":"gold",   "check": func(g): return g.daily_streak >= 100},
+	#{"id":"streak_365",  "name":"Eternal ✨",        "desc":"365-day streak",          "tier":"gold",   "check": func(g): return g.daily_streak >= 365},
+	# ── Water badges ──
+	#{"id":"hydro_7",     "name":"Hydration Hero 💧","desc":"Hit water goal 7 days in a row","tier":"silver","check": func(g): return g.daily_streak >= 7},
+	# ── Nutrition badges ──
+	#{"id":"iron_chef",   "name":"Planner 🏆",       "desc":"Save 5 meals",            "tier":"bronze", "check": func(g): return true},  # checked externally
+	#{"id":"rainbow",     "name":"Rainbow Plate 🌈", "desc":"Eat 6 categories in one day","tier":"silver","check": func(g): return true},
+	#{"id":"bone_builder","name":"Bone Builder 🦴",  "desc":"30 days hitting Ca+VitD", "tier":"gold",   "check": func(g): return true},
+	#{"id":"brain_food",  "name":"Brain Food 🧠",    "desc":"7 days of Omega-3+B12",   "tier":"silver", "check": func(g): return true},
+	# ── Condition badges ──
+	#{"id":"ox_warrior",  "name":"Oxalate Warrior 🌿","desc":"14 days under oxalate threshold","tier":"gold","check": func(g): return true},
+	#{"id":"data_driven", "name":"Data Driven 📊",   "desc":"Fill in all disease panels","tier":"bronze","check": func(g): return g.active_metabolic_conditions.size() >= 3},
+	# ── Currency badges ──
+	#{"id":"py_100",      "name":"Earner 💰",        "desc":"Earn 100 PY",             "tier":"bronze", "check": func(g): return g.py_currency >= 100},
+	#{"id":"py_1000",     "name":"Wealthy 💎",       "desc":"Earn 1000 PY",            "tier":"gold",   "check": func(g): return g.py_currency >= 1000},
+#]
+
+const BADGE_TIER_COLORS = {
+	"bronze": Color(0.80, 0.50, 0.20),
+	"silver": Color(0.75, 0.75, 0.80),
+	"gold":   Color(1.00, 0.85, 0.00),
+}
+
+const LEAGUE_NAMES = ["🥉 Bronze", "🥈 Silver", "🥇 Gold", "💎 Diamond", "🏆 Legendary"]
+const LEAGUE_THRESHOLDS = [0, 100, 500, 2000, 10000]  # all-time points to reach each
+
+const SEASONS = [
+	{
+		"name":        "Nordic Health Challenge",
+		"emoji":       "❄️",
+		"months":      [12, 1, 2],
+		"desc":        "Winter season — bonus points for eating traditional Nordic foods.",
+		"bonus_foods": ["herring", "salmon", "rye", "blueberry", "lingonberry"],
+		"bonus_field": "",
+		"bonus_pts":   2
+	},
+	{
+		"name":        "Spring Detox Season",
+		"emoji":       "🌿",
+		"months":      [3, 4, 5],
+		"desc":        "Spring — bonus points for green vegetables and low-oxalate days.",
+		"bonus_foods": [],
+		"bonus_field": "vitamin_c_mg",
+		"bonus_threshold": 100.0,
+		"bonus_pts":   2
+	},
+	{
+		"name":        "Hydration Championship",
+		"emoji":       "💧",
+		"months":      [6, 7, 8],
+		"desc":        "Summer — doubled water points.",
+		"bonus_foods": [],
+		"bonus_field": "water_ml",
+		"bonus_threshold": 3000.0,
+		"bonus_pts":   2
+	},
+	{
+		"name":        "Harvest Festival",
+		"emoji":       "🍂",
+		"months":      [9, 10, 11],
+		"desc":        "Autumn — bonus points for root vegetables and high fiber.",
+		"bonus_foods": ["carrot","beetroot","parsnip","sweet-potato","potato"],
+		"bonus_field": "fiber_g",
+		"bonus_threshold": 30.0,
+		"bonus_pts":   2
+	},
+]
+
+var current_league_idx: int = 0
+var league_weekly_pts: int  = 0
+var league_week_start: String = ""
 
 var metabolic_warnings_data = {
 
@@ -909,11 +990,16 @@ func _ready():
 	load_quests()
 	load_profile()
 	load_points()
+	load_badges()
+	load_report_date()
 	load_body_metrics_from_file()
 	load_metabolic_conditions()
 	# Create metabolic.json if it doesn't exist yet
 	if not FileAccess.file_exists("user://metabolic.json"):
 		save_metabolic_conditions()
+	if Global.should_show_weekly_report():
+		call_deferred("_show_weekly_report")
+		Global.mark_report_shown()
 
 # ─────────────────────────────────────────
 #  WARNINGS — called by FridgePage per food
@@ -1001,7 +1087,8 @@ func save_profile():
 	file.store_string(JSON.stringify({
 		"conditions": active_conditions,
 		"kidney_at_risk": kidney_at_risk,
-		"hide_red_warnings": hide_red_warnings
+		"hide_red_warnings": hide_red_warnings,
+		"use_fahrenheit":   use_fahrenheit
 	}))
 	file.close()
 
@@ -1014,7 +1101,7 @@ func load_profile():
 	active_conditions = data.get("conditions", [])
 	kidney_at_risk = data.get("kidney_at_risk", false)
 	hide_red_warnings   = data.get("hide_red_warnings", false)
-
+	use_fahrenheit      = data.get("use_fahrenheit", false)
 # ─────────────────────────────────────────
 #  METABOLIC CONDITIONS
 # ─────────────────────────────────────────
@@ -1365,6 +1452,7 @@ func check_and_update_streak():
 
 
 	last_streak_date = today
+	load_badges()
 	save_streak()
 
 func save_streak():
@@ -1719,7 +1807,7 @@ func check_quests(today_totals: Dictionary):
 		var qid = quest.get("id","")
 		if completed_quest_ids.has(qid): continue
 		var check_fn = quest.get("check", null)
-		if check_fn == null: continue
+		if not check_fn is Callable: continue
 		if check_fn.call(today_totals):
 			completed_quest_ids.append(qid)
 			var py = quest.get("py", 10)
@@ -1760,3 +1848,99 @@ func load_quests():
 		var qid = quest.get("id","")
 		if pool_by_id.has(qid) and pool_by_id[qid].has("check"):
 			quest["check"] = pool_by_id[qid]["check"]
+
+
+func get_current_league() -> Dictionary:
+	var all_time = get_points_alltime()
+	var idx = 0
+	for i in range(LEAGUE_THRESHOLDS.size()):
+		if all_time >= LEAGUE_THRESHOLDS[i]:
+			idx = i
+	current_league_idx = idx
+	return {
+		"index": idx,
+		"name":  LEAGUE_NAMES[idx],
+		"pts_to_next": LEAGUE_THRESHOLDS[min(idx+1, LEAGUE_THRESHOLDS.size()-1)] - int(all_time),
+		"progress_pct": _league_progress_pct(idx, int(all_time))
+	}
+
+func _league_progress_pct(idx: int, all_time: int) -> float:
+	if idx >= LEAGUE_THRESHOLDS.size() - 1: return 1.0
+	var lo = LEAGUE_THRESHOLDS[idx]
+	var hi = LEAGUE_THRESHOLDS[idx + 1]
+	return clamp(float(all_time - lo) / float(hi - lo), 0.0, 1.0)
+
+func get_current_season() -> Dictionary:
+	var month = Time.get_datetime_dict_from_system().get("month", 1)
+	for season in SEASONS:
+		if season["months"].has(month):
+			return season
+	return SEASONS[0]
+
+func get_season_bonus_pts(today_totals: Dictionary, foods_eaten: Array) -> int:
+	var season = get_current_season()
+	var bonus  = 0
+	# Bonus for specific foods eaten
+	if not season["bonus_foods"].is_empty():
+		for fid in season["bonus_foods"]:
+			for fname in foods_eaten:
+				if fname.to_lower().contains(fid):
+					bonus += season["bonus_pts"]
+					break
+	# Bonus for field threshold
+	if season.has("bonus_field") and season["bonus_field"] != "":
+		var field = season["bonus_field"]
+		var threshold = season.get("bonus_threshold", 0.0)
+		if today_totals.get(field, 0.0) >= threshold:
+			bonus += season["bonus_pts"]
+	return bonus
+
+#func check_badges():
+#	for badge in ALL_BADGES:
+#		var bid = badge["id"]
+#		if earned_badges.has(bid): continue
+#		var check_fn = badge.get("check", null)
+#		if check_fn == null: continue
+#			earned_badges.append(bid)
+#			save_badges()
+#			badge_earned.emit(badge)
+
+#func award_badge(bid: String):
+#	if earned_badges.has(bid): return
+#	for badge in ALL_BADGES:
+#		if badge["id"] == bid:
+#			save_badges()
+#			badge_earned.emit(badge)
+#			return
+
+func save_badges():
+	var file = FileAccess.open("user://badges.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"badges": earned_badges}))
+	file.close()
+
+func load_badges():
+	if not FileAccess.file_exists("user://badges.json"): return
+	var file = FileAccess.open("user://badges.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data: earned_badges = data.get("badges",[])
+
+func should_show_weekly_report() -> bool:
+	var dt      = Time.get_datetime_dict_from_system()
+	var weekday = dt.get("weekday", 0)  # 0=Sun, 1=Mon
+	var today   = Time.get_date_string_from_system()
+	# Show on Monday if not shown yet today
+	return weekday == 1 and last_report_date != today
+
+func mark_report_shown():
+	last_report_date = Time.get_date_string_from_system()
+	var file = FileAccess.open("user://report_date.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"date": last_report_date}))
+	file.close()
+
+func load_report_date():
+	if not FileAccess.file_exists("user://report_date.json"): return
+	var file = FileAccess.open("user://report_date.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data: last_report_date = data.get("date","")

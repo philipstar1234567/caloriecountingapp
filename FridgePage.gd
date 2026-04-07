@@ -59,6 +59,17 @@ const Z_COOK_PARAMS    = 25   # shows above action popup
 const Z_DETAILS_POPUP  = 15
 const Z_LIMIT_WARNING  = 30   # highest — must be seen above everything
 
+const NOTIFY_FIELDS = [
+	{"key":"calories",    "label":"Calories",  "unit":"kcal"},
+	{"key":"fat_g",       "label":"Fat",       "unit":"g"},
+	{"key":"protein_g",   "label":"Protein",   "unit":"g"},
+	{"key":"vitamin_b1_mg","label":"Vit B1",   "unit":"mg"},
+	{"key":"vitamin_c_mg","label":"Vit C",     "unit":"mg"},
+	{"key":"vitamin_e_mg","label":"Vit E",     "unit":"mg"},
+	{"key":"potassium_mg","label":"Potassium", "unit":"mg"},
+	{"key":"sodium_mg",   "label":"Salt",      "unit":"mg"},
+]
+
 const COOK_RETENTION = {
 	"boil": {
 		"calories":      1.00,
@@ -730,13 +741,54 @@ func check_shopping_entry(sid: String, checked: bool):
 	for entry in shopping_list:
 		if entry["_sid"] == sid:
 			entry["_checked"] = checked
-			if checked:
-				# Move food to fridge when checked
-				add_to_fridge_multi(entry["food"], entry.get("qty", 1))
-			break
+		if checked:
+			var qty = entry.get("qty", 1)
+			add_to_fridge_multi(entry["food"], qty)
+			entry["_fridge_qty_added"] = qty   # ← record how many we added
+		else:
+			# Reverse: remove from fridge what was added
+			var qty_to_remove = entry.get("_fridge_qty_added", entry.get("qty", 1))
+			_remove_from_fridge_by_food_id(entry["food"].get("id",""), qty_to_remove)
+			entry["_fridge_qty_added"] = 0
 	save_shopping_list()
 	# Do NOT call refresh_shopping_list() here — 
 	# we handle the visual change directly in the row
+
+func _remove_from_fridge_by_food_id(fid: String, qty: int):
+	var removed = 0
+	var to_remove: Array = []
+
+	# Find matching slots — prefer ones that are untouched (full, no override)
+	for slot in fridge_foods:
+		if removed >= qty: break
+		if slot.get("id","") != fid: continue
+		var iid       = slot.get("_iid","")
+		var w         = fridge_weights.get(iid, {})
+		var remaining = w.get("remaining_g", 0.0)
+		var total     = w.get("total_g", 100.0)
+		var count     = slot.get("_count", 1)
+		var has_override = fridge_overrides.has(iid)
+
+		# Only reverse slots that haven't been partially eaten or edited
+		if has_override: continue
+		if abs(remaining - total) > 0.5: continue  # partially eaten — skip
+
+		if count > qty - removed:
+			slot["_count"] = count - (qty - removed)
+			removed = qty
+		else:
+			removed += count
+			to_remove.append(iid)
+
+	for iid in to_remove:
+		fridge_foods = fridge_foods.filter(func(f): return f.get("_iid","") != iid)
+		fridge_weights.erase(iid)
+		fridge_overrides.erase(iid)
+
+	if current_page >= _get_total_pages():
+		current_page = max(0, _get_total_pages() - 1)
+	save_fridge()
+	build_fridge_ui()
 
 func refresh_shopping_list():
 	var paper_vbox = $Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/PaperScrollContainer/PaperItemsVBox
@@ -778,7 +830,7 @@ func refresh_shopping_list():
 		var checked  = entry.get("_checked", false)
 
 		var row = HBoxContainer.new()
-		row.custom_minimum_size = Vector2(0, 52)
+		row.custom_minimum_size = Vector2(0, 110)
 		row.add_theme_constant_override("separation", 8)
 		row.alignment = BoxContainer.ALIGNMENT_CENTER
 		paper_vbox.add_child(row)
@@ -816,15 +868,11 @@ func refresh_shopping_list():
 			uncheck_btn.text = "↩️"
 			uncheck_btn.flat = true
 			uncheck_btn.custom_minimum_size = Vector2(60, 60)
-			uncheck_btn.add_theme_font_size_override("font_size", 36)
+			uncheck_btn.add_theme_font_size_override("font_size", 70)
 			uncheck_btn.tooltip_text = "Uncheck — I haven't bought this yet"
 			var captured_sid = sid
 			uncheck_btn.pressed.connect(func():
-				for e in shopping_list:
-					if e["_sid"] == captured_sid:
-						e["_checked"] = false
-						break
-				save_shopping_list()
+				check_shopping_entry(captured_sid, false)   # ← handles fridge reversal
 				refresh_shopping_list()
 			)
 			row.add_child(uncheck_btn)
@@ -992,6 +1040,7 @@ func add_to_fridge(food: Dictionary):
 # ── Build the fridge grid ──
 func build_fridge_ui():
 	var fridge = $Panel/FridgeContainer
+	var throw = $Panel/ThrowBtn
 	fridge.add_theme_constant_override("h_separation", 40)
 	fridge.add_theme_constant_override("v_separation", 20)
 	for child in fridge.get_children():
@@ -1114,6 +1163,16 @@ func build_fridge_ui():
 		placeholder.custom_minimum_size = Vector2(110,110)
 		fridge.add_child(placeholder)
 
+	var throw_btn = Button.new()
+	throw_btn.text = "🗑 Throw empty items out"
+	throw_btn.add_theme_font_size_override("font_size", 26)
+	throw_btn.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+	throw_btn.custom_minimum_size = Vector2(0, 60)
+	throw_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	throw_btn.alignment = VERTICAL_ALIGNMENT_CENTER
+	throw_btn.pressed.connect(func(): _throw_out_current_page())
+	throw.add_child(throw_btn)
+
 	# Build dot indicators
 	_build_page_dots()
 
@@ -1135,6 +1194,24 @@ func _build_page_dots():
 			dot.color = Color(0.5, 0.5, 0.5, 0.7)
 		dots_container.add_child(dot)
 
+func _throw_out_current_page():
+	var start = current_page * ITEMS_PER_PAGE
+	var end   = min(start + ITEMS_PER_PAGE, fridge_foods.size())
+	var page_items = fridge_foods.slice(start, end)
+
+	for slot in page_items:
+		var iid = slot.get("_iid","")
+		var w   = fridge_weights.get(iid, {})
+		# Only throw out items that are at 0g — they are already consumed
+		if w.get("remaining_g", 1.0) <= 0.0:
+			fridge_foods = fridge_foods.filter(func(f): return f.get("_iid","") != iid)
+			fridge_weights.erase(iid)
+			fridge_overrides.erase(iid)
+
+	if current_page >= _get_total_pages():
+		current_page = max(0, _get_total_pages() - 1)
+	save_fridge()
+	build_fridge_ui()
 
 # ── Handle short/long press ──
 func _handle_fridge_input(event: InputEvent, food: Dictionary, _btn: Button, timer: Timer):
@@ -1183,82 +1260,111 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	# ── NUTRITIONAL INFO POPUP ──
 	# Fixed position: x=0..1170, y=0..215 (in your 390x844 display = scale 0.333)
 	# In display coords: x=0..390, y=0..72
+	# ── INFO POPUP with page toggle ──
 	var info_popup = PanelContainer.new()
 	info_popup.name = "InfoBubble"
-	info_popup.mouse_filter = Control.MOUSE_FILTER_STOP
-	# Position at top of screen
 	info_popup.set_anchor_and_offset(SIDE_LEFT,   0, 0)
 	info_popup.set_anchor_and_offset(SIDE_RIGHT,  1, 0)
 	info_popup.set_anchor_and_offset(SIDE_TOP,    0, 0)
 	info_popup.set_anchor_and_offset(SIDE_BOTTOM, 0, 215 * (390.0/1170.0))
-	# 215/1170 * 390 ≈ 72px in display space
+	info_popup.z_index = Z_INFO_BUBBLE
 
-	var info_hbox = HBoxContainer.new()
-	info_hbox.add_theme_constant_override("separation", 20)
-	info_popup.add_child(info_hbox)
+	var stack = VBoxContainer.new()
+	info_popup.add_child(stack)
 
-	# Left column
-	var left_col = VBoxContainer.new()
-	left_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	info_hbox.add_child(left_col)
+	# Page toggle row
+	var toggle_row = HBoxContainer.new()
+	stack.add_child(toggle_row)
 
-	var food_title = Label.new()
-	food_title.text = slot.get("name","") + (" ✏️" if has_override else "")
-	food_title.add_theme_font_size_override("font_size", 40)
-	food_title.autowrap_mode = TextServer.AUTOWRAP_WORD
-	left_col.add_child(food_title)
+	var per100_btn = Button.new()
+	per100_btn.text = "Per 100g"
+	per100_btn.flat = false
+	per100_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	toggle_row.add_child(per100_btn)
 
-	var fields_left = [
-		["  Calories",    str(snappedf(effective.get("calories",0),0.1)) + " kcal"],
-		["  Protein",     str(snappedf(effective.get("protein_g",0),0.1)) + " g"],
-		["  Fat",         str(snappedf(effective.get("fat_g",0),0.1)) + " g"],
-		["  Sat.",      str(snappedf(effective.get("saturated_fat_g",0),0.1)) + " g"],
-		["  Carbs",       str(snappedf(effective.get("carbs_g",0),0.1)) + " g"],
-		["  Sugar",     str(snappedf(effective.get("sugar_g",0),0.1)) + " g"],
-	]
-	for pair in fields_left:
-		var row = HBoxContainer.new()
-		var k = Label.new()
-		k.text = pair[0]
-		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		k.add_theme_font_size_override("font_size", 35)
-		var v = Label.new()
-		v.text = pair[1]
-		v.add_theme_font_size_override("font_size", 35)
-		row.add_child(k)
-		row.add_child(v)
-		left_col.add_child(row)
+	var total_btn = Button.new()
+	total_btn.text = "Total (" + str(snappedf(remaining,0.1)) + "g)"
+	total_btn.flat = true
+	total_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	toggle_row.add_child(total_btn)
 
-	# Right column
-	var right_col = VBoxContainer.new()
-	right_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	info_hbox.add_child(right_col)
+	# Content area — rebuilt on toggle
+	var content_hbox = HBoxContainer.new()
+	content_hbox.add_theme_constant_override("separation", 20)
+	content_hbox.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	stack.add_child(content_hbox)
 
-	var remaining_lbl = Label.new()
-	remaining_lbl.text = str(snappedf(remaining,0.1)) + "g left"
-	remaining_lbl.add_theme_font_size_override("font_size", 40)
-	right_col.add_child(remaining_lbl)
+	var _show_page = func(per_100g: bool):
+		per100_btn.flat = not per_100g
+		total_btn.flat  = per_100g
+		for child in content_hbox.get_children(): child.queue_free()
 
-	var fields_right = [
-		["Fiber",    str(snappedf(effective.get("fiber_g",0),0.1)) + " g"],
-		["Calcium",  str(snappedf(effective.get("calcium_mg",0),0.1)) + " mg"],
-		["Sodium",   str(snappedf(effective.get("sodium_mg",0),0.1)) + " mg"],
-		["Vit C",    str(snappedf(effective.get("vitamin_c_mg",0),0.1)) + " mg"],
-		["Vit D",    str(snappedf(effective.get("vitamin_d_mcg",0),0.1)) + " mcg"],
-		["B12",      str(snappedf(effective.get("vitamin_b12_mcg",0),0.1)) + " mcg"],
-	]
-	for pair in fields_right:
-		var row = HBoxContainer.new()
-		var k = Label.new()
-		k.text = pair[0]
-		k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		k.add_theme_font_size_override("font_size", 35)
-		var v = Label.new()
-		v.text = pair[1]
-		v.add_theme_font_size_override("font_size", 35)
-		row.add_child(k)
-		row.add_child(v)
-		right_col.add_child(row)
+		var multiplier = 1.0 if per_100g else (remaining / 100.0)
+
+		var left_col = VBoxContainer.new()
+		left_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		content_hbox.add_child(left_col)
+
+		var food_title_lbl = Label.new()
+		food_title_lbl.text = slot.get("name","") + \
+			(" ✏️" if has_override else "") + \
+			(" — per 100g" if per_100g else " — " + str(snappedf(remaining,0.1)) + "g total")
+		food_title_lbl.add_theme_font_size_override("font_size", 35)
+		food_title_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		left_col.add_child(food_title_lbl)
+
+		var fields_left = [
+			["Calories", "calories",   "kcal"],
+			["Protein",  "protein_g",  "g"],
+			["Fat",      "fat_g",      "g"],
+			["Sat.",     "saturated_fat_g","g"],
+			["Carbs",    "carbs_g",    "g"],
+			["Sugar",    "sugar_g",    "g"],
+		]
+		for pair in fields_left:
+			var r = HBoxContainer.new()
+			var k = Label.new(); k.text = pair[0]
+			k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			k.add_theme_font_size_override("font_size", 30)
+			var v = Label.new()
+			v.text = str(snappedf(effective.get(pair[1],0.0) * multiplier, 0.1)) + " " + pair[2]
+			v.add_theme_font_size_override("font_size", 30)
+			r.add_child(k); r.add_child(v)
+			left_col.add_child(r)
+
+		var right_col = VBoxContainer.new()
+		right_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		content_hbox.add_child(right_col)
+
+		var rem_lbl = Label.new()
+		rem_lbl.text = str(snappedf(remaining,0.1)) + "g left"
+		rem_lbl.add_theme_font_size_override("font_size", 35)
+		right_col.add_child(rem_lbl)
+
+		var fields_right = [
+			["Fiber",   "fiber_g",        "g"],
+			["Calcium", "calcium_mg",     "mg"],
+			["Sodium",  "sodium_mg",      "mg"],
+			["Vit C",   "vitamin_c_mg",   "mg"],
+			["Vit D",   "vitamin_d_mcg",  "mcg"],
+			["B12",     "vitamin_b12_mcg","mcg"],
+		]
+		for pair in fields_right:
+			var r = HBoxContainer.new()
+			var k = Label.new(); k.text = pair[0]
+			k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			k.add_theme_font_size_override("font_size", 30)
+			var v = Label.new()
+			v.text = str(snappedf(effective.get(pair[1],0.0) * multiplier, 0.1)) + " " + pair[2]
+			v.add_theme_font_size_override("font_size", 30)
+			r.add_child(k); r.add_child(v)
+			right_col.add_child(r)
+
+	_show_page.call(true)   # default: per 100g
+	per100_btn.pressed.connect(func(): _show_page.call(true))
+	total_btn.pressed.connect(func(): _show_page.call(false))
+
+	add_child(info_popup)
 
 	# ── ACTION POPUP ──
 	# Position ABOVE the pressed button
@@ -1677,6 +1783,34 @@ func _modify_weight(slot: Dictionary, new_total_g: float, popup: PanelContainer)
 	popup.queue_free()
 	var ib = get_node_or_null("InfoBubble")
 	if ib: ib.queue_free()
+	_show_weight_notification(slot.get("name","Food"), old_total, new_total_g)
+	popup.queue_free()
+
+func _show_weight_notification(food_name: String, old_g: float, new_g: float):
+	var existing = get_node_or_null("WeightNotification")
+	if existing: existing.queue_free()
+
+	var panel = PanelContainer.new()
+	panel.name = "WeightNotification"
+	panel.z_index = Z_LIMIT_WARNING
+	panel.set_anchor_and_offset(SIDE_LEFT,  0, 10)
+	panel.set_anchor_and_offset(SIDE_RIGHT, 1, -10)
+	panel.set_anchor_and_offset(SIDE_TOP,   0, 10)
+	panel.set_anchor_and_offset(SIDE_BOTTOM,0, 90)
+	panel.modulate.a = 0.0
+
+	var lbl = Label.new()
+	lbl.text = "⚖️ " + food_name + ": " + str(snappedf(old_g,0.1)) + "g → " + str(snappedf(new_g,0.1)) + "g"
+	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	panel.add_child(lbl)
+	add_child(panel)
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(4.0)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): panel.queue_free())
 
 func _remove_slot(iid: String):
 	fridge_foods = fridge_foods.filter(func(f): return f.get("_iid","") != iid)
@@ -2731,6 +2865,8 @@ func _apply_cook_to_entry(entry: Dictionary, method: String, params: Dictionary)
 		entry["cooked_nutrients"] = entry["food"].duplicate()
 		return
 
+	var before = entry.get("cooked_nutrients", entry["food"]).duplicate()
+
 	var raw    = entry["food"]
 	var weight = entry.get("weight_g", 100.0)
 	var rf     = COOK_RETENTION.get(method, {})
@@ -2768,6 +2904,8 @@ func _apply_cook_to_entry(entry: Dictionary, method: String, params: Dictionary)
 
 	cooked["_cooked_weight_g"] = snappedf(cooked_weight, 0.1)
 	entry["cooked_nutrients"] = cooked
+	entry["cooked_nutrients"] = cooked
+	_show_cook_change_notification(before, cooked)
 
 func _update_suggested_shopping():
 	suggested_shopping.clear()
@@ -3563,6 +3701,32 @@ func _eat_meal(meal: Dictionary):
 func _do_eat_meal(meal: Dictionary):
 	var items = meal.get("items", meal_items)
 
+	# ── Determine display name ──
+	# If eating from current plate while editing a saved meal, use that meal's name
+	var display_name = meal.get("name", "Current Meal")
+	if display_name == "Current Meal" and editing_meal_mid != "":
+		for sm in saved_meals:
+			if sm.get("_mid","") == editing_meal_mid:
+				display_name = sm.get("name","Current Meal")
+				break
+
+	# Build ingredient summary for the log
+	var ingredient_parts: Array = []
+	for entry in items:
+		var food_name = entry.get("food",{}).get("name","?")
+		var method    = entry.get("cook_method","raw")
+		var weight    = entry.get("weight_g", 100.0)
+		var yf        = COOK_YIELD.get(method, 1.0)
+		var cooked_w  = snappedf(weight * yf, 0.1)
+		if method == "raw":
+			ingredient_parts.append(food_name + " " + str(weight) + "g")
+		else:
+			ingredient_parts.append(food_name + " " + str(cooked_w) + "g")
+
+	var log_name = display_name
+	if not ingredient_parts.is_empty():
+		log_name += " (" + ", ".join(ingredient_parts) + ")"
+
 	var nutrient_keys = [
 		"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
 		"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
@@ -3790,6 +3954,11 @@ func _show_warning_detail_panel(food: Dictionary):
 	var warnings = Global.get_warnings(food)
 	if warnings.is_empty(): return
 
+	# Disable ALL input on ShoppingListPanel while warning is shown
+	var shopping_panel = $Panel/ShoppingListPanel
+	shopping_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_set_children_mouse_filter(shopping_panel, Control.MOUSE_FILTER_IGNORE)
+
 	# ── Full-screen backdrop — MOUSE_FILTER_STOP blocks everything below ──
 	var backdrop = ColorRect.new()
 	backdrop.name = "WarningDetailOverlay"
@@ -3798,18 +3967,23 @@ func _show_warning_detail_panel(food: Dictionary):
 	backdrop.z_index = 4000                            # ← high z-index
 	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP # ← blocks ALL clicks below
 
+	var _close = func():
+		backdrop.queue_free()
+		# Re-enable input on ShoppingListPanel
+		shopping_panel.mouse_filter = Control.MOUSE_FILTER_STOP
+		_set_children_mouse_filter(shopping_panel, Control.MOUSE_FILTER_PASS)
 	# Close on any press anywhere on the backdrop
 	backdrop.gui_input.connect(func(event):
 		if event is InputEventMouseButton and event.pressed:
-			backdrop.queue_free()
+			_close.call()
 		elif event is InputEventScreenTouch and event.pressed:
-			backdrop.queue_free()
+			_close.call()
 	)
 	add_child(backdrop)
 
 	# ── Warning panel — centered, fixed width ──
 	var panel = PanelContainer.new()
-	panel.z_index = 101
+	panel.z_index = 301000
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP    # ← panel itself also blocks
 
 	# Center it: anchor to center, then offset by half the panel size
@@ -3864,6 +4038,12 @@ func _show_warning_detail_panel(food: Dictionary):
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(hint)
 
+func _set_children_mouse_filter(node: Node, filter: int):
+	for child in node.get_children():
+		if child is Control:
+			child.mouse_filter = filter
+		_set_children_mouse_filter(child, filter)
+
 func _shopping_snapshot():
 	_shopping_undo_stack.append(shopping_list.duplicate(true))
 	if _shopping_undo_stack.size() > UNDO_MAX:
@@ -3875,3 +4055,50 @@ func _undo_shopping():
 	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
 	save_shopping_list()
 	refresh_shopping_list()
+
+func _show_cook_change_notification(before: Dictionary, after: Dictionary):
+	var existing = get_node_or_null("CookNotification")
+	if existing: existing.queue_free()
+
+	var lines: Array = []
+	for f in NOTIFY_FIELDS:
+		var key = f["key"]
+		var b   = snappedf(before.get(key, 0.0), 0.1)
+		var a   = snappedf(after.get(key, 0.0), 0.1)
+		if abs(b - a) > 0.05:
+			var arrow = "↓" if a < b else "↑"
+			lines.append(f["label"] + ": " + str(b) + " " + arrow + " " + str(a) + " " + f["unit"])
+
+	if lines.is_empty(): return
+
+	var panel = PanelContainer.new()
+	panel.name = "CookNotification"
+	panel.z_index = Z_LIMIT_WARNING
+	panel.set_anchor_and_offset(SIDE_LEFT,  0, 10)
+	panel.set_anchor_and_offset(SIDE_RIGHT, 1, -10)
+	panel.set_anchor_and_offset(SIDE_TOP,   0, 10)
+	panel.set_anchor_and_offset(SIDE_BOTTOM,0, 10 + 40 + lines.size() * 36)
+	panel.modulate.a = 0.0
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 4)
+	panel.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "🍳 Cooking changes:"
+	title.add_theme_font_size_override("font_size", 22)
+	vbox.add_child(title)
+
+	for line in lines:
+		var lbl = Label.new()
+		lbl.text = line
+		lbl.add_theme_font_size_override("font_size", 20)
+		vbox.add_child(lbl)
+
+	add_child(panel)
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(4.0)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): panel.queue_free())

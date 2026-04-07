@@ -55,6 +55,7 @@ func log_food(food: Dictionary):
 	var totals_for_quests = today_totals.duplicate()
 	totals_for_quests["water_ml"] = water_ml
 	Global.check_quests(totals_for_quests)
+	Global.check_badges()
 	save_today()
 	_save_to_history()
 	refresh_display()
@@ -89,19 +90,26 @@ func refresh_display():
 # ─────────────────────────────────────────
 func _refresh_streak_row():
 	var row = $Panel/ScrollContainer/VBoxContainer/StreakRow
+	if not row: return
+
 	var streak = Global.daily_streak
 	var flame_color = Color.GRAY
 	if streak >= 100: flame_color = Color(1.0, 0.85, 0.0)
 	elif streak >= 30: flame_color = Color(1.0, 0.2, 0.1)
 	elif streak >= 7:  flame_color = Color(1.0, 0.5, 0.0)
 
-	var streak_lbl = row.get_node("StreakLabel")
-	streak_lbl.text = "🔥 " + str(streak) + " days"
-	streak_lbl.add_theme_font_size_override("font_size", 48)
-	streak_lbl.add_theme_color_override("font_color", flame_color)
+	var streak_lbl = row.get_node_or_null("StreakLabel")
+	if streak_lbl:
+		streak_lbl.text = "🔥 " + str(streak) + " days"
+		streak_lbl.add_theme_color_override("font_color", flame_color)
 
-	row.get_node("FreezesLabel").text = "🧊 ×" + str(Global.streak_freeze_count)
-	row.get_node("PYLabel").text = "💰 " + str(Global.py_currency) + " PY"
+	var freeze_lbl = row.get_node_or_null("FreezesLabel")
+	if freeze_lbl:
+		freeze_lbl.text = "🧊 ×" + str(Global.streak_freeze_count)
+
+	var py_lbl = row.get_node_or_null("PYLabel")
+	if py_lbl:
+		py_lbl.text = "💰 " + str(Global.py_currency) + " PY"
 
 # ─────────────────────────────────────────
 #  PANEL 1 — QUESTS CARD
@@ -194,6 +202,12 @@ func _refresh_meal_history_card():
 		empty.text = "Nothing logged yet"
 		empty.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
 		vbox.add_child(empty)
+
+		var more = Button.new()
+		more.text = "See full history →"
+		more.flat = true
+		more.pressed.connect(func(): _open_meal_history_overlay(Time.get_date_string_from_system()))
+		vbox.add_child(more)
 	else:
 		for i in range(shown):
 			var lbl = Label.new()
@@ -201,62 +215,170 @@ func _refresh_meal_history_card():
 			lbl.add_theme_font_size_override("font_size", 36)
 			vbox.add_child(lbl)
 
-	if foods_eaten.size() > 3:
 		var more = Button.new()
 		more.text = "See full history →"
 		more.flat = true
 		more.pressed.connect(func(): _open_meal_history_overlay(Time.get_date_string_from_system()))
 		vbox.add_child(more)
 
-func _open_meal_history_overlay(date_str: String):
+func _open_meal_history_overlay(_start_date: String):
 	_show_overlay_panel(func(scroll_vbox):
+		# Navigation state — use a RefCounted wrapper so lambdas share the reference
+		var state = {"date": Time.get_date_string_from_system()}
+
 		# Nav row
 		var nav = HBoxContainer.new()
+		nav.add_theme_constant_override("separation", 8)
 		scroll_vbox.add_child(nav)
 
 		var prev_btn = Button.new()
 		prev_btn.text = "‹"
-		prev_btn.add_theme_font_size_override("font_size", 48)
+		prev_btn.add_theme_font_size_override("font_size", 36)
+		prev_btn.custom_minimum_size = Vector2(60, 60)
 		nav.add_child(prev_btn)
 
+		# Date button — opens calendar popup
 		var date_btn = Button.new()
-		date_btn.name = "DateBtn"
-		date_btn.text = date_str
+		date_btn.text = state["date"]
 		date_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		date_btn.add_theme_font_size_override("font_size", 48)
+		date_btn.add_theme_font_size_override("font_size", 36)
 		nav.add_child(date_btn)
 
 		var next_btn = Button.new()
 		next_btn.text = "›"
-		next_btn.add_theme_font_size_override("font_size", 48)
+		next_btn.add_theme_font_size_override("font_size", 36)
+		next_btn.custom_minimum_size = Vector2(60, 60)
 		nav.add_child(next_btn)
 
 		scroll_vbox.add_child(HSeparator.new())
 
-		# Content for this date
 		var content_vbox = VBoxContainer.new()
 		content_vbox.name = "ContentVBox"
+		content_vbox.add_theme_constant_override("separation", 8)
 		scroll_vbox.add_child(content_vbox)
 
-		_populate_history_content(content_vbox, date_str)
+		# Calendar popup (date picker)
+		var calendar_panel: PanelContainer = null
 
-		# Navigation logic
-		var current_date = date_str
+		var _navigate = func(new_date: String):
+			state["date"] = new_date
+			date_btn.text = new_date
+			for child in content_vbox.get_children():
+				child.queue_free()
+			_populate_history_content(content_vbox, new_date)
+
 		prev_btn.pressed.connect(func():
-			current_date = _offset_date(current_date, -1)
-			date_btn.text = current_date
-			for child in content_vbox.get_children(): child.queue_free()
-			_populate_history_content(content_vbox, current_date)
+			_navigate.call(_offset_date(state["date"], -1))
 		)
+
 		next_btn.pressed.connect(func():
 			var today = Time.get_date_string_from_system()
-			if current_date >= today: return
-			current_date = _offset_date(current_date, 1)
-			date_btn.text = current_date
-			for child in content_vbox.get_children(): child.queue_free()
-			_populate_history_content(content_vbox, current_date)
+			if state["date"] < today:
+				_navigate.call(_offset_date(state["date"], 1))
 		)
+
+		date_btn.pressed.connect(func():
+			if calendar_panel and is_instance_valid(calendar_panel):
+				calendar_panel.queue_free()
+				calendar_panel = null
+				return
+			calendar_panel = _make_calendar_popup(state["date"], func(picked: String):
+				if calendar_panel and is_instance_valid(calendar_panel):
+					calendar_panel.queue_free()
+					calendar_panel = null
+				_navigate.call(picked)
+			)
+			scroll_vbox.add_child(calendar_panel)
+		)
+
+		_populate_history_content(content_vbox, state["date"])
 	)
+
+func _make_calendar_popup(current_date: String, on_picked: Callable) -> PanelContainer:
+	var panel = PanelContainer.new()
+	panel.custom_minimum_size = Vector2(0, 0)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	panel.add_child(vbox)
+
+	var parts = current_date.split("-")
+	var year  = int(parts[0])
+	var month = int(parts[1])
+
+	var header = HBoxContainer.new()
+	vbox.add_child(header)
+
+	var prev_mo = Button.new(); prev_mo.text = "‹"; header.add_child(prev_mo)
+	var mo_lbl  = Label.new()
+	mo_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	mo_lbl.horizontal_alignment  = HORIZONTAL_ALIGNMENT_CENTER
+	header.add_child(mo_lbl)
+	var next_mo = Button.new(); next_mo.text = "›"; header.add_child(next_mo)
+
+	var grid = GridContainer.new()
+	grid.columns = 7
+	vbox.add_child(grid)
+
+	var state = {"year": year, "month": month}
+
+	var _rebuild = func():
+		mo_lbl.text = "%04d-%02d" % [state["year"], state["month"]]
+		for child in grid.get_children(): child.queue_free()
+		# Day headers
+		for d in ["Mo","Tu","We","Th","Fr","Sa","Su"]:
+			var h = Label.new(); h.text = d
+			h.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			h.add_theme_font_size_override("font_size", 36)
+			grid.add_child(h)
+		# Find first weekday of month
+		var first_unix = Time.get_unix_time_from_datetime_dict({
+			"year":state["year"],"month":state["month"],"day":1,
+			"hour":12,"minute":0,"second":0
+		})
+		var first_dt  = Time.get_datetime_dict_from_unix_time(first_unix)
+		var weekday   = first_dt.get("weekday", 1)  # 0=Sun,1=Mon,...
+		var offset    = (weekday + 6) % 7            # Mon=0
+		for i in range(offset):
+			grid.add_child(Control.new())  # empty cells
+		# Days in month
+		var days_in_month = 31
+		for test_day in range(28, 32):
+			var test_unix = Time.get_unix_time_from_datetime_dict({
+				"year":state["year"],"month":state["month"],"day":test_day,
+				"hour":12,"minute":0,"second":0
+			})
+			var test_dt = Time.get_datetime_dict_from_unix_time(test_unix)
+			if test_dt["month"] == state["month"]:
+				days_in_month = test_day
+		for day in range(1, days_in_month + 1):
+			var day_str = "%04d-%02d-%02d" % [state["year"], state["month"], day]
+			var day_btn = Button.new()
+			day_btn.text = str(day)
+			day_btn.custom_minimum_size = Vector2(40, 40)
+			day_btn.add_theme_font_size_override("font_size", 36)
+			# Highlight days that have history
+			if meal_history.has(day_str) and not meal_history[day_str].get("foods",[]).is_empty():
+				day_btn.add_theme_color_override("font_color", Color(0.3, 0.9, 0.4))
+			var captured = day_str
+			day_btn.pressed.connect(func(): on_picked.call(captured))
+			grid.add_child(day_btn)
+
+	var rebuild_ref = _rebuild  # keep reference
+	_rebuild.call()
+
+	prev_mo.pressed.connect(func():
+		state["month"] -= 1
+		if state["month"] < 1: state["month"] = 12; state["year"] -= 1
+		rebuild_ref.call()
+	)
+	next_mo.pressed.connect(func():
+		state["month"] += 1
+		if state["month"] > 12: state["month"] = 1; state["year"] += 1
+		rebuild_ref.call()
+	)
+
+	return panel
 
 func _populate_history_content(vbox: VBoxContainer, date_str: String):
 	var today = Time.get_date_string_from_system()
@@ -267,20 +389,22 @@ func _populate_history_content(vbox: VBoxContainer, date_str: String):
 		foods_list = foods_eaten
 		kcal       = today_totals.get("calories", 0.0)
 	elif meal_history.has(date_str):
-		var h   = meal_history[date_str]
-		foods_list = h.get("foods",[])
-		kcal       = h.get("totals",{}).get("calories",0.0)
+		var h  = meal_history[date_str]
+		foods_list = h.get("foods", [])
+		kcal       = h.get("totals",{}).get("calories", 0.0)
 
 	var kcal_lbl = Label.new()
-	kcal_lbl.text = "Total: " + str(snappedf(kcal,0.1)) + " kcal"
+	kcal_lbl.text = date_str + " — " + str(snappedf(kcal, 0.1)) + " kcal"
 	kcal_lbl.add_theme_font_size_override("font_size", 36)
+	kcal_lbl.add_theme_color_override("font_color",
+		Color(0.3,1.0,0.3) if date_str == today else Color(0.7,0.7,0.7))
 	vbox.add_child(kcal_lbl)
 
 	if foods_list.is_empty():
 		var empty = Label.new()
 		empty.text = "No foods logged this day"
-		empty.add_theme_font_size_override("font_size", 36)
 		empty.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
+		empty.add_theme_font_size_override("font_size", 36)
 		vbox.add_child(empty)
 		return
 
@@ -288,6 +412,7 @@ func _populate_history_content(vbox: VBoxContainer, date_str: String):
 		var lbl = Label.new()
 		lbl.text = "• " + food_name
 		lbl.add_theme_font_size_override("font_size", 36)
+		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 		vbox.add_child(lbl)
 
 func _offset_date(date_str: String, days: int) -> String:
@@ -598,7 +723,7 @@ func _refresh_water_card():
 
 	var glasses_row = HBoxContainer.new()
 	glasses_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	glasses_row.add_theme_constant_override("separation", 20)
+	glasses_row.add_theme_constant_override("separation", 5)
 	vbox.add_child(glasses_row)
 
 	var full_tex  = load(GLASS_FULL_PATH)  if ResourceLoader.exists(GLASS_FULL_PATH)  else null
@@ -643,6 +768,37 @@ func _refresh_water_card():
 		)
 		glasses_row.add_child(glass_btn)
 
+# ── Bonus glass — extra water beyond goal ──
+	var bonus_tex_path = "res://images/glass_bonus.png"  # your plus-sign glass icon
+	var bonus_drunk = water_ml > water_goal_ml           # true if user already drank extra
+
+	var bonus_btn = Button.new()
+	bonus_btn.flat = true
+	bonus_btn.custom_minimum_size = Vector2(100, 100)
+	bonus_btn.tooltip_text = "Log an extra glass (beyond your goal)"
+
+	var bonus_icon = TextureRect.new()
+	bonus_icon.custom_minimum_size = Vector2(100, 100)
+	bonus_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	if ResourceLoader.exists(bonus_tex_path):
+		bonus_icon.texture = load(bonus_tex_path)
+	else:
+		var cr = ColorRect.new()
+		cr.color = Color(0.2, 0.6, 1.0, 0.6) if not bonus_drunk else Color(0.6, 0.8, 1.0, 0.3)
+		cr.custom_minimum_size = Vector2(48, 48)
+		bonus_btn.add_child(cr)
+	bonus_btn.add_child(bonus_icon)
+
+	bonus_btn.pressed.connect(func():
+		water_ml += glass_ml   # add one extra glass
+		save_water()
+		_refresh_water_card()
+		var totals_q = today_totals.duplicate()
+		totals_q["water_ml"] = water_ml
+		Global.check_quests(totals_q)
+	)
+	glasses_row.add_child(bonus_btn)
+
 	# Points preview
 	var w_pts = 0.0
 	if water_ml >= water_goal_ml:
@@ -668,21 +824,25 @@ func _refresh_tips_card():
 	vbox.add_child(title)
 
 	var tips = _get_personalized_tips()
+	if tips.is_empty(): return
 	# Show first 2 tips on card, rest in overlay
-	var shown = min(1, tips.size())
-	for i in range(shown):
+	var today_seed = Time.get_date_string_from_system().hash()
+	var idx1 = today_seed % tips.size()
+	var idx2 = (today_seed + 7) % tips.size()   # +7 offset to avoid same tip twice
+	if idx2 == idx1: idx2 = (idx2 + 1) % tips.size()
+
+	for idx in [idx1, idx2]:
 		var lbl = Label.new()
-		lbl.text = "• " + tips[i]
+		lbl.text = "• " + tips[idx]
 		lbl.add_theme_font_size_override("font_size", 36)
 		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 		vbox.add_child(lbl)
 
-	if tips.size() > 1:
-		var more = Button.new()
-		more.text = "See all tips →"
-		more.flat = true
-		more.pressed.connect(func(): _open_tips_overlay())
-		vbox.add_child(more)
+	var more = Button.new()
+	more.text = "See all tips →"
+	more.flat = true
+	more.pressed.connect(func(): _open_tips_overlay())
+	vbox.add_child(more)
 
 func _open_tips_overlay():
 	var tips = _get_personalized_tips()
@@ -897,9 +1057,22 @@ func load_water():
 	glass_states = data.get("glass_states",[])
 
 func _save_to_history():
-	load_meal_history()
+	# Load from disk first to merge, but preserve today's live data
 	var today = Time.get_date_string_from_system()
-	meal_history[today] = {"totals": today_totals.duplicate(), "foods": foods_eaten.duplicate()}
+	if not FileAccess.file_exists("user://meal_history.json"):
+		meal_history = {}
+	else:
+		var file = FileAccess.open("user://meal_history.json", FileAccess.READ)
+		var data = JSON.parse_string(file.get_as_text())
+		file.close()
+		if data: meal_history = data
+
+	# Always write today from live memory, not from disk
+	meal_history[today] = {
+		"totals": today_totals.duplicate(),
+		"foods":  foods_eaten.duplicate()
+	}
+
 	var file = FileAccess.open("user://meal_history.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify(meal_history))
 	file.close()
@@ -910,9 +1083,250 @@ func load_meal_history():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if data: meal_history = data
+	# Merge today's live data so history is always current
+	var today = Time.get_date_string_from_system()
+	meal_history[today] = {
+		"totals": today_totals.duplicate(),
+		"foods":  foods_eaten.duplicate()
+	}
 
 func _goal_bar(value: float, goal: float) -> String:
 	if goal <= 0: return ""
 	var pct  = clamp(value / goal, 0.0, 1.0)
 	var fill = int(pct * 10)
 	return "█".repeat(fill) + "░".repeat(10 - fill)
+
+func _on_badge_earned(badge: Dictionary):
+	_show_badge_popup(badge)
+
+func _show_badge_popup(badge: Dictionary):
+	var existing = get_node_or_null("BadgePopup")
+	if existing: existing.queue_free()
+
+	var panel = PanelContainer.new()
+	panel.name = "BadgePopup"
+	panel.z_index = 60
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(320, 220)
+	panel.modulate.a = 0.0
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 14)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	panel.add_child(vbox)
+
+	var sparkle = Label.new()
+	sparkle.text = "✨ Badge Unlocked! ✨"
+	sparkle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sparkle.add_theme_font_size_override("font_size", 26)
+	vbox.add_child(sparkle)
+
+	var name_lbl = Label.new()
+	name_lbl.text = badge["name"]
+	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_lbl.add_theme_font_size_override("font_size", 36)
+	name_lbl.add_theme_color_override("font_color",
+		Global.BADGE_TIER_COLORS.get(badge.get("tier","bronze"), Color.WHITE))
+	vbox.add_child(name_lbl)
+
+	var desc_lbl = Label.new()
+	desc_lbl.text = badge["desc"]
+	desc_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	desc_lbl.add_theme_font_size_override("font_size", 22)
+	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(desc_lbl)
+
+	var tier_lbl = Label.new()
+	tier_lbl.text = badge.get("tier","bronze").capitalize() + " Badge"
+	tier_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	tier_lbl.add_theme_font_size_override("font_size", 20)
+	tier_lbl.add_theme_color_override("font_color",
+		Global.BADGE_TIER_COLORS.get(badge.get("tier","bronze"), Color.WHITE))
+	vbox.add_child(tier_lbl)
+
+	add_child(panel)
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.4)
+	tween.tween_property(panel, "scale",      Vector2(1.1,1.1), 0.2)
+	tween.tween_property(panel, "scale",      Vector2(1.0,1.0), 0.1)
+	tween.tween_interval(2.5)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): panel.queue_free())
+
+func _show_weekly_report():
+	_show_overlay_panel(func(scroll_vbox):
+		# Header
+		var now    = Time.get_datetime_dict_from_system()
+		var week_n = int(Time.get_unix_time_from_system() / 604800)
+
+		var title = Label.new()
+		title.text = "📊 Weekly Health Report — Week " + str(week_n % 52)
+		title.add_theme_font_size_override("font_size", 26)
+		title.autowrap_mode = TextServer.AUTOWRAP_WORD
+		scroll_vbox.add_child(title)
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Streak + League
+		var league = Global.get_current_league()
+		_add_report_row(scroll_vbox, "🔥 Streak",   str(Global.daily_streak) + " days")
+		_add_report_row(scroll_vbox, "🧊 Freezes",  str(Global.streak_freeze_count) + " remaining")
+		_add_report_row(scroll_vbox, "🏆 League",   league["name"])
+		_add_report_row(scroll_vbox, "⭐ Pts earned this week", str(snappedf(Global.get_points_week(),0)))
+		_add_report_row(scroll_vbox, "💰 PY balance", str(Global.py_currency) + " PY")
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Nutrition averages this week
+		var week_avg = _get_week_averages()
+		var rdas     = Global.get_micronutrient_rdas()
+		var macro_goals = Global.get_macro_goals()
+
+		var nutr_title = Label.new()
+		nutr_title.text = "📈 Nutrition averages (daily)"
+		nutr_title.add_theme_font_size_override("font_size", 22)
+		nutr_title.add_theme_color_override("font_color", Color(0.7,0.9,0.4))
+		scroll_vbox.add_child(nutr_title)
+
+		var daily_goal = Global.body_metrics.get("daily_goal", 2000.0)
+		_add_report_progress(scroll_vbox, "Calories",
+			week_avg.get("calories",0), daily_goal, "kcal")
+		_add_report_progress(scroll_vbox, "Protein",
+			week_avg.get("protein_g",0), macro_goals.get("protein_g",50), "g")
+		_add_report_progress(scroll_vbox, "Fiber",
+			week_avg.get("fiber_g",0), macro_goals.get("fiber_g",25), "g")
+		_add_report_progress(scroll_vbox, "Water",
+			week_avg.get("water_ml",0)/1000.0, Global.daily_water_liters, "L")
+
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Top nutrients met + missed
+		var nutr2_title = Label.new()
+		nutr2_title.text = "🔬 Micronutrients"
+		nutr2_title.add_theme_font_size_override("font_size", 22)
+		nutr2_title.add_theme_color_override("font_color", Color(0.4,0.8,0.9))
+		scroll_vbox.add_child(nutr2_title)
+
+		var met: Array = []
+		var missed: Array = []
+		for field in rdas.keys():
+			var rda = rdas[field]["rda"]
+			var avg = week_avg.get(field, 0.0)
+			if rda <= 0: continue
+			if avg >= rda:
+				met.append(rdas[field]["label"])
+			else:
+				missed.append(rdas[field]["label"] + " (" + str(int(avg/rda*100)) + "%)")
+
+		var met_lbl = Label.new()
+		met_lbl.text = "✅ Goals met: " + (", ".join(met) if not met.is_empty() else "None")
+		met_lbl.add_theme_font_size_override("font_size", 20)
+		met_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		met_lbl.add_theme_color_override("font_color", Color(0.3,0.9,0.3))
+		scroll_vbox.add_child(met_lbl)
+
+		var miss_lbl = Label.new()
+		miss_lbl.text = "❌ Needs work: " + (", ".join(missed.slice(0,6)) if not missed.is_empty() else "None!")
+		miss_lbl.add_theme_font_size_override("font_size", 20)
+		miss_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		miss_lbl.add_theme_color_override("font_color", Color(1.0,0.5,0.3))
+		scroll_vbox.add_child(miss_lbl)
+
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Badges earned this week
+		var badge_title = Label.new()
+		badge_title.text = "🏅 Badges"
+		badge_title.add_theme_font_size_override("font_size", 22)
+		scroll_vbox.add_child(badge_title)
+
+		var badge_lbl = Label.new()
+		badge_lbl.text = str(Global.earned_badges.size()) + " total badges earned"
+		badge_lbl.add_theme_font_size_override("font_size", 20)
+		scroll_vbox.add_child(badge_lbl)
+
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Seasonal bonus
+		var season = Global.get_current_season()
+		var seas_title = Label.new()
+		seas_title.text = season["emoji"] + " Season: " + season["name"]
+		seas_title.add_theme_font_size_override("font_size", 22)
+		seas_title.add_theme_color_override("font_color", Color(0.9, 0.7, 0.3))
+		scroll_vbox.add_child(seas_title)
+
+		var seas_desc = Label.new()
+		seas_desc.text = season["desc"]
+		seas_desc.add_theme_font_size_override("font_size", 20)
+		seas_desc.autowrap_mode = TextServer.AUTOWRAP_WORD
+		scroll_vbox.add_child(seas_desc)
+	)
+
+func _add_report_row(vbox: VBoxContainer, label: String, value: String):
+	var row = HBoxContainer.new()
+	vbox.add_child(row)
+	var k = Label.new(); k.text = label
+	k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	k.add_theme_font_size_override("font_size", 22)
+	row.add_child(k)
+	var v = Label.new(); v.text = value
+	v.add_theme_font_size_override("font_size", 22)
+	row.add_child(v)
+
+func _add_report_progress(vbox: VBoxContainer, label: String, val: float, goal: float, unit: String):
+	var col = VBoxContainer.new()
+	col.add_theme_constant_override("separation", 2)
+	vbox.add_child(col)
+
+	var row = HBoxContainer.new()
+	col.add_child(row)
+
+	var k = Label.new(); k.text = label
+	k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	k.add_theme_font_size_override("font_size", 21)
+	row.add_child(k)
+
+	var pct = clamp(val/goal, 0.0, 1.0) if goal > 0 else 0.0
+	var v   = Label.new()
+	v.text = str(snappedf(val,0.1)) + " / " + str(snappedf(goal,0.1)) + " " + unit
+	v.add_theme_font_size_override("font_size", 21)
+	if pct >= 1.0:
+		v.add_theme_color_override("font_color", Color(0.3,0.9,0.3))
+	elif pct >= 0.6:
+		v.add_theme_color_override("font_color", Color(1.0,0.85,0.0))
+	else:
+		v.add_theme_color_override("font_color", Color(1.0,0.4,0.3))
+	row.add_child(v)
+
+	var bar = Label.new()
+	var filled = int(pct * 10)
+	bar.text = "█".repeat(filled) + "░".repeat(10 - filled)
+	bar.add_theme_font_size_override("font_size", 18)
+	col.add_child(bar)
+
+func _get_week_averages() -> Dictionary:
+	var totals: Dictionary = {}
+	var days_found = 0
+	var unix_now   = Time.get_unix_time_from_system()
+
+	for i in range(7):
+		var unix_day = unix_now - (i * 86400)
+		var dt       = Time.get_datetime_dict_from_unix_time(unix_day)
+		var date_str = "%04d-%02d-%02d" % [dt.year, dt.month, dt.day]
+
+		var day_data: Dictionary = {}
+		if date_str == Time.get_date_string_from_system():
+			day_data = today_totals
+		elif meal_history.has(date_str):
+			day_data = meal_history[date_str].get("totals", {})
+		else:
+			continue
+
+		days_found += 1
+		for key in day_data.keys():
+			if not totals.has(key): totals[key] = 0.0
+			totals[key] += day_data[key]
+
+	if days_found == 0: return {}
+	for key in totals.keys():
+		totals[key] = totals[key] / days_found
+	return totals

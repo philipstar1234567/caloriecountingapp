@@ -74,6 +74,7 @@ size_flags_vertical = 3
 
 [node name="StreakRow" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 60
 alignment = 1
 
 [node name="StreakLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]

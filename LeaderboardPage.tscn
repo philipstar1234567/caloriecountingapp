@@ -41,9 +41,10 @@ vertical_alignment = 1
 [node name="PeriodTabs" type="TabContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 tab_alignment = 1
-current_tab = 0
+current_tab = 1
 
 [node name="TodayPanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
+visible = false
 custom_minimum_size = Vector2(0, 119.39)
 layout_mode = 2
 metadata/_tab_index = 0
@@ -64,7 +65,6 @@ layout_mode = 2
 text = "stay healthy? get healthy?"
 
 [node name="WeekPanel" type="Panel" parent="Panel/VBoxContainer/PeriodTabs"]
-visible = false
 custom_minimum_size = Vector2(0, 585.465)
 layout_mode = 2
 metadata/_tab_index = 1
