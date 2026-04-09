@@ -487,8 +487,7 @@ func calculate_adjusted_kcal_goal() -> Dictionary:
 		var graves_risk = metabolic_risk_levels.get("graves-disease","normal")
 		match graves_risk:
 			"active":
-			# +20-40% above TDEE — use +30% midpoint
-				var extra = adjusted * 0.30
+				var extra = adjusted * 0.30 # +20-40% above TDEE — use +30% midpoint
 				adjusted += extra
 				notes.append("Graves' (active): +" + str(snappedf(extra,0)) + " kcal (hypermetabolism +30%)")
 			"mild", "hyperthyroid-other":
@@ -571,7 +570,7 @@ func calculate_adjusted_kcal_goal() -> Dictionary:
 		adjusted = bmr
 		notes.append("⚠️ Floor enforced: goal cannot go below BMR (" + str(snappedf(bmr,0)) + " kcal) — this is your minimum safe intake")
 
-	return {"adjusted_goal": snappedf(adjusted, 1.0), "adjustments": notes}
+	return {"adjusted_goal": snappedf(adjusted, 0.1), "adjustments": notes}
 
 # ─────────────────────────────────────────
 #  MICRONUTRIENT RDAs — sex-aware, condition-adjusted
@@ -985,12 +984,12 @@ func get_visible_micronutrients() -> Array:
 #  STARTUP
 # ─────────────────────────────────────────
 func _ready():
-	load_streak()
-	load_currency()
 	load_quests()
 	load_profile()
 	load_points()
+	load_streak()
 	load_badges()
+	load_currency()
 	load_report_date()
 	load_body_metrics_from_file()
 	load_metabolic_conditions()
@@ -1206,6 +1205,7 @@ func get_points_alltime() -> float:
 
 func get_macro_goals() -> Dictionary:
 	var weight    = body_metrics.get("weight", 70.0)
+	print("DEBUG macro_goals: weight=", weight, " kidney_at_risk=", kidney_at_risk, " conditions=", active_metabolic_conditions)
 	var is_female = body_metrics.get("is_female", false)
 	var bmi_text  = body_metrics.get("bmi_text", "")
 	var daily_kcal = body_metrics.get("daily_goal", 2000.0)

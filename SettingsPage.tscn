@@ -701,7 +701,7 @@ text = "Crohn's Disease"
 layout_mode = 2
 text = "Diagnosed with Crohn's disease"
 
-[node name="ActiveFlare" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel/VBoxContainer"]
+[node name="ActiveFlareCheck" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/CrohnsPanel/VBoxContainer"]
 layout_mode = 2
 text = "Currently in active flare"
 

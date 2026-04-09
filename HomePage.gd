@@ -10,6 +10,7 @@ const GLASS_EMPTY_PATH = "res://images/glass_empty.png"
 var glass_states: Array = []  # true = full, false = empty
 
 func _ready():
+	$Panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_init_today_totals()
 	Global.load_currency()
 	Global.load_quests()
@@ -17,14 +18,27 @@ func _ready():
 	load_today()
 	load_water()
 	load_meal_history()
+	Global.load_streak()
 	refresh_display()
 	Global.quest_completed.connect(func(_q): refresh_display())
 	Global.py_awarded.connect(func(_a, _r): _refresh_streak_row())
 	Global.streak_milestone_reached.connect(_on_streak_milestone)
-	
+	var sc = $Panel/ScrollContainer
+	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+
+	var vbox = $Panel/ScrollContainer/VBoxContainer
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
+
 func _notification(what):
 	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
+		load_meal_history()
 		refresh_display()
+	elif what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_APPLICATION_PAUSED:
+		# Save current day to history even if nothing was logged
+		_save_to_history()
+		save_today()
+		save_water()
 
 func _init_today_totals():
 	today_totals = {
@@ -50,14 +64,17 @@ func log_food(food: Dictionary):
 	for key in today_totals.keys():
 		var food_key = "oxalate_mg_per_100g" if key == "oxalate_mg" else key
 		today_totals[key] += food.get(food_key, 0.0)
-	foods_eaten.append(food.get("name","Unknown"))
+	foods_eaten.append(food.get("name", "Unknown"))
+	print("DEBUG streak before: ", Global.daily_streak, " last_date: ", Global.last_streak_date, " today: ", Time.get_date_string_from_system())
 	Global.check_and_update_streak()
+	print("DEBUG streak after: ", Global.daily_streak)
+	Global.check_and_update_streak()
+	save_today()
+	_save_to_history()
+	Global.check_badges()
 	var totals_for_quests = today_totals.duplicate()
 	totals_for_quests["water_ml"] = water_ml
 	Global.check_quests(totals_for_quests)
-	Global.check_badges()
-	save_today()
-	_save_to_history()
 	refresh_display()
 
 # ─────────────────────────────────────────
@@ -595,7 +612,7 @@ func _refresh_micro_card():
 	# Vitamin circles row
 	var circles_row = HBoxContainer.new()
 	circles_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	circles_row.add_theme_constant_override("separation", 8)
+	circles_row.add_theme_constant_override("separation", 5)
 	vbox.add_child(circles_row)
 
 	for i in range(VITAMIN_FIELDS.size()):
@@ -612,14 +629,14 @@ func _refresh_micro_card():
 		circles_row.add_child(col)
 
 		var img = TextureRect.new()
-		img.custom_minimum_size = Vector2(48, 48)
+		img.custom_minimum_size = Vector2(90, 90)
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		var img_path = "res://images/vit_" + label.to_lower() + "_" + state + ".png"
 		if ResourceLoader.exists(img_path):
 			img.texture = load(img_path)
 		else:
 			var cr = ColorRect.new()
-			cr.custom_minimum_size = Vector2(48, 48)
+			cr.custom_minimum_size = Vector2(90, 90)
 			cr.color = Color.GREEN if state == "green" else (Color.YELLOW if state == "yellow" else Color.RED)
 			col.add_child(cr)
 		col.add_child(img)
@@ -710,102 +727,116 @@ func _refresh_water_card():
 	for child in vbox.get_children():
 		child.queue_free()
 
+	# ── Calculate goals ──
 	var water_goal_l  = Global.calculate_water_recommendation()
-	var water_goal_ml = water_goal_l * 1000.0
-	var water_l       = snappedf(water_ml / 1000.0, 2)
+	var water_goal_ml = water_goal_l * 1000.0   # e.g. 3000.0 for 3L
+	var glass_ml      = 250.0                    # one glass = exactly 250mL
+	var total_glasses = int(ceil(water_goal_ml / glass_ml))  # e.g. 12 for 3L
+	var water_l       = snappedf(water_ml / 1000.0, 0.01)
+	var goal_l        = snappedf(water_goal_l, 0.1)
 
+	# ── Title ──
 	var title = Label.new()
-	title.text = "💧 Water  " + str(water_l) + " / " + str(snappedf(water_goal_l,1)) + " L"
-	title.add_theme_font_size_override("font_size", 48)
+	title.text = "💧 Water  " + str(water_l) + " / " + str(goal_l) + " L"
+	title.add_theme_font_size_override("font_size", 36)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
-	# Calculate glasses
-	# Use lower limit as quest target, upper limit as panel goal
-	var lower_goal_ml = water_goal_ml * 0.85  # quest threshold
-	var glass_ml      = 250.0
-	var total_glasses = int(ceil(water_goal_ml / glass_ml))
-
-	# Initialize glass states if needed
-	if glass_states.size() != total_glasses:
-		glass_states.clear()
-		for i in range(total_glasses):
-			glass_states.append(false)  # false = full (not yet drunk), true = empty (drunk)
-
-	# Sync glass states with water_ml
+	# ── How many glasses has the user drunk? ──
+	# Each glass is exactly 250mL, water_ml is the running total
 	var glasses_drunk = int(water_ml / glass_ml)
+	# glasses_drunk = 4 means the user drank 1000mL (4 × 250mL = 1L)
+
+	# ── Sync glass_states array to match glasses_drunk ──
+	if glass_states.size() != total_glasses:
+		glass_states.resize(total_glasses)
+		for i in range(total_glasses):
+			glass_states[i] = false  # false = full (not yet drunk)
+
 	for i in range(total_glasses):
-		glass_states[i] = i < glasses_drunk
+		glass_states[i] = (i < glasses_drunk)
+	# glass_states[0..3] = true (drunk) after 4 glasses
+	# glass_states[4..11] = false (still full) for a 12-glass goal
 
-	var glasses_row = HBoxContainer.new()
-	glasses_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	glasses_row.add_theme_constant_override("separation", 5)
-	vbox.add_child(glasses_row)
-
+	# ── Load textures ──
 	var full_tex  = load(GLASS_FULL_PATH)  if ResourceLoader.exists(GLASS_FULL_PATH)  else null
 	var empty_tex = load(GLASS_EMPTY_PATH) if ResourceLoader.exists(GLASS_EMPTY_PATH) else null
 
+	# ── Build glass buttons row ──
+	var glasses_row = HBoxContainer.new()
+	glasses_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	glasses_row.add_theme_constant_override("separation", 8)
+	vbox.add_child(glasses_row)
+
 	for i in range(total_glasses):
-		var is_empty = glass_states[i]  # true = user drank this glass
+		var is_drunk = glass_states[i]  # true = user already drank this glass
 
 		var glass_btn = Button.new()
 		glass_btn.flat = true
-		glass_btn.custom_minimum_size = Vector2(100, 100)
+		glass_btn.custom_minimum_size = Vector2(96, 96)
 
 		var icon = TextureRect.new()
-		icon.custom_minimum_size = Vector2(100, 100)
+		icon.custom_minimum_size = Vector2(96, 96)
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		if is_empty and empty_tex:
-			icon.texture = empty_tex
-		elif not is_empty and full_tex:
-			icon.texture = full_tex
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE  # let button handle input
+
+		if is_drunk and empty_tex:
+			icon.texture = empty_tex   # drunk glass = empty image
+		elif not is_drunk and full_tex:
+			icon.texture = full_tex    # not yet drunk = full image
 		else:
 			# Fallback colored rect
 			var cr = ColorRect.new()
-			cr.color = Color(0.3,0.3,0.9,0.5) if not is_empty else Color(0.7,0.7,0.9,0.3)
-			cr.custom_minimum_size = Vector2(48,48)
+			cr.custom_minimum_size = Vector2(96, 96)
+			cr.color = Color(0.3, 0.3, 0.9, 0.5) if not is_drunk else Color(0.6, 0.6, 0.9, 0.2)
+			cr.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			glass_btn.add_child(cr)
+
 		glass_btn.add_child(icon)
 
+		# Pressing glass i sets water to (i+1) × 250mL
+		# Pressing an already-drunk glass undoes it (sets water back to i × 250mL)
 		var idx = i
 		glass_btn.pressed.connect(func():
-			# Toggle: if this glass is not yet drunk, drink up to this glass
-			var new_water = (idx + 1) * glass_ml
 			if glass_states[idx]:
-				# Already drunk — clicking empties back to before this glass
-				new_water = idx * glass_ml
-			water_ml = clamp(new_water, 0.0, water_goal_ml + 500.0)
+				# Already drunk — undo: set water back to this glass not being drunk
+				water_ml = idx * glass_ml
+			else:
+				# Not yet drunk — drink up to and including this glass
+				water_ml = (idx + 1) * glass_ml
+			water_ml = clamp(water_ml, 0.0, water_goal_ml + glass_ml * 4)
 			save_water()
 			_refresh_water_card()
-			# Check water quests
 			var totals_q = today_totals.duplicate()
 			totals_q["water_ml"] = water_ml
 			Global.check_quests(totals_q)
 		)
+
 		glasses_row.add_child(glass_btn)
 
-# ── Bonus glass — extra water beyond goal ──
-	var bonus_tex_path = "res://images/glass_bonus.png"  # your plus-sign glass icon
-	var bonus_drunk = water_ml > water_goal_ml           # true if user already drank extra
-
+	# ── Bonus glass (beyond goal) ──
+	var bonus_tex_path = "res://images/glass_bonus.png"
 	var bonus_btn = Button.new()
 	bonus_btn.flat = true
-	bonus_btn.custom_minimum_size = Vector2(100, 100)
-	bonus_btn.tooltip_text = "Log an extra glass (beyond your goal)"
+	bonus_btn.custom_minimum_size = Vector2(96, 96)
+	bonus_btn.tooltip_text = "Log an extra glass beyond your goal (+250mL)"
 
 	var bonus_icon = TextureRect.new()
-	bonus_icon.custom_minimum_size = Vector2(100, 100)
+	bonus_icon.custom_minimum_size = Vector2(96, 96)
 	bonus_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	bonus_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	if ResourceLoader.exists(bonus_tex_path):
 		bonus_icon.texture = load(bonus_tex_path)
 	else:
-		var cr = ColorRect.new()
-		cr.color = Color(0.2, 0.6, 1.0, 0.6) if not bonus_drunk else Color(0.6, 0.8, 1.0, 0.3)
-		cr.custom_minimum_size = Vector2(48, 48)
-		bonus_btn.add_child(cr)
+		var cr2 = ColorRect.new()
+		cr2.custom_minimum_size = Vector2(96, 96)
+		cr2.color = Color(0.2, 0.6, 1.0, 0.5)
+		cr2.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		bonus_btn.add_child(cr2)
 	bonus_btn.add_child(bonus_icon)
 
 	bonus_btn.pressed.connect(func():
-		water_ml += glass_ml   # add one extra glass
+		water_ml += glass_ml
 		save_water()
 		_refresh_water_card()
 		var totals_q = today_totals.duplicate()
@@ -814,18 +845,79 @@ func _refresh_water_card():
 	)
 	glasses_row.add_child(bonus_btn)
 
-	# Points preview
+	# ── Points preview ──
+	var lower_goal_ml = water_goal_ml * 0.85  # quest target = 85% of goal
 	var w_pts = 0.0
 	if water_ml >= water_goal_ml:
 		w_pts = 2.0
 	elif water_ml >= lower_goal_ml:
 		w_pts = 2.0 * (water_ml / water_goal_ml)
+
 	var pts_lbl = Label.new()
 	pts_lbl.text = "💧 " + str(snappedf(w_pts, 1)) + " / 2 pts"
 	pts_lbl.add_theme_font_size_override("font_size", 36)
 	pts_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(pts_lbl)
 
+	# ── Water intoxication warning ──
+	var water_max_ml = water_goal_ml * 1.15
+	if water_ml >= water_max_ml:
+		var warn_vbox = VBoxContainer.new()
+		warn_vbox.name = "WaterWarning"
+		vbox.add_child(warn_vbox)
+
+		var warn_lbl = Label.new()
+		warn_lbl.text = "⚠️ You reached the daily recommended water intake."
+		warn_lbl.add_theme_font_size_override("font_size", 36)
+		warn_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		warn_lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.1))
+		warn_vbox.add_child(warn_lbl)
+
+		var wi_row = HBoxContainer.new()
+		warn_vbox.add_child(wi_row)
+
+		var prefix = Label.new()
+		prefix.text = "Going further can cause "
+		prefix.add_theme_font_size_override("font_size", 36)
+		wi_row.add_child(prefix)
+
+		var wi_btn = Button.new()
+		wi_btn.text = "Water Intoxication"
+		wi_btn.flat = true
+		wi_btn.add_theme_font_size_override("font_size", 36)
+		wi_btn.add_theme_color_override("font_color", Color(0.3, 0.7, 1.0))
+		wi_btn.pressed.connect(_show_water_intoxication_info)
+		wi_row.add_child(wi_btn)
+
+func _show_water_intoxication_info():
+	_show_overlay_panel(func(scroll_vbox):
+		var title = Label.new()
+		title.text = "💧 Water Intoxication (Hyponatremia)"
+		title.add_theme_font_size_override("font_size", 36)
+		title.add_theme_color_override("font_color", Color(0.3, 0.7, 1.0))
+		title.autowrap_mode = TextServer.AUTOWRAP_WORD
+		scroll_vbox.add_child(title)
+		scroll_vbox.add_child(HSeparator.new())
+
+		var info_text = [
+			"Excess water dilutes the sodium and potassium in your blood.",
+			"",
+			"🧠 Cerebral Edema — brain swelling, headaches, confusion, seizures",
+			"❤️ Heart arrhythmias",
+			"💪 Muscle cramping",
+			"",
+			"Your kidneys can only process approximately 1 litre of water per hour.",
+			"Never exceed 1L per hour.",
+		]
+		for line in info_text:
+			var lbl = Label.new()
+			lbl.text = line
+			lbl.add_theme_font_size_override("font_size", 36)
+			lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			if line.begins_with("🧠") or line.begins_with("❤️") or line.begins_with("💪"):
+				lbl.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
+			scroll_vbox.add_child(lbl)
+	)
 
 func _refresh_tips_card():
 	var card = $Panel/ScrollContainer/VBoxContainer/TipsCard
@@ -1024,7 +1116,7 @@ func _show_overlay_panel(populate_fn: Callable):
 	var close_hint = Label.new()
 	close_hint.text = "Tap outside to close"
 	close_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	close_hint.add_theme_font_size_override("font_size", 18)
+	close_hint.add_theme_font_size_override("font_size", 36)
 	close_hint.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
 	scroll_vbox.add_child(close_hint)
 
@@ -1072,6 +1164,9 @@ func load_water():
 	glass_states = data.get("glass_states",[])
 
 func _save_to_history():
+	if foods_eaten.is_empty() and today_totals.get("calories", 0.0) <= 0:
+		return   # ← nothing logged today, don't overwrite yesterday's real data
+
 	# Load from disk first to merge, but preserve today's live data
 	var today = Time.get_date_string_from_system()
 	if not FileAccess.file_exists("user://meal_history.json"):
@@ -1133,7 +1228,7 @@ func _show_badge_popup(badge: Dictionary):
 	var sparkle = Label.new()
 	sparkle.text = "✨ Badge Unlocked! ✨"
 	sparkle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	sparkle.add_theme_font_size_override("font_size", 26)
+	sparkle.add_theme_font_size_override("font_size", 48)
 	vbox.add_child(sparkle)
 
 	var name_lbl = Label.new()
@@ -1147,14 +1242,14 @@ func _show_badge_popup(badge: Dictionary):
 	var desc_lbl = Label.new()
 	desc_lbl.text = badge["desc"]
 	desc_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	desc_lbl.add_theme_font_size_override("font_size", 22)
+	desc_lbl.add_theme_font_size_override("font_size", 36)
 	desc_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(desc_lbl)
 
 	var tier_lbl = Label.new()
 	tier_lbl.text = badge.get("tier","bronze").capitalize() + " Badge"
 	tier_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	tier_lbl.add_theme_font_size_override("font_size", 20)
+	tier_lbl.add_theme_font_size_override("font_size", 36)
 	tier_lbl.add_theme_color_override("font_color",
 		Global.BADGE_TIER_COLORS.get(badge.get("tier","bronze"), Color.WHITE))
 	vbox.add_child(tier_lbl)
@@ -1177,7 +1272,7 @@ func _show_weekly_report():
 
 		var title = Label.new()
 		title.text = "📊 Weekly Health Report — Week " + str(week_n % 52)
-		title.add_theme_font_size_override("font_size", 26)
+		title.add_theme_font_size_override("font_size", 36)
 		title.autowrap_mode = TextServer.AUTOWRAP_WORD
 		scroll_vbox.add_child(title)
 		scroll_vbox.add_child(HSeparator.new())
@@ -1198,7 +1293,7 @@ func _show_weekly_report():
 
 		var nutr_title = Label.new()
 		nutr_title.text = "📈 Nutrition averages (daily)"
-		nutr_title.add_theme_font_size_override("font_size", 22)
+		nutr_title.add_theme_font_size_override("font_size", 36)
 		nutr_title.add_theme_color_override("font_color", Color(0.7,0.9,0.4))
 		scroll_vbox.add_child(nutr_title)
 
@@ -1217,7 +1312,7 @@ func _show_weekly_report():
 		# Top nutrients met + missed
 		var nutr2_title = Label.new()
 		nutr2_title.text = "🔬 Micronutrients"
-		nutr2_title.add_theme_font_size_override("font_size", 22)
+		nutr2_title.add_theme_font_size_override("font_size", 36)
 		nutr2_title.add_theme_color_override("font_color", Color(0.4,0.8,0.9))
 		scroll_vbox.add_child(nutr2_title)
 
@@ -1234,14 +1329,14 @@ func _show_weekly_report():
 
 		var met_lbl = Label.new()
 		met_lbl.text = "✅ Goals met: " + (", ".join(met) if not met.is_empty() else "None")
-		met_lbl.add_theme_font_size_override("font_size", 20)
+		met_lbl.add_theme_font_size_override("font_size", 36)
 		met_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 		met_lbl.add_theme_color_override("font_color", Color(0.3,0.9,0.3))
 		scroll_vbox.add_child(met_lbl)
 
 		var miss_lbl = Label.new()
 		miss_lbl.text = "❌ Needs work: " + (", ".join(missed.slice(0,6)) if not missed.is_empty() else "None!")
-		miss_lbl.add_theme_font_size_override("font_size", 20)
+		miss_lbl.add_theme_font_size_override("font_size", 36)
 		miss_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 		miss_lbl.add_theme_color_override("font_color", Color(1.0,0.5,0.3))
 		scroll_vbox.add_child(miss_lbl)
@@ -1251,12 +1346,12 @@ func _show_weekly_report():
 		# Badges earned this week
 		var badge_title = Label.new()
 		badge_title.text = "🏅 Badges"
-		badge_title.add_theme_font_size_override("font_size", 22)
+		badge_title.add_theme_font_size_override("font_size", 36)
 		scroll_vbox.add_child(badge_title)
 
 		var badge_lbl = Label.new()
 		badge_lbl.text = str(Global.earned_badges.size()) + " total badges earned"
-		badge_lbl.add_theme_font_size_override("font_size", 20)
+		badge_lbl.add_theme_font_size_override("font_size", 36)
 		scroll_vbox.add_child(badge_lbl)
 
 		scroll_vbox.add_child(HSeparator.new())
@@ -1265,13 +1360,13 @@ func _show_weekly_report():
 		var season = Global.get_current_season()
 		var seas_title = Label.new()
 		seas_title.text = season["emoji"] + " Season: " + season["name"]
-		seas_title.add_theme_font_size_override("font_size", 22)
+		seas_title.add_theme_font_size_override("font_size", 36)
 		seas_title.add_theme_color_override("font_color", Color(0.9, 0.7, 0.3))
 		scroll_vbox.add_child(seas_title)
 
 		var seas_desc = Label.new()
 		seas_desc.text = season["desc"]
-		seas_desc.add_theme_font_size_override("font_size", 20)
+		seas_desc.add_theme_font_size_override("font_size", 36)
 		seas_desc.autowrap_mode = TextServer.AUTOWRAP_WORD
 		scroll_vbox.add_child(seas_desc)
 	)
@@ -1281,10 +1376,10 @@ func _add_report_row(vbox: VBoxContainer, label: String, value: String):
 	vbox.add_child(row)
 	var k = Label.new(); k.text = label
 	k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	k.add_theme_font_size_override("font_size", 22)
+	k.add_theme_font_size_override("font_size", 36)
 	row.add_child(k)
 	var v = Label.new(); v.text = value
-	v.add_theme_font_size_override("font_size", 22)
+	v.add_theme_font_size_override("font_size", 36)
 	row.add_child(v)
 
 func _add_report_progress(vbox: VBoxContainer, label: String, val: float, goal: float, unit: String):
@@ -1297,13 +1392,13 @@ func _add_report_progress(vbox: VBoxContainer, label: String, val: float, goal: 
 
 	var k = Label.new(); k.text = label
 	k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	k.add_theme_font_size_override("font_size", 21)
+	k.add_theme_font_size_override("font_size", 36)
 	row.add_child(k)
 
 	var pct = clamp(val/goal, 0.0, 1.0) if goal > 0 else 0.0
 	var v   = Label.new()
 	v.text = str(snappedf(val,0.1)) + " / " + str(snappedf(goal,0.1)) + " " + unit
-	v.add_theme_font_size_override("font_size", 21)
+	v.add_theme_font_size_override("font_size", 36)
 	if pct >= 1.0:
 		v.add_theme_color_override("font_color", Color(0.3,0.9,0.3))
 	elif pct >= 0.6:
@@ -1315,7 +1410,7 @@ func _add_report_progress(vbox: VBoxContainer, label: String, val: float, goal: 
 	var bar = Label.new()
 	var filled = int(pct * 10)
 	bar.text = "█".repeat(filled) + "░".repeat(10 - filled)
-	bar.add_theme_font_size_override("font_size", 18)
+	bar.add_theme_font_size_override("font_size", 36)
 	col.add_child(bar)
 
 func _get_week_averages() -> Dictionary:
@@ -1368,20 +1463,20 @@ func _show_milestone_popup(name: String, days: int):
 	var title = Label.new()
 	title.text = "🎉 Streak Milestone!"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 36)
 	vbox.add_child(title)
 
 	var streak_lbl = Label.new()
 	streak_lbl.text = str(days) + " Days — " + name
 	streak_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	streak_lbl.add_theme_font_size_override("font_size", 32)
+	streak_lbl.add_theme_font_size_override("font_size", 36)
 	streak_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.0))
 	vbox.add_child(streak_lbl)
 
 	var reward_lbl = Label.new()
 	reward_lbl.text = "+ " + str(days * 5) + " PY 💰"
 	reward_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	reward_lbl.add_theme_font_size_override("font_size", 26)
+	reward_lbl.add_theme_font_size_override("font_size", 36)
 	reward_lbl.add_theme_color_override("font_color", Color(0.4, 1.0, 0.4))
 	vbox.add_child(reward_lbl)
 

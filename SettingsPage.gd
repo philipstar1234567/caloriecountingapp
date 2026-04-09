@@ -334,6 +334,19 @@ func _ready():
 	_add_unit_selector(GRAVES + "InputFields/FT3Input",  "ft3")
 	_add_unit_selector(GRAVES + "InputFields/TSHInput",  "tsh")   # reuse existing tsh key
 	
+	get_node(CROHN + "ActiveFlareCheck").toggled.connect(func(c):
+		var is_active = c
+		if is_active:
+			Global.set_metabolic_risk("crohns-disease", "active")
+		else:
+			Global.set_metabolic_risk("crohns-disease", "confirmed")
+		var flare_check = get_node_or_null(CROHN + "ActiveFlareCheck")
+		_save_metabolic_inputs("crohns", {
+			"known": get_node(CROHN + "KnownCrohns").button_pressed,
+			"flare": c
+		})
+		_update_adjusted_goal_label()
+	)
 	get_node(GLYC + "InputFields/InsulinResistanceRow/IRCalculateBtn").pressed.connect(_on_calculate_homa_ir)
 	# red warning
 	get_node(BASE + "HideRedWarningsRow/HideRedCheck").toggled.connect(func(checked):
@@ -530,19 +543,43 @@ func _on_known_disease_toggled(checked: bool):
 	Global.save_profile()
 	_update_adjusted_goal_label()
 func save_kidney_settings(egfr: float):
+	# Use find_child to handle wrapping done by _add_unit_selector
+	var input_fields = get_node_or_null(KIDNEY + "InputFields")
+	var creatinine_val = 0.0
+	var age_val        = 0.0
+	var oxalate_val    = 0.0
+	var gender_idx     = 0
+
+	if input_fields:
+		var creatinine_input = input_fields.find_child("CreatinineInput", true, false)
+		var age_input        = input_fields.find_child("AgeInput",        true, false)
+		var oxalate_input    = input_fields.find_child("OxalateInput",    true, false)
+		var gender_input     = input_fields.find_child("GenderOption",    true, false)
+		if creatinine_input: creatinine_val = creatinine_input.value
+		if age_input:        age_val        = age_input.value
+		if oxalate_input:    oxalate_val    = oxalate_input.value
+		if gender_input:     gender_idx     = gender_input.selected
+
 	var risk_text = get_node(KIDNEY + "RiskLabel").text
 	var egfr_text = ""
 	if egfr > 0:
-		egfr_text = get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false).text
+		var egfr_lbl = get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false)
+		if egfr_lbl: egfr_text = egfr_lbl.text
+
 	_save_metabolic_inputs("kidney", {
-		"egfr": egfr,
-		"at_risk": Global.kidney_at_risk,
-		"known_disease": get_node(KIDNEY + "KnownDisease").button_pressed,
-		"risk_text": risk_text,
-		"egfr_text": egfr_text,
+		"egfr":            egfr,
+		"at_risk":         Global.kidney_at_risk,
+		"known_disease":   get_node(KIDNEY + "KnownDisease").button_pressed,
+		"risk_text":       risk_text,
+		"egfr_text":       egfr_text,
+		"creatinine":      creatinine_val,
+		"age":             age_val,
+		"oxalate":         oxalate_val,
+		"gender":          gender_idx,
 		"creatinine_unit": _unit_buttons["creatinine"].selected if _unit_buttons.has("creatinine") else 0
 	})
 	Global.save_profile()
+
 
 func load_kidney_settings():
 	if not FileAccess.file_exists("user://metabolic_inputs.json"): return
@@ -551,14 +588,30 @@ func load_kidney_settings():
 	file.close()
 	if not data or not data.has("kidney"): return
 	var k = data["kidney"]
+
 	Global.kidney_at_risk = k.get("at_risk", false)
 	var known = k.get("known_disease", false)
 	get_node(KIDNEY + "KnownDisease").button_pressed = known
 	get_node(KIDNEY + "InputFields").visible = !known
+
+	var input_fields = get_node_or_null(KIDNEY + "InputFields")
+	if input_fields:
+		var creatinine_input = input_fields.find_child("CreatinineInput", true, false)
+		var age_input        = input_fields.find_child("AgeInput",        true, false)
+		var oxalate_input    = input_fields.find_child("OxalateInput",    true, false)
+		var gender_input     = input_fields.find_child("GenderOption",    true, false)
+		if creatinine_input: creatinine_input.value = k.get("creatinine", 0.9)
+		if age_input:        age_input.value        = k.get("age",        30.0)
+		if oxalate_input:    oxalate_input.value    = k.get("oxalate",    0.0)
+		if gender_input:     gender_input.selected  = k.get("gender",     0)
+
 	if k.has("risk_text") and k["risk_text"] != "":
 		get_node(KIDNEY + "RiskLabel").text = k["risk_text"]
-	if k.has("egfr_text") and k["egfr_text"] != "":
-		get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false).text = k["egfr_text"]
+
+	var egfr_lbl = get_node(KIDNEY + "InputFields").find_child("eGFRLabel", true, false)
+	if egfr_lbl and k.get("egfr", 0.0) > 0:
+		egfr_lbl.text = "eGFR: " + str(k["egfr"]) + " mL/min/1.73m²"
+
 	if _unit_buttons.has("creatinine"):
 		_unit_buttons["creatinine"].selected = k.get("creatinine_unit", 0)
 		
@@ -1105,9 +1158,13 @@ func _on_known_gi_crohns(checked: bool):
 	else:
 		Global.set_metabolic_risk("crohns-disease", "normal")
 		get_node(CROHN + "ResultLabel").text = "—"
+	var flare_check = get_node_or_null(CROHN + "ActiveFlareCheck")
+	var is_flare = flare_check.button_pressed if flare_check else false
+	_save_metabolic_inputs("crohns", {
+		"known": checked,
+		"flare": is_flare
+	})
 	Global.save_metabolic_conditions()
-
-
 	_update_adjusted_goal_label()
 
 func _on_known_gi_epi(checked: bool):
@@ -1199,6 +1256,18 @@ func load_metabolic_ui():
 		get_node(HEMO + "InputFields/FerritinInputRow/FerritinInput").value = data["hemo"].get("ferritin", 100)
 		get_node(HEMO + "ResultLabel").text                = data["hemo"].get("result", "—")
 		if _unit_buttons.has("ferritin"): _unit_buttons["ferritin"].selected = data["hemo"].get("ferritin_unit", 0)
+
+	if data.has("crohns"):
+		var cn = data["crohns"]
+		var known_node = get_node_or_null(CROHN + "KnownCrohns")
+		if known_node: known_node.button_pressed = cn.get("known", false)
+		var flare_node = get_node_or_null(CROHN + "ActiveFlareCheck")
+		if flare_node:
+			flare_node.button_pressed = cn.get("flare", false)
+			if cn.get("flare", false):
+				Global.set_metabolic_risk("crohns-disease", "active")
+			elif cn.get("known", false):
+				Global.set_metabolic_risk("crohns-disease", "confirmed")
 
 	if data.has("wilson"):
 		get_node(WILS + "InputFields/CerulInputRow/CerulInput").value   = data["wilson"].get("cerul", 25)
@@ -1389,44 +1458,61 @@ func _celsius_to_f(c: float) -> float:
 	return c * 9.0 / 5.0 + 32.0
 
 func _on_calculate_homa_ir():
-	var insulin_raw = get_node(GLYC + "InputFields/InsulinResistanceRow/InsulinInputRow/InsulinInput").value
+	var insulin_input = get_node_or_null(GLYC + "InputFields/InsulinResistanceRow/InsulinInput")
+	if not insulin_input:
+		return
+	var insulin_raw = insulin_input.value
 	var glucose_raw = _get_input(GLYC, "FPGInput").value
-	var glucose_mgdl = _convert(glucose_raw, "fpg")  # convert to mg/dL
+	var glucose_mgdl = _convert(glucose_raw, "fpg")
 
 	# HOMA-IR = (fasting insulin µIU/mL × fasting glucose mg/dL) / 405
 	var homa_ir = (insulin_raw * glucose_mgdl) / 405.0
 	homa_ir = snappedf(homa_ir, 0.01)
 
-	var result_lbl = get_node(GLYC + "ResultLabel")
-	var existing = result_lbl.text
-	var msg  = ""
-	var risk = ""
-	var homa_section = "━━ HOMA-IR ━━\n" + msg
+	var risk = "normal"
+	var interpretation = ""
+	var advice = ""
+
 	if homa_ir >= 2.5:
 		risk = "insulin-resistant"
-		msg  = "🔴 HOMA-IR: " + str(homa_ir) + "\n" + \
-			"Insulin resistance detected (≥2.5).\n" + \
-			"• Increase dietary fiber and reduce refined carbohydrates.\n" + \
-			"• Prioritise low GI foods and resistant starch.\n" + \
-			"• Physical activity improves insulin sensitivity.\n" + \
-			"• Consider chromium picolinate 400 mcg/day.\n" + \
-			"Consult your doctor."
+		interpretation = "🔴 Insulin resistance detected (score ≥ 2.5)"
+		advice = (
+			"• Increase dietary fiber and reduce refined carbohydrates\n" +
+			"• Prioritise low GI foods and resistant starch\n" +
+			"• Physical activity significantly improves insulin sensitivity\n" +
+			"• Consider chromium picolinate 400 mcg/day\n" +
+			"• Consult your doctor"
+		)
 		Global.set_metabolic_condition("glycemic-health", true)
 		Global.set_metabolic_risk("glycemic-health", "insulin-resistant")
 	elif homa_ir >= 1.7:
 		risk = "borderline"
-		msg  = "🟡 HOMA-IR: " + str(homa_ir) + "\n" + \
-			"Borderline insulin resistance (1.7–2.5).\n" + \
-			"• Reduce sugar and refined carbohydrates.\n" + \
-			"• Increase soluble fiber intake.\n" + \
-			"• 30 min of moderate exercise daily."
+		interpretation = "🟡 Borderline insulin resistance (score 1.7–2.5)"
+		advice = (
+			"• Reduce sugar and refined carbohydrates\n" +
+			"• Increase soluble fiber intake\n" +
+			"• 30 min of moderate exercise daily recommended"
+		)
 	else:
-		msg  = "✅ HOMA-IR: " + str(homa_ir) + " — Insulin sensitivity appears normal."
+		interpretation = "✅ Insulin sensitivity appears normal (score < 1.7)"
+		advice = "Continue current diet and lifestyle."
 
-	# Append to existing glycemic result label
+	var homa_section = (
+		"━━ HOMA-IR ━━\n" +
+		"Score: " + str(homa_ir) + "\n" +
+		"Insulin: " + str(insulin_raw) + " µIU/mL   " +
+		"Glucose: " + str(snappedf(glucose_mgdl, 0.1)) + " mg/dL\n" +
+		interpretation + "\n" +
+		advice
+	)
+
+	var result_lbl = get_node(GLYC + "ResultLabel")
+	var existing   = result_lbl.text
+
+	# Remove any previous HOMA-IR section before appending fresh result
 	if "━━ HOMA-IR ━━" in existing:
 		var parts = existing.split("━━ HOMA-IR ━━")
-		existing = parts[0].strip_edges()
+		existing  = parts[0].strip_edges()
 
 	if existing.is_empty() or existing == "—":
 		result_lbl.text = homa_section
@@ -1438,6 +1524,8 @@ func _on_calculate_homa_ir():
 		"fpg":      glucose_raw,
 		"insulin":  insulin_raw,
 		"homa_ir":  homa_ir,
-		"result":   result_lbl.text
+		"hba1c_unit": _unit_buttons.get("hba1c", null).selected if _unit_buttons.has("hba1c") else 0,
+		"fpg_unit":   _unit_buttons.get("fpg",   null).selected if _unit_buttons.has("fpg")   else 0,
+		"result": result_lbl.text
 	})
 	_update_adjusted_goal_label()

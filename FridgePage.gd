@@ -300,7 +300,28 @@ func _ready():
 	)
 	$Panel/TopBar/MealPlannerButton.pressed.connect(_on_meal_planner_pressed)
 	$Panel/MealPlannerPanel/VBoxContainer/TopBarMP/MPCloseBtn.pressed.connect(func():
-		# Clear any active editing
+	# Reset meal planner filters
+		meal_active_filters.clear()
+		meal_sort_ascending = true
+		meal_warning_filter = "all"
+		_update_meal_filter_label()
+		# Visually deactivate all filter buttons
+		var filter_row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/FilterScrollH/FilterButtonsRow
+		if filter_row:
+			for btn in filter_row.get_children():
+				if btn is Button:
+					btn.button_pressed = false
+					btn.modulate = Color.WHITE
+		# Reset warning filter buttons
+		var warn_row = $Panel/MealPlannerPanel/VBoxContainer/FilterPanel/VBoxContainer/WarningFilterRow
+		if warn_row:
+			for btn in warn_row.get_children():
+				if btn is Button:
+					btn.button_pressed = (btn.text == "All")
+		# Clear search bar
+		var search = $Panel/MealPlannerPanel/VBoxContainer/MPSearchBar
+		if search: search.text = ""
+		# Rest of close logic unchanged
 		meal_items.clear()
 		editing_meal_mid = ""
 		var banner = $Panel/MealPlannerPanel/EditingBanner
@@ -309,7 +330,6 @@ func _ready():
 		var name_edit = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/SaveMealNameEdit
 		name_edit.text = ""
 		_refresh_meal_grid()
-	# Close any open popups
 		var ap = get_node_or_null("MealItemPopup")
 		if ap: ap.queue_free()
 		var ib = get_node_or_null("MealInfoBubble")
@@ -318,9 +338,10 @@ func _ready():
 		if dp: dp.queue_free()
 		$Panel/MealPlannerPanel.hide()
 		$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_PASS
+	)
 	# Show NavBar again
 		#get_tree().root.get_node("Main/NavBar").show()
-	)
+
 	var details_btn = $Panel/MealPlannerPanel/VBoxContainer/FrequencyRow/DetailsButton
 	details_btn.button_down.connect(func():
 		Global.any_button_pressed.emit() 
@@ -740,17 +761,19 @@ func decrement_shopping_entry(sid: String):
 func check_shopping_entry(sid: String, checked: bool):
 	_shopping_snapshot()
 	for entry in shopping_list:
-		if entry["_sid"] == sid:
-			entry["_checked"] = checked
+		if entry["_sid"] != sid: continue
+		# Guard: if already in target state, do nothing
+		if entry.get("_checked", false) == checked: return
+		entry["_checked"] = checked
 		if checked:
 			var qty = entry.get("qty", 1)
 			add_to_fridge_multi(entry["food"], qty)
-			entry["_fridge_qty_added"] = qty   # ← record how many we added
+			entry["_fridge_qty_added"] = qty
 		else:
-			# Reverse: remove from fridge what was added
 			var qty_to_remove = entry.get("_fridge_qty_added", entry.get("qty", 1))
 			_remove_from_fridge_by_food_id(entry["food"].get("id",""), qty_to_remove)
 			entry["_fridge_qty_added"] = 0
+		break
 	save_shopping_list()
 	# Do NOT call refresh_shopping_list() here — 
 	# we handle the visual change directly in the row
@@ -896,27 +919,30 @@ func refresh_shopping_list():
 			# IMPORTANT: capture sid in local var for lambda
 			var captured_sid = sid
 			cb.toggled.connect(func(is_checked):
-				if is_checked:
-					check_shopping_entry(captured_sid, true)
-					# Replace this row's checkbox with strikethrough immediately
-					# without rebuilding the whole list
-					var parent = cb.get_parent()
-					var idx    = cb.get_index()
-					cb.queue_free()
-					var rtl2 = RichTextLabel.new()
-					rtl2.bbcode_enabled = true
-					rtl2.fit_content = true
-					rtl2.text = "[s][color=#50507a]" + display_text + "[/color][/s]"
-					rtl2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-					rtl2.custom_minimum_size = Vector2(0, 44)
-					rtl2.add_theme_font_size_override("normal_font_size", 70)
-					rtl2.mouse_filter = Control.MOUSE_FILTER_IGNORE
-					parent.add_child(rtl2)
-					parent.move_child(rtl2, idx)
-					# Also disable the minus button in this row
-					if parent.get_child_count() > 0:
-						var mb = parent.get_child(0)
-						if mb is Button: mb.disabled = true
+				if not is_checked: return  # ignore untoggle
+				# Guard: check if already marked in data to prevent double-add
+				for e in shopping_list:
+					if e["_sid"] == captured_sid:
+						if e.get("_checked", false):
+							return  # already checked — do nothing
+						break
+				check_shopping_entry(captured_sid, true)
+				var parent = cb.get_parent()
+				var idx    = cb.get_index()
+				cb.queue_free()
+				var rtl2 = RichTextLabel.new()
+				rtl2.bbcode_enabled = true
+				rtl2.fit_content = true
+				rtl2.text = "[s][color=#50507a]" + display_text + "[/color][/s]"
+				rtl2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+				rtl2.custom_minimum_size = Vector2(0, 44)
+				rtl2.add_theme_font_size_override("normal_font_size", 70)
+				rtl2.mouse_filter = Control.MOUSE_FILTER_IGNORE
+				parent.add_child(rtl2)
+				parent.move_child(rtl2, idx)
+				if parent.get_child_count() > 0:
+					var mb = parent.get_child(0)
+					if mb is Button: mb.disabled = true
 			)
 			row.add_child(cb)
 
@@ -1507,10 +1533,48 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 func _on_action_pressed(key: String, slot: Dictionary, popup: PanelContainer, density: float, remaining_g: float):
 	var iid = slot.get("_iid","")
 	match key:
-		"eat_whole":      _eat_portion(slot, remaining_g, popup)
+		"eat_whole":
+			var count = slot.get("_count", 1)
+			if count > 1:
+				# Just decrement the group — no 0g warning
+				slot["_count"] = count - 1
+				save_fridge()
+				build_fridge_ui()
+				# Log one unit's nutrients
+				var effective = _get_effective_slot(slot)
+				var scaled    = effective.duplicate()
+				var ratio     = remaining_g / 100.0
+				var scalable  = [
+					"calories","protein_g","fat_g","carbs_g","fiber_g","calcium_mg",
+					"saturated_fat_g","monounsaturated_fat_g","polyunsaturated_fat_g",
+					"sugar_g","sodium_mg","iron_mg","copper_mg","selenium_mcg",
+					"vitamin_a_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
+					"vitamin_b5_mg","vitamin_b6_mg","vitamin_b7_mcg","vitamin_b9_mcg",
+					"vitamin_b12_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_e_mg",
+					"vitamin_k1_mcg","vitamin_k2_mcg","magnesium_mg","potassium_mg",
+					"zinc_mg","phosphorus_mg","manganese_mg","chromium_mcg",
+					"iodine_mcg","molybdenum_mcg","beta_carotene_mcg","lycopene_mcg",
+					"lutein_zeaxanthin_mcg","quercetin_mg","anthocyanins_mg",
+					"resveratrol_mg","total_polyphenols_mg","oxalate_mg_per_100g"
+				]
+				for field in scalable:
+					if scaled.has(field):
+						scaled[field] = scaled[field] * ratio
+				popup.queue_free()
+				var ib = get_node_or_null("InfoBubble")
+				if ib: ib.queue_free()
+				var main = get_tree().root.get_node("Main")
+				var home = main.get_node_or_null("ContentArea/HomePage")
+				if home == null: _log_food_to_file(scaled)
+				else: home.log_food(scaled)
+			else:
+				# Last unit — use normal eat_portion which will show 0g
+				_eat_portion(slot, remaining_g, popup)
 		"throw_out":
 			_remove_slot(iid)
 			popup.queue_free()
+			var ib = get_node_or_null("InfoBubble")
+			if ib: ib.queue_free()
 		"modify":
 			_show_input_area(popup, slot, "modify", "New total weight (g):", 1, 10000, 1, density, remaining_g)
 		"tablespoon":
@@ -1923,6 +1987,28 @@ func _on_list_pressed():
 	refresh_shopping_list()
 
 func _on_close_list():
+	# Reset all filters
+	active_filters.clear()
+	sort_ascending = true
+	warning_filter = "all"
+	_update_filter_label()
+	# Visually deactivate filter buttons
+	for key in filter_buttons.keys():
+		var btn = filter_buttons[key]
+		if btn:
+			btn.button_pressed = false
+			btn.modulate = Color.WHITE
+	# Reset warning filter buttons
+	var warn_row = $Panel/ShoppingListPanel/VBoxContainer/FilterPanel/VBoxContainer/WarningFilterRow
+	if warn_row:
+		for btn in warn_row.get_children():
+			if btn is Button:
+				btn.button_pressed = (btn.text == "All")
+	# Reset sort button states
+	_update_sort_button_states()
+	# Clear search bar
+	var search = $Panel/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar
+	if search: search.text = ""
 	$Panel/ShoppingListPanel.hide()
 	$Panel/ShoppingListPanel.mouse_filter = Control.MOUSE_FILTER_STOP
 	# Re-enable fridge buttons
