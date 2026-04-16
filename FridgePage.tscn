@@ -178,7 +178,7 @@ theme = SubResource("Theme_vo4mu")
 theme_override_font_sizes/font_size = 50
 
 [node name="ListPaperArea" type="Control" parent="Panel/ShoppingListPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 999)
+custom_minimum_size = Vector2(0, 1500)
 layout_mode = 2
 
 [node name="PaperImage" type="TextureRect" parent="Panel/ShoppingListPanel/VBoxContainer/ListPaperArea"]
@@ -188,7 +188,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 118.0
 offset_right = 7.0
-offset_bottom = 325.0
+offset_bottom = -162.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -198,13 +198,13 @@ texture = SubResource("CompressedTexture2D_2hr5r")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.134
-anchor_top = 0.117
-anchor_right = 1.004
-anchor_bottom = 1.325
+anchor_top = 0.084
+anchor_right = 1.0
+anchor_bottom = 0.887
 offset_left = 0.425995
-offset_top = 4.117
-offset_right = 0.355957
-offset_bottom = 0.324951
+offset_top = -11.0
+offset_right = 5.0
+offset_bottom = 10.5
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
@@ -255,7 +255,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_bottom = -893.0
+offset_bottom = -1383.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1

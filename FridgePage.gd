@@ -1176,8 +1176,8 @@ func build_fridge_ui():
 			container.add_child(warn_bg)
 
 			var warn_lbl = Label.new()
-			warn_lbl.text = "⚠️ 0 g\nleft"
-			warn_lbl.add_theme_font_size_override("font_size", 40)
+			warn_lbl.text = "⚠️ 0 g left"
+			warn_lbl.add_theme_font_size_override("font_size", 36)
 			warn_lbl.add_theme_color_override("font_color", Color.WHITE)
 			warn_lbl.position = Vector2(4, container.custom_minimum_size.y - 40)
 			warn_lbl.custom_minimum_size = Vector2(container.custom_minimum_size.x - 8, 40)
