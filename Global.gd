@@ -866,7 +866,7 @@ func get_micronutrient_rdas() -> Dictionary:
 	# ── Kidney at risk (CKD) ─────────────────────────────────────────────
 	if kidney_at_risk:
 		rdas["potassium_mg"]["rda"] = 2000.0   # restriction
-		rdas.erase("vitamin_c_mg")             # large doses harmful in CKD
+		rdas["vitamin_c_mg"]["rda"] = 30.0     # large doses harmful in CKD
 
 	# ── Lactose Intolerance ───────────────────────────────────────────────
 	if c.has("lactose-intolerance"):

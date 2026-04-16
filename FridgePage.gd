@@ -3178,7 +3178,7 @@ func _show_meal_details():
 		["Vitamin B5",  "vitamin_b5_mg",  "mg"],
 		["Vitamin B6",  "vitamin_b6_mg",  "mg"],
 		["Vitamin B7",  "vitamin_b7_mcg", "mcg"],
-		["Folate B9",   "vitamin_b9_mcg", "mcg"],
+		["Vitamin B9",  "vitamin_b9_mcg", "mcg"],
 		["Vitamin B12", "vitamin_b12_mcg","mcg"],
 		["Vitamin C",   "vitamin_c_mg",   "mg"],
 		["Vitamin D",   "vitamin_d_mcg",  "mcg"],

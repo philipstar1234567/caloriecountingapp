@@ -590,9 +590,9 @@ func _make_progress_row(entry: Dictionary) -> VBoxContainer:
 #  PANEL 4 — MICRO CARD
 # ─────────────────────────────────────────
 const VITAMIN_FIELDS = [
-	"vitamin_a_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
+	"vitamin_a_mcg","vitamin_d_mcg","vitamin_e_mg","vitamin_k2_mcg","vitamin_b1_mg","vitamin_b2_mg","vitamin_b3_mg",
 	"vitamin_b5_mg","vitamin_b6_mg","vitamin_b7_mcg","vitamin_b9_mcg",
-	"vitamin_b12_mcg","vitamin_c_mg","vitamin_d_mcg","vitamin_e_mg","vitamin_k2_mcg"
+	"vitamin_b12_mcg","vitamin_c_mg"
 ]
 const VITAMIN_LABELS = ["A","B1","B2","B3","B5","B6","B7","B9","B12","C","D","E","K2"]
 
@@ -609,43 +609,91 @@ func _refresh_micro_card():
 
 	var rdas = Global.get_micronutrient_rdas()
 
-	# Vitamin circles row
-	var circles_row = HBoxContainer.new()
-	circles_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	circles_row.add_theme_constant_override("separation", 5)
-	vbox.add_child(circles_row)
+	# VITAMIN_FIELDS order: A, B1, B2, B3, B5, B6, B7, B9, B12, C, D, E, K2
+	# VITAMIN_LABELS order: A, B1, B2, B3, B5, B6, B7, B9, B12, C, D, E, K2
+	# Water soluble: B1,B2,B3,B5,B6,B7,B9,B12,C → indices 1–9
+	# Fat soluble:   A, D, E, K2               → indices 0, 10, 11, 12
 
-	for i in range(VITAMIN_FIELDS.size()):
+	var water_soluble_indices = [1, 2, 3, 4, 5, 6, 7, 8, 9]   # B1–C
+	var fat_soluble_indices   = [0, 10, 11, 12]                 # A, D, E, K2
+
+	# ── Row 1: Water-soluble ──
+	var ws_row = HBoxContainer.new()
+	ws_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	ws_row.add_theme_constant_override("separation", 8)
+	vbox.add_child(ws_row)
+
+	for i in water_soluble_indices:
 		var field = VITAMIN_FIELDS[i]
 		var label = VITAMIN_LABELS[i]
 		if not rdas.has(field): continue
-		var rda  = rdas[field]["rda"]
-		var val  = today_totals.get(field, 0.0)
-		var pct  = clamp(val / rda, 0.0, 1.2) if rda > 0 else 0.0
+		var rda   = rdas[field]["rda"]
+		var val   = today_totals.get(field, 0.0)
+		var pct   = clamp(val / rda, 0.0, 1.2) if rda > 0 else 0.0
 		var state = "green" if pct >= 1.0 else ("yellow" if pct >= 0.5 else "red")
 
 		var col = VBoxContainer.new()
 		col.alignment = BoxContainer.ALIGNMENT_CENTER
-		circles_row.add_child(col)
+		ws_row.add_child(col)
 
 		var img = TextureRect.new()
-		img.custom_minimum_size = Vector2(90, 90)
+		img.custom_minimum_size = Vector2(120, 120)
 		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		var img_path = "res://images/vit_" + label.to_lower() + "_" + state + ".png"
 		if ResourceLoader.exists(img_path):
 			img.texture = load(img_path)
 		else:
 			var cr = ColorRect.new()
-			cr.custom_minimum_size = Vector2(90, 90)
+			cr.custom_minimum_size = Vector2(120, 120)
 			cr.color = Color.GREEN if state == "green" else (Color.YELLOW if state == "yellow" else Color.RED)
 			col.add_child(cr)
 		col.add_child(img)
 
-		#var lbl = Label.new()
-		#lbl.text = label
-		#lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		#lbl.add_theme_font_size_override("font_size", 16)
-		#col.add_child(lbl)
+	var ws_label = Label.new()
+	ws_label.text = "water soluble"
+	ws_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	ws_label.add_theme_font_size_override("font_size", 28)
+	ws_label.add_theme_color_override("font_color", Color(0.5, 0.7, 1.0))
+	vbox.add_child(ws_label)
+
+	# ── Row 2: Fat-soluble ──
+	var fs_row = HBoxContainer.new()
+	fs_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	fs_row.add_theme_constant_override("separation", 8)
+	vbox.add_child(fs_row)
+
+	for i in fat_soluble_indices:
+		var field = VITAMIN_FIELDS[i]
+		var label = VITAMIN_LABELS[i]
+		if not rdas.has(field): continue
+		var rda   = rdas[field]["rda"]
+		var val   = today_totals.get(field, 0.0)
+		var pct   = clamp(val / rda, 0.0, 1.2) if rda > 0 else 0.0
+		var state = "green" if pct >= 1.0 else ("yellow" if pct >= 0.5 else "red")
+
+		var col = VBoxContainer.new()
+		col.alignment = BoxContainer.ALIGNMENT_CENTER
+		fs_row.add_child(col)
+
+		var img = TextureRect.new()
+		img.custom_minimum_size = Vector2(120, 120)
+		img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		var img_path = "res://images/vit_" + label.to_lower() + "_" + state + ".png"
+		if ResourceLoader.exists(img_path):
+			img.texture = load(img_path)
+		else:
+			var cr = ColorRect.new()
+			cr.custom_minimum_size = Vector2(120, 120)
+			cr.color = Color.GREEN if state == "green" else (Color.YELLOW if state == "yellow" else Color.RED)
+			col.add_child(cr)
+		col.add_child(img)
+
+	var fs_label = Label.new()
+	fs_label.text = "fat soluble"
+	fs_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	fs_label.add_theme_font_size_override("font_size", 28)
+	fs_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.5))
+	vbox.add_child(fs_label)
 
 	card.gui_input.connect(func(event):
 		if event is InputEventMouseButton and event.pressed:
@@ -1138,7 +1186,29 @@ func load_today():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if not data: return
-	if data.get("date","") != Time.get_date_string_from_system(): return
+	if data.get("date","") != Time.get_date_string_from_system():
+		var old_date = data.get("date", "")
+		if old_date != "":
+			# Load meal history from disk
+			var history: Dictionary = {}
+			if FileAccess.file_exists("user://meal_history.json"):
+				var hfile = FileAccess.open("user://meal_history.json", FileAccess.READ)
+				var hdata = JSON.parse_string(hfile.get_as_text())
+				hfile.close()
+				if hdata: history = hdata
+
+			# Only write if there's actually something to save
+			var old_foods = data.get("foods", [])
+			var old_totals = data.get("totals", {})
+			if not old_foods.is_empty() or old_totals.get("calories", 0.0) > 0:
+				history[old_date] = {
+					"totals": old_totals,
+					"foods":  old_foods
+				}
+				var wfile = FileAccess.open("user://meal_history.json", FileAccess.WRITE)
+				wfile.store_string(JSON.stringify(history))
+				wfile.close()
+		return
 	var saved = data.get("totals",{})
 	for key in today_totals.keys():
 		if saved.has(key): today_totals[key] = saved[key]
