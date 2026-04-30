@@ -658,6 +658,8 @@ func refresh_current_tab():
 
 # ── One row in the browse list ──
 func make_browse_row(food: Dictionary) -> HBoxContainer:
+	var fs = _list_font_size()
+	
 	var row = HBoxContainer.new()
 	row.custom_minimum_size = Vector2(0, 60)
 
@@ -665,7 +667,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	if severity != "safe":
 		var badge = Label.new()
 		badge.text = "⛔" if severity == "avoid" else "⚠️"
-		badge.add_theme_font_size_override("font_size", 24)
+		badge.add_theme_font_size_override("font_size", 36)
 		row.add_child(badge)
 
 	var icon = TextureRect.new()
@@ -676,10 +678,26 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 		icon.texture = load(path)
 	row.add_child(icon)
 
+	var name_col = VBoxContainer.new()
+	name_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_col.add_theme_constant_override("separation", 2)
+	row.add_child(name_col)
+
 	var name_label = Label.new()
 	name_label.text = food.get("name", "")
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.add_theme_font_size_override("font_size", fs)
 	row.add_child(name_label)
+	
+	# Strict avoid label
+	var strict_conditions = _get_strict_avoid_conditions(food)
+	if not strict_conditions.is_empty():
+		var sa_lbl = Label.new()
+		sa_lbl.text = "⛔ strict avoid in your condition"
+		sa_lbl.add_theme_font_size_override("font_size", 36)
+		sa_lbl.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
+		name_col.add_child(sa_lbl)
+
 
 	if not active_filters.is_empty():
 		var val_vbox = VBoxContainer.new()  # ← VBox instead of inline text
@@ -690,12 +708,13 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 			var lbl_text = _get_filter_label(key) + ": " + _format_field_value(key, val)
 			var val_lbl = Label.new()
 			val_lbl.text = lbl_text
-			val_lbl.add_theme_font_size_override("font_size", 30)
+			val_lbl.add_theme_font_size_override("font_size", 36)
 			val_vbox.add_child(val_lbl)
 	else:
-		var amount = Label.new()
-		amount.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
-		row.add_child(amount)
+		var ox_lbl = Label.new()
+		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
+		ox_lbl.add_theme_font_size_override("font_size", 36)
+		row.add_child(ox_lbl)
 
 		var warnings = Global.get_warnings(food)
 		if warnings.size() > 0:
@@ -703,7 +722,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 			info_btn.text = "ℹ️"
 			info_btn.flat = true
 			info_btn.custom_minimum_size = Vector2(44, 44)
-			info_btn.add_theme_font_size_override("font_size", 22)
+			info_btn.add_theme_font_size_override("font_size", 36)
 			info_btn.pressed.connect(func():
 				Global.any_button_pressed.emit()
 				_show_warning_detail_panel(food)
@@ -2386,6 +2405,17 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	row.custom_minimum_size = Vector2(0, 60)
 	row.add_theme_constant_override("separation", 8)
 
+	# Warning badge
+	var severity = _get_food_severity(food)
+	if severity == "avoid":
+		var badge = Label.new(); badge.text = "⛔"
+		badge.add_theme_font_size_override("font_size", 24)
+		row.add_child(badge)
+	elif severity == "caution":
+		var badge = Label.new(); badge.text = "⚠️"
+		badge.add_theme_font_size_override("font_size", 24)
+		row.add_child(badge)
+
 	# Icon — same as shopping list
 	var icon = TextureRect.new()
 	icon.custom_minimum_size = Vector2(50, 50)
@@ -2394,10 +2424,24 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	if ResourceLoader.exists(path): icon.texture = load(path)
 	row.add_child(icon)
 
+	var name_col = VBoxContainer.new()
+	name_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_col.add_theme_constant_override("separation", 2)
+	row.add_child(name_col)
+
 	var name_lbl = Label.new()
 	name_lbl.text = food.get("name","")
 	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(name_lbl)
+
+	# Strict avoid label
+	var strict_conditions = _get_strict_avoid_conditions(food)
+	if not strict_conditions.is_empty():
+		var sa_lbl = Label.new()
+		sa_lbl.text = "⛔ strict avoid in your condition"
+		sa_lbl.add_theme_font_size_override("font_size", 19)
+		sa_lbl.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
+		name_col.add_child(sa_lbl)
 
 	# Show active filter values
 	if not meal_active_filters.is_empty():
@@ -2417,13 +2461,6 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 		row.add_child(ox_lbl)
 
 	# Warning badge
-	var severity = _get_food_severity(food)
-	if severity != "safe":
-		var badge = Label.new()
-		badge.text = "⛔" if severity == "avoid" else "⚠️"
-		badge.add_theme_font_size_override("font_size", 36)
-		row.add_child(badge)
-
 		var warnings = Global.get_warnings(food)
 		if warnings.size() > 0:
 			var info_btn = Button.new()
@@ -4242,3 +4279,81 @@ func _show_cook_change_notification(before: Dictionary, after: Dictionary):
 	tween.tween_interval(4.0)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
 	tween.tween_callback(func(): panel.queue_free())
+
+func _list_font_size() -> int:
+	return 70 if Global.accessibility_large_font else 36
+
+# Then replace every hardcoded font size in make_browse_row() and _make_meal_browse_row():
+	#name_label.add_theme_font_size_override("font_size", _list_font_size())
+	#ox_lbl.add_theme_font_size_override("font_size", _list_font_size())
+	#val_lbl.add_theme_font_size_override("font_size", _list_font_size() - 6)
+	#btn.add_theme_font_size_override("font_size", _list_font_size())
+	#sa_lbl.add_theme_font_size_override("font_size", _list_font_size() - 6)
+
+func _get_strict_avoid_conditions(food: Dictionary) -> Array:
+	var food_name = food.get("name","").to_lower()
+	var food_id   = food.get("id","").to_lower()
+	var cat       = food.get("category","").to_lower()
+	var result: Array = []
+
+	# Build keyword → food matching
+	# Each entry in strict_avoid is a descriptive string — we match keywords
+	var STRICT_KEYWORD_MAP = {
+		"graves-disease": [
+			{"keywords":["seaweed","kelp","nori","wakame","spirulina","kombu"], "ids":["seaweed","wakame","kelp"]},
+			{"keywords":["oyster","shrimp"], "ids":["oyster","shrimp","scampi"]},
+		],
+		"thyroid-health": [
+			{"keywords":["seaweed","kelp","nori","wakame"], "ids":["seaweed","wakame","kelp"]},
+			{"keywords":["millet"], "ids":["millet"]},
+			{"keywords":["cassava"], "ids":["cassava"]},
+		],
+		"celiac-disease": [
+			{"keywords":["wheat","spelt","rye","barley","oat"], "ids":["rye","spelt","oatmeal","oats","barley","khorasan-wheat"]},
+		],
+		"hemochromatosis": [
+			{"keywords":["beef","lamb","venison","pork","liver","kidney","blood","organ"],
+			 "ids":["ground-beef","beef-steak","lamb","veal","pork-tenderloin","pork-shoulder","pork-chop","bacon","reindeer","elk"]},
+			{"keywords":["shellfish","oyster","shrimp","lobster","crab"],
+			 "ids":["shrimp","lobster","crab","scampi"]},
+		],
+		"crohns-disease": [
+			{"keywords":["raw vegetable","fried","processed meat","shellfish"],
+			 "ids":["bacon","sausage","meatballs","shrimp","lobster","crab","scampi"]},
+		],
+		"nafld": [
+			{"keywords":["sugary","soda","juice","fructose","trans fat","ultra-processed"], "ids":[]},
+		],
+		"epi": [
+			{"keywords":["alcohol"], "ids":[]},
+		],
+		"post-cholecystectomy": [
+			{"keywords":["fried","trans fat"], "ids":[]},
+		],
+	}
+
+	for condition in Global.active_metabolic_conditions:
+		if not STRICT_KEYWORD_MAP.has(condition): continue
+		for entry in STRICT_KEYWORD_MAP[condition]:
+			# Check by food id first (most reliable)
+			for sid in entry["ids"]:
+				if food_id == sid or food_id.begins_with(sid):
+					if not result.has(condition):
+						result.append(condition)
+					break
+			if result.has(condition): break
+			# Check by name keywords
+			for keyword in entry["keywords"]:
+				if food_name.contains(keyword):
+					if not result.has(condition):
+						result.append(condition)
+					break
+			if result.has(condition): break
+
+	# Special: celiac — use contains_gluten field (most reliable)
+	if Global.active_metabolic_conditions.has("celiac-disease"):
+		if food.get("contains_gluten", false):
+			if not result.has("celiac-disease"):
+				result.append("celiac-disease")
+
+	return result

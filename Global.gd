@@ -999,6 +999,7 @@ func _ready():
 	if Global.should_show_weekly_report():
 		call_deferred("_show_weekly_report")
 		Global.mark_report_shown()
+	Global.load_ui_settings()
 
 # ─────────────────────────────────────────
 #  WARNINGS — called by FridgePage per food
@@ -1945,3 +1946,23 @@ func load_report_date():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if data: last_report_date = data.get("date","")
+
+var simple_mode: bool = false
+var accessibility_large_font: bool = false
+
+func save_ui_settings():
+	var file = FileAccess.open("user://ui_settings.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({
+		"simple_mode":   simple_mode,
+		"large_font":    accessibility_large_font
+	}))
+	file.close()
+
+func load_ui_settings():
+	if not FileAccess.file_exists("user://ui_settings.json"): return
+	var file = FileAccess.open("user://ui_settings.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if not data: return
+	simple_mode              = data.get("simple_mode", false)
+	accessibility_large_font = data.get("large_font", false)

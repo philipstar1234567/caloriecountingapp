@@ -396,6 +396,32 @@ func _ready():
 		Global.save_profile()
 	)
 	
+	# Simple mode
+	get_node(BASE + "SimpleModeRow/SimpleModeCheck").button_pressed = Global.simple_mode
+	get_node(BASE + "SimpleModeRow/SimpleModeCheck").toggled.connect(func(checked):
+		Global.simple_mode = checked
+		Global.save_ui_settings()
+		# Notify HomePage to refresh
+		var home = get_tree().root.get_node_or_null("Main/ContentArea/HomePage")
+		if home: home.refresh_display()
+	)
+
+	# Accessibility
+	get_node(BASE + "AccessibilityRow/AccessibilityCheck").button_pressed = Global.accessibility_large_font
+	get_node(BASE + "AccessibilityRow/AccessibilityCheck").toggled.connect(func(checked):
+		Global.accessibility_large_font = checked
+		Global.save_ui_settings()
+		# Apply immediately
+		var home = get_tree().root.get_node_or_null("Main/ContentArea/HomePage")
+		if home: home.refresh_display()
+		# Refresh shopping list and meal planner if open
+		var fridge = get_tree().root.get_node_or_null("Main/ContentArea/FridgePage")
+		if fridge:
+			fridge.refresh_current_tab()
+			if fridge._meal_tabs_built:
+				fridge._refresh_meal_tab()
+	)
+	
 	get_node(GRAVES + "KnownGraves").toggled.connect(func(c): _on_known_metabolic("graves-disease", c, GRAVES))
 	get_node(GRAVES + "InputFields/CalculateButton").pressed.connect(_on_calculate_graves)
 
@@ -430,6 +456,7 @@ func _ready():
 	load_kidney_settings()
 	load_body_metrics()
 	load_metabolic_ui()
+	_apply_dynamic_sizing()
 
 	var temp_opt = get_node(BASE + "TempUnitRow/TempUnitOption")
 	if temp_opt:
@@ -1357,6 +1384,35 @@ func _on_reset_intake():
 	if FileAccess.file_exists("user://water.json"):
 		DirAccess.remove_absolute("user://water.json")
 	print("Today's intake reset")
+	
+	# Reset today's points
+	var today = Time.get_date_string_from_system()
+	Global.points_history[today] = 0.0
+	Global.save_points(today, 0.0)
+
+	# Reset PY currency
+	Global.py_currency = 0
+	Global.save_currency()
+
+	# Reset streak
+	Global.daily_streak = 0
+	Global.last_streak_date = ""
+	Global.streak_freeze_count = 1
+	Global._last_celebrated_milestone = 0
+	Global.save_streak()
+
+	# Reset quests and completions for today
+	Global.completed_quest_ids.clear()
+	Global.save_quests()
+
+	# Notify HomePage to refresh if loaded
+	var main = get_tree().root.get_node("Main")
+	var home = main.get_node_or_null("ContentArea/HomePage")
+	if home:
+		home.today_totals = home._init_today_totals() if home.has_method("_init_today_totals") else {}
+		home.foods_eaten.clear()
+		home.water_ml = 0.0
+		home.refresh_display()
 
 func _on_reset_all():
 	# Delete all save files
@@ -1529,3 +1585,34 @@ func _on_calculate_homa_ir():
 		"result": result_lbl.text
 	})
 	_update_adjusted_goal_label()
+
+func _apply_dynamic_sizing():
+	var all_result_labels = [
+		KIDNEY + "RiskLabel",
+		GLYC   + "ResultLabel",
+		NAFLD  + "ResultLabel",
+		LIPID  + "ResultLabel",
+		THYR   + "ResultLabel",
+		OSTEO  + "ResultLabel",
+		HEMO   + "ResultLabel",
+		WILS   + "ResultLabel",
+		GRAVES + "ResultLabel",
+		CROHN  + "ResultLabel",
+		CELIAC + "ResultLabel",
+		SULF   + "ResultLabel",
+		LACT   + "ResultLabel",
+		EPI    + "ResultLabel",
+		CHOLE  + "ResultLabel",
+	]
+	for path in all_result_labels:
+		var lbl = get_node_or_null(path)
+		if not lbl: continue
+		lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		# Make the parent panel expand with content
+		var panel = lbl.get_parent()
+		while panel and not panel is PanelContainer:
+			panel = panel.get_parent()
+		if panel:
+			panel.custom_minimum_size = Vector2(0, 0)
+			panel.size_flags_vertical = Control.SIZE_SHRINK_BEGIN

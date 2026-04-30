@@ -10,7 +10,7 @@ const GLASS_EMPTY_PATH = "res://images/glass_empty.png"
 var glass_states: Array = []  # true = full, false = empty
 
 func _ready():
-	$Panel/WeeklyReportBtn.pressed.connect(func():
+	$Panel/ScrollContainer/VBoxContainer/StreakRow/WeeklyReportBtn.pressed.connect(func():
 		_show_reflection_screen()
 		# Mark as shown so it won't auto-show again today
 		Global.mark_report_shown()
@@ -108,12 +108,63 @@ func refresh_display():
 	_refresh_streak_row()
 	_refresh_quests_card()
 	_refresh_meal_history_card()
-	_refresh_macro_card()
-	_refresh_micro_card()
+	if Global.simple_mode:
+		_refresh_simple_kcal_card()
+	else:
+		_refresh_macro_card()
+		_refresh_micro_card()
 	_refresh_water_card()
 	_refresh_tips_card()
 	
+	var macro_card = $Panel/ScrollContainer/VBoxContainer/MacroCard
+	var micro_card = $Panel/ScrollContainer/VBoxContainer/MicroCard
+	var simple_card = $Panel/ScrollContainer/VBoxContainer/SimpleKcalCard
+	if macro_card:  macro_card.visible  = not Global.simple_mode
+	if micro_card:  micro_card.visible  = not Global.simple_mode
+	if simple_card: simple_card.visible = Global.simple_mode
 	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer)
+	
+func _refresh_simple_kcal_card():
+	var card = $Panel/ScrollContainer/VBoxContainer/SimpleKcalCard
+	if not card: return
+	var vbox = card.get_node("VBoxContainer")
+	for child in vbox.get_children(): child.queue_free()
+
+	var daily_goal = Global.body_metrics.get("daily_goal", 0.0)
+	var kcal       = today_totals.get("calories", 0.0)
+	var remaining  = daily_goal - kcal
+
+	var title = Label.new()
+	title.text = "🔥 Calories Today"
+	title.add_theme_font_size_override("font_size", 28)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(title)
+
+	var kcal_lbl = Label.new()
+	kcal_lbl.text = str(snappedf(kcal, 0.1)) + " kcal"
+	kcal_lbl.add_theme_font_size_override("font_size", 48)
+	kcal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	kcal_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
+	vbox.add_child(kcal_lbl)
+
+	if daily_goal > 0:
+		var pct   = clamp(kcal / daily_goal, 0.0, 1.0)
+		var fill  = int(pct * 10)
+		var bar   = Label.new()
+		bar.text  = "█".repeat(fill) + "░".repeat(10 - fill)
+		bar.add_theme_font_size_override("font_size", 22)
+		bar.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		vbox.add_child(bar)
+
+		var goal_lbl = Label.new()
+		var rem_str  = ("+" if remaining < 0 else "") + str(snappedf(abs(remaining),0.1))
+		goal_lbl.text = "Goal: " + str(snappedf(daily_goal,0.1)) + " kcal  |  " + \
+			("Over by " if remaining < 0 else "Remaining: ") + rem_str + " kcal"
+		goal_lbl.add_theme_font_size_override("font_size", 22)
+		goal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		if remaining < 0:
+			goal_lbl.add_theme_color_override("font_color", Color(1.0,0.4,0.3))
+		vbox.add_child(goal_lbl)
 # ─────────────────────────────────────────
 #  STREAK ROW (always visible at top)
 # ─────────────────────────────────────────

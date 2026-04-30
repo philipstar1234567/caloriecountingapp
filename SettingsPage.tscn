@@ -67,6 +67,36 @@ text = "⚠️ Reset All Configurations"
 layout_mode = 2
 text = "🧊 Reset Fridge"
 
+[node name="SimpleModeRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/SimpleModeRow"]
+layout_mode = 2
+
+[node name="SimpleModeCheck" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/SimpleModeRow"]
+layout_mode = 2
+text = "🧩 Simple Mode — show only calories on Home Page"
+
+[node name="AccessibilityRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/AccessibilityRow"]
+layout_mode = 2
+
+[node name="AccessibilityCheck" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/AccessibilityRow"]
+layout_mode = 2
+text = "Accessibility — large text for food lists"
+
+[node name="HideRedWarningsRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HideRedLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HideRedWarningsRow"]
+layout_mode = 2
+
+[node name="HideRedCheck" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HideRedWarningsRow"]
+layout_mode = 2
+text = "Hide high-risk foods from shopping list"
+
 [node name="TempUnitRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 
@@ -81,16 +111,6 @@ popup/item_0/text = "Celsius (°C)"
 popup/item_0/id = 0
 popup/item_1/text = "Fahrenheit (°F)"
 popup/item_1/id = 1
-
-[node name="HideRedWarningsRow" type="HBoxContainer" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="HideRedLabel" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HideRedWarningsRow"]
-layout_mode = 2
-
-[node name="HideRedCheck" type="CheckBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/HideRedWarningsRow"]
-layout_mode = 2
-text = "Hide high-risk foods from shopping list"
 
 [node name="BodyMetricsPanel" type="Panel" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 1400)
