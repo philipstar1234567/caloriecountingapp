@@ -11,6 +11,8 @@ var glass_states: Array = []  # true = full, false = empty
 
 func _ready():
 	$Panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	$Panel.clip_contents = true
+	$Panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	_init_today_totals()
 	Global.load_currency()
 	Global.load_quests()
@@ -25,6 +27,7 @@ func _ready():
 	Global.streak_milestone_reached.connect(_on_streak_milestone)
 	var sc = $Panel/ScrollContainer
 	sc.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	sc.clip_contents = true
 
 	var vbox = $Panel/ScrollContainer/VBoxContainer
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -102,6 +105,8 @@ func refresh_display():
 	_refresh_micro_card()
 	_refresh_water_card()
 	_refresh_tips_card()
+	
+	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer)
 # ─────────────────────────────────────────
 #  STREAK ROW (always visible at top)
 # ─────────────────────────────────────────
@@ -175,6 +180,7 @@ func _refresh_quests_card():
 		if event is InputEventMouseButton and event.pressed:
 			_open_quests_overlay()
 	)
+	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/QuestsCard)
 
 func _make_quest_mini_row(quest: Dictionary) -> HBoxContainer:
 	var qid = quest.get("id","")
@@ -252,6 +258,7 @@ func _refresh_meal_history_card():
 		more.flat = true
 		more.pressed.connect(func(): _open_meal_history_overlay(Time.get_date_string_from_system()))
 		vbox.add_child(more)
+		#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/MealHistoryCard)
 
 func _open_meal_history_overlay(_start_date: String):
 	_show_overlay_panel(func(scroll_vbox):
@@ -521,6 +528,7 @@ func _refresh_macro_card():
 		if event is InputEventMouseButton and event.pressed:
 			_open_macro_overlay()
 	)
+	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/MacroCard)
 
 func _open_macro_overlay():
 	_show_overlay_panel(func(scroll_vbox):
@@ -699,6 +707,7 @@ func _refresh_micro_card():
 		if event is InputEventMouseButton and event.pressed:
 			_open_micro_overlay()
 	)
+	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/MicroCard)
 
 func _open_micro_overlay():
 	_show_overlay_panel(func(scroll_vbox):
@@ -811,9 +820,10 @@ func _refresh_water_card():
 	var empty_tex = load(GLASS_EMPTY_PATH) if ResourceLoader.exists(GLASS_EMPTY_PATH) else null
 
 	# ── Build glass buttons row ──
-	var glasses_row = HBoxContainer.new()
+	var glasses_row = HFlowContainer.new()
 	glasses_row.alignment = BoxContainer.ALIGNMENT_CENTER
-	glasses_row.add_theme_constant_override("separation", 8)
+	glasses_row.add_theme_constant_override("h_separation", 8)
+	glasses_row.add_theme_constant_override("v_separation", 8)
 	vbox.add_child(glasses_row)
 
 	for i in range(total_glasses):
@@ -936,6 +946,8 @@ func _refresh_water_card():
 		wi_btn.add_theme_color_override("font_color", Color(0.3, 0.7, 1.0))
 		wi_btn.pressed.connect(_show_water_intoxication_info)
 		wi_row.add_child(wi_btn)
+		
+		#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/WaterCard)
 
 func _show_water_intoxication_info():
 	_show_overlay_panel(func(scroll_vbox):
@@ -998,6 +1010,8 @@ func _refresh_tips_card():
 	more.flat = true
 	more.pressed.connect(func(): _open_tips_overlay())
 	vbox.add_child(more)
+	
+	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/TipsCard)
 
 func _open_tips_overlay():
 	var tips = _get_personalized_tips()
@@ -1559,3 +1573,13 @@ func _show_milestone_popup(name: String, days: int):
 	tween.tween_interval(2.5)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
 	tween.tween_callback(func(): panel.queue_free())
+
+#func _fix_labels_in(node: Node):
+	#for child in node.get_children():
+		#if child is Label:
+			#child.autowrap_mode = TextServer.AUTOWRAP_WORD
+			#child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		#elif child is RichTextLabel:
+			#child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			#child.fit_content = true
+		#_fix_labels_in(child)

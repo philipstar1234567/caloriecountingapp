@@ -179,7 +179,7 @@ value = 70.0
 
 [node name="Label8" type="Label" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
-text = "Time interval:"
+text = "Time interval to reach goal (weeks):"
 
 [node name="TimeIntervalInput" type="SpinBox" parent="Panel/ScrollContainer/MarginContainer/VBoxContainer/BodyMetricsPanel/VBoxContainer"]
 layout_mode = 2
