@@ -13,10 +13,6 @@ func _ready():
 	Global.badge_earned.connect(_on_badge_earned_leaderboard)
 	refresh_display()
 
-func _notification(what):
-	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
-		refresh_display()
-
 # ─────────────────────────────────────────
 #  LEVEL SYSTEM
 # ─────────────────────────────────────────
@@ -309,3 +305,8 @@ func _build_league_ladder(container: VBoxContainer):
 
 func _on_badge_earned_leaderboard(_badge: Dictionary):
 	refresh_display()
+
+func _notification(what):
+	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
+		Global.load_points()    # ← reload from disk every time leaderboard is opened
+		refresh_display()

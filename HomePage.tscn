@@ -58,12 +58,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="WeeklyReportBtn" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.079
+anchor_bottom = 0.036
+offset_right = -0.430008
+offset_bottom = -0.152008
+text = "📊"
+
 [node name="ScrollContainer" type="ScrollContainer" parent="Panel"]
 custom_minimum_size = Vector2(1170, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 101.0
 offset_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 2

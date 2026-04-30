@@ -10,6 +10,11 @@ const GLASS_EMPTY_PATH = "res://images/glass_empty.png"
 var glass_states: Array = []  # true = full, false = empty
 
 func _ready():
+	$Panel/WeeklyReportBtn.pressed.connect(func():
+		_show_reflection_screen()
+		# Mark as shown so it won't auto-show again today
+		Global.mark_report_shown()
+)
 	$Panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	$Panel.clip_contents = true
 	$Panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -31,6 +36,8 @@ func _ready():
 
 	var vbox = $Panel/ScrollContainer/VBoxContainer
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	
+	_check_weekly_reflection()
 
 
 func _notification(what):
@@ -939,6 +946,7 @@ func _refresh_water_card():
 		prefix.add_theme_font_size_override("font_size", 36)
 		wi_row.add_child(prefix)
 
+
 		var wi_btn = Button.new()
 		wi_btn.text = "Water Intoxication"
 		wi_btn.flat = true
@@ -947,6 +955,7 @@ func _refresh_water_card():
 		wi_btn.pressed.connect(_show_water_intoxication_info)
 		wi_row.add_child(wi_btn)
 		
+		#Global.save_points(Time.get_date_string_from_system(), total_points)
 		#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/WaterCard)
 
 func _show_water_intoxication_info():
@@ -1181,6 +1190,7 @@ func _show_overlay_panel(populate_fn: Callable):
 	close_hint.add_theme_font_size_override("font_size", 36)
 	close_hint.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
 	scroll_vbox.add_child(close_hint)
+
 
 # ─────────────────────────────────────────
 #  SAVE / LOAD
@@ -1583,3 +1593,173 @@ func _show_milestone_popup(name: String, days: int):
 			#child.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			#child.fit_content = true
 		#_fix_labels_in(child)
+
+func _check_weekly_reflection():
+	var dt      = Time.get_datetime_dict_from_system()
+	var weekday = dt.get("weekday", 0)   # 0=Sun
+	var today   = Time.get_date_string_from_system()
+
+	if weekday != 0: return   # Only Sunday
+	if Global.last_report_date == today: return
+
+	call_deferred("_show_reflection_screen")
+
+func _show_reflection_screen():
+	# This function has NO weekday check — it works any day
+	# The Monday auto-trigger is handled by _check_weekly_reflection()
+	var week_avg = _get_week_averages()
+	# If no data at all, show a placeholder
+	if week_avg.is_empty():
+		_show_overlay_panel(func(scroll_vbox):
+			var lbl = Label.new()
+			lbl.text = "📊 No meal history yet this week.\nStart logging meals to see your weekly insights!"
+			lbl.add_theme_font_size_override("font_size", 24)
+			lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			scroll_vbox.add_child(lbl)
+		)
+		return
+
+	Global.mark_report_shown()
+	_save_weekly_report(week_avg)
+	
+func _save_weekly_report(week_avg: Dictionary):
+	var reports: Array = []
+	if FileAccess.file_exists("user://weekly_reports.json"):
+		var file = FileAccess.open("user://weekly_reports.json", FileAccess.READ)
+		var data = JSON.parse_string(file.get_as_text())
+		file.close()
+		if data and data is Array: reports = data
+
+	var today   = Time.get_date_string_from_system()
+	var summary = {
+		"week_label":    "Week of " + today,
+		"avg_kcal":      snappedf(week_avg.get("calories",0), 0.1),
+		"avg_protein":   snappedf(week_avg.get("protein_g",0), 0.1),
+		"avg_fiber":     snappedf(week_avg.get("fiber_g",0), 0.1),
+		"streak":        Global.daily_streak,
+		"pts_week":      snappedf(Global.get_points_week(), 0.1),
+		"py_currency":   Global.py_currency,
+		"achievement":   _get_week_achievement(),
+		"pattern":       _detect_pattern(week_avg),
+		"suggestion":    _get_next_week_suggestion(),
+	}
+
+	# Don't add duplicate for same week
+	var already = reports.any(func(r): return r.get("week_label","") == summary["week_label"])
+	if not already:
+		reports.append(summary)
+		# Keep last 52 weeks
+		if reports.size() > 52:
+			reports = reports.slice(reports.size() - 52)
+		var file = FileAccess.open("user://weekly_reports.json", FileAccess.WRITE)
+		file.store_string(JSON.stringify(reports))
+		file.close()
+
+	_show_overlay_panel(func(scroll_vbox):
+		var title = Label.new()
+		title.text = "🌅 Sunday Reflection"
+		title.add_theme_font_size_override("font_size", 50)
+		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		scroll_vbox.add_child(title)
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Pattern noticed
+		var pattern = _detect_pattern(week_avg)
+		if not pattern.is_empty():
+			var pattern_panel = PanelContainer.new()
+			var pv = VBoxContainer.new()
+			pattern_panel.add_child(pv)
+			scroll_vbox.add_child(pattern_panel)
+			var p_title = Label.new()
+			p_title.text = "🔍 Pattern noticed:"
+			p_title.add_theme_font_size_override("font_size", 36)
+			p_title.add_theme_color_override("font_color", Color(0.7,0.7,1.0))
+			pv.add_child(p_title)
+			var p_lbl = Label.new()
+			p_lbl.text = pattern
+			p_lbl.add_theme_font_size_override("font_size", 36)
+			p_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			pv.add_child(p_lbl)
+
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Achievement to celebrate
+		var achievement = _get_week_achievement()
+		var ach_panel = PanelContainer.new()
+		var av = VBoxContainer.new()
+		ach_panel.add_child(av)
+		scroll_vbox.add_child(ach_panel)
+		var a_title = Label.new()
+		a_title.text = "🎉 This week's win:"
+		a_title.add_theme_font_size_override("font_size", 36)
+		a_title.add_theme_color_override("font_color", Color(0.3,1.0,0.3))
+		av.add_child(a_title)
+		var a_lbl = Label.new()
+		a_lbl.text = achievement
+		a_lbl.add_theme_font_size_override("font_size", 36)
+		a_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		av.add_child(a_lbl)
+
+		scroll_vbox.add_child(HSeparator.new())
+
+		# Next week suggestion — framed as avatar journey
+		var suggestion = _get_next_week_suggestion()
+		var sug_panel = PanelContainer.new()
+		var sv = VBoxContainer.new()
+		sug_panel.add_child(sv)
+		scroll_vbox.add_child(sug_panel)
+		var s_title = Label.new()
+		s_title.text = "🗺️ Next week's adventure:"
+		s_title.add_theme_font_size_override("font_size", 36)
+		s_title.add_theme_color_override("font_color", Color(1.0,0.85,0.2))
+		sv.add_child(s_title)
+		var s_lbl = Label.new()
+		s_lbl.text = suggestion
+		s_lbl.add_theme_font_size_override("font_size", 36)
+		s_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		sv.add_child(s_lbl)
+	)
+
+func _detect_pattern(week_avg: Dictionary) -> String:
+	var sodium   = week_avg.get("sodium_mg", 0.0)
+	var sugar    = week_avg.get("sugar_g", 0.0)
+	var protein  = week_avg.get("protein_g", 0.0)
+	var macro_goals = Global.get_macro_goals()
+
+	if sodium > 2500:
+		return "Your sodium intake has been above the recommended limit this week. " + \
+			"Try reducing processed foods and adding fresh herbs instead of salt."
+	if sugar > 40:
+		return "Your sugar intake was elevated this week. " + \
+			"Swapping sugary snacks for fruit or nuts may help you feel more energetic."
+	if protein < macro_goals.get("protein_g",50.0) * 0.7:
+		return "Protein was below your goal most days this week. " + \
+			"Adding eggs, legumes or fish to each meal could help."
+	return "You showed consistent nutritional variety this week — keep exploring new foods!"
+
+func _get_week_achievement() -> String:
+	var rdas        = Global.get_micronutrient_rdas()
+	var week_avg    = _get_week_averages()
+	var met_rdas    = 0
+	for field in rdas.keys():
+		if week_avg.get(field,0.0) >= rdas[field]["rda"]:
+			met_rdas += 1
+	if Global.daily_streak >= 7:
+		return "🔥 You maintained a " + str(Global.daily_streak) + "-day streak — outstanding consistency!"
+	if met_rdas >= 10:
+		return "💊 You hit " + str(met_rdas) + " micronutrient goals on average — excellent nutrition!"
+	return "📝 You logged food every day you could — building a healthy habit!"
+
+func _get_next_week_suggestion() -> String:
+	var c = Global.active_metabolic_conditions
+	if c.has("osteoporosis"):
+		return "Your avatar is heading toward the mountain region — " + \
+			"where mountain folk are known for their bone strength. " + \
+			"Try adding more dairy, leafy greens or salmon this week for calcium and Vitamin D."
+	if c.has("glycemic-health"):
+		return "Your avatar discovers a Mediterranean coastal village " + \
+			"where locals eat low-GI foods and walk after meals. " + \
+			"Try barley, legumes or whole rye bread this week."
+	return "Your avatar reaches a new region famous for vibrant markets and colorful produce. " + \
+		"Challenge yourself to eat from 5 different food categories every day this week."
