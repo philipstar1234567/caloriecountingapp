@@ -75,9 +75,15 @@ func log_food(food: Dictionary):
 		var food_key = "oxalate_mg_per_100g" if key == "oxalate_mg" else key
 		today_totals[key] += food.get(food_key, 0.0)
 	foods_eaten.append(food.get("name", "Unknown"))
-	print("DEBUG streak before: ", Global.daily_streak, " last_date: ", Global.last_streak_date, " today: ", Time.get_date_string_from_system())
-	Global.check_and_update_streak()
-	print("DEBUG streak after: ", Global.daily_streak)
+
+	# ── Strict avoid penalty ──
+	var strict_conditions = Global._get_strict_avoid_conditions(food)
+	if not strict_conditions.is_empty():
+		var today = Time.get_date_string_from_system()
+		var current_pts = Global.points_history.get(today, 0.0)
+		Global.save_points(today, current_pts - float(strict_conditions.size()))
+		_show_strict_avoid_penalty_toast(food, strict_conditions)
+
 	Global.check_and_update_streak()
 	save_today()
 	_save_to_history()
@@ -86,6 +92,44 @@ func log_food(food: Dictionary):
 	totals_for_quests["water_ml"] = water_ml
 	Global.check_quests(totals_for_quests)
 	refresh_display()
+
+func _show_strict_avoid_penalty_toast(food: Dictionary, conditions: Array):
+	var existing = get_node_or_null("StrictAvoidToast")
+	if existing: existing.queue_free()
+
+	var panel = PanelContainer.new()
+	panel.name = "StrictAvoidToast"
+	panel.z_index = 60
+	panel.set_anchor_and_offset(SIDE_LEFT,   0, 10)
+	panel.set_anchor_and_offset(SIDE_RIGHT,  1, -10)
+	panel.set_anchor_and_offset(SIDE_TOP,    0, 10)
+	panel.set_anchor_and_offset(SIDE_BOTTOM, 0, 110)
+	panel.modulate.a = 0.0
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 6)
+	panel.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "⛔ −" + str(conditions.size()) + " pt  Strict avoid eaten: " + food.get("name","")
+	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_color_override("font_color", Color(1.0, 0.3, 0.2))
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(title)
+
+	for c in conditions:
+		var lbl = Label.new()
+		lbl.text = "Strictly contraindicated for: " + c.replace("-"," ").capitalize()
+		lbl.add_theme_font_size_override("font_size", 19)
+		lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.4))
+		vbox.add_child(lbl)
+
+	add_child(panel)
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(3.0)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): panel.queue_free())
 
 # ─────────────────────────────────────────
 #  WATER

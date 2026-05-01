@@ -1216,34 +1216,40 @@ func _on_reset_intake():
 		DirAccess.remove_absolute("user://water.json")
 	print("Today's intake reset")
 	
-	# Reset today's points
+	# Reset ONLY today's points — not all-time total
 	var today = Time.get_date_string_from_system()
 	Global.points_history[today] = 0.0
 	Global.save_points(today, 0.0)
 
-	# Reset PY currency
-	Global.py_currency = 0
+	# Reset only the PY earned today
+	# We need to track PY earned today separately
+	var py_today = Global.py_earned_today
+	Global.py_currency = max(0, Global.py_currency - py_today)
+	Global.py_earned_today = 0
 	Global.save_currency()
 
-	# Reset streak
-	Global.daily_streak = 0
-	Global.last_streak_date = ""
-	Global.streak_freeze_count = 1
-	Global._last_celebrated_milestone = 0
+	# Reset only today's streak progress — keep the streak number itself
+	# but mark that today hasn't been logged yet
+	Global.last_streak_date = _get_yesterday_string_from_settings()
 	Global.save_streak()
 
-	# Reset quests and completions for today
+	# Reset today's quest completions only
 	Global.completed_quest_ids.clear()
 	Global.save_quests()
 
-	# Notify HomePage to refresh if loaded
+	# Refresh HomePage
 	var main = get_tree().root.get_node("Main")
 	var home = main.get_node_or_null("ContentArea/HomePage")
 	if home:
-		home.today_totals = home._init_today_totals() if home.has_method("_init_today_totals") else {}
+		home._init_today_totals()
 		home.foods_eaten.clear()
 		home.water_ml = 0.0
 		home.refresh_display()
+
+func _get_yesterday_string_from_settings() -> String:
+	var unix = Time.get_unix_time_from_system() - 86400
+	var dt   = Time.get_datetime_dict_from_unix_time(unix)
+	return "%04d-%02d-%02d" % [dt.year, dt.month, dt.day]
 
 func _on_reset_all():
 	# Delete all save files

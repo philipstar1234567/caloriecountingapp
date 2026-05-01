@@ -8,6 +8,8 @@ signal badge_earned(badge: Dictionary)
 
 var last_report_date: String = ""
 
+var py_earned_today: int = 0
+
 var py_currency: int = 0
 var today_quests: Array = []      # [{id, description, target, progress, completed, pts, gems}]
 var completed_quest_ids: Array = []
@@ -1607,7 +1609,8 @@ func check_and_update_streak():
 
 	if last_streak_date == today:
 		return  # already logged today, streak intact
-
+	py_earned_today = 0
+	save_currency()
 	if last_streak_date == yesterday:
 		# Consecutive day — increment
 		daily_streak += 1
@@ -1673,11 +1676,20 @@ func _days_between(date_a: String, date_b: String) -> int:
 	})
 	return int(abs(unix_b - unix_a) / 86400)
 	
+
+
+func award_py(amount: int, reason: String = ""):
+	py_currency     += amount
+	py_earned_today += amount   # ← track today's earnings
+	save_currency()
+	py_awarded.emit(amount, reason)
+
 func save_currency():
 	var file = FileAccess.open("user://currency.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
-		"py": py_currency,
-		"last_streak_milestone": _last_celebrated_milestone
+		"py":                     py_currency,
+		"py_earned_today":        py_earned_today,
+		"last_streak_milestone":  _last_celebrated_milestone
 	}))
 	file.close()
 
@@ -1687,13 +1699,9 @@ func load_currency():
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
 	if not data: return
-	py_currency = data.get("py", 0)
+	py_currency              = data.get("py", 0)
+	py_earned_today          = data.get("py_earned_today", 0)
 	_last_celebrated_milestone = data.get("last_streak_milestone", 0)
-
-func award_py(amount: int, reason: String = ""):
-	py_currency += amount
-	save_currency()
-	py_awarded.emit(amount, reason)
 
 
 func generate_daily_quests():
@@ -2142,3 +2150,71 @@ func load_ui_settings():
 	if not data: return
 	simple_mode              = data.get("simple_mode", false)
 	accessibility_large_font = data.get("large_font", false)
+
+func _get_strict_avoid_conditions(food: Dictionary) -> Array:
+	var food_name = food.get("name","").to_lower()
+	var food_id   = food.get("id","").to_lower()
+	var cat       = food.get("category","").to_lower()
+	var result: Array = []
+
+	# Build keyword → food matching
+	# Each entry in strict_avoid is a descriptive string — we match keywords
+	var STRICT_KEYWORD_MAP = {
+		"graves-disease": [
+			{"keywords":["seaweed","kelp","nori","wakame","spirulina","kombu"], "ids":["seaweed","wakame","kelp"]},
+			{"keywords":["oyster","shrimp"], "ids":["oyster","shrimp","scampi"]},
+		],
+		"thyroid-health": [
+			{"keywords":["seaweed","kelp","nori","wakame"], "ids":["seaweed","wakame","kelp"]},
+			{"keywords":["millet"], "ids":["millet"]},
+			{"keywords":["cassava"], "ids":["cassava"]},
+		],
+		"celiac-disease": [
+			{"keywords":["wheat","spelt","rye","barley","oat"], "ids":["rye","spelt","oatmeal","oats","barley","khorasan-wheat"]},
+		],
+		"hemochromatosis": [
+			{"keywords":["beef","lamb","venison","pork","liver","kidney","blood","organ"],
+			 "ids":["ground-beef","beef-steak","lamb","veal","pork-tenderloin","pork-shoulder","pork-chop","bacon","reindeer","elk"]},
+			{"keywords":["shellfish","oyster","shrimp","lobster","crab"],
+			 "ids":["shrimp","lobster","crab","scampi"]},
+		],
+		"crohns-disease": [
+			{"keywords":["raw vegetable","fried","processed meat","shellfish"],
+			 "ids":["bacon","sausage","meatballs","shrimp","lobster","crab","scampi"]},
+		],
+		"nafld": [
+			{"keywords":["sugary","soda","juice","fructose","trans fat","ultra-processed"], "ids":[]},
+		],
+		"epi": [
+			{"keywords":["alcohol"], "ids":[]},
+		],
+		"post-cholecystectomy": [
+			{"keywords":["fried","trans fat"], "ids":[]},
+		],
+	}
+
+	for condition in active_metabolic_conditions:
+		if not STRICT_KEYWORD_MAP.has(condition): continue
+		for entry in STRICT_KEYWORD_MAP[condition]:
+			# Check by food id first (most reliable)
+			for sid in entry["ids"]:
+				if food_id == sid or food_id.begins_with(sid):
+					if not result.has(condition):
+						result.append(condition)
+					break
+			if result.has(condition): break
+			# Check by name keywords
+			for keyword in entry["keywords"]:
+				if food_name.contains(keyword):
+					if not result.has(condition):
+						result.append(condition)
+					break
+			if result.has(condition): break
+
+	# Special: celiac — use contains_gluten field (most reliable)
+	if active_metabolic_conditions.has("celiac-disease"):
+		if food.get("contains_gluten", false):
+			if not result.has("celiac-disease"):
+				result.append("celiac-disease")
+
+	return result

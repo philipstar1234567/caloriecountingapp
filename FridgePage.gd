@@ -38,6 +38,8 @@ const ITEMS_PER_PAGE: int = 18
 const GRID_COLS: int = 3
 var shopping_page: int = 0
 const SHOPPING_ITEMS_PER_PAGE: int = 9
+var _shop_page_starts: Array = [0]
+var _overflow_check_pending: bool = false
 
 # ── Swipe detection ──
 var _swipe_threshold: float = 50.0
@@ -642,8 +644,15 @@ func refresh_current_tab():
 	if warning_filter != "all" or Global.hide_red_warnings:
 		filtered = filtered.filter(func(f):
 			var severity = _get_food_severity(f)
-			if Global.hide_red_warnings and severity == "avoid":
-				return false
+
+			# Hide strict avoid foods if user has relevant conditions
+			if Global.hide_red_warnings:
+				var strict = Global._get_strict_avoid_conditions(f)
+				if not strict.is_empty():
+					return false  # hide strict avoid foods
+				if severity == "avoid":
+					return false  # hide high oxalate / condition-avoid foods
+
 			match warning_filter:
 				"avoid":   return severity == "avoid"
 				"caution": return severity == "caution"
@@ -702,7 +711,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	name_col.add_child(name_label)  # ← was row.add_child, must be name_col
 	
 	# Strict avoid label
-	var strict_conditions = _get_strict_avoid_conditions(food)
+	var strict_conditions = Global._get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		var sa_lbl = Label.new()
 		sa_lbl.text = "⛔ strict avoid in your condition"
@@ -785,6 +794,8 @@ func decrement_shopping_entry(sid: String):
 				shopping_list.remove_at(i)
 			break
 	# Clamp page
+	while _shop_page_starts.size() > shopping_page + 1:
+		_shop_page_starts.pop_back()
 	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
 	save_shopping_list()
 	refresh_shopping_list()
@@ -874,9 +885,10 @@ func refresh_shopping_list():
 	title_row.add_child(title_edit)
 
 	# Page slice
-	var start = shopping_page * SHOPPING_ITEMS_PER_PAGE
-	var end   = min(start + SHOPPING_ITEMS_PER_PAGE, shopping_list.size())
-	var page_items = shopping_list.slice(start, end)
+# Dynamic page slice
+	var _ps = _shop_page_starts[shopping_page] if shopping_page < _shop_page_starts.size() else shopping_list.size()
+	var _pe = _shop_page_starts[shopping_page + 1] if shopping_page + 1 < _shop_page_starts.size() else shopping_list.size()
+	var page_items = shopping_list.slice(_ps, min(_pe, shopping_list.size()))
 
 	for entry in page_items:
 		var sid      = entry.get("_sid", "")
@@ -932,50 +944,85 @@ func refresh_shopping_list():
 			)
 			row.add_child(uncheck_btn)
 		else:
-			# Unchecked — show CheckBox
+			# Bare CheckBox (no text) + autowrapping Label — fixes horizontal stretch
+			var cbox = HBoxContainer.new()
+			cbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+
 			var cb = CheckBox.new()
-			cb.text = display_text
-			cb.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-			cb.add_theme_font_size_override("font_size", 70)
+			cb.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+
+			var cb_lbl = Label.new()
+			cb_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			cb_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			cb_lbl.add_theme_font_size_override("font_size", 70)
+			cb_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
 			if entry.get("_suggested", false):
 				var suggested_g = entry.get("_suggested_g", 0.0)
-				cb.text = display_text + " (" + str(snappedf(suggested_g, 0.1)) + "g)"
-				cb.add_theme_color_override("font_color",         Color(0.7, 0.1, 0.1))
-				cb.add_theme_color_override("font_color_hover",   Color(0.7, 0.1, 0.1))
-				cb.add_theme_color_override("font_color_pressed", Color(0.7, 0.1, 0.1))
+				cb_lbl.text = display_text + " (" + str(snappedf(suggested_g, 0.1)) + "g)"
+				cb_lbl.add_theme_color_override("font_color", Color(0.7, 0.1, 0.1))
 			else:
-				cb.add_theme_color_override("font_color",         Color(0.08, 0.15, 0.35))
-				cb.add_theme_color_override("font_color_hover",   Color(0.08, 0.15, 0.35))
-				cb.add_theme_color_override("font_color_pressed", Color(0.08, 0.15, 0.35))
-			# IMPORTANT: capture sid in local var for lambda
+				cb_lbl.text = display_text
+				cb_lbl.add_theme_color_override("font_color", Color(0.08, 0.15, 0.35))
+
+			cbox.add_child(cb)
+			cbox.add_child(cb_lbl)
+			
+			cbox.mouse_filter = Control.MOUSE_FILTER_STOP  # make sure cbox receives input
+			cbox.gui_input.connect(func(event):
+				if event is InputEventScreenTouch and event.pressed:
+					cb.button_pressed = not cb.button_pressed
+					cbox.accept_event()
+				elif event is InputEventMouseButton \
+						and event.button_index == MOUSE_BUTTON_LEFT \
+						and event.pressed:
+					cb.button_pressed = not cb.button_pressed
+					cbox.accept_event()
+			)
+
 			var captured_sid = sid
+			var captured_display = display_text
 			cb.toggled.connect(func(is_checked):
-				if not is_checked: return  # ignore untoggle
-				# Guard: check if already marked in data to prevent double-add
+				if not is_checked: return
 				for e in shopping_list:
 					if e["_sid"] == captured_sid:
-						if e.get("_checked", false):
-							return  # already checked — do nothing
+						if e.get("_checked", false): return
 						break
 				check_shopping_entry(captured_sid, true)
-				var parent = cb.get_parent()
-				var idx    = cb.get_index()
-				cb.queue_free()
+				# cbox is still a valid node here — queue_free keeps it alive this frame
+				# so get_parent() and get_index() are still reliable
+				var parent_row = cbox.get_parent()
+				var slot_idx   = cbox.get_index()
+				cbox.queue_free()  # deferred — cbox is still at slot_idx this frame
 				var rtl2 = RichTextLabel.new()
 				rtl2.bbcode_enabled = true
 				rtl2.fit_content = true
-				rtl2.text = "[s][color=#50507a]" + display_text + "[/color][/s]"
+				rtl2.text = "[s][color=#50507a]" + captured_display + "[/color][/s]"
 				rtl2.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 				rtl2.custom_minimum_size = Vector2(0, 44)
 				rtl2.add_theme_font_size_override("normal_font_size", 70)
 				rtl2.mouse_filter = Control.MOUSE_FILTER_IGNORE
-				parent.add_child(rtl2)
-				parent.move_child(rtl2, idx)
-				if parent.get_child_count() > 0:
-					var mb = parent.get_child(0)
-					if mb is Button: mb.disabled = true
-			)
-			row.add_child(cb)
+				parent_row.add_child(rtl2)
+				parent_row.move_child(rtl2, slot_idx)
+				if parent_row.get_child_count() > 0:
+					var mb = parent_row.get_child(0)
+					if mb is Button: mb.disabled = true   # line 1000 (existing)
+					var pb = parent_row.get_child(parent_row.get_child_count() - 1)
+					if pb is Button: pb.disabled = true
+					var uncheck_btn = Button.new()
+					uncheck_btn.text = "↩️"
+					uncheck_btn.flat = true
+					uncheck_btn.custom_minimum_size = Vector2(60, 60)
+					uncheck_btn.add_theme_font_size_override("font_size", 70)
+					uncheck_btn.tooltip_text = "Uncheck — I haven't bought this yet"
+					uncheck_btn.pressed.connect(func():
+						check_shopping_entry(captured_sid, false)
+						refresh_shopping_list()
+					)
+					parent_row.add_child(uncheck_btn)
+					parent_row.move_child(uncheck_btn, slot_idx + 1)
+			)                                              # line 1001 (existing)
+			row.add_child(cbox)
 
 		# ── Plus button ──
 		var plus_btn = Button.new()
@@ -988,6 +1035,7 @@ func refresh_shopping_list():
 		row.add_child(plus_btn)
 
 	_build_shopping_dots()
+	_check_shopping_overflow()
 
 func _apply_strikethrough(cb: CheckBox, original_text: String):
 	# Replace checkbox label with a RichTextLabel showing strikethrough
@@ -1026,7 +1074,8 @@ func save_shopping_list():
 	file.store_string(JSON.stringify({
 		"list": shopping_list,
 		"page": shopping_page,
-		"titles": shopping_page_titles
+		"titles": shopping_page_titles,
+		"page_starts": _shop_page_starts
 	}))
 	file.close()
 
@@ -1039,6 +1088,7 @@ func load_shopping_list():
 	shopping_list = data.get("list", [])
 	shopping_page = data.get("page", 0)
 	shopping_page_titles = data.get("titles", {})
+	_shop_page_starts = data.get("page_starts", [0])
 
 # ── Add food to fridge (with quantity) ──
 func _generate_iid() -> String:
@@ -2073,13 +2123,72 @@ func load_fridge():
 	build_fridge_ui()
 
 func _get_shopping_pages() -> int:
-	return max(1, int(ceil(float(shopping_list.size()) / float(SHOPPING_ITEMS_PER_PAGE))))
+	var count = 0
+	for i in range(_shop_page_starts.size()):
+		if _shop_page_starts[i] < shopping_list.size():
+			count += 1
+	return max(1, count)
+
+func _check_shopping_overflow() -> void:
+	if _overflow_check_pending:
+		return
+	_overflow_check_pending = true
+	await get_tree().process_frame
+	await get_tree().process_frame
+	_overflow_check_pending = false
+	if not is_inside_tree():
+		return
+
+	var paper_vbox = $Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/PaperScrollContainer/PaperItemsVBox
+	var scroll_con  = $Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/PaperScrollContainer
+	# With vertical_scroll_mode = NEVER, scroll_con.size stays fixed at its anchored size.
+	# paper_vbox.size.y will be its natural content height (may exceed scroll_con).
+	if paper_vbox.size.y <= scroll_con.size.y + 2.0:
+		return
+
+	var item_rows: Array = []
+	for i in range(1, paper_vbox.get_child_count()):
+		var child = paper_vbox.get_child(i)
+		if child is HBoxContainer:
+			item_rows.append(child)
+	if item_rows.is_empty():
+		return
+
+	var sep      = float(paper_vbox.get_theme_constant("separation"))
+	var title_ch = paper_vbox.get_child(0) if paper_vbox.get_child_count() > 0 else null
+	var used_h   = (title_ch.size.y + sep) if title_ch else 0.0
+
+	var fitting = 0
+	for row_node in item_rows:
+		if used_h + row_node.size.y + sep <= scroll_con.size.y:
+			used_h += row_node.size.y + sep
+			fitting += 1
+		else:
+			break
+
+	fitting = max(1, fitting)
+	if fitting >= item_rows.size():
+		return
+
+	var page_start   = _shop_page_starts[shopping_page] if shopping_page < _shop_page_starts.size() else 0
+	var new_boundary = page_start + fitting
+
+	if shopping_page + 1 >= _shop_page_starts.size():
+		_shop_page_starts.append(new_boundary)
+	else:
+		_shop_page_starts[shopping_page + 1] = new_boundary
+		while _shop_page_starts.size() > shopping_page + 2:
+			_shop_page_starts.pop_back()
+
+	refresh_shopping_list()
 
 func _rip_shopping_page():
 	_shopping_snapshot()
-	var start = shopping_page * SHOPPING_ITEMS_PER_PAGE
-	var end   = min(start + SHOPPING_ITEMS_PER_PAGE, shopping_list.size())
-	shopping_list = shopping_list.slice(0, start) + shopping_list.slice(end)
+	var ps  = _shop_page_starts[shopping_page] if shopping_page < _shop_page_starts.size() else shopping_list.size()
+	var pe  = _shop_page_starts[shopping_page + 1] if shopping_page + 1 < _shop_page_starts.size() else shopping_list.size()
+	shopping_list = shopping_list.slice(0, ps) + shopping_list.slice(pe)
+	while _shop_page_starts.size() > shopping_page + 1:
+		_shop_page_starts.pop_back()
 	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
 	save_shopping_list()
 	refresh_shopping_list()
@@ -2275,14 +2384,23 @@ func _refresh_meal_tab():
 		)
 
 	# Warning filter
-	if meal_warning_filter != "all":
+	if meal_warning_filter != "all" or Global.hide_red_warnings:
 		filtered = filtered.filter(func(f):
 			var severity = _get_food_severity(f)
+
+			# Hide strict avoid foods if user has relevant conditions
+			if Global.hide_red_warnings:
+				var strict = Global._get_strict_avoid_conditions(f)
+				if not strict.is_empty():
+					return false  # hide strict avoid foods
+				if severity == "avoid":
+					return false  # hide high oxalate / condition-avoid foods
+
 			match meal_warning_filter:
 				"avoid":   return severity == "avoid"
 				"caution": return severity == "caution"
 				"none":    return severity == "safe"
-			return true
+				_:         return true
 		)
 
 	# Sort
@@ -2463,7 +2581,7 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	name_col.add_child(name_lbl)
 
 	# Strict avoid label
-	var strict_conditions = _get_strict_avoid_conditions(food)
+	var strict_conditions = Global._get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		var sa_lbl = Label.new()
 		sa_lbl.text = "⛔ strict avoid in your condition"
@@ -4246,7 +4364,7 @@ func _show_warning_detail_panel(food: Dictionary):
 	vbox.add_child(hint)
 
 	# ── Strict avoidance ──
-	var strict_conditions = _get_strict_avoid_conditions(food)
+	var strict_conditions = Global._get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		vbox.add_child(HSeparator.new())
 		var sa_title = Label.new()
@@ -4304,6 +4422,7 @@ func _undo_shopping():
 	shopping_list = _shopping_undo_stack.pop_back()
 	shopping_page = clamp(shopping_page, 0, max(0, _get_shopping_pages() - 1))
 	save_shopping_list()
+	_shop_page_starts = [0]
 	refresh_shopping_list()
 
 func _show_cook_change_notification(before: Dictionary, after: Dictionary):
@@ -4362,71 +4481,3 @@ func _list_font_size() -> int:
 	#val_lbl.add_theme_font_size_override("font_size", _list_font_size() - 6)
 	#btn.add_theme_font_size_override("font_size", _list_font_size())
 	#sa_lbl.add_theme_font_size_override("font_size", _list_font_size() - 6)
-
-func _get_strict_avoid_conditions(food: Dictionary) -> Array:
-	var food_name = food.get("name","").to_lower()
-	var food_id   = food.get("id","").to_lower()
-	var cat       = food.get("category","").to_lower()
-	var result: Array = []
-
-	# Build keyword → food matching
-	# Each entry in strict_avoid is a descriptive string — we match keywords
-	var STRICT_KEYWORD_MAP = {
-		"graves-disease": [
-			{"keywords":["seaweed","kelp","nori","wakame","spirulina","kombu"], "ids":["seaweed","wakame","kelp"]},
-			{"keywords":["oyster","shrimp"], "ids":["oyster","shrimp","scampi"]},
-		],
-		"thyroid-health": [
-			{"keywords":["seaweed","kelp","nori","wakame"], "ids":["seaweed","wakame","kelp"]},
-			{"keywords":["millet"], "ids":["millet"]},
-			{"keywords":["cassava"], "ids":["cassava"]},
-		],
-		"celiac-disease": [
-			{"keywords":["wheat","spelt","rye","barley","oat"], "ids":["rye","spelt","oatmeal","oats","barley","khorasan-wheat"]},
-		],
-		"hemochromatosis": [
-			{"keywords":["beef","lamb","venison","pork","liver","kidney","blood","organ"],
-			 "ids":["ground-beef","beef-steak","lamb","veal","pork-tenderloin","pork-shoulder","pork-chop","bacon","reindeer","elk"]},
-			{"keywords":["shellfish","oyster","shrimp","lobster","crab"],
-			 "ids":["shrimp","lobster","crab","scampi"]},
-		],
-		"crohns-disease": [
-			{"keywords":["raw vegetable","fried","processed meat","shellfish"],
-			 "ids":["bacon","sausage","meatballs","shrimp","lobster","crab","scampi"]},
-		],
-		"nafld": [
-			{"keywords":["sugary","soda","juice","fructose","trans fat","ultra-processed"], "ids":[]},
-		],
-		"epi": [
-			{"keywords":["alcohol"], "ids":[]},
-		],
-		"post-cholecystectomy": [
-			{"keywords":["fried","trans fat"], "ids":[]},
-		],
-	}
-
-	for condition in Global.active_metabolic_conditions:
-		if not STRICT_KEYWORD_MAP.has(condition): continue
-		for entry in STRICT_KEYWORD_MAP[condition]:
-			# Check by food id first (most reliable)
-			for sid in entry["ids"]:
-				if food_id == sid or food_id.begins_with(sid):
-					if not result.has(condition):
-						result.append(condition)
-					break
-			if result.has(condition): break
-			# Check by name keywords
-			for keyword in entry["keywords"]:
-				if food_name.contains(keyword):
-					if not result.has(condition):
-						result.append(condition)
-					break
-			if result.has(condition): break
-
-	# Special: celiac — use contains_gluten field (most reliable)
-	if Global.active_metabolic_conditions.has("celiac-disease"):
-		if food.get("contains_gluten", false):
-			if not result.has("celiac-disease"):
-				result.append("celiac-disease")
-
-	return result
