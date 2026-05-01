@@ -77,6 +77,182 @@ var _last_celebrated_milestone: int = 0
 	#{"id":"py_1000",     "name":"Wealthy 💎",       "desc":"Earn 1000 PY",            "tier":"gold",   "check": func(g): return g.py_currency >= 1000},
 #]
 
+const FOODS_TO_AVOID_NOTES = {
+	"epi": "⚠️ FAT MUST NOT BE RESTRICTED when using PERT (enzyme replacement therapy). Fat restriction worsens malnutrition and accelerates nutritional deficiency.",
+	"post-cholecystectomy": "⚠️ In the first 3 months after gallbladder removal, keep fat under 13g per meal. Gradually liberalize to normal after 3 months.",
+	"hemochromatosis": "⚠️ WITH MEALS: Use tea, coffee, dairy or eggs to inhibit iron absorption. Tannins and calcium compete with iron — use this to your advantage.",
+	"crohns-disease": "⚠️ During FLARES: avoid raw vegetables, whole nuts and seeds, and high-fiber foods. During REMISSION: increase fiber to 30–48g/day.",
+	"graves-disease": "⚠️ Soy can interfere with antithyroid medications. Separate by at least 4 hours from any medication dose.",
+}
+
+const FOODS_TO_AVOID = {
+	"graves-disease": {
+		"strict_avoid": [
+			"Seaweed (all: kelp, nori, wakame, spirulina, kombu)",
+			"Iodine supplements of any kind",
+			"Iodized salt in excess",
+			"High-iodine seafood in large amounts (oysters, shrimp)",
+			"Excessive caffeine (>2 cups coffee/day)",
+			"All alcohol",
+			"Soy in excess if on antithyroid drugs",
+		],
+		"limit": [
+			"Raw cruciferous vegetables (large amounts)",
+			"Very high-fiber foods if diarrhea present",
+			"Excessive refined sugar",
+		]
+	},
+	"thyroid-health": {  # Hashimoto's
+		"strict_avoid": [
+			"Seaweed/kelp supplements (excess iodine worsens autoimmunity)",
+			"Iodine supplements >300 mcg/day",
+			"Ultra-processed foods",
+			"Millet in large amounts (goitrogenic)",
+			"Cassava in large amounts",
+			"All alcohol",
+		],
+		"limit": [
+			"Raw cruciferous vegetables in very large amounts",
+			"Soy near levothyroxine dose (separate by 4 hours)",
+			"High omega-6 oils (corn, soybean, sunflower) in excess",
+			"Refined sugar and simple carbohydrates",
+			"Selenium >400 mcg/day (selenosis risk)",
+		]
+	},
+	"celiac-disease": {
+		"strict_avoid": [
+			"ALL wheat (durum, spelt, kamut, einkorn, emmer, farro)",
+			"Barley — all forms",
+			"Rye — all forms",
+			"Triticale",
+			"Conventional oats (cross-contamination; use certified GF oats only)",
+			"Malt, malt vinegar, malt flavoring, brewer's yeast",
+			"Regular beer, ale, lager, malt beverages",
+			"Traditional soy sauce (wheat-based)",
+			"Shared fryers / cooking surfaces with gluten foods",
+		],
+		"limit": [
+			"GF processed products (often high sugar/fat; nutritionally inferior)",
+			"Gluten-containing medications/supplements (check all labels)",
+		]
+	},
+	"hemochromatosis": {
+		"strict_avoid": [
+			"Red meat in excess (beef, lamb, venison, pork) — highest heme iron",
+			"Organ meats (liver, kidney, heart, blood pudding)",
+			"Raw shellfish (Vibrio vulnificus risk; lethal with iron overload)",
+			"Vitamin C supplements >250 mg",
+			"Iron-containing multivitamins and supplements",
+			"Cast iron cookware for acidic foods (tomatoes, citrus)",
+			"Iron-fortified cereals and breads",
+			"Excess alcohol (liver damage; enhances iron absorption)",
+		],
+		"inhibitors_to_use_with_meals": [
+			"Tea (black or green) — reduces iron absorption 40–60%",
+			"Coffee — chlorogenic acid reduces absorption",
+			"Dairy/calcium with meals — competes with iron",
+			"Whole grains and legumes (phytates bind iron)",
+			"Eggs with iron-rich meals (phosvitin binds iron)",
+		]
+	},
+	"crohns-disease": {
+		"strict_avoid": [
+			"Raw vegetables during flares (carrots, celery, corn, raw cruciferous)",
+			"Whole nuts and seeds during flares",
+			"Fried and fatty foods",
+			"All alcohol (pro-inflammatory; increases permeability)",
+			"Ultra-processed foods and emulsifiers (CMC, polysorbate-80)",
+			"Red and processed meats",
+			"Raw shellfish (infection risk during immunosuppression)",
+		],
+		"limit": [
+			"Lactose if intolerant (25–40% of CD patients)",
+			"Spicy foods",
+			"Caffeinated beverages if diarrhea present",
+			"High-FODMAP foods if IBS-CD overlap",
+			"Oxalate-rich foods if ileal disease (kidney stone risk)",
+			"Refined sugars (promote dysbiosis)",
+		]
+	},
+	"nafld": {
+		"strict_avoid": [
+			"All alcohol (directly hepatotoxic; accelerates fibrosis)",
+			"Added fructose and HFCS (sugary beverages, pastries)",
+			"Trans fats (commercially baked goods, fried fast food)",
+			"Ultra-processed foods",
+			"Sugary beverages (even one soda/day increases NAFLD risk)",
+		],
+		"limit": [
+			"Saturated fat (fatty meats, full-fat dairy)",
+			"Red and processed meats (heme iron causes oxidative stress in liver)",
+			"Refined carbohydrates",
+			"Excess omega-6 oils (corn, soybean, sunflower)",
+			"Large high-calorie meals in one sitting",
+		]
+	},
+	"glycemic-health": {
+		"strict_avoid": [
+			"Sugary beverages (soda, fruit juice, energy drinks)",
+			"Trans fats (commercial baked goods)",
+			"Ultra-processed foods",
+			"Heavy alcohol use",
+		],
+		"limit": [
+			"High GI foods (white bread, white rice, instant oatmeal, potatoes)",
+			"Added sugars (white sugar, honey, agave)",
+			"Saturated fat in excess (worsens insulin resistance)",
+			"Dried fruits in large amounts",
+			"Refined white flour products",
+		]
+	},
+	"lipid-health": {
+		"strict_avoid": [
+			"Trans fats — NO safe level (partially hydrogenated oils, stick margarine, fried fast food)",
+			"Tropical oils in excess (coconut oil 93% SFA, palm kernel oil 82% SFA)",
+		],
+		"limit": [
+			"Saturated fats (butter, lard, fatty meats, full-fat dairy)",
+			"Refined carbohydrates (raise TG dramatically)",
+			"Added sugars and fructose (elevate VLDL and TG)",
+			"Alcohol (>1 drink F / >2 drinks M): dramatically elevates TG",
+			"Processed meats (salami, hot dogs: high SFA + sodium)",
+		]
+	},
+	"epi": {
+		"strict_avoid": [
+			"All alcohol (primary cause of chronic pancreatitis)",
+			"Very high-fat single meals WITHOUT adequate PERT",
+		],
+		"limit": [
+			"High-sugar foods (risk of pancreatogenic diabetes)",
+			"Carbonated beverages (exacerbate bloating)",
+			"Raw vegetables in large amounts (increase gas)",
+			"Excessive caffeine",
+		],
+		"important_note": "FAT MUST NOT BE RESTRICTED when PERT is used. Fat restriction worsens malnutrition."
+	},
+	"post-cholecystectomy": {
+		"strict_avoid": [
+			"High-fat meals in early phase (>13 g fat/meal for first 3 months)",
+			"Fried and deep-fried foods",
+			"All alcohol (stimulates bile, worsens reflux)",
+			"Trans fats",
+		],
+		"limit": [
+			"Full-fat dairy",
+			"Processed meats",
+			"Cream-based sauces",
+			"Carbonated beverages (if causing reflux)",
+			"Caffeinated beverages (if reflux present)",
+			"Chocolate",
+			"Raw onions and garlic",
+			"Tomato-based foods if reflux",
+			"Spicy foods",
+			"Mint (relaxes LES, worsens reflux)",
+		]
+	},
+}
+
 const BADGE_TIER_COLORS = {
 	"bronze": Color(0.80, 0.50, 0.20),
 	"silver": Color(0.75, 0.75, 0.80),

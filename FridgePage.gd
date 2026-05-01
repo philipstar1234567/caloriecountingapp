@@ -59,6 +59,14 @@ const Z_COOK_PARAMS    = 25   # shows above action popup
 const Z_DETAILS_POPUP  = 15
 const Z_LIMIT_WARNING  = 30   # highest — must be seen above everything
 
+const FOODS_TO_AVOID_NOTES = {
+	"epi": "⚠️ FAT MUST NOT BE RESTRICTED when using PERT (enzyme replacement therapy). Fat restriction worsens malnutrition and accelerates nutritional deficiency.",
+	"post-cholecystectomy": "⚠️ In the first 3 months after gallbladder removal, keep fat under 13g per meal. Gradually liberalize to normal after 3 months.",
+	"hemochromatosis": "⚠️ WITH MEALS: Use tea, coffee, dairy or eggs to inhibit iron absorption. Tannins and calcium compete with iron — use this to your advantage.",
+	"crohns-disease": "⚠️ During FLARES: avoid raw vegetables, whole nuts and seeds, and high-fiber foods. During REMISSION: increase fiber to 30–48g/day.",
+	"graves-disease": "⚠️ Soy can interfere with antithyroid medications. Separate by at least 4 hours from any medication dose.",
+}
+
 const NOTIFY_FIELDS = [
 	{"key":"calories",    "label":"Calories",  "unit":"kcal"},
 	{"key":"fat_g",       "label":"Fat",       "unit":"g"},
@@ -686,15 +694,19 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	var name_label = Label.new()
 	name_label.text = food.get("name", "")
 	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_label.size_flags_vertical = Control.SIZE_EXPAND_FILL   # ← ADD
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER   # ← ADD
 	name_label.add_theme_font_size_override("font_size", fs)
-	row.add_child(name_label)
+	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD  # ← ADD
+	name_col.add_child(name_label)  # ← was row.add_child, must be name_col
 	
 	# Strict avoid label
 	var strict_conditions = _get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		var sa_lbl = Label.new()
 		sa_lbl.text = "⛔ strict avoid in your condition"
-		sa_lbl.add_theme_font_size_override("font_size", 36)
+		sa_lbl.add_theme_font_size_override("font_size", fs)
 		sa_lbl.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
 		name_col.add_child(sa_lbl)
 
@@ -708,12 +720,12 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 			var lbl_text = _get_filter_label(key) + ": " + _format_field_value(key, val)
 			var val_lbl = Label.new()
 			val_lbl.text = lbl_text
-			val_lbl.add_theme_font_size_override("font_size", 36)
+			val_lbl.add_theme_font_size_override("font_size", fs)
 			val_vbox.add_child(val_lbl)
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
-		ox_lbl.add_theme_font_size_override("font_size", 36)
+		ox_lbl.add_theme_font_size_override("font_size", fs)
 		row.add_child(ox_lbl)
 
 		var warnings = Global.get_warnings(food)
@@ -722,7 +734,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 			info_btn.text = "ℹ️"
 			info_btn.flat = true
 			info_btn.custom_minimum_size = Vector2(44, 44)
-			info_btn.add_theme_font_size_override("font_size", 36)
+			info_btn.add_theme_font_size_override("font_size", fs)
 			info_btn.pressed.connect(func():
 				Global.any_button_pressed.emit()
 				_show_warning_detail_panel(food)
@@ -2106,6 +2118,7 @@ func _build_meal_tabs():
 	# My Meals — always first
 	var my_meals_scroll = ScrollContainer.new()
 	my_meals_scroll.name = "My Meals"
+	my_meals_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	var my_meals_vbox = VBoxContainer.new()
 	my_meals_vbox.name = "MyMealsVBox"
 	my_meals_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -2115,9 +2128,14 @@ func _build_meal_tabs():
 # Tab 1: From Fridge
 	var fridge_scroll = ScrollContainer.new()
 	fridge_scroll.name = "From Fridge"
+	fridge_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED 
 	var fridge_vbox = VBoxContainer.new()
 	fridge_vbox.name = "FromFridgeVBox"
 	fridge_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var theme = Theme.new()
+	theme.set_font_size("font_size", "Label", 36)
+	fridge_vbox.theme = theme
+	
 	fridge_scroll.add_child(fridge_vbox)
 	tabs.add_child(fridge_scroll)
 
@@ -2131,9 +2149,12 @@ func _build_meal_tabs():
 	for cat in categories:
 		var scroll = ScrollContainer.new()
 		scroll.name = cat.capitalize()
+		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED 
 		var vbox = VBoxContainer.new()
 		vbox.name = cat.capitalize() + "Vbox"
 		vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		
+		
 		scroll.add_child(vbox)
 		tabs.add_child(scroll)
 
@@ -2402,6 +2423,7 @@ func _make_saved_meal_row(meal: Dictionary) -> VBoxContainer:
 
 func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	var row = HBoxContainer.new()
+	var fs = _list_font_size()
 	row.custom_minimum_size = Vector2(0, 60)
 	row.add_theme_constant_override("separation", 8)
 
@@ -2426,13 +2448,19 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 
 	var name_col = VBoxContainer.new()
 	name_col.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	name_col.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	name_col.add_theme_constant_override("separation", 2)
 	row.add_child(name_col)
 
 	var name_lbl = Label.new()
 	name_lbl.text = food.get("name","")
 	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	row.add_child(name_lbl)
+	name_lbl.size_flags_vertical = Control.SIZE_EXPAND_FILL     # ← ADD THIS
+	name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	name_lbl.add_theme_font_size_override("font_size", fs)
+	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD  # ← ADD
+	name_col.add_child(name_lbl)
 
 	# Strict avoid label
 	var strict_conditions = _get_strict_avoid_conditions(food)
@@ -3998,7 +4026,7 @@ func _show_eat_confirmation():
 
 	var lbl = Label.new()
 	lbl.text = "✅ Meal logged to today's intake!"
-	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.add_theme_font_size_override("font_size", 50)
 	lbl.add_theme_color_override("font_color", Color.WHITE)
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	panel.add_child(lbl)
@@ -4131,50 +4159,52 @@ func _show_warning_detail_panel(food: Dictionary):
 	var warnings = Global.get_warnings(food)
 	if warnings.is_empty(): return
 
-	# Disable ALL input on ShoppingListPanel while warning is shown
 	var shopping_panel = $Panel/ShoppingListPanel
 	shopping_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_set_children_mouse_filter(shopping_panel, Control.MOUSE_FILTER_IGNORE)
 
-	# ── Full-screen backdrop — MOUSE_FILTER_STOP blocks everything below ──
+	# ── CanvasLayer ensures true full-screen coverage ──
+	var canvas = CanvasLayer.new()
+	canvas.name = "WarningDetailOverlay"
+	add_child(canvas)
+
 	var backdrop = ColorRect.new()
-	backdrop.name = "WarningDetailOverlay"
 	backdrop.color = Color(0.0, 0.0, 0.0, 0.55)
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	backdrop.z_index = 4000                            # ← high z-index
-	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP # ← blocks ALL clicks below
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas.add_child(backdrop)
 
 	var _close = func():
-		backdrop.queue_free()
-		# Re-enable input on ShoppingListPanel
+		canvas.queue_free()
 		shopping_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 		_set_children_mouse_filter(shopping_panel, Control.MOUSE_FILTER_PASS)
-	# Close on any press anywhere on the backdrop
+
 	backdrop.gui_input.connect(func(event):
 		if event is InputEventMouseButton and event.pressed:
 			_close.call()
 		elif event is InputEventScreenTouch and event.pressed:
 			_close.call()
 	)
-	add_child(backdrop)
 
-	# ── Warning panel — centered, fixed width ──
+	# ── Panel — centered, dynamic height based on content ──
 	var panel = PanelContainer.new()
-	panel.z_index = 301000
-	panel.mouse_filter = Control.MOUSE_FILTER_STOP    # ← panel itself also blocks
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP
 
-	# Center it: anchor to center, then offset by half the panel size
-	var panel_width  = 360.0
-	var viewport     = get_viewport_rect().size
-	panel.set_anchor_and_offset(SIDE_LEFT,   0, viewport.x / 2.0 - panel_width / 2.0)
-	panel.set_anchor_and_offset(SIDE_RIGHT,  0, viewport.x / 2.0 + panel_width / 2.0)
-	panel.set_anchor_and_offset(SIDE_TOP,    0, 100)   # 100px from top
-	panel.set_anchor_and_offset(SIDE_BOTTOM, 1, -100)  # 100px from bottom
+	var viewport    = get_viewport_rect().size
+	var panel_width = viewport.x - 40.0
+	var max_height  = viewport.y * 0.7
+
+	panel.set_anchor_and_offset(SIDE_LEFT,  0, viewport.x / 2.0 - panel_width / 2.0)
+	panel.set_anchor_and_offset(SIDE_RIGHT, 0, viewport.x / 2.0 + panel_width / 2.0)
+	panel.set_anchor_and_offset(SIDE_TOP,   0, 500.0)
+	# No SIDE_BOTTOM — height is driven by content
 	backdrop.add_child(panel)
 
+	# Scroll so very long warnings don't go off-screen
 	var scroll = ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.custom_minimum_size = Vector2(0, 0)
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
 	panel.add_child(scroll)
 
 	var vbox = VBoxContainer.new()
@@ -4211,9 +4241,52 @@ func _show_warning_detail_panel(food: Dictionary):
 	var hint = Label.new()
 	hint.text = "Tap anywhere to close"
 	hint.add_theme_font_size_override("font_size", 36)
-	hint.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
+	hint.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(hint)
+
+	# ── Strict avoidance ──
+	var strict_conditions = _get_strict_avoid_conditions(food)
+	if not strict_conditions.is_empty():
+		vbox.add_child(HSeparator.new())
+		var sa_title = Label.new()
+		sa_title.text = "⛔ Strict Avoidance"
+		sa_title.add_theme_font_size_override("font_size", 36)
+		sa_title.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
+		vbox.add_child(sa_title)
+		for condition in strict_conditions:
+			var cond_lbl = Label.new()
+			cond_lbl.text = "This food is strictly contraindicated for: " + \
+				condition.replace("-"," ").capitalize()
+			cond_lbl.add_theme_font_size_override("font_size", 36)
+			cond_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			vbox.add_child(cond_lbl)
+
+	# ── Limit advice ──
+	for condition in Global.active_metabolic_conditions:
+		if not Global.FOODS_TO_AVOID.has(condition): continue
+		var limit_list = Global.FOODS_TO_AVOID[condition].get("limit", [])
+		var food_name_lower = food.get("name","").to_lower()
+		for limit_item in limit_list:
+			if food_name_lower.contains(limit_item.split(" ")[0].to_lower()):
+				vbox.add_child(HSeparator.new())
+				var lim_lbl = Label.new()
+				lim_lbl.text = "⚠️ Limit with " + condition.replace("-"," ").capitalize() + \
+					":\n" + limit_item
+				lim_lbl.add_theme_font_size_override("font_size", 36)
+				lim_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+				lim_lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.1))
+				vbox.add_child(lim_lbl)
+				break
+
+	# ── Clamp panel height after layout ──
+	vbox.queue_sort()
+	await get_tree().process_frame
+	await get_tree().process_frame 
+	if is_instance_valid(panel):
+		var content_h = vbox.size.y + 20.0
+		var clamped_h = min(content_h, max_height)
+		scroll.custom_minimum_size = Vector2(0, clamped_h)
 
 func _set_children_mouse_filter(node: Node, filter: int):
 	for child in node.get_children():

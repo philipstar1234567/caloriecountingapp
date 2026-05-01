@@ -100,6 +100,7 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="ShoppingListPanel" type="Panel" parent="Panel"]
+visible = false
 top_level = true
 custom_minimum_size = Vector2(0, 1800)
 layout_mode = 2
@@ -208,7 +209,6 @@ offset_bottom = 10.5
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 0
 
 [node name="PaperItemsVBox" type="VBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/PaperScrollContainer"]
 custom_minimum_size = Vector2(953, 0)
@@ -295,14 +295,13 @@ offset_bottom = -7.68005
 text = "Undo"
 
 [node name="MealPlannerPanel" type="Panel" parent="Panel"]
-visible = false
-top_level = true
 z_index = 1
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 347.0
+offset_bottom = 224.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -391,7 +390,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 
 [node name="TabContainer" type="TabContainer" parent="Panel/MealPlannerPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 450)
+custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 theme = SubResource("Theme_vo4mu")
 theme_override_font_sizes/font_size = 50
@@ -432,7 +431,6 @@ text = "➕List"
 [node name="MealArea" type="Control" parent="Panel/MealPlannerPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 1120)
 layout_mode = 2
-mouse_force_pass_scroll_events = false
 
 [node name="PlateImage" type="TextureRect" parent="Panel/MealPlannerPanel/VBoxContainer/MealArea"]
 layout_mode = 1
@@ -440,10 +438,9 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 79.0
-offset_bottom = 127.0
+offset_bottom = 171.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 texture = ExtResource("7_vo4mu")
 
 [node name="MealGridContainer" type="GridContainer" parent="Panel/MealPlannerPanel/VBoxContainer/MealArea"]
@@ -459,7 +456,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 20
 theme_override_constants/v_separation = 20
-columns = 3
+columns = 6
 
 [node name="ClearPlateBtn" type="Button" parent="Panel/MealPlannerPanel"]
 layout_mode = 1

@@ -1199,33 +1199,45 @@ func _show_overlay_panel(populate_fn: Callable):
 	var existing = get_node_or_null("OverlayBackdrop")
 	if existing: existing.queue_free()
 
-	# Blur backdrop
+	var canvas = CanvasLayer.new()
+	canvas.name = "OverlayBackdrop"
+	add_child(canvas)
+
 	var backdrop = ColorRect.new()
-	backdrop.name = "OverlayBackdrop"
 	backdrop.color = Color(0.0, 0.0, 0.0, 0.6)
 	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
-	backdrop.z_index = 50
-	backdrop.gui_input.connect(func(event):
-		if event is InputEventMouseButton and event.pressed:
-			backdrop.queue_free()
-		elif event is InputEventScreenTouch and event.pressed:
-			backdrop.queue_free()
-	)
-	add_child(backdrop)
+	canvas.add_child(backdrop)
 
-	# Content panel
+	var _close = func():
+		if is_instance_valid(canvas):
+			canvas.queue_free()
+
+	# Only close on a real left mouse click (not scroll wheel, not touch momentum)
+	backdrop.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed \
+				and event.button_index == MOUSE_BUTTON_LEFT:
+			_close.call()
+		elif event is InputEventScreenTouch and event.pressed:
+			_close.call()
+	)
+	var viewport    = get_viewport_rect().size
+	var panel_width = viewport.x - 40.0
+	# Panel anchored on all four sides so it never grows beyond the viewport
 	var panel = PanelContainer.new()
-	panel.z_index = 51
-	panel.set_anchor_and_offset(SIDE_LEFT,   0, 12)
-	panel.set_anchor_and_offset(SIDE_RIGHT,  1, -12)
-	panel.set_anchor_and_offset(SIDE_TOP,    0, 80)
-	panel.set_anchor_and_offset(SIDE_BOTTOM, 1, -80)
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP  # blocks clicks — no gui_input needed
+	panel.set_anchor_and_offset(SIDE_LEFT,  0, viewport.x / 2.0 - panel_width / 2.0)
+	panel.set_anchor_and_offset(SIDE_RIGHT, 0, viewport.x / 2.0 + panel_width / 2.0)
+	panel.set_anchor_and_offset(SIDE_TOP,    0,  80)
+  # ← cap the bottom
 	backdrop.add_child(panel)
 
+	# DO NOT connect panel.gui_input — MOUSE_FILTER_STOP already swallows events
+
 	var scroll = ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+# ← fill the panel height
 	panel.add_child(scroll)
 
 	var scroll_vbox = VBoxContainer.new()
@@ -1236,11 +1248,22 @@ func _show_overlay_panel(populate_fn: Callable):
 	populate_fn.call(scroll_vbox)
 
 	var close_hint = Label.new()
-	close_hint.text = "Tap outside to close"
+	close_hint.text = "Tap outside to close"  # updated hint wording
 	close_hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	close_hint.add_theme_font_size_override("font_size", 36)
-	close_hint.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
+	close_hint.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 	scroll_vbox.add_child(close_hint)
+
+	# ── Clamp panel height after layout ──
+	scroll_vbox.queue_sort()
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if is_instance_valid(canvas):
+		var viewport_h  = get_viewport_rect().size.y
+		var max_h       = viewport_h * 0.67 # 80px top + 80px bottom breathing room
+		var content_h   = scroll_vbox.size.y + 20.0
+		var clamped_h   = min(content_h, max_h)
+		scroll.custom_minimum_size = Vector2(0, clamped_h)
 
 
 # ─────────────────────────────────────────
