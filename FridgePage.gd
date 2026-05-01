@@ -721,16 +721,14 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 
 
 	if not active_filters.is_empty():
-		var val_vbox = VBoxContainer.new()  # ← VBox instead of inline text
-		val_vbox.add_theme_constant_override("separation", 2)
-		row.add_child(val_vbox)
 		for key in active_filters:
-			var val    = food.get(key, 0.0)
-			var lbl_text = _get_filter_label(key) + ": " + _format_field_value(key, val)
+			var val = food.get(key, 0.0)
 			var val_lbl = Label.new()
-			val_lbl.text = lbl_text
+			val_lbl.text = _get_filter_label(key) + ": " + _format_field_value(key, val)
 			val_lbl.add_theme_font_size_override("font_size", fs)
-			val_vbox.add_child(val_lbl)
+			val_lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+			val_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			name_col.add_child(val_lbl)     # ← goes inside name_col, below the name
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
@@ -2591,16 +2589,14 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 
 	# Show active filter values
 	if not meal_active_filters.is_empty():
-		var val_vbox = VBoxContainer.new()
-		val_vbox.add_theme_constant_override("separation", 2)
-		row.add_child(val_vbox)
 		for key in meal_active_filters:
-			var val    = food.get(key, 0.0)
-			var lbl_text = _get_filter_label(key) + ": " + _format_field_value(key, val)
+			var val = food.get(key, 0.0)
 			var val_lbl = Label.new()
-			val_lbl.text = lbl_text
+			val_lbl.text = _get_filter_label(key) + ": " + _format_field_value(key, val)
 			val_lbl.add_theme_font_size_override("font_size", 30)
-			val_vbox.add_child(val_lbl)
+			val_lbl.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+			val_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			name_col.add_child(val_lbl)
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
