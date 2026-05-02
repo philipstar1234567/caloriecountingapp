@@ -100,6 +100,7 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="ShoppingListPanel" type="Panel" parent="Panel"]
+visible = false
 top_level = true
 custom_minimum_size = Vector2(0, 1800)
 layout_mode = 2
@@ -294,7 +295,6 @@ offset_bottom = -7.68005
 text = "Undo"
 
 [node name="MealPlannerPanel" type="Panel" parent="Panel"]
-visible = false
 top_level = true
 z_index = 1
 layout_mode = 1
@@ -463,13 +463,13 @@ columns = 3
 [node name="ClearPlateBtn" type="Button" parent="Panel/MealPlannerPanel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.402
+anchor_top = 0.434
 anchor_right = 0.12
-anchor_bottom = 0.469
+anchor_bottom = 0.506
 offset_left = 7.0
-offset_top = -0.288025
-offset_right = -0.400009
-offset_bottom = -0.33606
+offset_top = 0.791931
+offset_right = -0.400024
+offset_bottom = 0.471924
 text = "🗑 
 Clear
 Plate"
@@ -478,13 +478,13 @@ Plate"
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.877
-anchor_top = 0.401
+anchor_top = 0.433
 anchor_right = 0.994
-anchor_bottom = 0.469
+anchor_bottom = 0.5
 offset_left = -0.0900879
-offset_top = -0.944031
+offset_top = 0.135925
 offset_right = 0.0200195
-offset_bottom = 0.66394
+offset_bottom = 3.92896
 text = "🍽 
 Eat"
 

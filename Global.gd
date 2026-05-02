@@ -594,7 +594,6 @@ func calculate_water_recommendation() -> float:
 		else:
 			liters = min(liters, max_rec)  # CKD restricts
 
-	daily_water_liters = liters
 	return liters
 
 func calculate_adjusted_kcal_goal() -> Dictionary:
@@ -1364,22 +1363,28 @@ func load_points():
 
 func get_points_today() -> float:
 	var today = Time.get_date_string_from_system()
+	if points_history.is_empty():
+		load_points()
 	return points_history.get(today, 0.0)
 
 func get_points_week() -> float:
-	var total = 0.0
+	if points_history.is_empty(): load_points()
+	var total    = 0.0
 	var unix_now = Time.get_unix_time_from_system()
-	for i in range(7):
+	var now_dt   = Time.get_datetime_dict_from_unix_time(unix_now)
+	var weekday  = now_dt.get("weekday", 1)
+	var days_since_monday = (weekday + 6) % 7
+	for i in range(days_since_monday + 1):
 		var unix_day = unix_now - (i * 86400)
-		var datetime = Time.get_datetime_dict_from_unix_time(unix_day)
-		var date = "%04d-%02d-%02d" % [datetime.year, datetime.month, datetime.day]
-		total += points_history.get(date, 0.0)
+		var dt       = Time.get_datetime_dict_from_unix_time(unix_day)
+		var date_str = "%04d-%02d-%02d" % [dt.year, dt.month, dt.day]
+		total += points_history.get(date_str, 0.0)
 	return total
 
 func get_points_alltime() -> float:
+	if points_history.is_empty(): load_points()
 	var total = 0.0
-	for val in points_history.values():
-		total += val
+	for val in points_history.values(): total += val
 	return total
 
 func get_macro_goals() -> Dictionary:
@@ -1729,20 +1734,30 @@ func _get_all_quest_definitions() -> Array:
 func get_personalized_quests() -> Array:
 	var today = Time.get_date_string_from_system()
 	if quest_date == today and not today_quests.is_empty():
+		# Quests already built for today — just ensure check callables are present
+		if today_quests[0].has("check"):
+			return today_quests
+		# Rebuild callables if missing (e.g. after load)
+		var full_pool = _build_quest_pool()
+		for i in range(today_quests.size()):
+			var qid = today_quests[i].get("id","")
+			for pq in full_pool:
+				if pq.get("id","") == qid:
+					today_quests[i]["check"] = pq["check"]
+					break
 		return today_quests
 
 	quest_date = today
-	completed_quest_ids.clear()
-	seed(today.hash() + daily_streak)  # seed varies by streak so quests feel fresh
+	# DO NOT clear completed_quest_ids here — they were loaded from disk
+	# Only clear if it's genuinely a new day
+	if quest_date != today:
+		completed_quest_ids.clear()
 
+	seed(today.hash() + daily_streak)
 	var pool = _build_quest_pool()
 	pool.shuffle()
-
-	# Separate into tiers
-	var core_quests   = pool.filter(func(q): return q.get("tier") == "core")
-	var bonus_quests  = pool.filter(func(q): return q.get("tier") == "bonus")
-
-	# Always give 3 core + 2 bonus
+	var core_quests  = pool.filter(func(q): return q.get("tier") == "core")
+	var bonus_quests = pool.filter(func(q): return q.get("tier") == "bonus")
 	today_quests = core_quests.slice(0, 3) + bonus_quests.slice(0, 2)
 	save_quests()
 	return today_quests
@@ -2002,11 +2017,13 @@ func check_quests(today_totals: Dictionary):
 	save_quests()
 
 func save_quests():
-	var saveable = []
-	for quest in today_quests:
-		var q = quest.duplicate()
-		q.erase("check")  # Callables can't be serialized
-		saveable.append(q)
+	var saveable = today_quests.map(func(q): return {
+		"id":   q.get("id",""),
+		"desc": q.get("desc",""),
+		"tier": q.get("tier","core"),
+		"py":   q.get("py", 10)
+		# deliberately omit "check"
+	})
 	var file = FileAccess.open("user://quests.json", FileAccess.WRITE)
 	file.store_string(JSON.stringify({
 		"date": quest_date,
@@ -2023,17 +2040,14 @@ func load_quests():
 	if not data: return
 	var today = Time.get_date_string_from_system()
 	if data.get("date","") != today: return  # stale — regenerate
-	quest_date = data.get("date","")
-	today_quests = data.get("quests",[])
+	quest_date          = data.get("date","")
 	completed_quest_ids = data.get("completed",[])
-	var pool = _build_quest_pool()
-	var pool_by_id: Dictionary = {}
-	for q in pool:
-		pool_by_id[q["id"]] = q
-	for quest in today_quests:
-		var qid = quest.get("id","")
-		if pool_by_id.has(qid) and pool_by_id[qid].has("check"):
-			quest["check"] = pool_by_id[qid]["check"]
+
+	# Rebuild the full quest objects with their check callables
+	# by matching saved ids against the full pool
+	var saved_ids = data.get("quests",[]).map(func(q): return q.get("id",""))
+	var full_pool = _build_quest_pool()
+	today_quests  = full_pool.filter(func(q): return saved_ids.has(q.get("id","")))
 
 
 func get_current_league() -> Dictionary:

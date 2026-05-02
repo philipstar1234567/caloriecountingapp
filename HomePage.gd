@@ -112,7 +112,7 @@ func _show_strict_avoid_penalty_toast(food: Dictionary, conditions: Array):
 
 	var title = Label.new()
 	title.text = "⛔ −" + str(conditions.size()) + " pt  Strict avoid eaten: " + food.get("name","")
-	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_font_size_override("font_size", 36)
 	title.add_theme_color_override("font_color", Color(1.0, 0.3, 0.2))
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(title)
@@ -120,7 +120,7 @@ func _show_strict_avoid_penalty_toast(food: Dictionary, conditions: Array):
 	for c in conditions:
 		var lbl = Label.new()
 		lbl.text = "Strictly contraindicated for: " + c.replace("-"," ").capitalize()
-		lbl.add_theme_font_size_override("font_size", 19)
+		lbl.add_theme_font_size_override("font_size", 36)
 		lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.4))
 		vbox.add_child(lbl)
 
@@ -154,6 +154,7 @@ func refresh_display():
 	_refresh_meal_history_card()
 	if Global.simple_mode:
 		_refresh_simple_kcal_card()
+		_refresh_important_notes_card()
 	else:
 		_refresh_macro_card()
 		_refresh_micro_card()
@@ -180,13 +181,13 @@ func _refresh_simple_kcal_card():
 
 	var title = Label.new()
 	title.text = "🔥 Calories Today"
-	title.add_theme_font_size_override("font_size", 28)
+	title.add_theme_font_size_override("font_size", 50)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
 	var kcal_lbl = Label.new()
 	kcal_lbl.text = str(snappedf(kcal, 0.1)) + " kcal"
-	kcal_lbl.add_theme_font_size_override("font_size", 48)
+	kcal_lbl.add_theme_font_size_override("font_size", 70)
 	kcal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	kcal_lbl.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
 	vbox.add_child(kcal_lbl)
@@ -196,7 +197,7 @@ func _refresh_simple_kcal_card():
 		var fill  = int(pct * 10)
 		var bar   = Label.new()
 		bar.text  = "█".repeat(fill) + "░".repeat(10 - fill)
-		bar.add_theme_font_size_override("font_size", 22)
+		bar.add_theme_font_size_override("font_size", 36)
 		bar.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		vbox.add_child(bar)
 
@@ -204,7 +205,7 @@ func _refresh_simple_kcal_card():
 		var rem_str  = ("+" if remaining < 0 else "") + str(snappedf(abs(remaining),0.1))
 		goal_lbl.text = "Goal: " + str(snappedf(daily_goal,0.1)) + " kcal  |  " + \
 			("Over by " if remaining < 0 else "Remaining: ") + rem_str + " kcal"
-		goal_lbl.add_theme_font_size_override("font_size", 22)
+		goal_lbl.add_theme_font_size_override("font_size", 36)
 		goal_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		if remaining < 0:
 			goal_lbl.add_theme_color_override("font_color", Color(1.0,0.4,0.3))
@@ -888,6 +889,7 @@ func _refresh_water_card():
 
 	# ── Calculate goals ──
 	var water_goal_l  = Global.calculate_water_recommendation()
+	Global.daily_water_liters = water_goal_l
 	var water_goal_ml = water_goal_l * 1000.0   # e.g. 3000.0 for 3L
 	var glass_ml      = 250.0                    # one glass = exactly 250mL
 	var total_glasses = int(ceil(water_goal_ml / glass_ml))  # e.g. 12 for 3L
@@ -1050,6 +1052,12 @@ func _refresh_water_card():
 		wi_btn.pressed.connect(_show_water_intoxication_info)
 		wi_row.add_child(wi_btn)
 		
+		var kcal_points  = Global.calculate_points(today_totals.get("calories",0.0),
+			Global.body_metrics.get("daily_goal",0.0),
+			Global.body_metrics.get("bmr",0.0))
+		var total_points = kcal_points + w_pts
+		Global.save_points(Time.get_date_string_from_system(), total_points)
+	
 		#Global.save_points(Time.get_date_string_from_system(), total_points)
 		#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/WaterCard)
 
@@ -1143,6 +1151,7 @@ func _get_personalized_tips() -> Array:
 	var trying_to_lose   = goal_w > 0 and goal_w < weight
 	var trying_to_gain   = goal_w > 0 and goal_w > weight
 	var trying_to_maintain = goal_w > 0 and abs(goal_w - weight) < 1.0
+	var water_goal_display = snappedf(Global.daily_water_liters, 0.1)
 
 	# ── Weight loss tips ──
 	if trying_to_lose:
@@ -1209,7 +1218,7 @@ func _get_personalized_tips() -> Array:
 
 	if Global.kidney_at_risk:
 		tips.append("Calcium consumed WITH oxalate-rich meals binds oxalate in the gut — preventing kidney stone formation.")
-		tips.append("Stay well hydrated — dilute urine protects the kidneys. Your goal today is " + str(snappedf(Global.daily_water_liters,1)) + "L.")
+		tips.append("Stay well hydrated — your goal today is " + str(water_goal_display) + "L.")
 		tips.append("Cooking oxalate-rich vegetables and discarding the water reduces oxalate content by up to 50%.")
 
 	if c.has("hemochromatosis"):
@@ -1713,20 +1722,24 @@ func _show_milestone_popup(name: String, days: int):
 		#_fix_labels_in(child)
 
 func _check_weekly_reflection():
-	var dt      = Time.get_datetime_dict_from_system()
-	var weekday = dt.get("weekday", 0)   # 0=Sun
-	var today   = Time.get_date_string_from_system()
+	var unix_now = Time.get_unix_time_from_system()
+	var dt       = Time.get_datetime_dict_from_unix_time(unix_now)
+	var weekday  = dt.get("weekday", -1)
+	var today    = Time.get_date_string_from_system()
 
-	if weekday != 0: return   # Only Sunday
+	# Godot weekday: 0=Sunday, 1=Monday, 2=Tuesday ... 6=Saturday
+	# We want Monday = 1
+	var is_monday = (weekday == 1)
+
+	if not is_monday: return
 	if Global.last_report_date == today: return
 
 	call_deferred("_show_reflection_screen")
 
 func _show_reflection_screen():
-	# This function has NO weekday check — it works any day
-	# The Monday auto-trigger is handled by _check_weekly_reflection()
 	var week_avg = _get_week_averages()
-	# If no data at all, show a placeholder
+	Global.mark_report_shown()
+
 	if week_avg.is_empty():
 		_show_overlay_panel(func(scroll_vbox):
 			var lbl = Label.new()
@@ -1738,7 +1751,65 @@ func _show_reflection_screen():
 		)
 		return
 
-	Global.mark_report_shown()
+	_show_overlay_panel(func(scroll_vbox):
+		var title = Label.new()
+		title.text = "🌅 Sunday Reflection"
+		title.add_theme_font_size_override("font_size", 28)
+		title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		scroll_vbox.add_child(title)
+		scroll_vbox.add_child(HSeparator.new())
+		# Pattern noticed
+		var pattern = _detect_pattern(week_avg)
+		if not pattern.is_empty():
+			var pattern_panel = PanelContainer.new()
+			var pv = VBoxContainer.new()
+			pattern_panel.add_child(pv)
+			scroll_vbox.add_child(pattern_panel)
+			var p_title = Label.new()
+			p_title.text = "🔍 Pattern noticed:"
+			p_title.add_theme_font_size_override("font_size", 22)
+			p_title.add_theme_color_override("font_color", Color(0.7,0.7,1.0))
+			pv.add_child(p_title)
+			var p_lbl = Label.new()
+			p_lbl.text = pattern
+			p_lbl.add_theme_font_size_override("font_size", 22)
+			p_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			pv.add_child(p_lbl)
+		scroll_vbox.add_child(HSeparator.new())
+		# Achievement
+		var achievement = _get_week_achievement()
+		var ach_panel = PanelContainer.new()
+		var av = VBoxContainer.new()
+		ach_panel.add_child(av)
+		scroll_vbox.add_child(ach_panel)
+		var a_title = Label.new()
+		a_title.text = "🎉 This week's win:"
+		a_title.add_theme_font_size_override("font_size", 22)
+		a_title.add_theme_color_override("font_color", Color(0.3,1.0,0.3))
+		av.add_child(a_title)
+		var a_lbl = Label.new()
+		a_lbl.text = achievement
+		a_lbl.add_theme_font_size_override("font_size", 22)
+		a_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		av.add_child(a_lbl)
+		scroll_vbox.add_child(HSeparator.new())
+		# Next week
+		var suggestion = _get_next_week_suggestion()
+		var sug_panel = PanelContainer.new()
+		var sv = VBoxContainer.new()
+		sug_panel.add_child(sv)
+		scroll_vbox.add_child(sug_panel)
+		var s_title = Label.new()
+		s_title.text = "🗺️ Next week's adventure:"
+		s_title.add_theme_font_size_override("font_size", 22)
+		s_title.add_theme_color_override("font_color", Color(1.0,0.85,0.2))
+		sv.add_child(s_title)
+		var s_lbl = Label.new()
+		s_lbl.text = suggestion
+		s_lbl.add_theme_font_size_override("font_size", 22)
+		s_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		sv.add_child(s_lbl)
+	)
 	_save_weekly_report(week_avg)
 	
 func _save_weekly_report(week_avg: Dictionary):
@@ -1881,3 +1952,79 @@ func _get_next_week_suggestion() -> String:
 			"Try barley, legumes or whole rye bread this week."
 	return "Your avatar reaches a new region famous for vibrant markets and colorful produce. " + \
 		"Challenge yourself to eat from 5 different food categories every day this week."
+
+func _refresh_important_notes_card():
+	var vbox = $Panel/ScrollContainer/VBoxContainer
+
+	# Remove existing important card if present
+	var existing = vbox.get_node_or_null("ImportantCard")
+	if existing: existing.queue_free()
+
+	# Collect all relevant notes for the user's active conditions
+	var active_notes: Array = []
+	for condition in Global.active_metabolic_conditions:
+		if Global.FOODS_TO_AVOID_NOTES.has(condition):
+			active_notes.append({
+				"condition": condition,
+				"note": Global.FOODS_TO_AVOID_NOTES[condition]
+			})
+
+	if active_notes.is_empty(): return
+
+	var card = PanelContainer.new()
+	card.name = "ImportantCard"
+	var inner = VBoxContainer.new()
+	inner.add_theme_constant_override("separation", 10)
+	card.add_child(inner)
+
+	var title = Label.new()
+	title.text = "🚨 Important!"
+	title.add_theme_font_size_override("font_size", 50)
+	title.add_theme_color_override("font_color", Color(1.0, 0.3, 0.2))
+	inner.add_child(title)
+
+	var shown = min(2, active_notes.size())
+	for i in range(shown):
+		inner.add_child(HSeparator.new())
+		var note_lbl = Label.new()
+		note_lbl.text = active_notes[i]["note"]
+		note_lbl.add_theme_font_size_override("font_size", 36)
+		note_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		note_lbl.add_theme_color_override("font_color", Color(1.0, 0.7, 0.2))
+		inner.add_child(note_lbl)
+
+	if active_notes.size() > 2:
+		var more_btn = Button.new()
+		more_btn.text = "See all notes (" + str(active_notes.size()) + ") →"
+		more_btn.flat = true
+		more_btn.pressed.connect(func(): _open_all_notes_overlay(active_notes))
+		inner.add_child(more_btn)
+
+	# Insert after TipsCard
+	var tips_card = vbox.get_node_or_null("TipsCard")
+	var insert_idx = tips_card.get_index() + 1 if tips_card else vbox.get_child_count()
+	vbox.add_child(card)
+	vbox.move_child(card, insert_idx)
+
+func _open_all_notes_overlay(notes: Array):
+	_show_overlay_panel(func(scroll_vbox):
+		var title = Label.new()
+		title.text = "🚨 Important Health Notes"
+		title.add_theme_font_size_override("font_size", 36)
+		title.add_theme_color_override("font_color", Color(1.0, 0.3, 0.2))
+		scroll_vbox.add_child(title)
+		scroll_vbox.add_child(HSeparator.new())
+		for entry in notes:
+			var cond_lbl = Label.new()
+			cond_lbl.text = entry["condition"].replace("-", " ").capitalize()
+			cond_lbl.add_theme_font_size_override("font_size", 36)
+			cond_lbl.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+			scroll_vbox.add_child(cond_lbl)
+			var note_lbl = Label.new()
+			note_lbl.text = entry["note"]
+			note_lbl.add_theme_font_size_override("font_size", 36)
+			note_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			note_lbl.add_theme_color_override("font_color", Color(1.0, 0.7, 0.2))
+			scroll_vbox.add_child(note_lbl)
+			scroll_vbox.add_child(HSeparator.new())
+	)

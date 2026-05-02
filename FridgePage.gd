@@ -1,5 +1,6 @@
 extends Control
 
+var _texture_cache: Dictionary = {}
 var shopping_page_titles: Dictionary = {}
 var _shopping_undo_stack: Array = []  # max 10 snapshots
 const UNDO_MAX = 10
@@ -530,6 +531,11 @@ func _get_filter_label(key: String) -> String:
 			return opt["label"]
 	return key
 
+func _get_texture(path: String) -> Texture2D:
+	if not _texture_cache.has(path):
+		if ResourceLoader.exists(path):
+			_texture_cache[path] = load(path)
+	return _texture_cache.get(path, null)
 
 # ── Load foods.json ──
 func load_foods():
@@ -540,12 +546,26 @@ func load_foods():
 	all_foods = JSON.parse_string(file.get_as_text())
 	file.close()
 	build_tabs()
+	
+func _build_meal_tabs_early():
+	if _meal_tabs_built: return
+	_build_meal_tabs()
+	_meal_tabs_built = true
 
 # ── Build one tab per category ──
 func build_tabs():
 	var tabs = $Panel/ShoppingListPanel/VBoxContainer/TabContainer
 	for child in tabs.get_children():
 		child.queue_free()
+
+	# ── "All" tab — first ──
+	var all_scroll = ScrollContainer.new()
+	all_scroll.name = "All"
+	var all_vbox = VBoxContainer.new()
+	all_vbox.name = "AllVBox"
+	all_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	all_scroll.add_child(all_vbox)
+	tabs.add_child(all_scroll)
 
 	var categories = []
 	for food in all_foods:
@@ -562,7 +582,7 @@ func build_tabs():
 		tabs.add_child(scroll)
 
 	_apply_tab_arrow_theme(tabs)
-	refresh_current_tab()
+
 
 
 func _get_food_severity(food: Dictionary) -> String:
@@ -590,14 +610,25 @@ func refresh_current_tab():
 	for child in vbox.get_children():
 		child.queue_free()
 
-	var cat    = tabs.get_tab_title(tabs.current_tab).to_lower()
+	var tab_title    = tabs.get_tab_title(tabs.current_tab).to_lower()
 	var search = $Panel/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text.to_lower()
 
-	var filtered = all_foods.filter(func(f):
-		var right_cat = f.get("category", "") == cat
-		var matches   = search.is_empty() or f.get("name", "").to_lower().contains(search)
-		return right_cat and matches
-	)
+	var filtered: Array
+	if tab_title == "all":
+		# All foods — start with alphabetical sort
+		filtered = all_foods.duplicate()
+		filtered.sort_custom(func(a, b): return a.get("name","") < b.get("name",""))
+	else:
+		filtered = all_foods.filter(func(f):
+			return f.get("category","") == tab_title
+		)
+
+	# Search
+	if not search.is_empty():
+		filtered = filtered.filter(func(f):
+			return f.get("name","").to_lower().contains(search)
+		)
+
 
 	if not active_filters.is_empty():
 		filtered = filtered.filter(func(f):
@@ -607,38 +638,28 @@ func refresh_current_tab():
 			return true
 		)
 
-	if not active_filters.is_empty():
-		var sort_key = "calories"  # default for multiple filters
-		if active_filters.size() == 1:
-			sort_key = active_filters[0]
+		# Special fiber/starch threshold filters
+		if active_filters.has("soluble_fiber_pct"):
+			filtered = filtered.filter(func(f):
+				return f.get("fiber_g",0.0) > 0.3 and f.get("soluble_fiber_pct",0) >= 50)
+		if active_filters.has("insoluble_fiber_pct"):
+			filtered = filtered.filter(func(f):
+				return f.get("fiber_g",0.0) > 0.3 and f.get("insoluble_fiber_pct",0) >= 50)
+		if active_filters.has("resistant_starch_pct"):
+			filtered = filtered.filter(func(f):
+				return f.get("carbs_g",0.0) > 1.0 and f.get("resistant_starch_pct",0) >= 10)
+		if active_filters.has("rapid_starch_pct"):
+			filtered = filtered.filter(func(f):
+				return f.get("carbs_g",0.0) > 1.0 and f.get("rapid_starch_pct",0) >= 50)
+		if active_filters.has("slow_starch_pct"):
+			filtered = filtered.filter(func(f):
+				return f.get("carbs_g",0.0) > 1.0 and f.get("slow_starch_pct",0) >= 40)
 
+		# Sort by active filter
+		var sort_key = "calories" if active_filters.size() > 1 else active_filters[0]
 		filtered.sort_custom(func(a, b):
-			var va = a.get(sort_key, 0.0)
-			var vb = b.get(sort_key, 0.0)
-			return va < vb if sort_ascending else va > vb
-		)
-		
-	if active_filters.has("soluble_fiber_pct"):
-		filtered = filtered.filter(func(f):
-			# Only show foods where soluble fiber is majority (>=50%)
-			# AND food actually has fiber
-			return f.get("fiber_g", 0.0) > 0.3 and f.get("soluble_fiber_pct", 0) >= 50
-		)
-	if active_filters.has("insoluble_fiber_pct"):
-		filtered = filtered.filter(func(f):
-			return f.get("fiber_g", 0.0) > 0.3 and f.get("insoluble_fiber_pct", 0) >= 50
-		)
-	if active_filters.has("resistant_starch_pct"):
-		filtered = filtered.filter(func(f):
-			return f.get("carbs_g", 0.0) > 1.0 and f.get("resistant_starch_pct", 0) >= 10
-		)
-	if active_filters.has("rapid_starch_pct"):
-		filtered = filtered.filter(func(f):
-			return f.get("carbs_g", 0.0) > 1.0 and f.get("rapid_starch_pct", 0) >= 50
-		)
-	if active_filters.has("slow_starch_pct"):
-		filtered = filtered.filter(func(f):
-			return f.get("carbs_g", 0.0) > 1.0 and f.get("slow_starch_pct", 0) >= 40
+			return a.get(sort_key,0.0) < b.get(sort_key,0.0) if sort_ascending \
+				else a.get(sort_key,0.0) > b.get(sort_key,0.0)
 		)
 		
 	if warning_filter != "all" or Global.hide_red_warnings:
@@ -718,7 +739,15 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 		sa_lbl.add_theme_font_size_override("font_size", fs)
 		sa_lbl.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
 		name_col.add_child(sa_lbl)
-
+	else:
+		# Limit — only show if not already strict avoid
+		var limit_conditions = _get_limit_conditions(food)
+		if not limit_conditions.is_empty():
+			var lim_lbl = Label.new()
+			lim_lbl.text = "⚠️ limit intake"
+			lim_lbl.add_theme_font_size_override("font_size", fs)
+			lim_lbl.add_theme_color_override("font_color", Color(1.0, 0.65, 0.1))
+			name_col.add_child(lim_lbl)
 
 	if not active_filters.is_empty():
 		for key in active_filters:
@@ -732,7 +761,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
-		ox_lbl.add_theme_font_size_override("font_size", fs)
+		ox_lbl.add_theme_font_size_override("font_size", fs - 20)
 		row.add_child(ox_lbl)
 
 		var warnings = Global.get_warnings(food)
@@ -1183,7 +1212,11 @@ func build_fridge_ui():
 		icon.custom_minimum_size = Vector2(90,90)
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		var path = "res://images/" + slot.get("id","") + ".png"
-		if ResourceLoader.exists(path): icon.texture = load(path)
+		if not _texture_cache.has(path):
+			if ResourceLoader.exists(path):
+				_texture_cache[path] = load(path)
+		if _texture_cache.has(path):
+			icon.texture = _texture_cache[path]
 		btn.add_child(icon)
 		# Long press timer
 		var timer = Timer.new()
@@ -2063,6 +2096,8 @@ func _on_list_pressed():
 	$Panel/ShoppingListPanel.mouse_filter = Control.MOUSE_FILTER_STOP
 	# Also disable fridge buttons while list is open
 	$Panel/FridgeContainer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var tabs = $Panel/ShoppingListPanel/VBoxContainer/TabContainer
+	tabs.call_deferred("set", "current_tab", 1)
 	refresh_shopping_list()
 
 func _on_close_list():
@@ -2195,6 +2230,7 @@ func _on_meal_planner_pressed():
 	$Panel/MealPlannerPanel.show()
 	$Panel/MealPlannerPanel.mouse_filter = Control.MOUSE_FILTER_STOP
 	$Panel/FridgeContainer.mouse_filter  = Control.MOUSE_FILTER_IGNORE
+	
 	# Hide NavBar
 	#get_tree().root.get_node("Main/NavBar").hide()
 
@@ -2202,11 +2238,9 @@ func _on_meal_planner_pressed():
 		_build_meal_tabs()
 		_meal_tabs_built = true
 
-	# Always default to Fruits tab on open
+	# Always default to All tab on open
 	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
-	var fruits_idx = _get_fruits_tab_index()
-	tabs.current_tab = fruits_idx
-	_refresh_meal_tab()
+	tabs.current_tab = 0  # ← "My Meals" — instant, no food rows to build
 	_refresh_my_meals_tab()
 	_refresh_meal_grid()
 
@@ -2215,7 +2249,14 @@ func _get_fruits_tab_index() -> int:
 	for i in range(tabs.get_tab_count()):
 		if tabs.get_tab_title(i).to_lower() == "fruits":
 			return i
-	return 2  # fallback
+	return 3  # fallback
+
+func _get_all_tab_index() -> int:
+	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
+	for i in range(tabs.get_tab_count()):
+		if tabs.get_tab_title(i).to_lower() == "all":
+			return i
+	return 2
 
 func _build_meal_tabs():
 	var tabs = $Panel/MealPlannerPanel/VBoxContainer/TabContainer
@@ -2245,6 +2286,16 @@ func _build_meal_tabs():
 	
 	fridge_scroll.add_child(fridge_vbox)
 	tabs.add_child(fridge_scroll)
+	
+		# Tab 2: All
+	var all_scroll = ScrollContainer.new()
+	all_scroll.name = "All"
+	all_scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED 
+	var all_vbox = VBoxContainer.new()
+	all_vbox.name = "AllVBox"
+	all_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	all_scroll.add_child(all_vbox)
+	tabs.add_child(all_scroll)
 
 	# Food category tabs
 	var categories = []
@@ -2359,26 +2410,23 @@ func _refresh_meal_tab():
 	for child in vbox.get_children():
 		child.queue_free()
 
-	var cat = tabs.get_tab_title(tabs.current_tab).to_lower().strip_edges()
-	if cat == "my meals": return
+	var tab_name   = tabs.get_tab_title(tabs.current_tab).to_lower().strip_edges()
+	if tab_name == "my meals" or tab_name == "from fridge": return
 
 	var search_text = ""
 	var search_bar = $Panel/MealPlannerPanel/VBoxContainer/TopBarMP/MPSearchBar
 	if search_bar: search_text = search_bar.text.to_lower()
 
-	var filtered = all_foods.filter(func(f):
-		if f.get("category","") != cat: return false
-		if not search_text.is_empty() and not f.get("name","").to_lower().contains(search_text):
-			return false
-		return true
-	)
+	var filtered: Array
+	if tab_name == "all":
+		filtered = all_foods.duplicate()
+		filtered.sort_custom(func(a, b): return a.get("name","") < b.get("name",""))
+	else:
+		filtered = all_foods.filter(func(f): return f.get("category","") == tab_name)
 
-	# Nutrient filters
-	if not meal_active_filters.is_empty():
+	if not search_text.is_empty():
 		filtered = filtered.filter(func(f):
-			for key in meal_active_filters:
-				if f.get(key, 0.0) <= 0: return false
-			return true
+			return f.get("name","").to_lower().contains(search_text)
 		)
 
 	# Warning filter
@@ -2407,6 +2455,10 @@ func _refresh_meal_tab():
 		filtered.sort_custom(func(a, b):
 			return a.get(sort_key,0.0) < b.get(sort_key,0.0) if meal_sort_ascending \
 				else a.get(sort_key,0.0) > b.get(sort_key,0.0)
+		)
+	else:
+		filtered.sort_custom(func(a, b):
+			return a.get("name","").to_lower() < b.get("name","").to_lower()
 		)
 
 	for food in filtered:
@@ -2547,11 +2599,11 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	var severity = _get_food_severity(food)
 	if severity == "avoid":
 		var badge = Label.new(); badge.text = "⛔"
-		badge.add_theme_font_size_override("font_size", 24)
+		badge.add_theme_font_size_override("font_size", 36)
 		row.add_child(badge)
 	elif severity == "caution":
 		var badge = Label.new(); badge.text = "⚠️"
-		badge.add_theme_font_size_override("font_size", 24)
+		badge.add_theme_font_size_override("font_size", 36)
 		row.add_child(badge)
 
 	# Icon — same as shopping list
@@ -2583,9 +2635,18 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	if not strict_conditions.is_empty():
 		var sa_lbl = Label.new()
 		sa_lbl.text = "⛔ strict avoid in your condition"
-		sa_lbl.add_theme_font_size_override("font_size", 19)
+		sa_lbl.add_theme_font_size_override("font_size", fs)
 		sa_lbl.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
 		name_col.add_child(sa_lbl)
+	else:
+		# Limit — only show if not already strict avoid
+		var limit_conditions = _get_limit_conditions(food)
+		if not limit_conditions.is_empty():
+			var lim_lbl = Label.new()
+			lim_lbl.text = "⚠️ limit intake"
+			lim_lbl.add_theme_font_size_override("font_size", fs)
+			lim_lbl.add_theme_color_override("font_color", Color(1.0, 0.65, 0.1))
+			name_col.add_child(lim_lbl)
 
 	# Show active filter values
 	if not meal_active_filters.is_empty():
@@ -2600,6 +2661,7 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
+		ox_lbl.add_theme_font_size_override("font_size", fs - 20)
 		row.add_child(ox_lbl)
 
 	# Warning badge
@@ -2700,7 +2762,11 @@ func _refresh_meal_grid():
 		icon.custom_minimum_size = Vector2(200,200)
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		var path = "res://images/" + food.get("id","") + ".png"
-		if ResourceLoader.exists(path): icon.texture = load(path)
+		if not _texture_cache.has(path):
+			if ResourceLoader.exists(path):
+				_texture_cache[path] = load(path)
+		if _texture_cache.has(path):
+			icon.texture = _texture_cache[path]
 		btn.add_child(icon)
 
 		# Cook method badge
@@ -3263,10 +3329,13 @@ func _show_meal_details():
 
 	var popup = PanelContainer.new()
 	popup.name = "MealDetailsPopup"
-	popup.set_anchor_and_offset(SIDE_LEFT,   0, 10)
-	popup.set_anchor_and_offset(SIDE_RIGHT,  1, -10)
+	popup.top_level = true  # escapes parent clipping, uses full screen
+	var vp = get_viewport_rect().size
+	var panel_w = 800.0     # ← adjust this to taste
+	popup.set_anchor_and_offset(SIDE_LEFT,   0, vp.x / 2.0 - panel_w / 2.0)
+	popup.set_anchor_and_offset(SIDE_RIGHT,  0, vp.x / 2.0 + panel_w / 2.0)
 	popup.set_anchor_and_offset(SIDE_TOP,    0, 10)
-	popup.set_anchor_and_offset(SIDE_BOTTOM, 1, -10)
+	popup.set_anchor_and_offset(SIDE_BOTTOM, 0, vp.y - 10)
 
 	var scroll = ScrollContainer.new()
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -3815,7 +3884,8 @@ func _make_from_fridge_row(slot: Dictionary) -> HBoxContainer:
 		"\n" + str(snappedf(remaining, 0.1)) + "g" + \
 		(" ×" + str(count) if count > 1 else "") + " remaining"
 	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_lbl.add_theme_font_size_override("font_size", 22)
+	#name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	name_lbl.add_theme_font_size_override("font_size", 36)
 	row.add_child(name_lbl)
 
 	# 0g warning
@@ -3829,7 +3899,7 @@ func _make_from_fridge_row(slot: Dictionary) -> HBoxContainer:
 	var add_btn = Button.new()
 	add_btn.text = "+ Meal"
 	add_btn.custom_minimum_size = Vector2(90, 50)
-	add_btn.add_theme_font_size_override("font_size", 22)
+	add_btn.add_theme_font_size_override("font_size", 36)
 	add_btn.pressed.connect(func():
 		Global.any_button_pressed.emit()
 		_open_from_fridge_portion_popup(slot)
@@ -4150,7 +4220,10 @@ func _show_eat_confirmation():
 	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
 	tween.tween_interval(1.5)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.3)
-	tween.tween_callback(func(): panel.queue_free())
+	tween.tween_callback(func():
+		if is_instance_valid(panel):
+			panel.queue_free()
+	)
 
 func _process(_delta: float) -> void:
 	var action_popup = get_node_or_null("ActionPopup")
@@ -4390,6 +4463,7 @@ func _show_warning_detail_panel(food: Dictionary):
 				lim_lbl.add_theme_font_size_override("font_size", 36)
 				lim_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 				lim_lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.1))
+				lim_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 				vbox.add_child(lim_lbl)
 				break
 
@@ -4477,3 +4551,32 @@ func _list_font_size() -> int:
 	#val_lbl.add_theme_font_size_override("font_size", _list_font_size() - 6)
 	#btn.add_theme_font_size_override("font_size", _list_font_size())
 	#sa_lbl.add_theme_font_size_override("font_size", _list_font_size() - 6)
+func _get_limit_conditions(food: Dictionary) -> Array:
+	var food_name_lower = food.get("name","").to_lower()
+	var food_id_lower   = food.get("id","").to_lower()
+	var result: Array   = []
+
+	# Keyword map for limit categories — less strict than strict_avoid
+	var LIMIT_KEYWORDS = {
+		"graves-disease":     ["cruciferous","broccoli","cabbage","kale","cauliflower","sugar","caffeine"],
+		"thyroid-health":     ["cruciferous","broccoli","cabbage","kale","soy","tofu","sunflower","corn","soybean"],
+		"hemochromatosis":    ["sugar","fructose","alcohol"],
+		"crohns-disease":     ["spicy","lactose","milk","yogurt","kefir","cream","sugar"],
+		"nafld":              ["butter","cream","cheese","sausage","bacon","flour","pasta","rice","bread"],
+		"glycemic-health":    ["potato","white-bread","rice","bread-roll","honey","sugar","raisin","dates"],
+		"lipid-health":       ["butter","cream","cheese","sausage","bacon","pasta","rice","bread"],
+		"epi":                ["sugar","soda","carbonated","caffeine"],
+		"post-cholecystectomy":["cream","cheese","chocolate","mint","onion","garlic","tomato","spicy"],
+	}
+
+	for condition in Global.active_metabolic_conditions:
+		if not LIMIT_KEYWORDS.has(condition): continue
+		for keyword in LIMIT_KEYWORDS[condition]:
+			if food_name_lower.contains(keyword) or food_id_lower.contains(keyword):
+				# Only add if NOT already a strict avoid
+				var strict = Global._get_strict_avoid_conditions(food)
+				if not strict.has(condition) and not result.has(condition):
+					result.append(condition)
+				break
+
+	return result
