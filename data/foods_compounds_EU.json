@@ -1,0 +1,1162 @@
+{
+  "_meta": {
+	"version": "2.0",
+	"region": "Europe / Norway",
+	"data_sources": [
+	  "Matvaretabellen (Norwegian Food Composition Database, Helsedirektoratet)",
+	  "EFSA Comprehensive European Food Consumption Database",
+	  "EuroFIR (European Food Information Resource Network)",
+	  "Danish Food Composition Databank (DTU Fødevareinstituttet)",
+	  "Monash University FODMAP Database (FODMAP classification)",
+	  "EFSA Scientific Opinion on Dietary Reference Values for carbohydrates and dietary fibre (2010)",
+	  "Ingredient estimation for Norwegian ready meals based on declared ingredients on packaging"
+	],
+	"notes": "Compound values are 0-3 (0=negligible, 1=low, 2=medium, 3=high) per standard European serving. Ready meal compound values are estimated from declared ingredient lists. Duplicates from the original food list have been deduplicated.",
+	"compounds": {
+	  "raffinose":         "Oligosaccharides (GOS/RFO) - fermented by gut bacteria -> CO2 + H2 -> bloating",
+	  "inulin_fos":        "Fructooligosaccharides & inulin - highly fermentable -> gas, bloat",
+	  "lactose":           "Milk sugar - undigested in lactase-deficient people -> osmotic + fermentation",
+	  "fructose":          "Fruit sugar - absorbed by limited GLUT-5 transporters; excess -> osmotic",
+	  "sorbitol":          "Sugar alcohol - poorly absorbed, osmotically active, inhibits fructose uptake",
+	  "mannitol":          "Sugar alcohol - poorly absorbed, osmotically active",
+	  "xylitol":           "Sugar alcohol - poorly absorbed, osmotically active",
+	  "resistant_starch":  "Starch that escapes small intestine -> colonic fermentation -> gas",
+	  "soluble_fiber":     "Fermentable fiber (pectin, guar, beta-glucan) -> SCFA + gas production",
+	  "insoluble_fiber":   "Less fermentable fiber; speeds transit; bulk former",
+	  "sulfur_aa":         "Sulfur amino acids (methionine, cysteine) -> H2S + methanethiol -> smelly gas",
+	  "glucosinolates":    "Cruciferous sulfur compounds -> H2S via bacterial metabolism -> very smelly gas",
+	  "allicin_compounds": "Organosulfur in alliums (garlic/onion) -> sulfide gases -> smelly gas",
+	  "tryptophan":        "Amino acid -> bacterial conversion to indole + skatole -> fecal odor",
+	  "high_protein":      "General high protein load -> putrefaction (cadaverine, putrescine, indole)",
+	  "fat_high":          "High fat -> triggers large bile acid release -> secretory effect in colon",
+	  "capsaicin":         "Chili compound -> TRPV1 activation -> accelerated motility + secretion",
+	  "caffeine":          "Stimulates colonic motility via adenosine receptors -> loose stool",
+	  "alcohol":           "Damages intestinal mucosa; stimulates secretion; accelerates motility",
+	  "tannins":           "Polyphenols in tea/wine/coffee - can cause constipation or irritation",
+	  "magnesium":         "Osmotically active ion; high intake -> osmotic diarrhea",
+	  "gluten":            "Gliadin protein -> immune/inflammatory reaction in sensitive individuals",
+	  "histamine":         "Biogenic amine in fermented/aged foods -> GI irritation + motility"
+	}
+  },
+  "foods": [
+
+	{ "id": "apple", "name": "Apple", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 2, "soluble_fiber": 2 } },
+
+	{ "id": "apricot", "name": "Apricot", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 2, "soluble_fiber": 1 } },
+
+	{ "id": "dried_fruit", "name": "Dried Fruit (generic)", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 2, "soluble_fiber": 2 } },
+
+	{ "id": "avocado", "name": "Avocado", "category": "fruit",
+	  "compounds": { "mannitol": 2, "fructose": 1, "soluble_fiber": 2, "insoluble_fiber": 1, "fat_high": 2 } },
+
+	{ "id": "banana", "name": "Banana (ripe)", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 1 } },
+
+	{ "id": "blackberry", "name": "Blackberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 1, "soluble_fiber": 2, "insoluble_fiber": 1, "tannins": 1 } },
+
+	{ "id": "blueberry", "name": "Blueberry", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 1, "soluble_fiber": 1, "tannins": 1 } },
+
+	{ "id": "breadfruit", "name": "Breadfruit", "category": "fruit",
+	  "compounds": { "resistant_starch": 2, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "carambola", "name": "Carambola (Star Fruit)", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 1 } },
+
+	{ "id": "cherry", "name": "Cherry", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 2, "soluble_fiber": 1 } },
+
+	{ "id": "cranberry", "name": "Cranberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 1, "tannins": 2, "soluble_fiber": 1 } },
+
+	{ "id": "currant", "name": "Currant (black/red)", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 1, "tannins": 1, "soluble_fiber": 1 } },
+
+	{ "id": "dates", "name": "Dates", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 2, "soluble_fiber": 2 } },
+
+	{ "id": "elderberry", "name": "Elderberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "tannins": 2, "soluble_fiber": 1 } },
+
+	{ "id": "figs", "name": "Figs", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 1, "soluble_fiber": 2, "insoluble_fiber": 1 } },
+
+	{ "id": "gooseberry", "name": "Gooseberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 1, "tannins": 1, "soluble_fiber": 1 } },
+
+	{ "id": "goji_berry", "name": "Goji Berry", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 2 } },
+
+	{ "id": "grapefruit", "name": "Grapefruit", "category": "fruit",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1, "tannins": 1 } },
+
+	{ "id": "grape", "name": "Grape", "category": "fruit",
+	  "compounds": { "fructose": 2, "tannins": 1 } },
+
+	{ "id": "guava", "name": "Guava", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 3, "insoluble_fiber": 2, "tannins": 1 } },
+
+	{ "id": "jackfruit", "name": "Jackfruit", "category": "fruit",
+	  "compounds": { "fructose": 2, "raffinose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "jujube", "name": "Jujube", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 1 } },
+
+	{ "id": "kiwi", "name": "Kiwi", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 1, "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "kumquat", "name": "Kumquat", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 2 } },
+
+	{ "id": "lemon", "name": "Lemon", "category": "fruit",
+	  "compounds": { "fructose": 0, "soluble_fiber": 1 } },
+
+	{ "id": "lime", "name": "Lime", "category": "fruit",
+	  "compounds": { "fructose": 0, "soluble_fiber": 1 } },
+
+	{ "id": "lychee", "name": "Lychee", "category": "fruit",
+	  "compounds": { "fructose": 3, "soluble_fiber": 1 } },
+
+	{ "id": "mango", "name": "Mango", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 1, "soluble_fiber": 1 } },
+
+	{ "id": "melon", "name": "Melon (cantaloupe/honeydew)", "category": "fruit",
+	  "compounds": { "fructose": 2, "mannitol": 1 } },
+
+	{ "id": "nectarine", "name": "Nectarine", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 2, "soluble_fiber": 1 } },
+
+	{ "id": "orange", "name": "Orange", "category": "fruit",
+	  "compounds": { "fructose": 1, "soluble_fiber": 2 } },
+
+	{ "id": "mandarin_orange", "name": "Mandarin Orange", "category": "fruit",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "papaya", "name": "Papaya", "category": "fruit",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "passion_fruit", "name": "Passion Fruit", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 3, "insoluble_fiber": 2 } },
+
+	{ "id": "peach", "name": "Peach", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 2, "soluble_fiber": 1 } },
+
+	{ "id": "pear", "name": "Pear", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 3, "soluble_fiber": 2 } },
+
+	{ "id": "pineapple", "name": "Pineapple", "category": "fruit",
+	  "compounds": { "fructose": 2, "soluble_fiber": 1 } },
+
+	{ "id": "plum", "name": "Plum", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 2, "soluble_fiber": 1 } },
+
+	{ "id": "pomegranate", "name": "Pomegranate", "category": "fruit",
+	  "compounds": { "fructose": 2, "tannins": 2, "soluble_fiber": 1 } },
+
+	{ "id": "prickly_pear", "name": "Prickly Pear", "category": "fruit",
+	  "compounds": { "fructose": 1, "soluble_fiber": 2 } },
+
+	{ "id": "prunes", "name": "Prunes / Dried Plums", "category": "fruit",
+	  "compounds": { "sorbitol": 3, "fructose": 2, "soluble_fiber": 3 } },
+
+	{ "id": "raisin", "name": "Raisin", "category": "fruit",
+	  "compounds": { "fructose": 3, "sorbitol": 2, "soluble_fiber": 2 } },
+
+	{ "id": "raspberry", "name": "Raspberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 1, "soluble_fiber": 2, "insoluble_fiber": 1, "tannins": 1 } },
+
+	{ "id": "strawberry", "name": "Strawberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "watermelon", "name": "Watermelon", "category": "fruit",
+	  "compounds": { "fructose": 3, "mannitol": 1 } },
+
+	{ "id": "coconut", "name": "Coconut (flesh)", "category": "fruit",
+	  "compounds": { "fat_high": 3, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "boysenberry", "name": "Boysenberry", "category": "fruit",
+	  "compounds": { "fructose": 1, "sorbitol": 1, "soluble_fiber": 2, "tannins": 1 } },
+
+	{ "id": "feijoa", "name": "Feijoa", "category": "fruit",
+	  "compounds": { "fructose": 2, "sorbitol": 1, "soluble_fiber": 1, "inulin_fos": 1 } },
+
+	{ "id": "artichoke", "name": "Artichoke", "category": "vegetable",
+	  "compounds": { "inulin_fos": 3, "fructose": 1, "soluble_fiber": 3 } },
+
+	{ "id": "asparagus", "name": "Asparagus", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "bitter_melon", "name": "Bitter Melon", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "bamboo_shoots", "name": "Bamboo Shoots", "category": "vegetable",
+	  "compounds": { "insoluble_fiber": 2, "soluble_fiber": 1 } },
+
+	{ "id": "green_beans", "name": "Green Beans", "category": "vegetable",
+	  "compounds": { "raffinose": 1, "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "beetroot", "name": "Beetroot (rødbet)", "category": "vegetable",
+	  "compounds": { "fructose": 2, "inulin_fos": 1, "soluble_fiber": 1 } },
+
+	{ "id": "broad_beans", "name": "Broad Beans / Fava (bondebønner)", "category": "legume",
+	  "compounds": { "raffinose": 2, "soluble_fiber": 2, "high_protein": 1, "tryptophan": 1 } },
+
+	{ "id": "broccoli", "name": "Broccoli", "category": "vegetable",
+	  "compounds": { "glucosinolates": 3, "raffinose": 2, "soluble_fiber": 2, "insoluble_fiber": 2, "sulfur_aa": 1 } },
+
+	{ "id": "brussels_sprouts", "name": "Brussels Sprouts (rosenkol)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 3, "raffinose": 3, "soluble_fiber": 2, "insoluble_fiber": 2, "sulfur_aa": 1 } },
+
+	{ "id": "cabbage", "name": "Cabbage (hodekål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 3, "raffinose": 3, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "red_cabbage", "name": "Red Cabbage (rødkål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 3, "raffinose": 2, "tannins": 1, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "carrot", "name": "Carrot (gulrot)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "soluble_fiber": 2, "insoluble_fiber": 1 } },
+
+	{ "id": "cassava", "name": "Cassava", "category": "vegetable",
+	  "compounds": { "resistant_starch": 3, "soluble_fiber": 1 } },
+
+	{ "id": "cauliflower", "name": "Cauliflower (blomkål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 3, "raffinose": 2, "mannitol": 2, "soluble_fiber": 1, "insoluble_fiber": 2, "sulfur_aa": 1 } },
+
+	{ "id": "chicory", "name": "Chicory (sikori)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 3, "fructose": 1, "soluble_fiber": 3, "tannins": 1 } },
+
+	{ "id": "corn", "name": "Corn / Maize (mais)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "resistant_starch": 1, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "cucumber", "name": "Cucumber (agurk)", "category": "vegetable",
+	  "compounds": { "fructose": 1 } },
+
+	{ "id": "eggplant", "name": "Eggplant / Aubergine (aubergine)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "garlic", "name": "Garlic (hvitløk)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 3, "allicin_compounds": 3, "fructose": 1 } },
+
+	{ "id": "ginger", "name": "Ginger (ingefær)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "okra", "name": "Okra", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 2, "insoluble_fiber": 2, "raffinose": 1 } },
+
+	{ "id": "onion", "name": "Onion (løk)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 3, "allicin_compounds": 2, "fructose": 2, "soluble_fiber": 1 } },
+
+	{ "id": "peas", "name": "Peas (erter)", "category": "vegetable",
+	  "compounds": { "raffinose": 2, "inulin_fos": 1, "soluble_fiber": 2, "high_protein": 1, "tryptophan": 1 } },
+
+	{ "id": "bell_pepper", "name": "Bell Pepper (paprika)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "pumpkin", "name": "Pumpkin (gresskar)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "radish", "name": "Radish (reddik)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1 } },
+
+	{ "id": "sweet_potato", "name": "Sweet Potato (søtpotet)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "resistant_starch": 1, "soluble_fiber": 2, "mannitol": 1 } },
+
+	{ "id": "taro", "name": "Taro", "category": "vegetable",
+	  "compounds": { "resistant_starch": 2, "soluble_fiber": 1 } },
+
+	{ "id": "tomato", "name": "Tomato (tomat)", "category": "vegetable",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1, "tannins": 1 } },
+
+	{ "id": "turnip", "name": "Turnip (nepe)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1, "fructose": 1 } },
+
+	{ "id": "potato", "name": "Potato / freshly cooked (potet, nykjøkt)", "category": "vegetable",
+	  "compounds": { "resistant_starch": 1, "soluble_fiber": 1 } },
+
+	{ "id": "zucchini", "name": "Zucchini (squash)", "category": "vegetable",
+	  "compounds": { "mannitol": 1, "soluble_fiber": 1 } },
+
+	{ "id": "fennel", "name": "Fennel (fennikel)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "chili_pepper", "name": "Chili Pepper (chilipepper)", "category": "vegetable",
+	  "compounds": { "capsaicin": 3 } },
+
+	{ "id": "yam", "name": "Yam", "category": "vegetable",
+	  "compounds": { "resistant_starch": 2, "soluble_fiber": 1 } },
+
+	{ "id": "spinach", "name": "Spinach (spinat)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "magnesium": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "garden_rhubarb", "name": "Garden Rhubarb (rabarbra)", "category": "vegetable",
+	  "compounds": { "tannins": 2, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "collard_greens", "name": "Collard Greens", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "insoluble_fiber": 2, "soluble_fiber": 1, "sulfur_aa": 1 } },
+
+	{ "id": "parsley", "name": "Parsley (persille)", "category": "herb",
+	  "compounds": { "inulin_fos": 1, "soluble_fiber": 1 } },
+
+	{ "id": "purslane", "name": "Purslane (portulakk)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "magnesium": 1 } },
+
+	{ "id": "dandelion_greens", "name": "Dandelion Greens (løvetann)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "soluble_fiber": 2, "tannins": 1 } },
+
+	{ "id": "thyme", "name": "Thyme (timian)", "category": "herb",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "dill", "name": "Dill (dill)", "category": "herb",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "celery", "name": "Celery (selleri)", "category": "vegetable",
+	  "compounds": { "mannitol": 2, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "chives", "name": "Chives (gressløk)", "category": "herb",
+	  "compounds": { "inulin_fos": 1, "allicin_compounds": 1 } },
+
+	{ "id": "coriander", "name": "Coriander / Cilantro (koriander)", "category": "herb",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "leek", "name": "Leek (purreløk)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "allicin_compounds": 1, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "lettuce", "name": "Lettuce (salat, generic)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "mustard_greens", "name": "Mustard Greens (sennepsblader)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "watercress", "name": "Watercress (brønnkarse)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1, "sulfur_aa": 1 } },
+
+	{ "id": "arugula", "name": "Arugula / Rocket (ruccola)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1 } },
+
+	{ "id": "quinoa", "name": "Quinoa", "category": "grain",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "almonds", "name": "Almonds (mandler)", "category": "nut",
+	  "compounds": { "fat_high": 2, "insoluble_fiber": 3, "soluble_fiber": 1, "high_protein": 1 } },
+
+	{ "id": "cashew", "name": "Cashew (cashewnøtter)", "category": "nut",
+	  "compounds": { "fat_high": 2, "fructose": 1, "raffinose": 1, "high_protein": 1 } },
+
+	{ "id": "hazelnut", "name": "Hazelnut (hasselnøtter)", "category": "nut",
+	  "compounds": { "fat_high": 2, "insoluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "pine_nuts", "name": "Pine Nuts (pinjekjerner)", "category": "nut",
+	  "compounds": { "fat_high": 2, "high_protein": 1 } },
+
+	{ "id": "mixed_nuts", "name": "Mixed Nuts (blandede nøtter)", "category": "nut",
+	  "compounds": { "fat_high": 2, "insoluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "peanut", "name": "Peanut (peanøtter/jordnøtter)", "category": "nut",
+	  "compounds": { "fat_high": 2, "high_protein": 2, "raffinose": 1, "tryptophan": 1, "soluble_fiber": 1 } },
+
+	{ "id": "pistachio", "name": "Pistachio (pistasjnøtter)", "category": "nut",
+	  "compounds": { "fat_high": 2, "inulin_fos": 2, "fructose": 1, "high_protein": 1 } },
+
+	{ "id": "chestnut", "name": "Chestnut (kastanje)", "category": "nut",
+	  "compounds": { "resistant_starch": 1, "soluble_fiber": 2, "fructose": 1 } },
+
+	{ "id": "walnut", "name": "Walnut (valnøtter)", "category": "nut",
+	  "compounds": { "fat_high": 2, "insoluble_fiber": 2, "tannins": 1, "high_protein": 1, "sulfur_aa": 1 } },
+
+	{ "id": "almond_butter", "name": "Almond Butter (mandelsmør)", "category": "nut",
+	  "compounds": { "fat_high": 2, "insoluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "pecan", "name": "Pecan (pekannøtter)", "category": "nut",
+	  "compounds": { "fat_high": 3, "insoluble_fiber": 2, "tannins": 1 } },
+
+	{ "id": "macadamia", "name": "Macadamia (macadamianøtter)", "category": "nut",
+	  "compounds": { "fat_high": 3, "soluble_fiber": 1 } },
+
+	{ "id": "ginkgo_nuts", "name": "Ginkgo Nuts (ginkgonøtter)", "category": "nut",
+	  "compounds": { "resistant_starch": 1, "soluble_fiber": 1 } },
+
+	{ "id": "pili_nuts", "name": "Pili Nuts", "category": "nut",
+	  "compounds": { "fat_high": 3, "high_protein": 1 } },
+
+	{ "id": "watermelon_seeds", "name": "Watermelon Seeds", "category": "seed",
+	  "compounds": { "high_protein": 2, "fat_high": 1, "magnesium": 1 } },
+
+	{ "id": "oatmeal", "name": "Oatmeal / Porridge (havregrot)", "category": "grain",
+	  "compounds": { "soluble_fiber": 3, "gluten": 1 } },
+
+	{ "id": "oats", "name": "Oats / Rolled Oats (havregryn)", "category": "grain",
+	  "compounds": { "soluble_fiber": 3, "gluten": 1 } },
+
+	{ "id": "rice", "name": "White Rice / cooked (hvit ris, kokt)", "category": "grain",
+	  "compounds": { "resistant_starch": 0 } },
+
+	{ "id": "brown_rice", "name": "Brown Rice / cooked (brun ris, kokt)", "category": "grain",
+	  "compounds": { "resistant_starch": 1, "insoluble_fiber": 2, "soluble_fiber": 1 } },
+
+	{ "id": "pasta", "name": "Pasta (cooked / kokt pasta)", "category": "grain",
+	  "compounds": { "gluten": 3, "resistant_starch": 1 } },
+
+	{ "id": "spaghetti", "name": "Spaghetti (cooked / kokt)", "category": "grain",
+	  "compounds": { "gluten": 3, "resistant_starch": 1 } },
+
+	{ "id": "flour", "name": "Wheat Flour (hvetemel)", "category": "grain",
+	  "compounds": { "gluten": 3 } },
+
+	{ "id": "sesame_seeds", "name": "Sesame Seeds (sesamfrø)", "category": "seed",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2, "sulfur_aa": 1, "high_protein": 1 } },
+
+	{ "id": "buckwheat", "name": "Buckwheat (bokhvete)", "category": "grain",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "amaranth_grain", "name": "Amaranth (grain / amarantfrø)", "category": "grain",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "couscous", "name": "Couscous", "category": "grain",
+	  "compounds": { "gluten": 3 } },
+
+	{ "id": "cornmeal", "name": "Cornmeal (maismel/polenta)", "category": "grain",
+	  "compounds": { "insoluble_fiber": 2 } },
+
+	{ "id": "millet", "name": "Millet (hirse)", "category": "grain",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "rye", "name": "Rye (rug)", "category": "grain",
+	  "compounds": { "gluten": 2, "inulin_fos": 2, "soluble_fiber": 2, "resistant_starch": 1 } },
+
+	{ "id": "chickpeas", "name": "Chickpeas (kikerter, kokt)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "inulin_fos": 1, "tryptophan": 2, "high_protein": 2 } },
+
+	{ "id": "lentil", "name": "Lentil (linser, kokt)", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 2, "soluble_fiber": 2, "tryptophan": 2, "high_protein": 2, "sulfur_aa": 1 } },
+
+	{ "id": "kidney_beans", "name": "Kidney Beans (kidneybønner, kokt)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 3, "soluble_fiber": 2, "tryptophan": 2, "high_protein": 2, "sulfur_aa": 1 } },
+
+	{ "id": "soybean", "name": "Soybean / Soja (soyabønner)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 1, "soluble_fiber": 2, "tryptophan": 3, "high_protein": 3, "sulfur_aa": 2 } },
+
+	{ "id": "tofu", "name": "Tofu (toffu/soyaost)", "category": "legume",
+	  "compounds": { "raffinose": 1, "high_protein": 2, "tryptophan": 2, "sulfur_aa": 1 } },
+
+	{ "id": "hummus", "name": "Hummus", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 1, "soluble_fiber": 1, "fat_high": 1, "high_protein": 1, "allicin_compounds": 1 } },
+
+	{ "id": "white_beans", "name": "White Beans (hvite bønner, kokt)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2, "tryptophan": 1 } },
+
+	{ "id": "black_gram", "name": "Black Gram / Urad (svart gram)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2, "tryptophan": 1 } },
+
+	{ "id": "sunflower_seeds", "name": "Sunflower Seeds (solsikkefrø)", "category": "seed",
+	  "compounds": { "fat_high": 2, "high_protein": 2, "sulfur_aa": 1, "magnesium": 1 } },
+
+	{ "id": "pumpkin_seeds", "name": "Pumpkin Seeds (gresskarkjerner)", "category": "seed",
+	  "compounds": { "fat_high": 2, "high_protein": 2, "magnesium": 2, "tryptophan": 2, "sulfur_aa": 1 } },
+
+	{ "id": "flax_seeds", "name": "Flax Seeds (linfrø)", "category": "seed",
+	  "compounds": { "soluble_fiber": 3, "insoluble_fiber": 2, "fat_high": 1 } },
+
+	{ "id": "milk", "name": "Cow's Milk (kumelk)", "category": "dairy",
+	  "compounds": { "lactose": 3, "fat_high": 1, "high_protein": 1 } },
+
+	{ "id": "yogurt", "name": "Yogurt / plain (yoghurt, naturell)", "category": "dairy",
+	  "compounds": { "lactose": 1, "fat_high": 1, "high_protein": 1, "histamine": 1 } },
+
+	{ "id": "greek_yogurt", "name": "Greek Yogurt (gresk yoghurt)", "category": "dairy",
+	  "compounds": { "lactose": 1, "high_protein": 2, "fat_high": 1 } },
+
+	{ "id": "cheese", "name": "Cheese (generic / ost, generell)", "category": "dairy",
+	  "compounds": { "lactose": 1, "fat_high": 2, "high_protein": 2, "sulfur_aa": 2, "histamine": 2, "tryptophan": 2 } },
+
+	{ "id": "cottage_cheese", "name": "Cottage Cheese (kesam)", "category": "dairy",
+	  "compounds": { "lactose": 2, "high_protein": 2, "fat_high": 1 } },
+
+	{ "id": "cream_cheese", "name": "Cream Cheese (fløteost / Philadelphia-type)", "category": "dairy",
+	  "compounds": { "lactose": 2, "fat_high": 3 } },
+
+	{ "id": "butter", "name": "Butter (smør)", "category": "dairy",
+	  "compounds": { "fat_high": 3, "lactose": 0 } },
+
+	{ "id": "egg", "name": "Egg / whole (egg, helt)", "category": "protein",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 3, "tryptophan": 2, "fat_high": 1 } },
+
+	{ "id": "chocolate_milk", "name": "Chocolate Milk (sjokolademelk)", "category": "dairy",
+	  "compounds": { "lactose": 3, "fructose": 1, "fat_high": 1 } },
+
+	{ "id": "mozzarella", "name": "Mozzarella", "category": "dairy",
+	  "compounds": { "lactose": 1, "fat_high": 2, "high_protein": 2 } },
+
+	{ "id": "feta", "name": "Feta", "category": "dairy",
+	  "compounds": { "lactose": 1, "fat_high": 2, "high_protein": 2, "histamine": 2, "sulfur_aa": 1 } },
+
+	{ "id": "brie", "name": "Brie", "category": "dairy",
+	  "compounds": { "lactose": 0, "fat_high": 3, "high_protein": 2, "histamine": 2 } },
+
+	{ "id": "goat_cheese", "name": "Goat Cheese (geitost / chevre)", "category": "dairy",
+	  "compounds": { "lactose": 1, "fat_high": 2, "high_protein": 2, "histamine": 1 } },
+
+	{ "id": "ricotta", "name": "Ricotta", "category": "dairy",
+	  "compounds": { "lactose": 2, "fat_high": 2, "high_protein": 2 } },
+
+	{ "id": "sour_cream", "name": "Sour Cream (romme)", "category": "dairy",
+	  "compounds": { "lactose": 2, "fat_high": 3 } },
+
+	{ "id": "coconut_milk", "name": "Coconut Milk (kokosmelk)", "category": "dairy_alternative",
+	  "compounds": { "fat_high": 3, "soluble_fiber": 1 } },
+
+	{ "id": "kefir", "name": "Kefir", "category": "dairy",
+	  "compounds": { "lactose": 1, "histamine": 2, "high_protein": 1 } },
+
+	{ "id": "whipped_cream", "name": "Whipped Cream (pisket krem / fløte)", "category": "dairy",
+	  "compounds": { "fat_high": 3, "lactose": 1 } },
+
+	{ "id": "chicken_breast", "name": "Chicken Breast (kyllingbryst)", "category": "meat",
+	  "compounds": { "high_protein": 3, "tryptophan": 2, "sulfur_aa": 1 } },
+
+	{ "id": "chicken_thigh", "name": "Chicken Thigh (kyllinglår)", "category": "meat",
+	  "compounds": { "high_protein": 2, "tryptophan": 2, "sulfur_aa": 1, "fat_high": 1 } },
+
+	{ "id": "whole_chicken", "name": "Whole Chicken (hel kylling)", "category": "meat",
+	  "compounds": { "high_protein": 2, "tryptophan": 2, "sulfur_aa": 1, "fat_high": 2 } },
+
+	{ "id": "turkey", "name": "Turkey (kalkun)", "category": "meat",
+	  "compounds": { "high_protein": 3, "tryptophan": 3, "sulfur_aa": 1 } },
+
+	{ "id": "duck", "name": "Duck (and)", "category": "meat",
+	  "compounds": { "high_protein": 2, "tryptophan": 2, "sulfur_aa": 1, "fat_high": 3 } },
+
+	{ "id": "pork_tenderloin", "name": "Pork Tenderloin (svinefilet)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 1 } },
+
+	{ "id": "pork_shoulder", "name": "Pork Shoulder (svineskulder/nakke)", "category": "meat",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 3 } },
+
+	{ "id": "pork_chop", "name": "Pork Chop (svinekotelett)", "category": "meat",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 2 } },
+
+	{ "id": "bacon", "name": "Bacon", "category": "meat",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 3, "histamine": 2 } },
+
+	{ "id": "ground_beef", "name": "Ground Beef (kjottdeig)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 3, "tryptophan": 3, "fat_high": 2 } },
+
+	{ "id": "beef_steak", "name": "Beef Steak (biff)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 3, "tryptophan": 3, "fat_high": 2 } },
+
+	{ "id": "veal", "name": "Veal (kalvekjott)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 1 } },
+
+	{ "id": "lamb", "name": "Lamb (lam)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 3, "tryptophan": 2, "fat_high": 2 } },
+
+	{ "id": "reindeer", "name": "Reindeer (reinsdyr)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 1 } },
+
+	{ "id": "elk_moose", "name": "Elk / Moose (elg)", "category": "meat",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 1 } },
+
+	{ "id": "sausage", "name": "Sausage (polse)", "category": "meat",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 3, "histamine": 2, "gluten": 1 } },
+
+	{ "id": "meatballs", "name": "Meatballs (kjottboller/kjottkaker)", "category": "meat",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 2, "gluten": 1 } },
+
+	{ "id": "salmon", "name": "Salmon (laks)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 2, "histamine": 1 } },
+
+	{ "id": "cod", "name": "Cod (torsk)", "category": "fish",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 1, "tryptophan": 2 } },
+
+	{ "id": "mackerel", "name": "Mackerel (makrell)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 2, "histamine": 2 } },
+
+	{ "id": "herring", "name": "Herring (sild)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 2, "histamine": 3 } },
+
+	{ "id": "trout", "name": "Trout (orret)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 1 } },
+
+	{ "id": "tuna", "name": "Tuna (tunfisk)", "category": "fish",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 2, "tryptophan": 2, "histamine": 2 } },
+
+	{ "id": "shrimp", "name": "Shrimp / Prawns (reker)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 1 } },
+
+	{ "id": "lobster", "name": "Lobster (hummer)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 1 } },
+
+	{ "id": "crab", "name": "Crab (krabbe)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 1 } },
+
+	{ "id": "scampi", "name": "Scampi (sjøkreps/scampi)", "category": "fish",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 1 } },
+
+	{ "id": "tilapia", "name": "Tilapia", "category": "fish",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 1, "tryptophan": 2 } },
+
+	{ "id": "white_bread", "name": "White Bread (loff)", "category": "bread",
+	  "compounds": { "gluten": 3, "fructose": 0 } },
+
+	{ "id": "whole_grain_bread", "name": "Whole Grain Bread (grovbrod)", "category": "bread",
+	  "compounds": { "gluten": 3, "insoluble_fiber": 3, "resistant_starch": 1, "soluble_fiber": 1 } },
+
+	{ "id": "sourdough_bread", "name": "Sourdough Bread (surdeigsbrød)", "category": "bread",
+	  "compounds": { "gluten": 2, "resistant_starch": 1 } },
+
+	{ "id": "crispbread", "name": "Crispbread (Knekkebrød)", "category": "bread",
+	  "compounds": { "gluten": 2, "insoluble_fiber": 3, "soluble_fiber": 1, "resistant_starch": 1 } },
+
+	{ "id": "bread_roll", "name": "Bread Roll (rundstykke)", "category": "bread",
+	  "compounds": { "gluten": 3 } },
+
+	{ "id": "kale", "name": "Kale (grønnkål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 3, "insoluble_fiber": 3, "soluble_fiber": 1, "sulfur_aa": 1 } },
+
+	{ "id": "pak_choi", "name": "Pak Choi", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "rutabaga", "name": "Rutabaga / Swede (kalrot)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "fructose": 1, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "savoy_cabbage", "name": "Savoy Cabbage (savoykål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "raffinose": 2, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "iceberg_lettuce", "name": "Iceberg Lettuce (isbergsalat)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 0 } },
+
+	{ "id": "chia_seeds", "name": "Chia Seeds (chiafrø)", "category": "seed",
+	  "compounds": { "soluble_fiber": 3, "insoluble_fiber": 2, "fat_high": 1, "magnesium": 1 } },
+
+	{ "id": "chinese_cabbage", "name": "Chinese Cabbage (kinakål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "celeriac", "name": "Celeriac (sellerirot)", "category": "vegetable",
+	  "compounds": { "mannitol": 2, "inulin_fos": 1, "soluble_fiber": 1 } },
+
+	{ "id": "yardlong_beans", "name": "Yardlong Beans", "category": "vegetable",
+	  "compounds": { "raffinose": 1, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "edamame", "name": "Edamame", "category": "legume",
+	  "compounds": { "raffinose": 2, "high_protein": 2, "tryptophan": 2, "sulfur_aa": 1, "soluble_fiber": 1 } },
+
+	{ "id": "endive", "name": "Endive (sikori/endiv)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "fructose": 1, "soluble_fiber": 1, "tannins": 1 } },
+
+	{ "id": "jerusalem_artichoke", "name": "Jerusalem Artichoke (jordskokk)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 3, "fructose": 2, "soluble_fiber": 3 } },
+
+	{ "id": "kohlrabi", "name": "Kohlrabi (kalrabi)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "lotus_root", "name": "Lotus Root", "category": "vegetable",
+	  "compounds": { "resistant_starch": 1, "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "parsnip", "name": "Parsnip (pastinakk)", "category": "vegetable",
+	  "compounds": { "fructose": 2, "inulin_fos": 1, "soluble_fiber": 2, "insoluble_fiber": 1 } },
+
+	{ "id": "sauerkraut", "name": "Sauerkraut (surkål)", "category": "fermented",
+	  "compounds": { "histamine": 3, "glucosinolates": 2, "raffinose": 1 } },
+
+	{ "id": "seaweed", "name": "Seaweed / generic (tang og tare)", "category": "vegetable",
+	  "compounds": { "mannitol": 2, "soluble_fiber": 2 } },
+
+	{ "id": "turnip_greens", "name": "Turnip Greens (nepeblader)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "insoluble_fiber": 2, "soluble_fiber": 1 } },
+
+	{ "id": "water_chestnuts", "name": "Water Chestnuts", "category": "vegetable",
+	  "compounds": { "resistant_starch": 1, "soluble_fiber": 1 } },
+
+	{ "id": "winter_melon", "name": "Winter Melon", "category": "vegetable",
+	  "compounds": { "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "wax_gourd", "name": "Wax Gourd", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "summer_squash", "name": "Summer Squash", "category": "vegetable",
+	  "compounds": { "mannitol": 1, "fructose": 1, "soluble_fiber": 1 } },
+
+	{ "id": "wakame", "name": "Wakame (seaweed)", "category": "vegetable",
+	  "compounds": { "mannitol": 2, "soluble_fiber": 2, "histamine": 1 } },
+
+	{ "id": "shallot", "name": "Shallot (sjalottlok)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 3, "allicin_compounds": 2, "fructose": 2 } },
+
+	{ "id": "arrowroot", "name": "Arrowroot", "category": "vegetable",
+	  "compounds": { "resistant_starch": 2, "soluble_fiber": 1 } },
+
+	{ "id": "pickled_cucumber", "name": "Pickled Cucumber (sylteagurk)", "category": "fermented",
+	  "compounds": { "histamine": 1, "fructose": 0 } },
+
+	{ "id": "sun_dried_tomato", "name": "Sun-Dried Tomato (soltorket tomat)", "category": "vegetable",
+	  "compounds": { "fructose": 2, "tannins": 1, "histamine": 2 } },
+
+	{ "id": "napa_cabbage", "name": "Napa Cabbage (napakål)", "category": "vegetable",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1 } },
+
+	{ "id": "yautia", "name": "Yautia / Malanga", "category": "vegetable",
+	  "compounds": { "resistant_starch": 2, "soluble_fiber": 1 } },
+
+	{ "id": "amaranth_leaves", "name": "Amaranth Leaves", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "magnesium": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "chrysanthemum_greens", "name": "Chrysanthemum Greens", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "garden_cress", "name": "Garden Cress (karse)", "category": "herb",
+	  "compounds": { "glucosinolates": 2, "soluble_fiber": 1 } },
+
+	{ "id": "moringa", "name": "Drumstick Leaves / Moringa", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 2, "insoluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "lambsquarters", "name": "Lambsquarters (meldestokk)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 1, "magnesium": 1 } },
+
+	{ "id": "scallion", "name": "Scallion / Spring Onion (varlok)", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "allicin_compounds": 1, "fructose": 1 } },
+
+	{ "id": "welsh_onion", "name": "Welsh Onion", "category": "vegetable",
+	  "compounds": { "inulin_fos": 2, "allicin_compounds": 1, "fructose": 1 } },
+
+	{ "id": "pumpkin_leaves", "name": "Pumpkin Leaves (gresskarbladblader)", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "sweet_potato_leaves", "name": "Sweet Potato Leaves", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "taro_leaves", "name": "Taro Leaves", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 2 } },
+
+	{ "id": "vine_spinach", "name": "Vine Spinach / Basella", "category": "vegetable",
+	  "compounds": { "soluble_fiber": 1, "insoluble_fiber": 1, "magnesium": 1 } },
+
+	{ "id": "lemongrass", "name": "Lemongrass (sitrongress)", "category": "herb",
+	  "compounds": { "soluble_fiber": 1 } },
+
+	{ "id": "grape_leaves", "name": "Grape Leaves (vinblader)", "category": "vegetable",
+	  "compounds": { "tannins": 2, "insoluble_fiber": 2, "soluble_fiber": 1 } },
+
+	{ "id": "spelt", "name": "Spelt (spelt/dinkel)", "category": "grain",
+	  "compounds": { "gluten": 3, "soluble_fiber": 1, "fructose": 1 } },
+
+	{ "id": "barley", "name": "Barley (bygg)", "category": "grain",
+	  "compounds": { "gluten": 2, "inulin_fos": 2, "soluble_fiber": 3, "resistant_starch": 1 } },
+
+	{ "id": "bulgur", "name": "Bulgur", "category": "grain",
+	  "compounds": { "gluten": 3, "soluble_fiber": 2, "resistant_starch": 1 } },
+
+	{ "id": "lotus_seeds", "name": "Lotus Seeds", "category": "seed",
+	  "compounds": { "resistant_starch": 1, "soluble_fiber": 1 } },
+
+	{ "id": "adzuki_bean", "name": "Adzuki Bean", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "baked_beans", "name": "Baked Beans (hermetiske bønner i tomatisaus)", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 1, "soluble_fiber": 2, "fructose": 1 } },
+
+	{ "id": "black_turtle_bean", "name": "Black Turtle Bean (svarte bønner)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 3, "soluble_fiber": 2, "high_protein": 2, "tryptophan": 1 } },
+
+	{ "id": "french_beans", "name": "French Beans (haricots verts)", "category": "legume",
+	  "compounds": { "raffinose": 1, "soluble_fiber": 1, "insoluble_fiber": 1 } },
+
+	{ "id": "great_northern_beans", "name": "Great Northern Beans", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "navy_beans", "name": "Navy Beans (hagebønner)", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 3, "high_protein": 2 } },
+
+	{ "id": "pinto_beans", "name": "Pinto Beans", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "fava_beans", "name": "Fava Beans (bondebønner)", "category": "legume",
+	  "compounds": { "raffinose": 2, "soluble_fiber": 2, "high_protein": 2, "tryptophan": 1 } },
+
+	{ "id": "cowpea", "name": "Cowpea / Black-eyed Pea", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "lablab", "name": "Lablab / Hyacinth Bean", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 1 } },
+
+	{ "id": "lima_beans", "name": "Lima Beans", "category": "legume",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "lupin_bean", "name": "Lupin Bean (lupin)", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 1, "soluble_fiber": 3, "high_protein": 3 } },
+
+	{ "id": "mung_beans", "name": "Mung Beans (mungbønner)", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "pigeon_pea", "name": "Pigeon Pea", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2 } },
+
+	{ "id": "refried_beans", "name": "Refried Beans", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 1, "soluble_fiber": 2, "fat_high": 1, "high_protein": 1 } },
+
+	{ "id": "tempeh", "name": "Tempeh", "category": "legume",
+	  "compounds": { "high_protein": 3, "tryptophan": 2, "sulfur_aa": 2, "histamine": 2, "raffinose": 1 } },
+
+	{ "id": "winged_beans", "name": "Winged Beans", "category": "legume",
+	  "compounds": { "raffinose": 2, "soluble_fiber": 2, "high_protein": 3, "sulfur_aa": 1 } },
+
+	{ "id": "falafel", "name": "Falafel", "category": "legume",
+	  "compounds": { "raffinose": 2, "resistant_starch": 1, "soluble_fiber": 1, "fat_high": 2, "allicin_compounds": 1, "high_protein": 1 } },
+
+	{ "id": "arborio_rice", "name": "Arborio Rice (risottoris)", "category": "grain",
+	  "compounds": { "resistant_starch": 0 } },
+
+	{ "id": "glutinous_rice", "name": "Glutinous Rice (klebrig ris)", "category": "grain",
+	  "compounds": { "resistant_starch": 1 } },
+
+	{ "id": "soba_noodles", "name": "Soba Noodles", "category": "grain",
+	  "compounds": { "gluten": 2, "resistant_starch": 1 } },
+
+	{ "id": "semolina", "name": "Semolina (semule/durumgryn)", "category": "grain",
+	  "compounds": { "gluten": 3 } },
+
+	{ "id": "kamut", "name": "Khorasan Wheat / Kamut", "category": "grain",
+	  "compounds": { "gluten": 3, "soluble_fiber": 1 } },
+
+	{ "id": "blue_cheese", "name": "Blue Cheese (blåmuggost – Norvegia Bla, Roquefort)", "category": "dairy",
+	  "compounds": { "lactose": 0, "fat_high": 3, "high_protein": 2, "histamine": 3, "sulfur_aa": 2, "tryptophan": 2 } },
+
+	{ "id": "camembert", "name": "Camembert", "category": "dairy",
+	  "compounds": { "lactose": 0, "fat_high": 3, "high_protein": 2, "histamine": 2 } },
+
+	{ "id": "edam", "name": "Edam (edamerost)", "category": "dairy",
+	  "compounds": { "lactose": 0, "fat_high": 2, "high_protein": 2, "histamine": 1, "sulfur_aa": 1 } },
+
+	{ "id": "brunost", "name": "Brunost / Brown Cheese (geitost/myseost)", "category": "dairy",
+	  "compounds": { "lactose": 3, "fat_high": 2, "fructose": 1 } },
+
+	{ "id": "gouda", "name": "Gouda (goudaost)", "category": "dairy",
+	  "compounds": { "lactose": 0, "fat_high": 2, "high_protein": 2, "histamine": 2, "sulfur_aa": 1 } },
+
+	{ "id": "gruyere", "name": "Gruyere", "category": "dairy",
+	  "compounds": { "lactose": 0, "fat_high": 2, "high_protein": 3, "histamine": 2, "sulfur_aa": 2, "tryptophan": 2 } },
+
+	{ "id": "buttermilk", "name": "Buttermilk (kjernemelk)", "category": "dairy",
+	  "compounds": { "lactose": 2, "high_protein": 1 } },
+
+	{ "id": "condensed_milk", "name": "Condensed Milk (kondensert melk)", "category": "dairy",
+	  "compounds": { "lactose": 3, "fat_high": 1 } },
+
+	{ "id": "goat_milk", "name": "Goat Milk (geitemelk)", "category": "dairy",
+	  "compounds": { "lactose": 3, "fat_high": 1, "high_protein": 1 } },
+
+	{ "id": "egg_white", "name": "Egg White (eggehvite)", "category": "protein",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 1 } },
+
+	{ "id": "egg_yolk", "name": "Egg Yolk (eggeplomme)", "category": "protein",
+	  "compounds": { "fat_high": 2, "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2 } },
+
+	{ "id": "rice_drink", "name": "Risdrikk (unsweetened)", "category": "plant_milk",
+	  "compounds": { "fructose": 1 } },
+
+	{ "id": "soy_drink", "name": "Sojadrikk usøtet (Alpro)", "category": "plant_milk",
+	  "compounds": { "raffinose": 1, "high_protein": 1 } },
+
+	{ "id": "almond_drink", "name": "Mandeldrikk usøtet (Alpro)", "category": "plant_milk",
+	  "compounds": { "fat_high": 1 } },
+
+	{
+	  "id": "fjordland_fiskesuppe",
+	  "name": "Fiskesuppe med crème fraîche (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: torsk/laks, crème fraîche, gulrot, potet, purreløk, fløte",
+	  "compounds": { "high_protein": 2, "fat_high": 2, "lactose": 1, "sulfur_aa": 1, "tryptophan": 1, "fructose": 1, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "fjordland_kjottsuppe",
+	  "name": "Kjøttsuppe med rotgrønnsaker og poteter (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: storfekjøtt, gulrot, pastinakk, nepe, potet, løk",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fructose": 1, "inulin_fos": 1, "resistant_starch": 1, "insoluble_fiber": 1 }
+	},
+
+	{
+	  "id": "fjordland_proteinbowl_taco",
+	  "name": "Proteinbowl Taco med kjøttdeig og ris (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kjøttdeig, ris, tomat, løk, chili, hvitløk, cumin",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 3, "tryptophan": 3, "fat_high": 2, "capsaicin": 1, "allicin_compounds": 1, "fructose": 1 }
+	},
+
+	{
+	  "id": "fjordland_betasuppe",
+	  "name": "Brimis Fyldig Betasuppe med bygg (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: bygg, gulrot, pastinakk, fløte, løk",
+	  "compounds": { "gluten": 2, "inulin_fos": 2, "soluble_fiber": 2, "fat_high": 2, "lactose": 1, "fructose": 1 }
+	},
+
+	{
+	  "id": "fjordland_laks_pasta",
+	  "name": "Laks og Pasta i frisk urtesaus (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: laks, pasta (hvete), fløte-urtesaus",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 2, "gluten": 3 }
+	},
+
+	{
+	  "id": "fjordland_proteinbowl_kylling",
+	  "name": "Proteinbowl Kylling og pasta med grønnsaker (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kyllingbryst, pasta (hvete), blandede grønnsaker, lett saus",
+	  "compounds": { "high_protein": 3, "tryptophan": 2, "sulfur_aa": 1, "gluten": 3, "insoluble_fiber": 1, "fructose": 1 }
+	},
+
+	{
+	  "id": "fjordland_skogsgryte",
+	  "name": "Brimis Skogsgryte med bacon og fløtesaus (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: bacon, skogsopp, fløtesaus, løk",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 3, "histamine": 2, "lactose": 1, "mannitol": 2 }
+	},
+
+	{
+	  "id": "fjordland_masala_chickpeas",
+	  "name": "MasalaMagic Butter Chickpeas (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kikerter, smør/ghee, tomat, fløte, løk, hvitløk, garam masala",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2, "fat_high": 2, "capsaicin": 1, "inulin_fos": 1, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "fjordland_masala_chicken",
+	  "name": "MasalaMagic Butter Chicken med basmatiris (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kylling, basmatiris, smørsaus, fløte, tomat, løk, hvitløk, garam masala",
+	  "compounds": { "high_protein": 3, "tryptophan": 2, "sulfur_aa": 1, "fat_high": 2, "lactose": 1, "capsaicin": 1, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "fjordland_pasta_kjottsaus",
+	  "name": "Pasta med kjøttsaus, tomat og løk (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: pasta (hvete), kjøttdeig, tomatsaus, løk, hvitløk",
+	  "compounds": { "gluten": 3, "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 1, "fructose": 2, "inulin_fos": 2, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "fjordland_pasta_ost_skinke",
+	  "name": "Pasta med ost- og skinkesaus (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: pasta (hvete), skinke, fløteostsaus, modnet ost",
+	  "compounds": { "gluten": 3, "fat_high": 2, "high_protein": 2, "sulfur_aa": 2, "histamine": 2, "lactose": 1 }
+	},
+
+	{
+	  "id": "fjordland_polsegrateng",
+	  "name": "Pølsegrateng med makaroni og ostesaus (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: pølse, makaroni (hvete), ostesaus (melk, mel, ost)",
+	  "compounds": { "gluten": 3, "fat_high": 3, "high_protein": 2, "sulfur_aa": 2, "histamine": 2, "lactose": 2 }
+	},
+
+	{
+	  "id": "findus_fiskegrateng",
+	  "name": "Familiens Fiskegrateng med makaroni (Findus)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvit fisk (torsk/sei), makaroni (hvete), bechamelsaus (melk, smør, mel)",
+	  "compounds": { "gluten": 3, "fat_high": 2, "lactose": 2, "high_protein": 2, "sulfur_aa": 1, "tryptophan": 1 }
+	},
+
+	{
+	  "id": "meremat_marokkansk_kylling",
+	  "name": "Marokkansk Kyllingsuppe (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kylling, kikerter, løk, hvitløk, gulrot, tomat, marokkanske krydder",
+	  "compounds": { "high_protein": 2, "tryptophan": 2, "raffinose": 1, "inulin_fos": 2, "allicin_compounds": 1, "fructose": 1 }
+	},
+
+	{
+	  "id": "meremat_kylling_curry",
+	  "name": "Suppe med kylling, curry og grønnsaker (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kylling, blandede grønnsaker, kokosmelk eller fløte, løk, hvitløk, currykrydder",
+	  "compounds": { "high_protein": 2, "tryptophan": 2, "capsaicin": 1, "fat_high": 1, "fructose": 1, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "meremat_gulrot_chili",
+	  "name": "Suppe med gulrøtter, chili og ingefær (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: gulrot, chili, ingefær, kokosmelk eller fløte",
+	  "compounds": { "capsaicin": 3, "fructose": 1, "soluble_fiber": 2, "fat_high": 1 }
+	},
+
+	{
+	  "id": "meremat_blomkal_nepe",
+	  "name": "Suppe med blomkål, nepe og persillerot (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: blomkål, nepe, persillerot, fløte eller buljong",
+	  "compounds": { "glucosinolates": 3, "raffinose": 2, "mannitol": 2, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "meremat_red_curry_linser",
+	  "name": "Red Curry Suppe med linser og bønner (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: røde linser, blandede bønner, kokosmelk, rød curry-pasta (chili, hvitløk, sitrongress)",
+	  "compounds": { "raffinose": 3, "resistant_starch": 2, "soluble_fiber": 2, "high_protein": 2, "capsaicin": 2, "fat_high": 1, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "meremat_tomat_squash",
+	  "name": "Suppe med tomat, squash og basilikum (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: tomat, squash, basilikum, løk, hvitløk, olivenolje",
+	  "compounds": { "fructose": 1, "mannitol": 1, "tannins": 1, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "meremat_koreansk_ramen",
+	  "name": "Koreansk Ramen suppe med svinenakke (Mere Mat)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: svinenakke, hveteramen-nudler, gochujang (chilipasta), soyasaus, hvitløk, løk",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 3, "gluten": 3, "capsaicin": 2, "histamine": 2, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "fjordland_risgrot",
+	  "name": "Risgrøt (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvit ris, kumelk, smør, salt",
+	  "compounds": { "lactose": 2, "fat_high": 1 }
+	},
+
+	{
+	  "id": "fjordland_kjottkaker",
+	  "name": "Kjøttkaker med ertestuing og poteter (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kjøttboller (storfe/svin + brødsmuler), ertestuing, kokte poteter, saus",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 2, "gluten": 1, "raffinose": 2, "soluble_fiber": 2, "tryptophan": 1, "resistant_starch": 1 }
+	},
+
+	{
+	  "id": "fjordland_svenska_kjottboller",
+	  "name": "Svenska kjøttboller i fløtesaus med potetstappe (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kjøttboller (storfe/svin + brødsmuler), fløtesaus, potetmos (melk, smør)",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 3, "gluten": 1, "lactose": 1 }
+	},
+
+	{
+	  "id": "fettuccine_funghi",
+	  "name": "Fettuccine Funghi med kremet soppsaus",
+	  "category": "ready_meal",
+	  "note": "Ingredients: fettuccine (hvete), skogsopp, fløte, hvitløk, parmesan",
+	  "compounds": { "gluten": 3, "mannitol": 2, "fat_high": 3, "lactose": 1, "histamine": 1, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "fjordland_pulled_pork",
+	  "name": "Pulled Pork BBQ med coleslaw og potetstappe (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: svineskulder (pulled), BBQ-saus (fruktosebasert), coleslaw (kål, gulrot, majones), potetmos",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "fat_high": 2, "tryptophan": 2, "glucosinolates": 2, "raffinose": 1, "fructose": 1 }
+	},
+
+	{
+	  "id": "fjordland_torsk_purrelok",
+	  "name": "Torsk med purreløksaus, gulrøtter og poteter (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: torsk, purreløk, fløtesaus, gulrot, kokte poteter",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 1, "tryptophan": 2, "inulin_fos": 2, "allicin_compounds": 1, "fructose": 1, "fat_high": 1, "lactose": 1 }
+	},
+
+	{
+	  "id": "fjordland_lammefrikasse",
+	  "name": "Lammefrikasse med poteter (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: lam, fløtesaus, gulrot, purreløk, kokte poteter",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 3, "tryptophan": 2, "fat_high": 2, "lactose": 1, "resistant_starch": 1, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "fjordland_laksefilet_urtesaus",
+	  "name": "Laksefilet med urtesaus, gulrøtter og poteter (Fjordland)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: laksefilet, urte-fløtesaus, gulrot, kokte poteter",
+	  "compounds": { "high_protein": 2, "sulfur_aa": 2, "tryptophan": 2, "fat_high": 2, "lactose": 1, "resistant_starch": 1 }
+	},
+
+	{
+	  "id": "maggi_saucy_teriyaki",
+	  "name": "Saucy Noodles Teriyaki (Maggi)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvetnudler, teriyakisaus (soya, mirin, sukker, hvitløk), sesam",
+	  "compounds": { "gluten": 3, "fructose": 1, "histamine": 2, "allicin_compounds": 1, "sulfur_aa": 1 }
+	},
+
+	{
+	  "id": "waldemars_chili_con_carne",
+	  "name": "Chili con Carne gryte med storfekjøtt (Waldemars)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: kjøttdeig, kidneybønner, tomat, løk, hvitløk, chili, cumin",
+	  "compounds": { "high_protein": 3, "sulfur_aa": 3, "tryptophan": 3, "fat_high": 2, "raffinose": 2, "resistant_starch": 2, "capsaicin": 3, "fructose": 1, "inulin_fos": 1, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "foodcollective_carbonara",
+	  "name": "Pasta Carbonara i kremet oste- og fløtesaus (Food Collective)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: pasta (hvete), egg, bacon/pancetta, fløte, parmesan/pecorino",
+	  "compounds": { "gluten": 3, "fat_high": 3, "high_protein": 2, "sulfur_aa": 3, "tryptophan": 2, "lactose": 1, "histamine": 2 }
+	},
+
+	{
+	  "id": "foodcollective_lasagne",
+	  "name": "Lasagne Bolognese (Food Collective)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: pastaplater (hvete), kjøttdeig, tomatsaus, bechamel (melk, smør, mel, ost), løk, hvitløk",
+	  "compounds": { "gluten": 3, "high_protein": 3, "sulfur_aa": 3, "tryptophan": 3, "fat_high": 2, "lactose": 2, "fructose": 1, "inulin_fos": 2, "allicin_compounds": 1 }
+	},
+
+	{
+	  "id": "grandiosa_original",
+	  "name": "Grandiosa Pizza Original",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvetebunn, tomatsaus, mozzarella, skinke/pepperoni, løk",
+	  "compounds": { "gluten": 3, "fat_high": 2, "histamine": 3, "fructose": 1, "lactose": 1, "sulfur_aa": 1, "inulin_fos": 1 }
+	},
+
+	{
+	  "id": "big_one_classic",
+	  "name": "Big One Classic Pizza",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvetebunn, tomatsaus, mozzarella, diverse kjøttpålegg",
+	  "compounds": { "gluten": 3, "fat_high": 2, "histamine": 3, "fructose": 1, "lactose": 1, "sulfur_aa": 1 }
+	},
+
+	{
+	  "id": "dr_oetker_mozzarella",
+	  "name": "Ristorante Pizza Mozzarella (Dr. Oetker)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvetebunn, tomatsaus, mozzarella",
+	  "compounds": { "gluten": 3, "fat_high": 2, "lactose": 1, "fructose": 1 }
+	},
+
+	{
+	  "id": "dr_oetker_pollo_spinat",
+	  "name": "Ristorante Pizza Pollo med kylling og spinat (Dr. Oetker)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvetebunn, tomatsaus, mozzarella, kyllingbryst, spinat",
+	  "compounds": { "gluten": 3, "fat_high": 2, "lactose": 1, "high_protein": 2, "tryptophan": 1, "magnesium": 1 }
+	},
+
+	{
+	  "id": "dr_oetker_pepperoni",
+	  "name": "Ristorante Pepperoni Salame (Dr. Oetker)",
+	  "category": "ready_meal",
+	  "note": "Ingredients: hvetebunn, tomatsaus, mozzarella, pepperoni-salami (høy histamin)",
+	  "compounds": { "gluten": 3, "fat_high": 3, "histamine": 3, "fructose": 1, "lactose": 1, "sulfur_aa": 1 }
+	}
+
+  ]
+}

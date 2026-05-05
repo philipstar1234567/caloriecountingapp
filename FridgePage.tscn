@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://dba6tab5k5v8e"]
+[gd_scene load_steps=18 format=3 uid="uid://dba6tab5k5v8e"]
 
 [ext_resource type="Texture2D" uid="uid://0aqgvuof38hh" path="res://images/apple.png" id="1_2hr5r"]
 [ext_resource type="Script" uid="uid://bpjmipxx1mjsc" path="res://FridgePage.gd" id="1_g7aye"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://c8q2d58jisr7h" path="res://Assets/icons/ics.png" id="4_2hr5r"]
 [ext_resource type="Texture2D" uid="uid://dn1twfphjjbgv" path="res://Assets/icons/meal.png" id="5_3iava"]
 [ext_resource type="Texture2D" uid="uid://c330sfhvh1k20" path="res://images/plate.png" id="7_vo4mu"]
+[ext_resource type="Script" uid="uid://dvvup2f8likkd" path="res://DigestiveSimulatorPanel.gd" id="8_vo4mu"]
 
 [sub_resource type="Theme" id="Theme_jrcy7"]
 default_font_size = 40
@@ -106,13 +107,16 @@ custom_minimum_size = Vector2(0, 1800)
 layout_mode = 2
 offset_top = 215.0
 offset_right = 1170.0
-offset_bottom = 2543.0
+offset_bottom = 2534.0
 mouse_force_pass_scroll_events = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel/ShoppingListPanel"]
-layout_mode = 0
-offset_right = 1161.0
-offset_bottom = 1919.0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.992
+anchor_bottom = 1.0
+offset_right = 0.359985
+offset_bottom = 947.0
 theme = SubResource("Theme_xepse")
 alignment = 1
 
@@ -130,6 +134,7 @@ custom_minimum_size = Vector2(240, 0)
 layout_mode = 2
 icon = ExtResource("4_2hr5r")
 flat = true
+icon_alignment = 1
 
 [node name="FilterPanel" type="Panel" parent="Panel/ShoppingListPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 250)
@@ -184,12 +189,12 @@ layout_mode = 2
 
 [node name="PaperImage" type="TextureRect" parent="Panel/ShoppingListPanel/VBoxContainer/ListPaperArea"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 118.0
-offset_right = 7.0
-offset_bottom = -162.0
+anchors_preset = -1
+anchor_top = 0.079
+anchor_right = 1.006
+anchor_bottom = 0.892
+offset_top = -0.500008
+offset_right = 0.0339355
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -241,12 +246,13 @@ theme_override_constants/margin_right = 60
 
 [node name="ShoppingPageDots" type="HBoxContainer" parent="Panel/ShoppingListPanel/VBoxContainer/ListPaperArea"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 1274.0
-offset_right = 20.0
-offset_bottom = 396.0
+anchors_preset = -1
+anchor_top = 0.855
+anchor_right = 1.017
+anchor_bottom = 0.933
+offset_top = 0.5
+offset_right = 0.262939
+offset_bottom = -0.5
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
@@ -295,6 +301,7 @@ offset_bottom = -7.68005
 text = "Undo"
 
 [node name="MealPlannerPanel" type="Panel" parent="Panel"]
+visible = false
 top_level = true
 z_index = 1
 layout_mode = 1
@@ -499,3 +506,121 @@ offset_left = -0.160034
 offset_top = 0.151855
 offset_right = -0.309998
 offset_bottom = 0.787842
+
+[node name="DigestCheckBtn" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.455
+anchor_top = 0.035
+anchor_right = 0.538
+anchor_bottom = 0.074
+offset_left = -0.350037
+offset_top = -0.620003
+offset_right = -0.460083
+offset_bottom = -0.367996
+icon = ExtResource("1_2hr5r")
+flat = true
+expand_icon = true
+
+[node name="DigestiveSimulatorPanel" type="Panel" parent="Panel"]
+top_level = true
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.076
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -0.432007
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_vo4mu")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/DigestiveSimulatorPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.99
+offset_bottom = 0.399902
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TopBar" type="HBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "🧫 Digestion Check"
+
+[node name="CloseBtn" type="Button" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/TopBar"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+icon = ExtResource("4_2hr5r")
+flat = true
+expand_icon = true
+
+[node name="SensitivityRow" type="HBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LactoseToggle" type="CheckButton" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/SensitivityRow"]
+layout_mode = 2
+text = "Lactose"
+
+[node name="FructoseToggle" type="CheckButton" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/SensitivityRow"]
+layout_mode = 2
+text = "Fructose"
+
+[node name="GlutenToggle" type="CheckButton" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/SensitivityRow"]
+layout_mode = 2
+text = "Gluten"
+
+[node name="HistamineToggle" type="CheckButton" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/SensitivityRow"]
+layout_mode = 2
+text = "Histamine"
+
+[node name="ContentRow" type="HBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="LeftCol" type="VBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SearchBar" type="LineEdit" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/LeftCol"]
+layout_mode = 2
+placeholder_text = "Search foods..."
+
+[node name="FoodScrollContainer" type="ScrollContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/LeftCol"]
+custom_minimum_size = Vector2(0, 1400)
+layout_mode = 2
+
+[node name="FoodList" type="VBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/LeftCol/FoodScrollContainer"]
+layout_mode = 2
+
+[node name="RightCol" type="VBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ClearMealBtn" type="Button" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/RightCol"]
+layout_mode = 2
+text = "🗑 Clear"
+
+[node name="MealLabel" type="Label" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/RightCol"]
+layout_mode = 2
+text = "Selected meal:"
+
+[node name="SelectedScrollContainer" type="ScrollContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/RightCol"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SelectedList" type="VBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/ContentRow/RightCol/SelectedScrollContainer"]
+layout_mode = 2
+
+[node name="WarningsScroll" type="ScrollContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="WarningsContainer" type="VBoxContainer" parent="Panel/DigestiveSimulatorPanel/VBoxContainer/WarningsScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+alignment = 1
