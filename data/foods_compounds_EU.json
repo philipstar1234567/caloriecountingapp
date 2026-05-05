@@ -1156,7 +1156,3028 @@
 	  "category": "ready_meal",
 	  "note": "Ingredients: hvetebunn, tomatsaus, mozzarella, pepperoni-salami (høy histamin)",
 	  "compounds": { "gluten": 3, "fat_high": 3, "histamine": 3, "fructose": 1, "lactose": 1, "sulfur_aa": 1 }
-	}
+	},
 
+	{
+	  "id": "beef_tenderloin",
+	  "name": "Beef Tenderloin (Psoas major)",
+	  "category": "beef_muscle",
+	  "note": "Leanest premium cut. ~3.7g fat/100g raw. Very high protein, moderate sulfur AA.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_ribeye",
+	  "name": "Beef Ribeye (Longissimus thoracis)",
+	  "category": "beef_muscle",
+	  "note": "High intramuscular fat (marbling). ~15-20g fat/100g raw. Rich bile acid load.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "beef_striploin",
+	  "name": "Beef Striploin (Longissimus lumborum)",
+	  "category": "beef_muscle",
+	  "note": "Moderate marbling. ~10g fat/100g raw.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "beef_chuck",
+	  "name": "Beef Chuck / Shoulder (Triceps brachii / Clod)",
+	  "category": "beef_muscle",
+	  "note": "Working muscle with connective tissue. ~10g fat/100g raw. Common as stew/mince.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "beef_flat_iron",
+	  "name": "Beef Flat Iron (Infraspinatus)",
+	  "category": "beef_muscle",
+	  "note": "Tender shoulder cut. ~8g fat/100g raw.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "beef_top_sirloin",
+	  "name": "Beef Top Sirloin (Gluteus medius)",
+	  "category": "beef_muscle",
+	  "note": "Lean rump cut. ~5g fat/100g raw.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_topside",
+	  "name": "Beef Topside / Inside Round (Semimembranosus)",
+	  "category": "beef_muscle",
+	  "note": "Very lean round cut. ~3-5g fat/100g raw. Common as roast or thin-sliced.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_silverside",
+	  "name": "Beef Silverside / Bottom Round (Biceps femoris)",
+	  "category": "beef_muscle",
+	  "note": "Lean hind cut. ~4-6g fat/100g raw. Often slow-cooked or corned.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_eye_of_round",
+	  "name": "Beef Eye of Round (Semitendinosus)",
+	  "category": "beef_muscle",
+	  "note": "Very lean, low marbling. ~3g fat/100g raw. Lowest fat beef muscle cut.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_brisket",
+	  "name": "Beef Brisket (Pectoralis profundus)",
+	  "category": "beef_muscle",
+	  "note": "High fat, collagen-dense. ~15-20g fat/100g raw. Slow-cooked. Significant bile acid trigger.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "beef_flank",
+	  "name": "Beef Flank (Rectus abdominis)",
+	  "category": "beef_muscle",
+	  "note": "Lean, coarse-grained. ~7g fat/100g raw.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_neck",
+	  "name": "Beef Neck",
+	  "category": "beef_muscle",
+	  "note": "High connective tissue and fat. ~12g fat/100g raw. Often minced or braised.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "beef_shank",
+	  "name": "Beef Shank / Shin",
+	  "category": "beef_muscle",
+	  "note": "Very lean, collagen-rich. ~4g fat/100g raw. Slow-cook only.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "beef_diaphragm",
+	  "name": "Beef Diaphragm / Outside Skirt",
+	  "category": "beef_muscle",
+	  "note": "Respiratory muscle. ~10g fat/100g raw. High myoglobin = intense flavor. Moderate sulfur AA.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "pork_loin",
+	  "name": "Pork Loin (Longissimus dorsi)",
+	  "category": "pork_muscle",
+	  "note": "Very lean pork cut (svinefilet/kotelettstykke). ~4g fat/100g raw.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "pork_shoulder",
+	  "name": "Pork Shoulder / Blade (svineskulder)",
+	  "category": "pork_muscle",
+	  "note": "Moderate-high fat. ~12g fat/100g raw. Common for pulled pork and mince.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "pork_belly",
+	  "name": "Pork Belly (svinebrystet/side)",
+	  "category": "pork_muscle",
+	  "note": "Very high fat. ~30-40g fat/100g raw depending on thickness. Major bile acid trigger.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "pork_leg",
+	  "name": "Pork Leg / Ham, fresh (svinestek/lår)",
+	  "category": "pork_muscle",
+	  "note": "Lean hind cut. ~7g fat/100g raw. Not cured (cured ham has higher histamine).",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "pork_neck",
+	  "name": "Pork Neck / Collar (svinenakke)",
+	  "category": "pork_muscle",
+	  "note": "Well-marbled neck cut. ~15g fat/100g raw. Classic slow-cook or ramen cut.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "pork_ribs",
+	  "name": "Pork Spare Ribs (svineribbe)",
+	  "category": "pork_muscle",
+	  "note": "Very high fat between ribs. ~25-30g fat/100g raw. National Norwegian dish. Significant bile acid load.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "pork_cheek",
+	  "name": "Pork Cheek (svinnekinn)",
+	  "category": "pork_muscle",
+	  "note": "Rich, gelatinous facial muscle. ~12g fat/100g raw. Popular in European slow-cooking.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "pork_knuckle",
+	  "name": "Pork Knuckle / Hock, meat portion (svinekno)",
+	  "category": "pork_muscle",
+	  "note": "High collagen, moderate fat. ~10g fat/100g raw meat (excluding rind).",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 2,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "chicken_breast",
+	  "name": "Chicken Breast (Pectoralis major), skinless (kyllingbryst)",
+	  "category": "poultry_muscle",
+	  "note": "Leanest common protein source. ~1-2g fat/100g raw. Very high protein.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 1,
+		"fat_high": 0
+	  }
+	},
+	{
+	  "id": "chicken_thigh",
+	  "name": "Chicken Thigh, skinless (kyllinglår, uten skinn)",
+	  "category": "poultry_muscle",
+	  "note": "Higher fat than breast. ~5g fat/100g raw skinless.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 1,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "chicken_drumstick",
+	  "name": "Chicken Drumstick, skinless (kyllingtrommelstikke)",
+	  "category": "poultry_muscle",
+	  "note": "Similar to thigh. ~5g fat/100g raw skinless.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 1,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "chicken_wing",
+	  "name": "Chicken Wing (kyllingvinge)",
+	  "category": "poultry_muscle",
+	  "note": "Higher fat due to skin ratio. ~12g fat/100g with skin.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "chicken_back",
+	  "name": "Chicken Back / Oyster (kyllingrygge)",
+	  "category": "poultry_muscle",
+	  "note": "High bone-to-meat ratio, moderate fat from proximity to carcass fat. ~10g fat/100g edible portion.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "lamb_leg",
+	  "name": "Lamb Leg (lammestek/lår)",
+	  "category": "lamb_muscle",
+	  "note": "Moderate fat. ~9g fat/100g raw. Strong sulfur amino acid profile typical of ruminants.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 3,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "lamb_shoulder",
+	  "name": "Lamb Shoulder (lammeskulder)",
+	  "category": "lamb_muscle",
+	  "note": "Higher fat than leg. ~15g fat/100g raw. Richer flavor, used in braises.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 3,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "lamb_loin_chop",
+	  "name": "Lamb Loin Chop (lammekotelett)",
+	  "category": "lamb_muscle",
+	  "note": "Tender loin cut. ~12g fat/100g raw trimmed. Classic Norwegian grillcut.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 3,
+		"fat_high": 2
+	  }
+	},
+	{
+	  "id": "beef_liver",
+	  "name": "Beef Liver (okselever)",
+	  "category": "beef_offal",
+	  "note": "Very high protein, very high tryptophan (~290mg/100g). Moderate fat. Elevated histamine due to immune/lymphatic activity and histidine pools. High magnesium.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 3,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 2,
+		"magnesium": 2
+	  }
+	},
+	{
+	  "id": "beef_kidney",
+	  "name": "Beef Kidney (oksenyrer)",
+	  "category": "beef_offal",
+	  "note": "High protein, lean. Elevated histamine — kidneys filter blood and concentrate bioactive amines. Distinct sulfurous odor from urea compounds.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 3,
+		"fat_high": 1,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "beef_heart",
+	  "name": "Beef Heart (oksehjerte)",
+	  "category": "beef_offal",
+	  "note": "Densely muscular cardiac tissue. Lean (~4g fat/100g). Very high protein and CoQ10. Lower histamine than liver/kidney.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "beef_tongue",
+	  "name": "Beef Tongue (oksetunge)",
+	  "category": "beef_offal",
+	  "note": "High fat muscle. ~15g fat/100g raw. Rich collagen and fat make it one of the fattier offal cuts.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "beef_tripe",
+	  "name": "Beef Tripe / Rumen (oksemage/innmat)",
+	  "category": "beef_offal",
+	  "note": "Stomach lining, mostly collagen (very low tryptophan — collagen lacks it). Lean. Mild histamine. Moderate sulfur from stomach environment.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 0,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "beef_lung",
+	  "name": "Beef Lung (okselunge)",
+	  "category": "beef_offal",
+	  "note": "Very lean respiratory tissue. Lower tryptophan than muscle. Mild histamine.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 0,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "beef_spleen",
+	  "name": "Beef Spleen (oksemilt)",
+	  "category": "beef_offal",
+	  "note": "Blood-filtering organ, high iron. Elevated histamine (immune organ with mast cells). Lean.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "beef_brain",
+	  "name": "Beef Brain (oksehjerne)",
+	  "category": "beef_offal",
+	  "note": "Extremely high fat (~10g/100g mostly phospholipids and cholesterol). Very high tryptophan (~240mg/100g). Soft texture — triggers large bile acid release.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 3,
+		"sulfur_aa": 1,
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "beef_marrow_bone",
+	  "name": "Beef Bone Marrow (beinmarg)",
+	  "category": "beef_offal",
+	  "note": "Almost pure fat (~80g fat/100g edible marrow). Negligible protein. The single strongest bile acid trigger in the list. Used as roasted marrow in Norwegian/European cuisine.",
+	  "compounds": {
+		"high_protein": 0,
+		"tryptophan": 0,
+		"sulfur_aa": 0,
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "pork_liver",
+	  "name": "Pork Liver (svinelever)",
+	  "category": "pork_offal",
+	  "note": "Very similar profile to beef liver. Slightly higher vitamin A. ~290mg tryptophan/100g. Moderate histamine.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 3,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 2,
+		"magnesium": 2
+	  }
+	},
+	{
+	  "id": "pork_kidney",
+	  "name": "Pork Kidney (svinenyrer)",
+	  "category": "pork_offal",
+	  "note": "Lean, high protein. Concentrated bioactive amines from blood filtration. Strong sulfurous note.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 3,
+		"fat_high": 1,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "pork_heart",
+	  "name": "Pork Heart (svinehjerte)",
+	  "category": "pork_offal",
+	  "note": "Dense cardiac muscle. Lean (~4g fat/100g). High protein, moderate histamine.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "pork_stomach",
+	  "name": "Pork Stomach / Maw (svinemage)",
+	  "category": "pork_offal",
+	  "note": "Similar to beef tripe. Collagen-rich, low tryptophan. Lean. Mild sulfur from gastric environment.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 0,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "pork_tongue",
+	  "name": "Pork Tongue (svinetunge)",
+	  "category": "pork_offal",
+	  "note": "Fatty muscular organ. ~14g fat/100g raw. High protein. Often cured in Norway (higher histamine if cured — value here is fresh).",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "pork_brain",
+	  "name": "Pork Brain (svinehjerne)",
+	  "category": "pork_offal",
+	  "note": "Similar to beef brain. High phospholipid fat. Very high tryptophan. Triggers bile acid secretion.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 3,
+		"sulfur_aa": 1,
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "pork_lung",
+	  "name": "Pork Lung (svinelunge)",
+	  "category": "pork_offal",
+	  "note": "Very lean, spongy respiratory tissue. Low tryptophan. Mild histamine.",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 0,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "chicken_liver",
+	  "name": "Chicken Liver (kyllinglever)",
+	  "category": "poultry_offal",
+	  "note": "Excellent source of folate and iron. ~5g fat/100g. Very high tryptophan (~300mg/100g). Moderate histamine — common pate ingredient.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 3,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 2,
+		"magnesium": 1
+	  }
+	},
+	{
+	  "id": "chicken_heart",
+	  "name": "Chicken Heart (kyllinghjerte)",
+	  "category": "poultry_offal",
+	  "note": "Very lean, small but nutrient-dense cardiac muscle. ~7g fat/100g. High protein and CoQ10.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "chicken_gizzard",
+	  "name": "Chicken Gizzard (kyllingkråse)",
+	  "category": "poultry_offal",
+	  "note": "Muscular grinding organ (ventriculus). Very lean (~2g fat/100g). Tough texture. Low tryptophan relative to muscle — mostly collagenous connective tissue mixed with muscle.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 1,
+		"sulfur_aa": 1,
+		"fat_high": 0,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "lamb_liver",
+	  "name": "Lamb Liver (lammelever)",
+	  "category": "lamb_offal",
+	  "note": "Very similar to beef liver. High tryptophan (~280mg/100g). Higher flavor intensity than other livers. Moderate histamine.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 3,
+		"sulfur_aa": 2,
+		"fat_high": 1,
+		"histamine": 2,
+		"magnesium": 2
+	  }
+	},
+	{
+	  "id": "lamb_kidney",
+	  "name": "Lamb Kidney (lammenyrer)",
+	  "category": "lamb_offal",
+	  "note": "Lean filtration organ. Strong sulfurous character (higher than beef kidney due to volatile thiol compounds in lamb). Elevated histamine.",
+	  "compounds": {
+		"high_protein": 3,
+		"tryptophan": 2,
+		"sulfur_aa": 3,
+		"fat_high": 1,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "oil_olive_extra_virgin",
+	  "name": "Olive Oil, Extra Virgin (olivenolje, ekstra jomfru)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_olive_refined",
+	  "name": "Olive Oil, Refined (raffinert olivenolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_rapeseed",
+	  "name": "Rapeseed / Canola Oil (rapsolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_sunflower",
+	  "name": "Sunflower Oil (solsikkeolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_sunflower_high_oleic",
+	  "name": "Sunflower Oil, High-Oleic (solsikkeolje, høy oljeinnhold)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_soybean",
+	  "name": "Soybean Oil (soyaolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_corn",
+	  "name": "Corn / Maize Oil (maisolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_coconut",
+	  "name": "Coconut Oil (kokosolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_palm",
+	  "name": "Palm Oil (palmolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_palm_kernel",
+	  "name": "Palm Kernel Oil (palmekjerneolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_flaxseed",
+	  "name": "Flaxseed / Linseed Oil (linolje/linfrøolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_walnut",
+	  "name": "Walnut Oil (valnøttolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_almond",
+	  "name": "Almond Oil (mandelolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_hazelnut",
+	  "name": "Hazelnut Oil (hasselnøttolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_avocado",
+	  "name": "Avocado Oil (avokadoolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_pumpkin_seed",
+	  "name": "Pumpkin Seed Oil (gresskarkjerneolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_sesame",
+	  "name": "Sesame Oil (sesamolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_sesame_toasted",
+	  "name": "Toasted Sesame Oil (ristet sesamolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "oil_hemp",
+	  "name": "Hemp Seed Oil (hampfrøolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_chia",
+	  "name": "Chia Seed Oil (chiafrøolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_rice_bran",
+	  "name": "Rice Bran Oil (riskliolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_safflower",
+	  "name": "Safflower Oil (saflоrolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_grape_seed",
+	  "name": "Grape Seed Oil (druefrøolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "oil_argan",
+	  "name": "Argan Oil (arganolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_macadamia",
+	  "name": "Macadamia Oil (macadamiaolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_black_seed",
+	  "name": "Black Seed / Nigella Oil (svartfrøolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_mustard",
+	  "name": "Mustard Oil (sennepsolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"glucosinolates": 1
+	  }
+	},
+	{
+	  "id": "oil_cottonseed",
+	  "name": "Cottonseed Oil (bomullsfrøolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_camelina",
+	  "name": "Camelina Oil (camelina-/vårrybs-olje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"glucosinolates": 1
+	  }
+	},
+	{
+	  "id": "oil_evening_primrose",
+	  "name": "Evening Primrose Oil (nattlysolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_borage",
+	  "name": "Borage Oil (agurkurtolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_fish_cod_liver",
+	  "name": "Cod Liver Oil (tran / torskelever-olje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "oil_fish_salmon",
+	  "name": "Salmon Oil (lakseolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "oil_fish_sardine",
+	  "name": "Sardine Oil (sardinolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "oil_fish_anchovy",
+	  "name": "Anchovy Oil (ansjosolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "oil_krill",
+	  "name": "Krill Oil (krillolje)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "oil_ghee",
+	  "name": "Ghee (clarified butter / klarnet smør)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_lard",
+	  "name": "Lard / Pork Fat (svinefett/smult)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_beef_tallow",
+	  "name": "Beef Tallow (oksefett/talg)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_duck_fat",
+	  "name": "Duck Fat (andefett)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "oil_schmaltz",
+	  "name": "Schmaltz (rendered chicken/goose fat)",
+	  "category": "oil",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "sauce_soy_regular",
+	  "name": "Soy Sauce, regular (soyasaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"gluten": 2,
+		"allicin_compounds": 0,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_soy_tamari",
+	  "name": "Tamari (gluten-free soy sauce)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_soy_light",
+	  "name": "Light Soy Sauce (lys soyasaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"gluten": 2
+	  }
+	},
+	{
+	  "id": "sauce_soy_dark",
+	  "name": "Dark Soy Sauce (mørk soyasaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"gluten": 2,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "sauce_teriyaki",
+	  "name": "Teriyaki Sauce (teriyakisaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"gluten": 2,
+		"fructose": 2,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_mirin",
+	  "name": "Mirin (Japanese sweet rice wine)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"alcohol": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_ponzu",
+	  "name": "Ponzu Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"gluten": 1,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_oyster",
+	  "name": "Oyster Sauce (østersaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"gluten": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "sauce_fish",
+	  "name": "Fish Sauce / Nuoc Mam (fiskesaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_hoisin",
+	  "name": "Hoisin Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"histamine": 2,
+		"gluten": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_worcestershire",
+	  "name": "Worcestershire Sauce (Worcestersaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"fructose": 1,
+		"tannins": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_tabasco",
+	  "name": "Tabasco (Original Red)",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 2,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "sauce_sriracha",
+	  "name": "Sriracha",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 2,
+		"fructose": 1,
+		"allicin_compounds": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_gochujang",
+	  "name": "Gochujang (Korean chili paste)",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 3,
+		"histamine": 2,
+		"gluten": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "sauce_sambal_oelek",
+	  "name": "Sambal Oelek",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 3,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_harissa",
+	  "name": "Harissa (Tunisian/North African chili paste)",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 3,
+		"allicin_compounds": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_ketchup",
+	  "name": "Ketchup / Tomato Ketchup (European formula – Heinz EU)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_mustard_yellow",
+	  "name": "Yellow Mustard (gul sennep)",
+	  "category": "sauce",
+	  "compounds": {
+		"glucosinolates": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_mustard_dijon",
+	  "name": "Dijon Mustard",
+	  "category": "sauce",
+	  "compounds": {
+		"glucosinolates": 2,
+		"histamine": 1,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_mustard_grain",
+	  "name": "Whole Grain Mustard (grovkornet sennep)",
+	  "category": "sauce",
+	  "compounds": {
+		"glucosinolates": 2,
+		"histamine": 1,
+		"insoluble_fiber": 1
+	  }
+	},
+	{
+	  "id": "sauce_mayonnaise",
+	  "name": "Mayonnaise (majones – European formula)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_remoulade",
+	  "name": "Remoulade (Norwegian/Danish style)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"fructose": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_aioli",
+	  "name": "Aioli (garlic mayonnaise / hvitløksmajones)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3,
+		"allicin_compounds": 3,
+		"inulin_fos": 1
+	  }
+	},
+	{
+	  "id": "sauce_hollandaise",
+	  "name": "Hollandaise Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3,
+		"lactose": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_bechamel",
+	  "name": "Béchamel Sauce (hvit saus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"lactose": 2,
+		"gluten": 1
+	  }
+	},
+	{
+	  "id": "sauce_brown_gravy",
+	  "name": "Brown Gravy (brun saus / kjøttsaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"gluten": 1,
+		"fat_high": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_cream_sauce",
+	  "name": "Cream Sauce / Fløtesaus",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3,
+		"lactose": 2
+	  }
+	},
+	{
+	  "id": "sauce_tomato_passata",
+	  "name": "Tomato Passata / Puré (tomatpuré/tomatsaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_tomato_arrabiata",
+	  "name": "Arrabbiata Sauce (spicy tomato)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"tannins": 1,
+		"capsaicin": 2,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_pesto",
+	  "name": "Pesto alla Genovese",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"allicin_compounds": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_red_pesto",
+	  "name": "Red Pesto (pesto rosso)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"fructose": 1,
+		"histamine": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_tzatziki",
+	  "name": "Tzatziki",
+	  "category": "sauce",
+	  "compounds": {
+		"lactose": 1,
+		"fat_high": 1,
+		"allicin_compounds": 2,
+		"inulin_fos": 1
+	  }
+	},
+	{
+	  "id": "sauce_hummus_plain",
+	  "name": "Hummus (plain)",
+	  "category": "sauce",
+	  "compounds": {
+		"raffinose": 2,
+		"fat_high": 1,
+		"allicin_compounds": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "sauce_tahini",
+	  "name": "Tahini (sesampasta)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"high_protein": 1,
+		"sulfur_aa": 1
+	  }
+	},
+	{
+	  "id": "sauce_miso",
+	  "name": "Miso Paste (miso)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 2,
+		"gluten": 1,
+		"raffinose": 1,
+		"tryptophan": 1
+	  }
+	},
+	{
+	  "id": "sauce_sweet_chili",
+	  "name": "Sweet Chili Sauce (søt chilisaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 3,
+		"capsaicin": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_bbq",
+	  "name": "BBQ Sauce (European formula)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 3,
+		"tannins": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_vinegar_white",
+	  "name": "White Wine Vinegar (hvitvinseddik)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_vinegar_red",
+	  "name": "Red Wine Vinegar (rødvinseddik)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_vinegar_apple_cider",
+	  "name": "Apple Cider Vinegar (eplecidereddik)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "sauce_vinegar_balsamic",
+	  "name": "Balsamic Vinegar (balsamicoeddik)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"fructose": 2,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "sauce_vinegar_malt",
+	  "name": "Malt Vinegar (malteddik)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 1,
+		"gluten": 1
+	  }
+	},
+	{
+	  "id": "sauce_vinegar_rice",
+	  "name": "Rice Vinegar (riseddik)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_shaoxing_wine",
+	  "name": "Shaoxing Rice Wine (kinesisk riskvin)",
+	  "category": "sauce",
+	  "compounds": {
+		"alcohol": 2,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "sauce_doenjang",
+	  "name": "Doenjang (Korean fermented soybean paste)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 2,
+		"raffinose": 1,
+		"tryptophan": 1
+	  }
+	},
+	{
+	  "id": "sauce_gochugaru",
+	  "name": "Gochugaru (Korean chili flakes)",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 3
+	  }
+	},
+	{
+	  "id": "sauce_chili_oil",
+	  "name": "Chili Oil (chili-olje)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3,
+		"capsaicin": 2
+	  }
+	},
+	{
+	  "id": "sauce_raita",
+	  "name": "Raita (Indian yoghurt sauce)",
+	  "category": "sauce",
+	  "compounds": {
+		"lactose": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_chimichurri",
+	  "name": "Chimichurri",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"allicin_compounds": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_salsa_roja",
+	  "name": "Salsa Roja (tomato salsa)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 1,
+		"capsaicin": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_guacamole",
+	  "name": "Guacamole",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"mannitol": 1,
+		"allicin_compounds": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "sauce_frank_hot",
+	  "name": "Frank's RedHot / Generic Hot Sauce (European market)",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 2,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "sauce_caesar_dressing",
+	  "name": "Caesar Dressing",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"histamine": 2,
+		"high_protein": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_ranch_dressing",
+	  "name": "Ranch Dressing (European formula)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"lactose": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_thousand_island",
+	  "name": "Thousand Island Dressing",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"fructose": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_blue_cheese_dressing",
+	  "name": "Blue Cheese Dressing",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"lactose": 1,
+		"histamine": 3
+	  }
+	},
+	{
+	  "id": "sauce_honey_mustard",
+	  "name": "Honey Mustard Dressing / Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"glucosinolates": 1
+	  }
+	},
+	{
+	  "id": "sauce_nam_prik",
+	  "name": "Nam Prik (Thai chili dipping sauce)",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 3,
+		"histamine": 2,
+		"allicin_compounds": 2
+	  }
+	},
+	{
+	  "id": "sauce_plum",
+	  "name": "Plum Sauce (plommesaus, Chinese style)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 3,
+		"sorbitol": 1,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_black_bean",
+	  "name": "Black Bean Sauce (svart bønnesaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"raffinose": 1,
+		"gluten": 1
+	  }
+	},
+	{
+	  "id": "sauce_XO",
+	  "name": "XO Sauce (Chinese seafood chili sauce)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"fat_high": 2,
+		"capsaicin": 2,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_demi_glace",
+	  "name": "Demi-Glace (French reduction sauce)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 2,
+		"high_protein": 2,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_bearnaise",
+	  "name": "Béarnaise Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3,
+		"lactose": 1,
+		"histamine": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_veloute",
+	  "name": "Velouté Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 1,
+		"gluten": 1,
+		"lactose": 1
+	  }
+	},
+	{
+	  "id": "sauce_curry_yellow",
+	  "name": "Yellow Curry Paste / Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 1,
+		"allicin_compounds": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "sauce_curry_red",
+	  "name": "Red Curry Paste / Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 2,
+		"allicin_compounds": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "sauce_curry_green",
+	  "name": "Green Curry Paste / Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"capsaicin": 3,
+		"allicin_compounds": 2,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "sauce_tikka_masala",
+	  "name": "Tikka Masala Sauce (jarred, EU formula)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 1,
+		"lactose": 1,
+		"capsaicin": 1,
+		"fructose": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_coconut_cream",
+	  "name": "Coconut Cream (kokoskrem, for cooking)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 3
+	  }
+	},
+	{
+	  "id": "sauce_sour_cream_dip",
+	  "name": "Sour Cream Dip (rømmedip)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"lactose": 2,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_gravy_chicken",
+	  "name": "Chicken Gravy (kyllingsaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"gluten": 1,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "sauce_cranberry",
+	  "name": "Cranberry Sauce (tyttebærsaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"sorbitol": 1,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "sauce_apple",
+	  "name": "Apple Sauce (eplemos)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 3,
+		"sorbitol": 2
+	  }
+	},
+	{
+	  "id": "sauce_lingonberry",
+	  "name": "Lingonberry Jam / Sauce (tyttebærsyltetøy)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"sorbitol": 1,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "sauce_cloudberry_jam",
+	  "name": "Cloudberry Jam (multesyltetøy)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"sorbitol": 1
+	  }
+	},
+	{
+	  "id": "sauce_strawberry_jam",
+	  "name": "Strawberry Jam (jordbærsyltetøy)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2
+	  }
+	},
+	{
+	  "id": "sauce_marmalade",
+	  "name": "Orange Marmalade (appelsinsyltetøy)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2
+	  }
+	},
+	{
+	  "id": "sauce_mango_chutney",
+	  "name": "Mango Chutney",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 3,
+		"sorbitol": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_tamarind",
+	  "name": "Tamarind Paste / Sauce (tamarind)",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"tannins": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "sauce_anchovy_paste",
+	  "name": "Anchovy Paste (ansjosspasta)",
+	  "category": "sauce",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 2,
+		"sulfur_aa": 1
+	  }
+	},
+	{
+	  "id": "sauce_sundried_tomato_paste",
+	  "name": "Sun-Dried Tomato Paste",
+	  "category": "sauce",
+	  "compounds": {
+		"fructose": 2,
+		"histamine": 2,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "sauce_peanut",
+	  "name": "Peanut Sauce (jordnøttsaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"high_protein": 1,
+		"raffinose": 1,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "sauce_satay",
+	  "name": "Satay Sauce",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"high_protein": 1,
+		"raffinose": 1,
+		"allicin_compounds": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "sauce_black_pepper",
+	  "name": "Black Pepper Sauce (peppersaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"lactose": 1
+	  }
+	},
+	{
+	  "id": "sauce_mushroom_cream",
+	  "name": "Mushroom Cream Sauce (soppsaus)",
+	  "category": "sauce",
+	  "compounds": {
+		"fat_high": 2,
+		"lactose": 2,
+		"mannitol": 2,
+		"allicin_compounds": 1
+	  }
+	},
+	{
+	  "id": "milk_sheep",
+	  "name": "Sheep Milk (fåremelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 3,
+		"fat_high": 2,
+		"high_protein": 2
+	  }
+	},
+	{
+	  "id": "milk_buffalo",
+	  "name": "Water Buffalo Milk (bøffelmelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 3,
+		"fat_high": 3,
+		"high_protein": 2
+	  }
+	},
+	{
+	  "id": "milk_camel",
+	  "name": "Camel Milk (kamelmelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 2,
+		"fat_high": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "milk_donkey",
+	  "name": "Donkey Milk (eselmelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 3,
+		"fat_high": 0,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "milk_mare",
+	  "name": "Mare's Milk / Koumiss base (hoppemelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 3,
+		"fat_high": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "milk_reindeer",
+	  "name": "Reindeer Milk (reinsdyrmelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 3,
+		"fat_high": 3,
+		"high_protein": 3
+	  }
+	},
+	{
+	  "id": "milk_yak",
+	  "name": "Yak Milk (yakmelk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 3,
+		"fat_high": 2,
+		"high_protein": 2
+	  }
+	},
+	{
+	  "id": "cheese_sheep_manchego",
+	  "name": "Manchego (sheep milk cheese)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 0,
+		"fat_high": 3,
+		"high_protein": 2,
+		"histamine": 2,
+		"sulfur_aa": 2,
+		"tryptophan": 2
+	  }
+	},
+	{
+	  "id": "cheese_sheep_pecorino",
+	  "name": "Pecorino Romano (sheep milk cheese)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 0,
+		"fat_high": 3,
+		"high_protein": 3,
+		"histamine": 3,
+		"sulfur_aa": 2,
+		"tryptophan": 3
+	  }
+	},
+	{
+	  "id": "cheese_sheep_roquefort",
+	  "name": "Roquefort (sheep milk blue cheese)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 0,
+		"fat_high": 3,
+		"high_protein": 2,
+		"histamine": 3,
+		"sulfur_aa": 2,
+		"tryptophan": 2
+	  }
+	},
+	{
+	  "id": "cheese_sheep_ricotta_salata",
+	  "name": "Ricotta Salata (sheep milk)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 1,
+		"fat_high": 2,
+		"high_protein": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "cheese_sheep_ossau_iraty",
+	  "name": "Ossau-Iraty (French sheep cheese)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 0,
+		"fat_high": 3,
+		"high_protein": 2,
+		"histamine": 2,
+		"sulfur_aa": 1
+	  }
+	},
+	{
+	  "id": "cheese_buffalo_mozzarella",
+	  "name": "Buffalo Mozzarella (Mozzarella di Bufala)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 1,
+		"fat_high": 3,
+		"high_protein": 2
+	  }
+	},
+	{
+	  "id": "cheese_camel_informal",
+	  "name": "Camel Milk Cheese (informal production)",
+	  "category": "dairy",
+	  "compounds": {
+		"lactose": 1,
+		"fat_high": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_oat",
+	  "name": "Oat Milk, unsweetened (havremelk, usøtet – e.g. Oatly EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"gluten": 1,
+		"fructose": 1,
+		"soluble_fiber": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_oat_sweetened",
+	  "name": "Oat Milk, sweetened (havremelk, søtet)",
+	  "category": "beverages",
+	  "compounds": {
+		"gluten": 1,
+		"fructose": 2,
+		"soluble_fiber": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_soy",
+	  "name": "Soy Milk, unsweetened (soyamelk, usøtet – Alpro EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"raffinose": 1,
+		"high_protein": 2,
+		"tryptophan": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_almond",
+	  "name": "Almond Milk, unsweetened (mandelmelk, usøtet – Alpro EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_rice",
+	  "name": "Rice Milk, unsweetened (rismelk, usøtet)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_coconut",
+	  "name": "Coconut Milk Drink, unsweetened (kokosmelkdrikk – Alpro EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_hazelnut",
+	  "name": "Hazelnut Milk (hasselnøttmelk – Alpro EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"fat_high": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_cashew",
+	  "name": "Cashew Milk (cashewmelk)",
+	  "category": "beverages",
+	  "compounds": {
+		"fat_high": 1,
+		"fructose": 1,
+		"raffinose": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_macadamia",
+	  "name": "Macadamia Milk (macadamiamelk)",
+	  "category": "beverages",
+	  "compounds": {
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_hemp",
+	  "name": "Hemp Milk (hampmelk)",
+	  "category": "beverages",
+	  "compounds": {
+		"fat_high": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_pea",
+	  "name": "Pea Milk (ertemelk – e.g. Sproud EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"high_protein": 2,
+		"raffinose": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_quinoa",
+	  "name": "Quinoa Milk",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 1,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_spelt",
+	  "name": "Spelt Milk (speltmelk)",
+	  "category": "beverages",
+	  "compounds": {
+		"gluten": 2,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_potato",
+	  "name": "Potato Milk (potetmelk – e.g. DUG EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 1,
+		"resistant_starch": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_flax",
+	  "name": "Flaxseed Milk (linfrømelk)",
+	  "category": "beverages",
+	  "compounds": {
+		"soluble_fiber": 1,
+		"fat_high": 1
+	  }
+	},
+	{
+	  "id": "milk_plant_lupin",
+	  "name": "Lupin Milk (lupinmelk)",
+	  "category": "beverages",
+	  "compounds": {
+		"high_protein": 2,
+		"raffinose": 1,
+		"soluble_fiber": 1
+	  }
+	},
+	{
+	  "id": "bev_water_tap",
+	  "name": "Tap Water (springvann)",
+	  "category": "beverages",
+	  "compounds": {}
+	},
+	{
+	  "id": "bev_water_sparkling",
+	  "name": "Sparkling Water (kullsyreholdig vann – e.g. Imsdalen, San Pellegrino)",
+	  "category": "beverages",
+	  "compounds": {}
+	},
+	{
+	  "id": "bev_coffee_filter",
+	  "name": "Filter Coffee (filtrekaffe)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 3,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_coffee_espresso",
+	  "name": "Espresso",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 3,
+		"tannins": 3
+	  }
+	},
+	{
+	  "id": "bev_coffee_instant",
+	  "name": "Instant Coffee (pulverkaffe)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 2,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_coffee_cold_brew",
+	  "name": "Cold Brew Coffee",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 3,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_tea_black",
+	  "name": "Black Tea (svart te – e.g. Lipton, Twinings EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 2,
+		"tannins": 3
+	  }
+	},
+	{
+	  "id": "bev_tea_green",
+	  "name": "Green Tea (grønn te)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 1,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_tea_white",
+	  "name": "White Tea (hvit te)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 1,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "bev_tea_oolong",
+	  "name": "Oolong Tea",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 2,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_tea_chamomile",
+	  "name": "Chamomile Tea (kamillette)",
+	  "category": "beverages",
+	  "compounds": {}
+	},
+	{
+	  "id": "bev_tea_peppermint",
+	  "name": "Peppermint Tea (peppermynte-te)",
+	  "category": "beverages",
+	  "compounds": {}
+	},
+	{
+	  "id": "bev_tea_ginger",
+	  "name": "Ginger Tea (ingefærte)",
+	  "category": "beverages",
+	  "compounds": {}
+	},
+	{
+	  "id": "bev_tea_rooibos",
+	  "name": "Rooibos Tea (rooibos-te)",
+	  "category": "beverages",
+	  "compounds": {
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "bev_tea_nettle",
+	  "name": "Nettle Tea (brenneslete)",
+	  "category": "beverages",
+	  "compounds": {
+		"magnesium": 1
+	  }
+	},
+	{
+	  "id": "bev_tea_hibiscus",
+	  "name": "Hibiscus Tea (hibiskuste)",
+	  "category": "beverages",
+	  "compounds": {
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_coca_cola_eu",
+	  "name": "Coca-Cola (EU formula – sucrose, not HFCS)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 2,
+		"caffeine": 2
+	  }
+	},
+	{
+	  "id": "bev_pepsi_eu",
+	  "name": "Pepsi (EU formula – sucrose-based)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 2,
+		"caffeine": 2
+	  }
+	},
+	{
+	  "id": "bev_fanta_orange_eu",
+	  "name": "Fanta Orange (EU formula – 5% juice, low sugar vs US)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_sprite_eu",
+	  "name": "Sprite (EU formula)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_schweppes_tonic",
+	  "name": "Schweppes Tonic Water (EU formula)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_redbull_eu",
+	  "name": "Red Bull (EU formula)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 2,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_monster_eu",
+	  "name": "Monster Energy (EU formula)",
+	  "category": "beverages",
+	  "compounds": {
+		"caffeine": 3,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_orange_juice_fresh",
+	  "name": "Fresh Orange Juice (ferskpresset appelsinjuice)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 2
+	  }
+	},
+	{
+	  "id": "bev_apple_juice",
+	  "name": "Apple Juice (eplejuice – European pressed)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 3,
+		"sorbitol": 1
+	  }
+	},
+	{
+	  "id": "bev_grape_juice",
+	  "name": "Grape Juice (druesaft)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 3,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "bev_mango_juice",
+	  "name": "Mango Juice / Nectar (mangojuice)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 3,
+		"sorbitol": 1
+	  }
+	},
+	{
+	  "id": "bev_pear_juice",
+	  "name": "Pear Juice (pærejuice)",
+	  "category": "beverages",
+	  "compounds": {
+		"fructose": 3,
+		"sorbitol": 3
+	  }
+	},
+	{
+	  "id": "bev_prune_juice",
+	  "name": "Prune Juice (sviskejuice)",
+	  "category": "beverages",
+	  "compounds": {
+		"sorbitol": 3,
+		"fructose": 2
+	  }
+	},
+	{
+	  "id": "bev_beer_lager",
+	  "name": "Beer, Lager (øl, lager – e.g. Ringnes, Tuborg EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"gluten": 2,
+		"fructose": 0
+	  }
+	},
+	{
+	  "id": "bev_beer_wheat",
+	  "name": "Wheat Beer / Weissbier (hveteøl)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"gluten": 3,
+		"fructose": 0
+	  }
+	},
+	{
+	  "id": "bev_beer_stout",
+	  "name": "Stout / Dark Beer (mørkt øl – Guinness EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"gluten": 2,
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "bev_beer_gluten_free",
+	  "name": "Gluten-Free Beer (glutenfritt øl)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2
+	  }
+	},
+	{
+	  "id": "bev_cider_dry",
+	  "name": "Dry Cider (tørr sider – e.g. Rekorderlig EU)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_cider_sweet",
+	  "name": "Sweet Cider (søt sider)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"fructose": 3,
+		"sorbitol": 1
+	  }
+	},
+	{
+	  "id": "bev_wine_white_dry",
+	  "name": "White Wine, dry (hvitvin, tørr)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "bev_wine_white_sweet",
+	  "name": "White Wine, sweet / dessert (søt hvitvin)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"fructose": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "bev_wine_red",
+	  "name": "Red Wine (rødvin)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"tannins": 3,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "bev_wine_rose",
+	  "name": "Rosé Wine (rosévin)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"tannins": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "bev_wine_sparkling",
+	  "name": "Sparkling Wine / Champagne / Prosecco",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 2,
+		"histamine": 2,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "bev_spirits_vodka",
+	  "name": "Vodka",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 3
+	  }
+	},
+	{
+	  "id": "bev_spirits_gin",
+	  "name": "Gin",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 3
+	  }
+	},
+	{
+	  "id": "bev_spirits_whisky",
+	  "name": "Whisky / Whiskey",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 3,
+		"tannins": 1,
+		"gluten": 1
+	  }
+	},
+	{
+	  "id": "bev_spirits_rum",
+	  "name": "Rum",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 3,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_spirits_aquavit",
+	  "name": "Aquavit (Akevitt – Norwegian spirit)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 3
+	  }
+	},
+	{
+	  "id": "bev_spirits_brandy",
+	  "name": "Brandy / Cognac",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 3,
+		"tannins": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "bev_kombucha",
+	  "name": "Kombucha (EU-produced)",
+	  "category": "beverages",
+	  "compounds": {
+		"histamine": 2,
+		"alcohol": 0,
+		"fructose": 1,
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "bev_kefir_water",
+	  "name": "Water Kefir (vannkefir)",
+	  "category": "beverages",
+	  "compounds": {
+		"histamine": 1,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "bev_kvass",
+	  "name": "Kvass (fermented rye bread drink)",
+	  "category": "beverages",
+	  "compounds": {
+		"alcohol": 1,
+		"gluten": 2,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "spice_black_pepper",
+	  "name": "Black Pepper (sort pepper)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_white_pepper",
+	  "name": "White Pepper (hvit pepper)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_cayenne",
+	  "name": "Cayenne Pepper (cayennepepper)",
+	  "category": "spice",
+	  "compounds": {
+		"capsaicin": 3
+	  }
+	},
+	{
+	  "id": "spice_paprika_sweet",
+	  "name": "Sweet Paprika (søt paprika)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_paprika_smoked",
+	  "name": "Smoked Paprika (røkt paprika)",
+	  "category": "spice",
+	  "compounds": {
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "spice_chili_powder",
+	  "name": "Chili Powder (chilipulver)",
+	  "category": "spice",
+	  "compounds": {
+		"capsaicin": 2
+	  }
+	},
+	{
+	  "id": "spice_cumin",
+	  "name": "Cumin (karve/spidskommen)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_coriander_seed",
+	  "name": "Coriander Seed (korianderfrø)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_turmeric",
+	  "name": "Turmeric (gurkemeie)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_ginger_ground",
+	  "name": "Ground Ginger (malt ingefær)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_cinnamon",
+	  "name": "Cinnamon (kanel)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "spice_cardamom",
+	  "name": "Cardamom (kardemomme)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_cloves",
+	  "name": "Cloves (nellik)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 2
+	  }
+	},
+	{
+	  "id": "spice_allspice",
+	  "name": "Allspice (allehånde)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_nutmeg",
+	  "name": "Nutmeg (muskatnøtt)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_star_anise",
+	  "name": "Star Anise (stjerneanis)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_fennel_seed",
+	  "name": "Fennel Seed (fennikelfrø)",
+	  "category": "spice",
+	  "compounds": {
+		"inulin_fos": 1
+	  }
+	},
+	{
+	  "id": "spice_caraway",
+	  "name": "Caraway (karve – common in Norwegian baking)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_anise",
+	  "name": "Anise Seed (anisfrø)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_bay_leaf",
+	  "name": "Bay Leaf (laurbærblad)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_rosemary",
+	  "name": "Rosemary (rosmarin)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "spice_oregano",
+	  "name": "Oregano",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_basil",
+	  "name": "Basil (basilikum)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_tarragon",
+	  "name": "Tarragon (estragon)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_sage",
+	  "name": "Sage (salvie)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "spice_mint",
+	  "name": "Mint / Spearmint (mynte)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_chili_flakes",
+	  "name": "Dried Chili Flakes (chiliflak)",
+	  "category": "spice",
+	  "compounds": {
+		"capsaicin": 2
+	  }
+	},
+	{
+	  "id": "spice_garlic_powder",
+	  "name": "Garlic Powder (hvitløkspulver)",
+	  "category": "spice",
+	  "compounds": {
+		"allicin_compounds": 2,
+		"inulin_fos": 2
+	  }
+	},
+	{
+	  "id": "spice_onion_powder",
+	  "name": "Onion Powder (løkpulver)",
+	  "category": "spice",
+	  "compounds": {
+		"allicin_compounds": 1,
+		"inulin_fos": 2,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "spice_garlic_fresh",
+	  "name": "Fresh Garlic (fersk hvitløk – condiment use)",
+	  "category": "spice",
+	  "compounds": {
+		"allicin_compounds": 3,
+		"inulin_fos": 3,
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "spice_garam_masala",
+	  "name": "Garam Masala",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_curry_powder",
+	  "name": "Curry Powder (karriblanding)",
+	  "category": "spice",
+	  "compounds": {
+		"capsaicin": 1
+	  }
+	},
+	{
+	  "id": "spice_za_atar",
+	  "name": "Za'atar (Middle Eastern herb blend)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "spice_ras_el_hanout",
+	  "name": "Ras el Hanout",
+	  "category": "spice",
+	  "compounds": {
+		"capsaicin": 1
+	  }
+	},
+	{
+	  "id": "spice_fenugreek",
+	  "name": "Fenugreek (bukkehornsfrø)",
+	  "category": "spice",
+	  "compounds": {
+		"soluble_fiber": 1,
+		"inulin_fos": 1
+	  }
+	},
+	{
+	  "id": "spice_asafoetida",
+	  "name": "Asafoetida / Hing (asafoetida)",
+	  "category": "spice",
+	  "compounds": {
+		"inulin_fos": 3,
+		"allicin_compounds": 2,
+		"gluten": 1
+	  }
+	},
+	{
+	  "id": "spice_salt",
+	  "name": "Salt (salt – NaCl)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_msg",
+	  "name": "MSG / Monosodium Glutamate (E621)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_sugar_white",
+	  "name": "White Sugar (hvitt sukker / sukrose)",
+	  "category": "spice",
+	  "compounds": {
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "spice_sugar_brown",
+	  "name": "Brown Sugar (brunt sukker)",
+	  "category": "spice",
+	  "compounds": {
+		"fructose": 1
+	  }
+	},
+	{
+	  "id": "spice_honey",
+	  "name": "Honey (honning)",
+	  "category": "spice",
+	  "compounds": {
+		"fructose": 3
+	  }
+	},
+	{
+	  "id": "spice_maple_syrup",
+	  "name": "Maple Syrup (lønnesirup)",
+	  "category": "spice",
+	  "compounds": {
+		"fructose": 2
+	  }
+	},
+	{
+	  "id": "spice_agave_syrup",
+	  "name": "Agave Syrup (agavesirup)",
+	  "category": "spice",
+	  "compounds": {
+		"fructose": 3,
+		"inulin_fos": 2
+	  }
+	},
+	{
+	  "id": "spice_stevia",
+	  "name": "Stevia (steviaekstrakt)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_xylitol_sweetener",
+	  "name": "Xylitol (sugar substitute / sukkererstatning)",
+	  "category": "spice",
+	  "compounds": {
+		"xylitol": 3
+	  }
+	},
+	{
+	  "id": "spice_sorbitol_sweetener",
+	  "name": "Sorbitol (E420 – used in sugar-free products)",
+	  "category": "spice",
+	  "compounds": {
+		"sorbitol": 3
+	  }
+	},
+	{
+	  "id": "spice_erythritol",
+	  "name": "Erythritol (E968 – sugar alcohol)",
+	  "category": "spice",
+	  "compounds": {
+		"sorbitol": 1
+	  }
+	},
+	{
+	  "id": "spice_lemon_juice",
+	  "name": "Lemon Juice (sitronsaft – as condiment)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_lime_juice",
+	  "name": "Lime Juice (limejuice – as condiment)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_capers",
+	  "name": "Capers (kapers)",
+	  "category": "spice",
+	  "compounds": {
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "spice_horseradish",
+	  "name": "Horseradish (pepperrot)",
+	  "category": "spice",
+	  "compounds": {
+		"glucosinolates": 3
+	  }
+	},
+	{
+	  "id": "spice_wasabi",
+	  "name": "Wasabi (Japanese horseradish)",
+	  "category": "spice",
+	  "compounds": {
+		"glucosinolates": 3
+	  }
+	},
+	{
+	  "id": "spice_vanilla",
+	  "name": "Vanilla Extract / Pod (vaniljeekstrakt)",
+	  "category": "spice",
+	  "compounds": {}
+	},
+	{
+	  "id": "spice_cocoa_powder",
+	  "name": "Cocoa Powder (kakaopulver, unsweetened)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 3,
+		"caffeine": 1,
+		"magnesium": 1
+	  }
+	},
+	{
+	  "id": "spice_yeast_extract",
+	  "name": "Yeast Extract / Marmite / Vegemite",
+	  "category": "spice",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 2,
+		"tryptophan": 2,
+		"gluten": 1
+	  }
+	},
+	{
+	  "id": "spice_nutritional_yeast",
+	  "name": "Nutritional Yeast (næringsgjær)",
+	  "category": "spice",
+	  "compounds": {
+		"high_protein": 2,
+		"tryptophan": 2
+	  }
+	},
+	{
+	  "id": "spice_sumac",
+	  "name": "Sumac (sumak)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 3
+	  }
+	},
+	{
+	  "id": "spice_tamarind_paste",
+	  "name": "Tamarind Paste (tamarindpasta – as spice)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 2,
+		"fructose": 1,
+		"histamine": 1
+	  }
+	},
+	{
+	  "id": "spice_dried_chili_whole",
+	  "name": "Dried Whole Chili (tørket hel chili)",
+	  "category": "spice",
+	  "compounds": {
+		"capsaicin": 3
+	  }
+	},
+	{
+	  "id": "spice_juniper_berry",
+	  "name": "Juniper Berry (einebær – Nordic spice)",
+	  "category": "spice",
+	  "compounds": {
+		"tannins": 1
+	  }
+	},
+	{
+	  "id": "spice_dried_mushroom_powder",
+	  "name": "Dried Mushroom Powder (tørket sopppulver – umami)",
+	  "category": "spice",
+	  "compounds": {
+		"mannitol": 2,
+		"histamine": 2
+	  }
+	},
+	{
+	  "id": "spice_fish_sauce_spice",
+	  "name": "Fish Sauce used as seasoning (fiskesaus som krydder)",
+	  "category": "spice",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 1
+	  }
+	},
+	{
+	  "id": "spice_shrimp_paste",
+	  "name": "Shrimp Paste / Belacan (rekepasta)",
+	  "category": "spice",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 2,
+		"sulfur_aa": 1
+	  }
+	},
+	{
+	  "id": "spice_miso_seasoning",
+	  "name": "Miso used as seasoning (miso som krydder)",
+	  "category": "spice",
+	  "compounds": {
+		"histamine": 3,
+		"high_protein": 1,
+		"gluten": 1
+	  }
+	}
   ]
 }
