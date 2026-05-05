@@ -74,7 +74,7 @@ size_flags_vertical = 3
 
 [node name="StreakRow" type="HBoxContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 60
+theme_override_constants/separation = 50
 alignment = 1
 
 [node name="WeeklyReportBtn" type="Button" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
@@ -100,6 +100,10 @@ horizontal_alignment = 1
 layout_mode = 2
 theme_override_font_sizes/font_size = 48
 horizontal_alignment = 1
+
+[node name="PointsLabel" type="Label" parent="Panel/ScrollContainer/VBoxContainer/StreakRow"]
+layout_mode = 2
+text = "⭐ 0 pts"
 
 [node name="QuestsCard" type="PanelContainer" parent="Panel/ScrollContainer/VBoxContainer"]
 layout_mode = 2

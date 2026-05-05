@@ -1243,6 +1243,8 @@ func _on_reset_intake():
 	if home:
 		home._init_today_totals()
 		home.foods_eaten.clear()
+		home._categories_eaten_today.clear()
+		home.today_totals = {}
 		home.water_ml = 0.0
 		home.refresh_display()
 

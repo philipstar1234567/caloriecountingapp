@@ -57,27 +57,27 @@ var last_streak_date: String = ""
 var streak_freeze_count: int = 1  # starts with 1 free freeze
 var _last_celebrated_milestone: int = 0
 
-#const ALL_BADGES = [
-	# ── Streak badges ──
-	#{"id":"streak_3",    "name":"Spark 🔥",        "desc":"3-day streak",            "tier":"bronze", "check": func(g): return g.daily_streak >= 3},
-	#{"id":"streak_7",    "name":"Flame 🔥🔥",      "desc":"7-day streak",            "tier":"silver", "check": func(g): return g.daily_streak >= 7},
-	#{"id":"streak_30",   "name":"Inferno 🌋",       "desc":"30-day streak",           "tier":"gold",   "check": func(g): return g.daily_streak >= 30},
-	#{"id":"streak_100",  "name":"Solar ☀️",         "desc":"100-day streak",          "tier":"gold",   "check": func(g): return g.daily_streak >= 100},
-	#{"id":"streak_365",  "name":"Eternal ✨",        "desc":"365-day streak",          "tier":"gold",   "check": func(g): return g.daily_streak >= 365},
+var ALL_BADGES = [
+	 #── Streak badges ──
+	{"id":"streak_3",    "name":"Spark 🔥",        "desc":"3-day streak",            "tier":"bronze", "check": func(g): return g.daily_streak >= 3},
+	{"id":"streak_7",    "name":"Flame 🔥🔥",      "desc":"7-day streak",            "tier":"silver", "check": func(g): return g.daily_streak >= 7},
+	{"id":"streak_30",   "name":"Inferno 🌋",       "desc":"30-day streak",           "tier":"gold",   "check": func(g): return g.daily_streak >= 30},
+	{"id":"streak_100",  "name":"Solar ☀️",         "desc":"100-day streak",          "tier":"gold",   "check": func(g): return g.daily_streak >= 100},
+	{"id":"streak_365",  "name":"Eternal ✨",        "desc":"365-day streak",          "tier":"gold",   "check": func(g): return g.daily_streak >= 365},
 	# ── Water badges ──
-	#{"id":"hydro_7",     "name":"Hydration Hero 💧","desc":"Hit water goal 7 days in a row","tier":"silver","check": func(g): return g.daily_streak >= 7},
+	{"id":"hydro_7",     "name":"Hydration Hero 💧","desc":"Hit water goal 7 days in a row","tier":"silver","check": func(g): return g.daily_streak >= 7},
 	# ── Nutrition badges ──
-	#{"id":"iron_chef",   "name":"Planner 🏆",       "desc":"Save 5 meals",            "tier":"bronze", "check": func(g): return true},  # checked externally
-	#{"id":"rainbow",     "name":"Rainbow Plate 🌈", "desc":"Eat 6 categories in one day","tier":"silver","check": func(g): return true},
-	#{"id":"bone_builder","name":"Bone Builder 🦴",  "desc":"30 days hitting Ca+VitD", "tier":"gold",   "check": func(g): return true},
-	#{"id":"brain_food",  "name":"Brain Food 🧠",    "desc":"7 days of Omega-3+B12",   "tier":"silver", "check": func(g): return true},
+	{"id":"iron_chef",   "name":"Planner 🏆",       "desc":"Save 5 meals",            "tier":"bronze", "check": func(g): return true},  # checked externally
+	{"id":"rainbow",     "name":"Rainbow Plate 🌈", "desc":"Eat 6 categories in one day","tier":"silver","check": func(g): return true},
+	{"id":"bone_builder","name":"Bone Builder 🦴",  "desc":"30 days hitting Ca+VitD", "tier":"gold",   "check": func(g): return true},
+	{"id":"brain_food",  "name":"Brain Food 🧠",    "desc":"7 days of Omega-3+B12",   "tier":"silver", "check": func(g): return true},
 	# ── Condition badges ──
-	#{"id":"ox_warrior",  "name":"Oxalate Warrior 🌿","desc":"14 days under oxalate threshold","tier":"gold","check": func(g): return true},
-	#{"id":"data_driven", "name":"Data Driven 📊",   "desc":"Fill in all disease panels","tier":"bronze","check": func(g): return g.active_metabolic_conditions.size() >= 3},
+	{"id":"ox_warrior",  "name":"Oxalate Warrior 🌿","desc":"14 days under oxalate threshold","tier":"gold","check": func(g): return true},
+	{"id":"data_driven", "name":"Data Driven 📊",   "desc":"Fill in all disease panels","tier":"bronze","check": func(g): return g.active_metabolic_conditions.size() >= 3},
 	# ── Currency badges ──
-	#{"id":"py_100",      "name":"Earner 💰",        "desc":"Earn 100 PY",             "tier":"bronze", "check": func(g): return g.py_currency >= 100},
-	#{"id":"py_1000",     "name":"Wealthy 💎",       "desc":"Earn 1000 PY",            "tier":"gold",   "check": func(g): return g.py_currency >= 1000},
-#]
+	{"id":"py_100",      "name":"Earner 💰",        "desc":"Earn 100 PY",             "tier":"bronze", "check": func(g): return g.py_currency >= 100},
+	{"id":"py_1000",     "name":"Wealthy 💎",       "desc":"Earn 1000 PY",            "tier":"gold",   "check": func(g): return g.py_currency >= 1000},
+]
 
 const FOODS_TO_AVOID_NOTES = {
 	"epi": "⚠️ FAT MUST NOT BE RESTRICTED when using PERT (enzyme replacement therapy). Fat restriction worsens malnutrition and accelerates nutritional deficiency.",
@@ -1163,8 +1163,8 @@ func get_visible_micronutrients() -> Array:
 func _ready():
 	load_quests()
 	load_profile()
-	load_points()
 	load_streak()
+	load_points()
 	load_badges()
 	load_currency()
 	load_report_date()
@@ -1384,7 +1384,9 @@ func get_points_week() -> float:
 func get_points_alltime() -> float:
 	if points_history.is_empty(): load_points()
 	var total = 0.0
-	for val in points_history.values(): total += val
+	for key in points_history.keys():
+		if not key.begins_with("_"):
+			total += points_history[key]
 	return total
 
 func get_macro_goals() -> Dictionary:
@@ -1609,37 +1611,47 @@ func get_condition_clinical_notes() -> Dictionary:
 	return notes
 
 func check_and_update_streak():
-	var today = Time.get_date_string_from_system()
+	var today     = Time.get_date_string_from_system()
 	var yesterday = _get_yesterday_string()
 
+	print("STREAK CHECK: today=", today, " last=", last_streak_date,
+		" streak=", daily_streak)
+
 	if last_streak_date == today:
-		return  # already logged today, streak intact
-	py_earned_today = 0
-	save_currency()
+		print("STREAK: already logged today, no change")
+		return
+
 	if last_streak_date == yesterday:
-		# Consecutive day — increment
 		daily_streak += 1
-	elif last_streak_date == "" or _days_between(last_streak_date, today) == 2:
-		# Missed exactly one day — check for freeze
+		print("STREAK: consecutive day! new streak=", daily_streak)
+	elif last_streak_date == "":
+		daily_streak = 1
+		print("STREAK: first ever log, streak=1")
+	elif _days_between(last_streak_date, today) == 2:
 		if streak_freeze_count > 0:
 			streak_freeze_count -= 1
 			daily_streak += 1
+
+			print("STREAK: freeze used! streak=", daily_streak)
 		else:
-			daily_streak = 1  # reset
+			daily_streak = 1
+			print("STREAK: missed a day, reset to 1")
 	else:
-		daily_streak = 1  # reset after long absence
-	
+		daily_streak = 1
+
+		print("STREAK: long absence, reset to 1")
+
+	# Milestone check
 	var milestones = [3, 7, 14, 30, 60, 100, 200, 365]
 	for m in milestones:
 		if daily_streak == m and _last_celebrated_milestone < m:
 			_last_celebrated_milestone = m
 			streak_milestone_reached.emit(m)
 
-
-
 	last_streak_date = today
-	load_badges()
+
 	save_streak()
+	print("STREAK: saved. streak=", daily_streak, " last_date=", last_streak_date)
 
 func save_streak():
 	var file = FileAccess.open("user://streak.json", FileAccess.WRITE)
@@ -2095,23 +2107,25 @@ func get_season_bonus_pts(today_totals: Dictionary, foods_eaten: Array) -> int:
 			bonus += season["bonus_pts"]
 	return bonus
 
-#func check_badges():
-#	for badge in ALL_BADGES:
-#		var bid = badge["id"]
-#		if earned_badges.has(bid): continue
-#		var check_fn = badge.get("check", null)
-#		if check_fn == null: continue
-#			earned_badges.append(bid)
-#			save_badges()
-#			badge_earned.emit(badge)
+func check_badges():
+	for badge in ALL_BADGES:
+		var bid = badge["id"]
+		if earned_badges.has(bid): continue
+		var check_fn = badge.get("check", null)
+		if check_fn == null: continue
+		if not check_fn.call(self): continue
+		earned_badges.append(bid)
+		save_badges()
+		badge_earned.emit(badge)
 
-#func award_badge(bid: String):
-#	if earned_badges.has(bid): return
-#	for badge in ALL_BADGES:
-#		if badge["id"] == bid:
-#			save_badges()
-#			badge_earned.emit(badge)
-#			return
+func award_badge(bid: String):
+	if earned_badges.has(bid): return
+	for badge in ALL_BADGES:
+		if badge["id"] == bid:
+			earned_badges.append(bid)  # ← this was also missing in the original
+			save_badges()
+			badge_earned.emit(badge)
+			return
 
 func save_badges():
 	var file = FileAccess.open("user://badges.json", FileAccess.WRITE)
@@ -2165,7 +2179,7 @@ func load_ui_settings():
 	simple_mode              = data.get("simple_mode", false)
 	accessibility_large_font = data.get("large_font", false)
 
-func _get_strict_avoid_conditions(food: Dictionary) -> Array:
+func get_strict_avoid_conditions(food: Dictionary) -> Array:
 	var food_name = food.get("name","").to_lower()
 	var food_id   = food.get("id","").to_lower()
 	var cat       = food.get("category","").to_lower()
@@ -2232,3 +2246,92 @@ func _get_strict_avoid_conditions(food: Dictionary) -> Array:
 				result.append("celiac-disease")
 
 	return result
+
+# In Global.gd — add this function:
+func calculate_today_points(today_totals: Dictionary, water_ml: float) -> float:
+	var kcal       = today_totals.get("calories", 0.0)
+	var daily_goal = body_metrics.get("daily_goal", 0.0)
+	var bmr        = body_metrics.get("bmr", 0.0)
+	var goal_weight = body_metrics.get("goal_weight", 0.0)
+	var weight      = body_metrics.get("weight", 0.0)
+
+	# ── Kcal points ──
+	var kcal_pts = 0.0
+	if bmr > 0 and daily_goal > 0 and goal_weight > 0 and weight > 0:
+		if goal_weight > weight:
+			if kcal >= daily_goal:
+				kcal_pts = 1.0 + floor((kcal - daily_goal) / 500.0)
+		elif goal_weight < weight:
+			if kcal <= daily_goal and kcal >= bmr:
+				kcal_pts = 1.0 + floor((daily_goal - kcal) / 500.0)
+		else:
+			if abs(kcal - daily_goal) <= daily_goal * 0.1:
+				kcal_pts = 1.0
+
+	# ── Water points ──
+	var water_goal_ml = daily_water_liters * 1000.0
+	var water_pts = 0.0
+	if water_goal_ml > 0 and water_ml >= water_goal_ml:
+		water_pts = 1.0 + floor((water_ml - water_goal_ml) / 500.0)
+
+	# ── Strict avoid penalty (loaded from today's log) ──
+	var penalty = points_history.get("_penalty_" + Time.get_date_string_from_system(), 0.0)
+
+	# ── Oxalate penalty ──
+	var oxalate_penalty = 0.0
+	if kidney_at_risk:
+		var ox = today_totals.get("oxalate_mg", 0.0)
+		var ca = today_totals.get("calcium_mg", 0.0)
+		if ox > 50.0:
+			oxalate_penalty -= floor((ox - 50.0) / 50.0)
+		var ratio = ox / max(ca, 1.0)
+		if ratio > 0.5:
+			oxalate_penalty -= floor((ratio - 0.5) / 0.5)
+
+	return kcal_pts + water_pts + penalty + oxalate_penalty
+
+func calculate_and_save_points(today_totals: Dictionary, water_ml_val: float, foods_eaten: Array = []):
+	var today      = Time.get_date_string_from_system()
+	var daily_goal = body_metrics.get("daily_goal", 0.0)
+	var bmr        = body_metrics.get("bmr", 0.0)
+	var goal_w     = body_metrics.get("goal_weight", 0.0)
+	var weight     = body_metrics.get("weight", 0.0)
+	var kcal       = today_totals.get("calories", 0.0)
+
+	var pts = 0.0
+
+	# ── Kcal points: 1 pt for being within goal, +1 per 500 in right direction ──
+	if daily_goal > 0 and bmr > 0:
+		if goal_w > weight:          # gaining
+			if kcal >= daily_goal:
+				pts += 1.0 + floor((kcal - daily_goal) / 500.0)
+		elif goal_w < weight:        # losing
+			if kcal >= bmr and kcal <= daily_goal:
+				pts += 1.0 + floor((daily_goal - kcal) / 500.0)
+		else:                        # maintenance
+			if kcal >= daily_goal * 0.85 and kcal <= daily_goal * 1.15:
+				pts += 1.0
+
+	# ── Water points: 1 pt at goal, +1 per extra 500mL ──
+	var water_goal_ml = daily_water_liters * 1000.0
+	var water_max_ml  = water_goal_ml * 1.15
+	if water_goal_ml > 0 and water_ml_val >= water_goal_ml:
+		var effective_ml = min(water_ml_val, water_max_ml)
+		pts += 1.0 + floor((effective_ml - water_goal_ml) / 500.0)
+
+	# ── Oxalate penalty ──
+	if kidney_at_risk:
+		var ox = today_totals.get("oxalate_mg", 0.0)
+		var ca = today_totals.get("calcium_mg", 1.0)
+		if ox > 50.0:
+			pts -= floor((ox - 50.0) / 50.0)
+		var ratio = ox / max(ca, 1.0)
+		if ratio > 0.5:
+			pts -= floor((ratio - 0.5) / 0.5)
+
+	# ── Strict avoid penalty (accumulated separately in points_history["_penalty"]) ──
+	var penalty = points_history.get("_penalty_" + today, 0.0)
+	pts += penalty
+
+	pts += float(get_season_bonus_pts(today_totals, foods_eaten))
+	save_points(today, pts)

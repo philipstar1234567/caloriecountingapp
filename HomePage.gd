@@ -2,6 +2,7 @@ extends Control
 
 var today_totals: Dictionary = {}
 var foods_eaten: Array = []
+var _categories_eaten_today: Array = []
 var water_ml: float = 0.0
 var meal_history: Dictionary = {}
 
@@ -77,21 +78,33 @@ func log_food(food: Dictionary):
 	foods_eaten.append(food.get("name", "Unknown"))
 
 	# ── Strict avoid penalty ──
-	var strict_conditions = Global._get_strict_avoid_conditions(food)
+	var strict_conditions = Global.get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		var today = Time.get_date_string_from_system()
-		var current_pts = Global.points_history.get(today, 0.0)
-		Global.save_points(today, current_pts - float(strict_conditions.size()))
+		var key   = "_penalty_" + today
+		var current_penalty = Global.points_history.get(key, 0.0)
+		Global.points_history[key] = current_penalty - float(strict_conditions.size())
 		_show_strict_avoid_penalty_toast(food, strict_conditions)
 
 	Global.check_and_update_streak()
+	var cat = food.get("category","")
+	if cat != "" and not _categories_eaten_today.has(cat):
+		_categories_eaten_today.append(cat)
 	save_today()
 	_save_to_history()
 	Global.check_badges()
 	var totals_for_quests = today_totals.duplicate()
 	totals_for_quests["water_ml"] = water_ml
+	totals_for_quests["_category_count"] = _count_categories_today()
 	Global.check_quests(totals_for_quests)
+	Global.calculate_and_save_points(today_totals, water_ml, foods_eaten)
 	refresh_display()
+
+func _count_categories_today() -> int:
+	var cats: Array = []
+	# foods_eaten stores names — we need to track categories separately
+	return _categories_eaten_today.size()
+
 
 func _show_strict_avoid_penalty_toast(food: Dictionary, conditions: Array):
 	var existing = get_node_or_null("StrictAvoidToast")
@@ -160,6 +173,8 @@ func refresh_display():
 		_refresh_micro_card()
 	_refresh_water_card()
 	_refresh_tips_card()
+
+
 	
 	var macro_card = $Panel/ScrollContainer/VBoxContainer/MacroCard
 	var micro_card = $Panel/ScrollContainer/VBoxContainer/MicroCard
@@ -251,6 +266,15 @@ func _refresh_streak_row():
 	if py_lbl:
 		py_lbl.text = "💰 " + str(Global.py_currency) + " PY"
 
+	# ── Points today — add this ──
+	var pts_today = snappedf(Global.get_points_today(), 0.1)
+	var pts_lbl = row.get_node_or_null("PointsLabel")
+	if pts_lbl:
+		Global.load_points()   # reload in case leaderboard wrote after last refresh
+		var pts = snappedf(Global.get_points_today(), 0.1)
+		pts_lbl.text = "⭐ " + str(pts) + " pts"
+		pts_lbl.add_theme_color_override("font_color",
+			Color(0.4,1.0,0.4) if pts > 0 else Color(0.5,0.5,0.5))
 # ─────────────────────────────────────────
 #  PANEL 1 — QUESTS CARD
 # ─────────────────────────────────────────
@@ -971,7 +995,10 @@ func _refresh_water_card():
 			_refresh_water_card()
 			var totals_q = today_totals.duplicate()
 			totals_q["water_ml"] = water_ml
+			totals_q["_category_count"] = _categories_eaten_today.size()
 			Global.check_quests(totals_q)
+			Global.calculate_and_save_points(today_totals, water_ml, foods_eaten)
+			_refresh_streak_row()
 		)
 
 		glasses_row.add_child(glass_btn)
@@ -1004,25 +1031,29 @@ func _refresh_water_card():
 		var totals_q = today_totals.duplicate()
 		totals_q["water_ml"] = water_ml
 		Global.check_quests(totals_q)
+		Global.calculate_and_save_points(today_totals, water_ml, foods_eaten)
+		_refresh_streak_row()
 	)
 	glasses_row.add_child(bonus_btn)
 
 	# ── Points preview ──
 	var lower_goal_ml = water_goal_ml * 0.85  # quest target = 85% of goal
+	var water_max_ml = water_goal_ml * 1.15  # same threshold as the warning
 	var w_pts = 0.0
 	if water_ml >= water_goal_ml:
-		w_pts = 2.0
+		var effective_ml = min(water_ml, water_max_ml)  # cap at warning threshold
+		w_pts = 1.0 + floor((effective_ml - water_goal_ml) / 500.0)
 	elif water_ml >= lower_goal_ml:
 		w_pts = 2.0 * (water_ml / water_goal_ml)
 
 	var pts_lbl = Label.new()
-	pts_lbl.text = "💧 " + str(snappedf(w_pts, 1)) + " / 2 pts"
+	pts_lbl.text = "💧 " + str(snappedf(w_pts, 1)) + " pts"
 	pts_lbl.add_theme_font_size_override("font_size", 36)
 	pts_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(pts_lbl)
 
 	# ── Water intoxication warning ──
-	var water_max_ml = water_goal_ml * 1.15
+	water_max_ml = water_goal_ml * 1.15
 	if water_ml >= water_max_ml:
 		var warn_vbox = VBoxContainer.new()
 		warn_vbox.name = "WaterWarning"
@@ -1052,12 +1083,9 @@ func _refresh_water_card():
 		wi_btn.pressed.connect(_show_water_intoxication_info)
 		wi_row.add_child(wi_btn)
 		
-		var kcal_points  = Global.calculate_points(today_totals.get("calories",0.0),
-			Global.body_metrics.get("daily_goal",0.0),
-			Global.body_metrics.get("bmr",0.0))
-		var total_points = kcal_points + w_pts
-		Global.save_points(Time.get_date_string_from_system(), total_points)
-	
+
+
+		Global.calculate_and_save_points(today_totals, water_ml, foods_eaten)
 		#Global.save_points(Time.get_date_string_from_system(), total_points)
 		#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/WaterCard)
 
@@ -1327,7 +1355,8 @@ func save_today():
 	file.store_string(JSON.stringify({
 		"date": Time.get_date_string_from_system(),
 		"totals": today_totals,
-		"foods": foods_eaten
+		"foods": foods_eaten,
+		"categories_eaten": _categories_eaten_today
 	}))
 	file.close()
 
@@ -1364,6 +1393,7 @@ func load_today():
 	for key in today_totals.keys():
 		if saved.has(key): today_totals[key] = saved[key]
 	foods_eaten = data.get("foods",[])
+	_categories_eaten_today = data.get("categories_eaten", [])
 
 func save_water():
 	var file = FileAccess.open("user://water.json", FileAccess.WRITE)
@@ -2028,3 +2058,4 @@ func _open_all_notes_overlay(notes: Array):
 			scroll_vbox.add_child(note_lbl)
 			scroll_vbox.add_child(HSeparator.new())
 	)
+	

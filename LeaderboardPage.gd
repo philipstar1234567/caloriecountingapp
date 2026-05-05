@@ -251,12 +251,12 @@ func _add_leaderboard_entry(vbox: VBoxContainer, rank: int, name: String,
 
 	# Points
 	var pts_lbl = Label.new()
-	var pts_label: String 
+	var pts_label: String
 	match mode:
-		"today":   str(snappedf(pts,0.1)) + " pts\ntoday"
-		"week":    str(snappedf(pts,0.1)) + " pts\nthis week"
-		"alltime": str(snappedf(pts,0.1)) + " pts\nall time"
-		_:         str(snappedf(pts,0.1)) + " pts"
+		"today":   pts_label = str(snappedf(pts,0.1)) + " pts\ntoday"
+		"week":    pts_label = str(snappedf(pts,0.1)) + " pts\nthis week"
+		"alltime": pts_label = str(snappedf(pts,0.1)) + " pts\nall time"
+		_:         pts_label = str(snappedf(pts,0.1)) + " pts"
 	pts_lbl.text = pts_label
 	pts_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	pts_lbl.add_theme_font_size_override("font_size", 48)

@@ -1,5 +1,6 @@
 extends Control
 
+var _provisional_deductions: Dictionary = {}
 var _texture_cache: Dictionary = {}
 var shopping_page_titles: Dictionary = {}
 var _shopping_undo_stack: Array = []  # max 10 snapshots
@@ -333,6 +334,7 @@ func _ready():
 		var search = $Panel/MealPlannerPanel/VBoxContainer/MPSearchBar
 		if search: search.text = ""
 		# Rest of close logic unchanged
+		_revert_provisional_deductions()
 		meal_items.clear()
 		editing_meal_mid = ""
 		var banner = $Panel/MealPlannerPanel/EditingBanner
@@ -575,11 +577,19 @@ func build_tabs():
 
 	for cat in categories:
 		var scroll = ScrollContainer.new()
-		scroll.name = cat.capitalize()
+		# Store the raw category key as the node name so the tab title round-trips
+		# back exactly. capitalize() converts "beef_organ" → "Beef Organ" (spaces),
+		# so tab_title.to_lower() becomes "beef organ" which never matches the JSON
+		# field "beef_organ". Using the raw key fixes organs and all multi-word cats.
+		scroll.name = cat
 		var vbox = VBoxContainer.new()
 		vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		scroll.add_child(vbox)
 		tabs.add_child(scroll)
+		# Set a pretty human-readable label on the tab (spaces instead of underscores,
+		# capitalised) without affecting the node name used for category matching.
+		var tab_idx = tabs.get_tab_count() - 1
+		tabs.set_tab_title(tab_idx, cat.replace("_", " ").capitalize())
 
 	_apply_tab_arrow_theme(tabs)
 
@@ -610,7 +620,10 @@ func refresh_current_tab():
 	for child in vbox.get_children():
 		child.queue_free()
 
-	var tab_title    = tabs.get_tab_title(tabs.current_tab).to_lower()
+	# Use the scroll node's name as the authoritative category key — it always
+	# matches the raw JSON "category" field regardless of how the tab is displayed.
+	var tab_category = scroll.name  # e.g. "beef_organ", "chicken", etc.
+	var tab_title    = tab_category.to_lower()
 	var search = $Panel/ShoppingListPanel/VBoxContainer/TopBar2/SearchBar.text.to_lower()
 
 	var filtered: Array
@@ -620,7 +633,7 @@ func refresh_current_tab():
 		filtered.sort_custom(func(a, b): return a.get("name","") < b.get("name",""))
 	else:
 		filtered = all_foods.filter(func(f):
-			return f.get("category","") == tab_title
+			return f.get("category","") == tab_category
 		)
 
 	# Search
@@ -668,7 +681,7 @@ func refresh_current_tab():
 
 			# Hide strict avoid foods if user has relevant conditions
 			if Global.hide_red_warnings:
-				var strict = Global._get_strict_avoid_conditions(f)
+				var strict = Global.get_strict_avoid_conditions(f)
 				if not strict.is_empty():
 					return false  # hide strict avoid foods
 				if severity == "avoid":
@@ -732,7 +745,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	name_col.add_child(name_label)  # ← was row.add_child, must be name_col
 	
 	# Strict avoid label
-	var strict_conditions = Global._get_strict_avoid_conditions(food)
+	var strict_conditions = Global.get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		var sa_lbl = Label.new()
 		sa_lbl.text = "⛔ strict avoid in your condition"
@@ -761,7 +774,7 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
-		ox_lbl.add_theme_font_size_override("font_size", fs - 20)
+		ox_lbl.add_theme_font_size_override("font_size", fs)
 		row.add_child(ox_lbl)
 
 		var warnings = Global.get_warnings(food)
@@ -1554,7 +1567,7 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	total_btn.pressed.connect(func(): _show_page.call(false))
 
 	add_child(info_popup)
-
+	
 	# ── ACTION POPUP ──
 	# Position ABOVE the pressed button
 	var btn_global_pos = pressed_btn.get_global_rect()
@@ -2436,7 +2449,7 @@ func _refresh_meal_tab():
 
 			# Hide strict avoid foods if user has relevant conditions
 			if Global.hide_red_warnings:
-				var strict = Global._get_strict_avoid_conditions(f)
+				var strict = Global.get_strict_avoid_conditions(f)
 				if not strict.is_empty():
 					return false  # hide strict avoid foods
 				if severity == "avoid":
@@ -2631,7 +2644,7 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	name_col.add_child(name_lbl)
 
 	# Strict avoid label
-	var strict_conditions = Global._get_strict_avoid_conditions(food)
+	var strict_conditions = Global.get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		var sa_lbl = Label.new()
 		sa_lbl.text = "⛔ strict avoid in your condition"
@@ -2661,7 +2674,7 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	else:
 		var ox_lbl = Label.new()
 		ox_lbl.text = str(food.get("oxalate_mg_per_100g",0)) + "mg ox"
-		ox_lbl.add_theme_font_size_override("font_size", fs - 20)
+		ox_lbl.add_theme_font_size_override("font_size", fs)
 		row.add_child(ox_lbl)
 
 	# Warning badge
@@ -3013,8 +3026,9 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 	params_area.visible = false
 	vbox.add_child(params_area)
 
-	add_child(action_popup)
-	action_popup.z_index = Z_ACTION_POPUP
+	$Panel/MealPlannerPanel.add_child(action_popup)
+	action_popup.z_index = 200
+	action_popup.mouse_filter = Control.MOUSE_FILTER_STOP
 
 func _show_meal_weight_editor(popup: PanelContainer, entry: Dictionary, idx: int):
 	var params_area = popup.find_child("CookParamsArea", true, false)
@@ -3600,12 +3614,15 @@ func _on_save_meal_pressed():
 
 	save_saved_meals()
 	name_edit.text = ""
+	_revert_provisional_deductions()
 	meal_items.clear()
 	editing_meal_mid = ""
 	_refresh_meal_grid()
 	_refresh_my_meals_tab()
 
 func _add_meal_to_fridge(meal: Dictionary):
+	# Commit provisional deductions — ingredients were used to make this fridge item
+	_provisional_deductions.clear()
 	var merged   = meal.get("merged_nutrients",{})
 	var total_g  = meal.get("total_cooked_g", 100.0)
 	var meal_name = meal.get("name","My Meal")
@@ -3804,6 +3821,7 @@ func _apply_tab_arrow_theme(tabs: TabContainer):
 		tabs.add_theme_icon_override("increment_highlight", right_tex)
 
 func _on_clear_plate():
+	_revert_provisional_deductions()
 	meal_items.clear()
 	editing_meal_mid = ""
 	var banner = $Panel/MealPlannerPanel/EditingBanner
@@ -3922,7 +3940,8 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 
 	var popup = PanelContainer.new()
 	popup.name = "FridgePortionPopup"
-	popup.z_index = Z_ACTION_POPUP
+	popup.z_index = 200
+	popup.mouse_filter = Control.MOUSE_FILTER_STOP
 	popup.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	popup.custom_minimum_size = Vector2(360, 0)
 
@@ -3932,7 +3951,7 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 
 	var title = Label.new()
 	title.text = slot.get("name","") + "  ·  " + str(snappedf(remaining,0.1)) + "g remaining"
-	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_font_size_override("font_size", 36)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	vbox.add_child(title)
 	vbox.add_child(HSeparator.new())
@@ -3957,7 +3976,7 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 		var btn = Button.new()
 		btn.custom_minimum_size = Vector2(82, 70)
 		btn.text = action["icon"] + "\n" + action["label"]
-		btn.add_theme_font_size_override("font_size", 17)
+		btn.add_theme_font_size_override("font_size", 36)
 		if action["key"] == "close":
 			btn.add_theme_color_override("font_color", Color(1.0,0.4,0.4))
 			btn.pressed.connect(func(): popup.queue_free())
@@ -3976,7 +3995,7 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 	input_area.name = "PortionInputArea"
 	vbox.add_child(input_area)
 
-	add_child(popup)
+	$Panel/MealPlannerPanel.add_child(popup)
 
 func _show_fridge_portion_input(popup: PanelContainer, vbox: VBoxContainer, slot: Dictionary, action_key: String, density: float, remaining: float):
 	var input_area = vbox.get_node_or_null("PortionInputArea")
@@ -4052,7 +4071,20 @@ func _add_fridge_slot_to_meal(slot: Dictionary, portion_g: float):
 	for field in scalable:
 		if scaled.has(field):
 			scaled[field] = scaled[field] * ratio
-
+		# Apply provisional deduction to fridge immediately
+	var src_iid = slot.get("_iid","")
+	if src_iid != "":
+		var fw = fridge_weights.get(src_iid, {})
+		if not fw.is_empty():
+			var prev_remaining = fw.get("remaining_g", 0.0)
+			fw["remaining_g"] = max(prev_remaining - portion_g, 0.0)
+			fridge_weights[src_iid] = fw
+			# Track for potential revert
+			var already_deducted = _provisional_deductions.get(src_iid, 0.0)
+			_provisional_deductions[src_iid] = already_deducted + portion_g
+		save_fridge()
+		build_fridge_ui()
+		_refresh_from_fridge_tab()
 	# Store the _iid so Eat button knows which fridge slot to subtract from
 	var entry = {
 		"food":             scaled,
@@ -4068,6 +4100,19 @@ func _add_fridge_slot_to_meal(slot: Dictionary, portion_g: float):
 	_update_suggested_shopping()
 	# Refresh From Fridge tab so remaining shows correctly
 	_refresh_from_fridge_tab()
+	
+func _revert_provisional_deductions():
+	for iid in _provisional_deductions.keys():
+		var fw = fridge_weights.get(iid, {})
+		if not fw.is_empty():
+			fw["remaining_g"] = min(
+				fw.get("remaining_g", 0.0) + _provisional_deductions[iid],
+				fw.get("total_g", 100.0)
+			)
+			fridge_weights[iid] = fw
+	_provisional_deductions.clear()
+	save_fridge()
+	build_fridge_ui()
 	
 func _eat_meal(meal: Dictionary):
 	var items = meal.get("items", meal_items)
@@ -4088,6 +4133,9 @@ func _eat_meal(meal: Dictionary):
 	_do_eat_meal(meal)
 
 func _do_eat_meal(meal: Dictionary):
+	# Commit provisional deductions — they are already applied to fridge_weights
+	# so just clear the tracking dict without restoring
+	_provisional_deductions.clear()
 	var items = meal.get("items", meal_items)
 
 	# ── Determine display name ──
@@ -4433,7 +4481,7 @@ func _show_warning_detail_panel(food: Dictionary):
 	vbox.add_child(hint)
 
 	# ── Strict avoidance ──
-	var strict_conditions = Global._get_strict_avoid_conditions(food)
+	var strict_conditions = Global.get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
 		vbox.add_child(HSeparator.new())
 		var sa_title = Label.new()
@@ -4525,7 +4573,7 @@ func _show_cook_change_notification(before: Dictionary, after: Dictionary):
 
 	var title = Label.new()
 	title.text = "🍳 Cooking changes:"
-	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_font_size_override("font_size", 36)
 	vbox.add_child(title)
 
 	for line in lines:
@@ -4574,7 +4622,7 @@ func _get_limit_conditions(food: Dictionary) -> Array:
 		for keyword in LIMIT_KEYWORDS[condition]:
 			if food_name_lower.contains(keyword) or food_id_lower.contains(keyword):
 				# Only add if NOT already a strict avoid
-				var strict = Global._get_strict_avoid_conditions(food)
+				var strict = Global.get_strict_avoid_conditions(food)
 				if not strict.has(condition) and not result.has(condition):
 					result.append(condition)
 				break
