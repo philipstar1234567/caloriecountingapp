@@ -1,5 +1,10 @@
 extends Control
 
+var _expire_btn: Button = null
+var _expire_btn_dragging: bool = false
+var _expire_btn_drag_offset: Vector2 = Vector2.ZERO
+var _glucose_needed: float = 0.0
+var _glucose_consumed_from_highlights: float = 0.0
 var _insulin_btn: Button = null
 var _btn_dragging: bool = false
 var _btn_drag_offset: Vector2 = Vector2.ZERO
@@ -1285,20 +1290,54 @@ func build_fridge_ui():
 		
 		# After creating container, before add_child:
 
-		if _glucose_highlight_green.has(iid):
-			var border = ColorRect.new()
-			border.color = Color(0.2, 0.95, 0.3, 0.6)
-			border.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-			border.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			border.z_index = -1
-			container.add_child(border)
-		elif _glucose_highlight_yellow.has(iid):
-			var border = ColorRect.new()
-			border.color = Color(1.0, 0.85, 0.0, 0.5)
-			border.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-			border.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			border.z_index = -1
-			container.add_child(border)
+		if _glucose_highlight_green.has(iid) or _glucose_highlight_yellow.has(iid):
+			var border_panel = Panel.new()
+			var sb = StyleBoxFlat.new()
+			sb.bg_color = Color(0, 0, 0, 0)        # fully transparent fill
+			sb.set_border_width_all(5)
+			sb.set_corner_radius_all(8)
+			if _glucose_highlight_green.has(iid):
+				sb.border_color = Color(0.1, 0.95, 0.25)
+			else:
+				sb.border_color = Color(1.0, 0.85, 0.0)
+			border_panel.add_theme_stylebox_override("panel", sb)
+			border_panel.z_index = 300
+			border_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			border_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			border_panel.z_index = 30   # above the button and badge
+			# Badge for items that provide more sugar than needed
+			if _glucose_needed > 0:
+				var effective_slot = _get_effective_slot(slot)
+				var sugar_per_100  = effective_slot.get("sugar_g", 0.0)
+				var w_slot         = fridge_weights.get(iid, {})
+				var remaining_slot = w_slot.get("remaining_g", 100.0)
+				var count_slot     = slot.get("_count", 1)
+				var total_sugar    = sugar_per_100 * remaining_slot / 100.0 * count_slot
+				if total_sugar > _glucose_needed and sugar_per_100 > 0:
+					var grams_to_eat = (_glucose_needed / (sugar_per_100 / 100.0))
+					var badge = Label.new()
+					badge.text = str(int(snappedf(grams_to_eat,1))) + " g / " + str(int(remaining_slot)) + " g"
+					badge.add_theme_font_size_override("font_size", 36)
+					badge.add_theme_color_override("font_color", Color.WHITE)
+					badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+					badge.set_anchor_and_offset(SIDE_LEFT,   0, 0)
+					badge.set_anchor_and_offset(SIDE_RIGHT,  1, 0)
+					badge.set_anchor_and_offset(SIDE_BOTTOM, 1, 0)
+					badge.set_anchor_and_offset(SIDE_TOP,    1, -36)
+					badge.z_index = 35
+					var badge_bg = ColorRect.new()
+					badge_bg.z_index = 300
+					badge_bg.color = Color(0.1, 0.7, 0.2, 0.85)
+					badge_bg.set_anchor_and_offset(SIDE_LEFT,   0, 0)
+					badge_bg.set_anchor_and_offset(SIDE_RIGHT,  1, 0)
+					badge_bg.set_anchor_and_offset(SIDE_BOTTOM, 1, 0)
+					badge_bg.set_anchor_and_offset(SIDE_TOP,    1, -36)
+					badge_bg.z_index = 34
+					badge_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+					badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+					container.add_child(badge_bg)
+					container.add_child(badge)
+			container.add_child(border_panel)
 		
 		container.add_child(btn)
 
@@ -2081,6 +2120,17 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 		fridge_weights[iid] = w
 
 	save_fridge()
+	if _glucose_highlight_green.has(iid) or _glucose_highlight_yellow.has(iid):
+
+		var sugar_per_100 = effective.get("sugar_g", 0.0)
+		_glucose_consumed_from_highlights += sugar_per_100 * portion_g / 100.0
+		if _glucose_consumed_from_highlights >= _glucose_needed and _glucose_needed > 0:
+			_glucose_highlight_green.clear()
+			_glucose_highlight_yellow.clear()
+			_glucose_needed = 0.0
+			_glucose_consumed_from_highlights = 0.0
+			var lb = get_node_or_null("GlucoseLegendBox")
+			if lb: lb.queue_free()
 	build_fridge_ui()
 	popup.queue_free()
 
@@ -2242,6 +2292,7 @@ func save_fridge():
 		"expiry": fridge_expiry
 	}))
 	file.close()
+	_refresh_expire_btn_badge()
 
 func load_fridge():
 	if not FileAccess.file_exists("user://fridge.json"): return
@@ -5131,6 +5182,8 @@ func _build_insulin_btn():
 
 	_insulin_btn.gui_input.connect(_on_insulin_btn_input)
 	add_child(_insulin_btn)
+	_build_expire_btn()
+	_refresh_expire_btn_badge()
 
 func _on_insulin_btn_input(event: InputEvent):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -5187,10 +5240,13 @@ func _open_insulin_calculator():
 	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(backdrop)
 
+	var center = CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.add_child(center)
+
 	var panel = PanelContainer.new()
-	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	panel.custom_minimum_size = Vector2(360, 0)
-	backdrop.add_child(panel)
+	panel.custom_minimum_size = Vector2(500, 0)
+	center.add_child(panel)
 
 	var vbox = VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 14)
@@ -5313,6 +5369,7 @@ func _open_insulin_calculator():
 			"⚠️ This is an estimate. Always follow your doctor's advice."
 		)
 		result_lbl.add_theme_color_override("font_color", Color(1.0,0.7,0.2))
+		btn_row.queue_free()
 		action_row.visible = true
 	)
 
@@ -5360,6 +5417,8 @@ func _make_insulin_slider(label_text: String, min_v: float, max_v: float,
 
 func _show_glucose_options_in_fridge(glucose_needed: float):
 	_glucose_highlight_green.clear()
+	_glucose_needed = glucose_needed
+	_glucose_consumed_from_highlights = 0.0
 	_glucose_highlight_yellow.clear()
 
 	# Calculate effective glucose (sugar_g or net carbs) for each slot
@@ -5409,33 +5468,55 @@ func _show_glucose_options_in_fridge(glucose_needed: float):
 	build_fridge_ui()   # rebuild with highlights
 
 func _show_no_glucose_warning():
+	
+	var center = CenterContainer.new()
+	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	add_child(center)
+
 	var panel = PanelContainer.new()
 	panel.z_index = 200
-	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	panel.custom_minimum_size = Vector2(340, 0)
+	#panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(500, 0)
 	panel.modulate.a = 0.0
-	add_child(panel)
+	center.add_child(panel)
 
 	var lbl = Label.new()
+	lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	lbl.text = "⚠️ You don't have enough glucose in your fridge"
 	lbl.add_theme_font_size_override("font_size", 36)
 	lbl.add_theme_color_override("font_color", Color(1.0,0.3,0.2))
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	panel.add_child(lbl)
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for child in panel.get_children():
+		if child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 	var tween = create_tween()
 	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
 	tween.tween_interval(3.0)
 	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
-	tween.tween_callback(func(): panel.queue_free())
+	tween.tween_callback(func(): center.queue_free())
 
 func _build_glucose_legend():
-	var existing = get_node_or_null("GlucoseLegend")
-	if existing: existing.queue_free()
+	var existing = get_node_or_null("Panel/GlucoseLegendBox")
+	if existing: existing.get_parent().queue_free()
+
+	var legend_box = VBoxContainer.new()
+	legend_box.name = "GlucoseLegendBox"
+	legend_box.z_index = 200
+	legend_box.custom_minimum_size = Vector2(200, 200)  # adjust width to taste
+	#legend_box.offset_top += 630
+	#legend_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	legend_box.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	#legend_box.top_level = true
+	legend_box.add_theme_constant_override("separation", 6)
 
 	var legend = HBoxContainer.new()
-	legend.name = "GlucoseLegend"
+	#legend.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	#legend.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	legend.add_theme_constant_override("separation", 16)
 
 	# Green entry
@@ -5449,7 +5530,7 @@ func _build_glucose_legend():
 	green_cr.custom_minimum_size = Vector2(24, 24)
 	legend.add_child(green_cr)
 	var green_lbl = Label.new()
-	green_lbl.text = "— Provides enough glucose alone"
+	green_lbl.text = "— Provides enough glucose\n ALONE"
 	green_lbl.add_theme_font_size_override("font_size", 36)
 	legend.add_child(green_lbl)
 
@@ -5459,16 +5540,36 @@ func _build_glucose_legend():
 	yellow_cr.custom_minimum_size = Vector2(24, 24)
 	legend.add_child(yellow_cr)
 	var yellow_lbl = Label.new()
-	yellow_lbl.text = "— Provide enough glucose TOGETHER"
+	yellow_lbl.text = "— Provide enough glucose\n TOGETHER"
 	yellow_lbl.add_theme_font_size_override("font_size", 36)
 	legend.add_child(yellow_lbl)
+	legend_box.add_child(legend)
+
+	# Cancel button
+	var cancel_legend_btn = Button.new()
+	cancel_legend_btn.text = "Cancel"
+	cancel_legend_btn.z_index = 250
+	cancel_legend_btn.add_theme_font_size_override("font_size", 36)
+	cancel_legend_btn.add_theme_color_override("font_color", Color(1.0, 0.4, 0.4))
+	cancel_legend_btn.custom_minimum_size = Vector2(0, 60)
+	cancel_legend_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	cancel_legend_btn.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	cancel_legend_btn.pressed.connect(func():
+		_glucose_highlight_green.clear()
+		_glucose_highlight_yellow.clear()
+		legend_box.get_parent().queue_free()
+		build_fridge_ui()
+	)
+	legend_box.add_child(cancel_legend_btn)
 
 	# Insert above fridge container
-	var fridge_container = $Panel/FridgeContainer
-	var parent = fridge_container.get_parent()
-	var idx = fridge_container.get_index()
-	parent.add_child(legend)
-	parent.move_child(legend, idx)
+	var panel = $Panel
+	var wrapper = CenterContainer.new()
+	wrapper.set_anchors_preset(Control.PRESET_TOP_WIDE)
+	wrapper.offset_top = 600
+	wrapper.add_child(legend_box)
+	panel.add_child(wrapper)
+
 
 func _notification(what):
 	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
@@ -5476,5 +5577,212 @@ func _notification(what):
 		# Clear glucose highlights when returning to fridge
 		_glucose_highlight_green.clear()
 		_glucose_highlight_yellow.clear()
-		var legend = get_node_or_null("GlucoseLegend")
-		if legend: legend.queue_free()
+		var legend_box = get_node_or_null("Panel/GlucoseLegendBox")
+		if legend_box: legend_box.queue_free()
+
+func _build_expire_btn():
+	_expire_btn = Button.new()
+	_expire_btn.text = "📅"
+	_expire_btn.custom_minimum_size = Vector2(64, 64)
+	_expire_btn.add_theme_font_size_override("font_size", 36)
+	_expire_btn.z_index = 50
+	_expire_btn.tooltip_text = "Soon to Expire"
+
+	var saved_pos = Vector2(20, 480)
+	if FileAccess.file_exists("user://expire_btn_pos.json"):
+		var f = FileAccess.open("user://expire_btn_pos.json", FileAccess.READ)
+		var d = JSON.parse_string(f.get_as_text())
+		f.close()
+		if d: saved_pos = Vector2(d.get("x",20), d.get("y",480))
+	_expire_btn.position = saved_pos
+
+	_expire_btn.gui_input.connect(_on_expire_btn_input)
+	add_child(_expire_btn)
+
+func _on_expire_btn_input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_expire_btn_dragging = false
+			_expire_btn_drag_offset = _expire_btn.position - event.global_position
+		else:
+			if not _expire_btn_dragging:
+				_open_expiry_list()
+			else:
+				var f = FileAccess.open("user://expire_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_expire_btn.position.x,"y":_expire_btn.position.y}))
+				f.close()
+			_expire_btn_dragging = false
+	elif event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+		_expire_btn_dragging = true
+		_expire_btn.position = (event.global_position + _expire_btn_drag_offset).clamp(
+			Vector2.ZERO, get_viewport_rect().size - _expire_btn.custom_minimum_size)
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_expire_btn_dragging = false
+			_expire_btn_drag_offset = _expire_btn.position - event.position
+		else:
+			if not _expire_btn_dragging:
+				_open_expiry_list()
+			else:
+				var f = FileAccess.open("user://expire_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_expire_btn.position.x,"y":_expire_btn.position.y}))
+				f.close()
+			_expire_btn_dragging = false
+	elif event is InputEventScreenDrag:
+		_expire_btn_dragging = true
+		_expire_btn.position = (event.position + _expire_btn_drag_offset).clamp(
+			Vector2.ZERO, get_viewport_rect().size - _expire_btn.custom_minimum_size)
+
+func _parse_expiry_unix(date_str: String) -> int:
+	var parts = date_str.strip_edges().split("/")
+	if parts.size() != 3: return -1
+	var d = parts[0].to_int()
+	var m = parts[1].to_int()
+	var y = parts[2].to_int()
+	if d == 0 or m == 0 or y == 0: return -1
+	return int(Time.get_unix_time_from_datetime_dict({
+		"year":y,"month":m,"day":d,"hour":0,"minute":0,"second":0
+	}))
+
+func _refresh_expire_btn_badge():
+	if not _expire_btn: return
+	var existing_badge = _expire_btn.get_node_or_null("ExpireBadge")
+	if existing_badge: existing_badge.queue_free()
+
+	var today_unix = Time.get_unix_time_from_system()
+	var today_start = today_unix - int(today_unix) % 86400  # floor to midnight approx
+	var has_today = false
+
+	for iid in fridge_expiry.keys():
+		var expiry_unix = _parse_expiry_unix(fridge_expiry[iid])
+		if expiry_unix < 0: continue
+		var days_left = int((expiry_unix - today_unix) / 86400)
+		if days_left <= 0: has_today = true; break
+
+	if not has_today: return
+
+	var badge = Label.new()
+	badge.name = "ExpireBadge"
+	badge.text = "!"
+	badge.add_theme_font_size_override("font_size", 36)
+	badge.add_theme_color_override("font_color", Color.WHITE)
+	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+	var badge_bg = ColorRect.new()
+	badge_bg.color = Color(0.9, 0.1, 0.1)
+	badge_bg.custom_minimum_size = Vector2(20, 20)
+	badge_bg.position = Vector2(_expire_btn.custom_minimum_size.x - 18, -4)
+	badge_bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	badge.position = badge_bg.position
+	badge.custom_minimum_size = Vector2(20, 20)
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	_expire_btn.add_child(badge_bg)
+	_expire_btn.add_child(badge)
+
+func _open_expiry_list():
+	var existing = get_node_or_null("ExpiryListOverlay")
+	if existing: existing.queue_free()
+
+	# Build sorted list of items with valid expiry dates
+	var items_with_expiry: Array = []
+	var today_unix = Time.get_unix_time_from_system()
+
+	for slot in fridge_foods:
+		var iid = slot.get("_iid","")
+		if not fridge_expiry.has(iid): continue
+		var expiry_str = fridge_expiry[iid]
+		if expiry_str.is_empty(): continue
+		var expiry_unix = _parse_expiry_unix(expiry_str)
+		if expiry_unix < 0: continue
+		var days_left = int((expiry_unix - today_unix) / 86400)
+		if days_left > 5: continue   # only within 5 days
+		items_with_expiry.append({
+			"slot":       slot,
+			"expiry_str": expiry_str,
+			"days_left":  days_left
+		})
+
+	# Sort ascending by days_left
+	items_with_expiry.sort_custom(func(a,b): return a["days_left"] < b["days_left"])
+
+	var backdrop = ColorRect.new()
+	backdrop.name = "ExpiryListOverlay"
+	backdrop.color = Color(0,0,0,0.65)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.z_index = 100
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(backdrop)
+
+	var panel = PanelContainer.new()
+	panel.set_anchor_and_offset(SIDE_LEFT,   0, 20)
+	panel.set_anchor_and_offset(SIDE_RIGHT,  1, -20)
+	panel.set_anchor_and_offset(SIDE_TOP,    0, 100)
+	panel.set_anchor_and_offset(SIDE_BOTTOM, 1, -100)
+	backdrop.add_child(panel)
+
+	var outer = VBoxContainer.new()
+	outer.add_theme_constant_override("separation", 10)
+	panel.add_child(outer)
+
+	var title = Label.new()
+	title.text = "⏰ Expiring Soon"
+	title.add_theme_font_size_override("font_size", 36)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	outer.add_child(title)
+
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	outer.add_child(scroll)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 8)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(vbox)
+
+	if items_with_expiry.is_empty():
+		var empty = Label.new()
+		empty.text = "No items expiring within 5 days 🎉"
+		empty.add_theme_font_size_override("font_size", 36)
+		empty.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		vbox.add_child(empty)
+	else:
+		for entry in items_with_expiry:
+			var row = HBoxContainer.new()
+			row.add_theme_constant_override("separation", 10)
+			vbox.add_child(row)
+
+			var name_lbl = Label.new()
+			name_lbl.text = entry["slot"].get("name","?")
+			name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			name_lbl.add_theme_font_size_override("font_size", 36)
+			row.add_child(name_lbl)
+
+			var days = entry["days_left"]
+			var date_lbl = Label.new()
+			date_lbl.text = entry["expiry_str"]
+			date_lbl.add_theme_font_size_override("font_size", 36)
+			row.add_child(date_lbl)
+
+			var days_lbl = Label.new()
+			if days <= 0:
+				days_lbl.text = "EXPIRED"
+				days_lbl.add_theme_color_override("font_color", Color(1.0,0.2,0.2))
+			elif days == 1:
+				days_lbl.text = "tomorrow"
+				days_lbl.add_theme_color_override("font_color", Color(1.0,0.5,0.0))
+			else:
+				days_lbl.text = str(days) + " days"
+				days_lbl.add_theme_color_override("font_color",
+					Color(1.0,0.7,0.0) if days <= 2 else Color(0.7,0.7,0.7))
+			days_lbl.add_theme_font_size_override("font_size", 36)
+			row.add_child(days_lbl)
+
+	var close_btn = Button.new()
+	close_btn.text = "Close"
+	close_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	close_btn.custom_minimum_size = Vector2(0, 60)
+	close_btn.add_theme_font_size_override("font_size", 36)
+	close_btn.pressed.connect(func(): backdrop.queue_free())
+	outer.add_child(close_btn)
