@@ -5,6 +5,7 @@ signal py_awarded(amount: int, reason: String)
 signal streak_milestone_reached(days: int)
 signal quest_completed(quest: Dictionary)
 signal badge_earned(badge: Dictionary)
+signal item_equipped
 
 var last_report_date: String = ""
 

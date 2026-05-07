@@ -1,5 +1,11 @@
 extends Control
 
+var _insulin_btn: Button = null
+var _btn_dragging: bool = false
+var _btn_drag_offset: Vector2 = Vector2.ZERO
+var _glucose_highlight_green: Array = []
+var _glucose_highlight_yellow: Array = []
+var fridge_expiry: Dictionary = {}   # { _iid: "dd/mm/yyyy" }
 @onready var digest_check_btn: Button = $Panel/DigestCheckBtn
 @onready var digestive_panel: Panel  = $Panel/DigestiveSimulatorPanel
 var _provisional_deductions: Dictionary = {}
@@ -256,6 +262,9 @@ const FILTER_OPTIONS = [
 	{"key":"vitamin_d_mcg",        "label":"Vit D"},
 	{"key":"vitamin_e_mg",         "label":"Vit E"},
 	{"key":"vitamin_k2_mcg",       "label":"Vit K2"},
+	{"key":"saturated_fat_g", "label":"Sat Fat"},
+	{"key":"monounsaturated_fat_g", "label":"MonoUnSat Fat"},
+	{"key":"polyunsaturated_fat_g", "label":"PolyUnSat Fat"},
 	{"key":"calcium_mg",           "label":"Calcium"},
 	{"key":"iron_mg",              "label":"Iron"},
 	{"key":"magnesium_mg",         "label":"Magnesium"},
@@ -336,7 +345,7 @@ func _ready():
 				if btn is Button:
 					btn.button_pressed = (btn.text == "All")
 		# Clear search bar
-		var search = $Panel/MealPlannerPanel/VBoxContainer/MPSearchBar
+		var search = $Panel/MealPlannerPanel/VBoxContainer/TopBarMP/MPSearchBar
 		if search: search.text = ""
 		# Rest of close logic unchanged
 		_revert_provisional_deductions()
@@ -392,6 +401,9 @@ func _ready():
 	_build_filter_buttons()
 	_build_warning_filter_buttons()
 	_connect_sort_buttons()
+	Global.item_equipped.connect(func(_a,_b): pass)  # existing signal
+	_build_insulin_btn()
+	_update_insulin_btn_visibility()
 
 # ─────────────────────────────────────────
 #  SWIPE DETECTION
@@ -744,16 +756,33 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 	name_col.add_theme_constant_override("separation", 2)
 	row.add_child(name_col)
 
-	var name_label = Label.new()
-	name_label.text = food.get("name", "")
-	name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_label.size_flags_vertical = Control.SIZE_EXPAND_FILL   # ← ADD
-	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER   # ← ADD
-	name_label.add_theme_font_size_override("font_size", fs)
-	name_label.autowrap_mode = TextServer.AUTOWRAP_WORD  # ← ADD
-	name_col.add_child(name_label)  # ← was row.add_child, must be name_col
-	
+	if Global.simple_mode:
+		var name_label = Label.new()
+		name_label.text = food.get("name", "")
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		name_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		name_label.add_theme_font_size_override("font_size", fs)
+		name_label.add_theme_color_override("font_color", Color(1.0, 1.0, 1.0))
+		name_label.autowrap_mode = TextServer.AUTOWRAP_WORD
+		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		name_col.add_child(name_label)
+	else:
+		var name_label = Button.new()
+		name_label.text = food.get("name", "")
+		name_label.flat = true
+		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_label.size_flags_vertical = Control.SIZE_EXPAND_FILL
+		name_label.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		name_label.alignment = VERTICAL_ALIGNMENT_CENTER
+		name_label.add_theme_font_size_override("font_size", fs)
+		name_label.add_theme_color_override("font_color",         Color(0.3, 0.6, 1.0))
+		name_label.add_theme_color_override("font_color_hover",   Color(0.5, 0.8, 1.0))
+		name_label.add_theme_color_override("font_color_pressed", Color(0.2, 0.5, 0.9))
+		name_label.pressed.connect(func(): _show_food_nutrition_panel(food))
+		name_label.autowrap_mode = TextServer.AUTOWRAP_WORD
+		name_col.add_child(name_label)
 	# Strict avoid label
 	var strict_conditions = Global.get_strict_avoid_conditions(food)
 	if not strict_conditions.is_empty():
@@ -1253,6 +1282,24 @@ func build_fridge_ui():
 	)
 
 		btn.gui_input.connect(func(event): _handle_fridge_input(event, slot, btn, timer))
+		
+		# After creating container, before add_child:
+
+		if _glucose_highlight_green.has(iid):
+			var border = ColorRect.new()
+			border.color = Color(0.2, 0.95, 0.3, 0.6)
+			border.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			border.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			border.z_index = -1
+			container.add_child(border)
+		elif _glucose_highlight_yellow.has(iid):
+			var border = ColorRect.new()
+			border.color = Color(1.0, 0.85, 0.0, 0.5)
+			border.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			border.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			border.z_index = -1
+			container.add_child(border)
+		
 		container.add_child(btn)
 
 # Count badge
@@ -1608,12 +1655,45 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	vbox.add_theme_constant_override("separation", 8)
 	action_popup.add_child(vbox)
 
+	var name_row = HBoxContainer.new()
+	name_row.add_theme_constant_override("separation", 8)
+	#name_row.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	action_popup.get_child(0).add_child(name_row)
+
 	var title = Label.new()
 	title.text = slot.get("name","")
+	title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 35)
+	title.add_theme_font_size_override("font_size", 36)
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
-	vbox.add_child(title)
+	name_row.add_child(title)
+	
+	var expiry_edit = LineEdit.new()
+	expiry_edit.placeholder_text = "dd/mm/yyyy"
+	expiry_edit.text = fridge_expiry.get(iid, "")
+	expiry_edit.custom_minimum_size = Vector2(250, 44)
+	expiry_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
+	expiry_edit.add_theme_font_size_override("font_size", 36)
+	#expiry_edit.alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	var captured_iid = iid
+	expiry_edit.text_submitted.connect(func(new_text: String):
+		fridge_expiry[captured_iid] = new_text
+		save_fridge()
+	)
+	expiry_edit.focus_exited.connect(func():
+		fridge_expiry[captured_iid] = expiry_edit.text
+		save_fridge()
+	)
+	name_row.add_child(expiry_edit)
+
+	var bb_lbl = Label.new()
+	bb_lbl.text = "(Best Before)"
+	bb_lbl.custom_minimum_size = Vector2(300, 44)
+	bb_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	bb_lbl.add_theme_font_size_override("font_size", 36)
+	bb_lbl.add_theme_color_override("font_color", Color(0.6,0.6,0.6))
+	#bb_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_row.add_child(bb_lbl)
 	
 	add_child(action_popup)
 
@@ -2158,7 +2238,8 @@ func save_fridge():
 	file.store_string(JSON.stringify({
 		"fridge": fridge_foods,
 		"weights":   fridge_weights,
-		"overrides": fridge_overrides
+		"overrides": fridge_overrides,
+		"expiry": fridge_expiry
 	}))
 	file.close()
 
@@ -2175,6 +2256,7 @@ func load_fridge():
 			if not slot.has("_iid"):
 				slot["_iid"] = _generate_iid()
 	if data.has("weights"):   fridge_weights   = data["weights"]
+	fridge_expiry = data.get("expiry", {})
 	if data.has("overrides"): fridge_overrides = data["overrides"]
 	build_fridge_ui()
 
@@ -2643,15 +2725,40 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 	name_col.add_theme_constant_override("separation", 2)
 	row.add_child(name_col)
 
-	var name_lbl = Label.new()
-	name_lbl.text = food.get("name","")
-	name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	name_lbl.size_flags_vertical = Control.SIZE_EXPAND_FILL     # ← ADD THIS
-	name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
-	name_lbl.add_theme_font_size_override("font_size", fs)
-	name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD  # ← ADD
-	name_col.add_child(name_lbl)
+	if Global.simple_mode == true:
+	
+		var name_lbl = Label.new()
+		name_lbl.text = food.get("name","")
+		
+		name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_lbl.size_flags_vertical = Control.SIZE_EXPAND_FILL     # ← ADD THIS
+		name_lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		name_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		name_lbl.add_theme_font_size_override("font_size", fs)
+		name_lbl.add_theme_color_override("font_color",         Color(1.0, 1.0, 1.0))
+		name_lbl.add_theme_color_override("font_color_hover",   Color(0.5, 0.8, 1.0))
+		name_lbl.add_theme_color_override("font_color_pressed", Color(0.2, 0.5, 0.9))
+		
+		name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD  # ← ADD
+
+		name_col.add_child(name_lbl)
+	else:
+		var name_lbl = Button.new()
+		name_lbl.text = food.get("name","")
+		name_lbl.flat = true
+		name_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		name_lbl.size_flags_vertical = Control.SIZE_EXPAND_FILL     # ← ADD THIS
+		name_lbl.alignment = VERTICAL_ALIGNMENT_CENTER
+		name_lbl.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		name_lbl.add_theme_font_size_override("font_size", fs)
+		name_lbl.add_theme_color_override("font_color",         Color(0.3, 0.6, 1.0))
+		name_lbl.add_theme_color_override("font_color_hover",   Color(0.5, 0.8, 1.0))
+		name_lbl.add_theme_color_override("font_color_pressed", Color(0.2, 0.5, 0.9))
+		name_lbl.pressed.connect(func(): _show_food_nutrition_panel(food))
+		name_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD  # ← ADD
+		name_col.add_child(name_lbl)
+	
+
 
 	# Strict avoid label
 	var strict_conditions = Global.get_strict_avoid_conditions(food)
@@ -3965,7 +4072,8 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 			ex.queue_free()
 			_portion_popup_stack.erase(ex)
 			break
-
+	
+	_clean_portion_popup_stack()
 	if _portion_popup_stack.size() >= MAX_PORTION_POPUPS:
 		_show_popup_limit_warning()
 		return
@@ -4038,10 +4146,12 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 
 func _remove_portion_popup(popup: Node):
 	_portion_popup_stack.erase(popup)
-	popup.queue_free()
+	if is_instance_valid(popup): popup.queue_free()
+	_clean_portion_popup_stack()
 	_reposition_portion_popups()
 
 func _reposition_portion_popups():
+	_clean_portion_popup_stack()
 	# Stack popups centered on screen, one under the other
 	var viewport    = get_viewport_rect().size
 	var popup_width = min(380.0, viewport.x - 20.0)
@@ -4811,3 +4921,560 @@ func _show_fridge_ingredient_warning(meal: Dictionary, missing: Array):
 	no_btn.add_theme_font_size_override("font_size", 48)
 	no_btn.pressed.connect(func(): backdrop.queue_free())
 	btn_row.add_child(no_btn)
+
+func _clean_portion_popup_stack():
+	_portion_popup_stack = _portion_popup_stack.filter(
+		func(p): return is_instance_valid(p)
+	)
+
+func _show_food_nutrition_panel(food: Dictionary):
+	var existing = get_node_or_null("FoodNutritionOverlay")
+	if existing: existing.queue_free()
+
+	var canvas = CanvasLayer.new()
+	canvas.name = "OverlayBackdrop"
+	add_child(canvas)
+
+	var backdrop = ColorRect.new()
+	backdrop.name = "FoodNutritionOverlay"
+	backdrop.top_level = true
+	backdrop.color = Color(0.0, 0.0, 0.0, 0.6)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.z_index = 200
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	canvas.add_child(backdrop)
+	
+	var _close = func():
+		if is_instance_valid(canvas):
+			canvas.queue_free()
+			
+	backdrop.gui_input.connect(func(event):
+		if event is InputEventMouseButton and event.pressed \
+				and event.button_index == MOUSE_BUTTON_LEFT:
+			_close.call()
+		elif event is InputEventScreenTouch and event.pressed:
+			_close.call()
+	)
+	var panel = PanelContainer.new()
+	panel.z_index = 201
+	panel.mouse_filter = Control.MOUSE_FILTER_STOP
+	panel.set_anchor_and_offset(SIDE_LEFT,   0, 12)
+	panel.set_anchor_and_offset(SIDE_RIGHT,  1, -12)
+	panel.set_anchor_and_offset(SIDE_TOP,    0, 150)
+	panel.set_anchor_and_offset(SIDE_BOTTOM, 1, -400)
+	backdrop.add_child(panel)
+
+	var scroll = ScrollContainer.new()
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical   = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	panel.add_child(scroll)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 10)
+	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(vbox)
+
+	# Header
+	var title = Label.new()
+	title.text = food.get("name","") + "  (" + food.get("category","").capitalize() + ")"
+	title.add_theme_font_size_override("font_size", 36)
+	title.add_theme_color_override("font_color", Color(0.3,0.7,1.0))
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(title)
+
+	var sub = Label.new()
+	sub.text = "Per 100g  ·  Tap outside to close"
+	sub.add_theme_font_size_override("font_size", 36)
+	sub.add_theme_color_override("font_color", Color(0.5,0.5,0.5))
+	vbox.add_child(sub)
+
+	vbox.add_child(HSeparator.new())
+
+	# Grouped sections
+	var sections = [
+		{"title":"Macronutrients", "color":Color(0.8,0.8,0.4), "fields":[
+			["Calories",         "calories",              "kcal"],
+			["Protein",          "protein_g",             "g"],
+			["Fat",              "fat_g",                 "g"],
+			["  Saturated",      "saturated_fat_g",       "g"],
+			["  Mono",           "monounsaturated_fat_g", "g"],
+			["  Poly",           "polyunsaturated_fat_g", "g"],
+			["Carbohydrates",    "carbs_g",               "g"],
+			["  Sugar",          "sugar_g",               "g"],
+			["Fiber",            "fiber_g",               "g"],
+			["Oxalate",          "oxalate_mg_per_100g",   "mg"],
+			["Glycemic Index",   "glycemic_index",        "GI"],
+			["Soluble Fiber",    "soluble_fiber_pct",     "%"],
+			["Insoluble Fiber",  "insoluble_fiber_pct",   "%"],
+		]},
+		{"title":"Vitamins", "color":Color(0.5,0.9,0.4), "fields":[
+			["Vitamin A",   "vitamin_a_mcg",   "mcg"],
+			["Vitamin B1",  "vitamin_b1_mg",   "mg"],
+			["Vitamin B2",  "vitamin_b2_mg",   "mg"],
+			["Vitamin B3",  "vitamin_b3_mg",   "mg"],
+			["Vitamin B5",  "vitamin_b5_mg",   "mg"],
+			["Vitamin B6",  "vitamin_b6_mg",   "mg"],
+			["Vitamin B7",  "vitamin_b7_mcg",  "mcg"],
+			["Vitamin B9",  "vitamin_b9_mcg",  "mcg"],
+			["Vitamin B12", "vitamin_b12_mcg", "mcg"],
+			["Vitamin C",   "vitamin_c_mg",    "mg"],
+			["Vitamin D",   "vitamin_d_mcg",   "mcg"],
+			["Vitamin E",   "vitamin_e_mg",    "mg"],
+			["Vitamin K1",  "vitamin_k1_mcg",  "mcg"],
+			["Vitamin K2",  "vitamin_k2_mcg",  "mcg"],
+		]},
+		{"title":"Minerals", "color":Color(0.4,0.8,0.9), "fields":[
+			["Calcium",    "calcium_mg",    "mg"],
+			["Iron",       "iron_mg",       "mg"],
+			["Magnesium",  "magnesium_mg",  "mg"],
+			["Potassium",  "potassium_mg",  "mg"],
+			["Sodium",     "sodium_mg",     "mg"],
+			["Zinc",       "zinc_mg",       "mg"],
+			["Phosphorus", "phosphorus_mg", "mg"],
+			["Copper",     "copper_mg",     "mg"],
+			["Selenium",   "selenium_mcg",  "mcg"],
+			["Iodine",     "iodine_mcg",    "mcg"],
+			["Manganese",  "manganese_mg",  "mg"],
+			["Chromium",   "chromium_mcg",  "mcg"],
+			["Molybdenum", "molybdenum_mcg","mcg"],
+			["Sulfur",     "sulfur_mg",     "mg"],
+		]},
+		{"title":"Antioxidants", "color":Color(0.9,0.5,0.9), "fields":[
+			["Beta-carotene",    "beta_carotene_mcg",    "mcg"],
+			["Lycopene",         "lycopene_mcg",          "mcg"],
+			["Lutein+Zeaxanthin","lutein_zeaxanthin_mcg", "mcg"],
+			["Quercetin",        "quercetin_mg",          "mg"],
+			["Anthocyanins",     "anthocyanins_mg",       "mg"],
+			["Resveratrol",      "resveratrol_mg",        "mg"],
+			["Polyphenols",      "total_polyphenols_mg",  "mg"],
+		]},
+		{"title":"Starch Profile", "color":Color(0.9,0.7,0.3), "fields":[
+			["Resistant Starch", "resistant_starch_pct", "%"],
+			["Fast Starch",      "rapid_starch_pct",     "%"],
+			["Slow Starch",      "slow_starch_pct",      "%"],
+		]},
+	]
+
+	for section in sections:
+		var sec_title = Label.new()
+		sec_title.text = section["title"]
+		sec_title.add_theme_font_size_override("font_size", 36)
+		sec_title.add_theme_color_override("font_color", section["color"])
+		vbox.add_child(sec_title)
+
+		var any_shown = false
+		for field in section["fields"]:
+			var val = food.get(field[1], 0.0)
+			if val <= 0.0: continue  # skip zero values
+			any_shown = true
+			var row = HBoxContainer.new()
+			vbox.add_child(row)
+			var k = Label.new()
+			k.text = field[0]
+			k.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			k.add_theme_font_size_override("font_size", 36)
+			row.add_child(k)
+			var v = Label.new()
+			v.text = str(snappedf(val, 0.01)) + " " + field[2]
+			v.add_theme_font_size_override("font_size", 36)
+			row.add_child(v)
+
+		if not any_shown:
+			var none_lbl = Label.new()
+			none_lbl.text = "No data"
+			none_lbl.add_theme_font_size_override("font_size", 36)
+			none_lbl.add_theme_color_override("font_color", Color(0.4,0.4,0.4))
+			vbox.add_child(none_lbl)
+
+		vbox.add_child(HSeparator.new())
+
+	# Warnings for this food
+	var warnings = Global.get_warnings(food)
+	if not warnings.is_empty():
+		var warn_title = Label.new()
+		warn_title.text = "⚠️ Warnings for your conditions"
+		warn_title.add_theme_font_size_override("font_size", 36)
+		warn_title.add_theme_color_override("font_color", Color(1.0,0.5,0.2))
+		vbox.add_child(warn_title)
+		for w in warnings:
+			var wl = Label.new()
+			wl.text = ("⛔ " if w["severity"]=="avoid" else "⚠️ ") + w["message"]
+			wl.add_theme_font_size_override("font_size", 36)
+			wl.autowrap_mode = TextServer.AUTOWRAP_WORD
+			vbox.add_child(wl)
+
+func _update_insulin_btn_visibility():
+	if _insulin_btn == null: return
+	var has_diabetes = (
+		Global.active_metabolic_conditions.has("glycemic-health") or
+		Global.known_diagnoses.has("glycemic-health")
+	)
+	_insulin_btn.visible = has_diabetes
+
+func _build_insulin_btn():
+	_insulin_btn = Button.new()
+	_insulin_btn.text = "💉"
+	_insulin_btn.custom_minimum_size = Vector2(64, 64)
+	_insulin_btn.add_theme_font_size_override("font_size", 36)
+	_insulin_btn.z_index = 50
+	_insulin_btn.tooltip_text = "Insulin → Glucose Calculator"
+
+	# Restore saved position
+	var saved_pos = Vector2(20, 400)
+	if FileAccess.file_exists("user://insulin_btn_pos.json"):
+		var f = FileAccess.open("user://insulin_btn_pos.json", FileAccess.READ)
+		var d = JSON.parse_string(f.get_as_text())
+		f.close()
+		if d: saved_pos = Vector2(d.get("x",20), d.get("y",400))
+	_insulin_btn.position = saved_pos
+
+	_insulin_btn.gui_input.connect(_on_insulin_btn_input)
+	add_child(_insulin_btn)
+
+func _on_insulin_btn_input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_btn_dragging = false
+			_btn_drag_offset = _insulin_btn.position - event.global_position
+		else:
+			if not _btn_dragging:
+				_open_insulin_calculator()
+			else:
+				var f = FileAccess.open("user://insulin_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_insulin_btn.position.x,"y":_insulin_btn.position.y}))
+				f.close()
+			_btn_dragging = false
+
+	elif event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+		_btn_dragging = true
+		_insulin_btn.position = event.global_position + _btn_drag_offset
+		_insulin_btn.position = _insulin_btn.position.clamp(
+			Vector2.ZERO,
+			get_viewport_rect().size - _insulin_btn.custom_minimum_size
+		)
+
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_btn_dragging = false
+			_btn_drag_offset = _insulin_btn.position - event.position
+		else:
+			if not _btn_dragging:
+				_open_insulin_calculator()
+			else:
+				var f = FileAccess.open("user://insulin_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_insulin_btn.position.x,"y":_insulin_btn.position.y}))
+				f.close()
+			_btn_dragging = false
+
+	elif event is InputEventScreenDrag:
+		_btn_dragging = true
+		_insulin_btn.position = event.position + _btn_drag_offset
+		_insulin_btn.position = _insulin_btn.position.clamp(
+			Vector2.ZERO,
+			get_viewport_rect().size - _insulin_btn.custom_minimum_size
+		)
+
+func _open_insulin_calculator():
+	var existing = get_node_or_null("InsulinCalc")
+	if existing: existing.queue_free()
+
+	var backdrop = ColorRect.new()
+	backdrop.name = "InsulinCalc"
+	backdrop.color = Color(0,0,0,0.7)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.z_index = 100
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(backdrop)
+
+	var panel = PanelContainer.new()
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(360, 0)
+	backdrop.add_child(panel)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 14)
+	panel.add_child(vbox)
+
+	var title = Label.new()
+	title.text = "💉 Insulin → Glucose Calculator"
+	title.add_theme_font_size_override("font_size", 36)
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(title)
+
+	var sub = Label.new()
+	sub.text = "How much insulin did you accidentally inject?"
+	sub.add_theme_font_size_override("font_size", 36)
+	sub.add_theme_color_override("font_color", Color(0.7,0.7,0.7))
+	sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	sub.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(sub)
+
+	# 3-number slider: [tens 0-3] [units 0-9] [decimal 0/5]
+	var sliders_row = HBoxContainer.new()
+	sliders_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	sliders_row.add_theme_constant_override("separation", 16)
+	vbox.add_child(sliders_row)
+
+	var total_lbl = Label.new()
+	total_lbl.text = "0.0 units"
+	total_lbl.add_theme_font_size_override("font_size", 36)
+	total_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	total_lbl.add_theme_color_override("font_color", Color(1.0,0.6,0.2))
+	vbox.add_child(total_lbl)
+
+	var slider_tens  = _make_insulin_slider("Tens",   0, 3,  1, "× 10")
+	var slider_units = _make_insulin_slider("Units",  0, 9,  1, "units")
+	var slider_dec   = _make_insulin_slider("×½",     0, 1,  1, "0.5 unit")
+	sliders_row.add_child(slider_tens["container"])
+	sliders_row.add_child(slider_units["container"])
+	sliders_row.add_child(slider_dec["container"])
+
+	var _update_total = func():
+		var total = slider_tens["slider"].value * 10.0 + \
+					slider_units["slider"].value + \
+					slider_dec["slider"].value * 0.5
+		total = min(total, 30.0)
+		total_lbl.text = str(snappedf(total, 0.5)) + " units"
+
+	slider_tens["slider"].value_changed.connect(func(_v): _update_total.call())
+	slider_units["slider"].value_changed.connect(func(_v): _update_total.call())
+	slider_dec["slider"].value_changed.connect(func(_v): _update_total.call())
+
+	var result_lbl = Label.new()
+	result_lbl.name = "ResultLabel"
+	result_lbl.add_theme_font_size_override("font_size", 36)
+	result_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	result_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	vbox.add_child(result_lbl)
+
+	var btn_row = HBoxContainer.new()
+	btn_row.add_theme_constant_override("separation", 12)
+	btn_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	vbox.add_child(btn_row)
+
+	var calc_btn = Button.new()
+	calc_btn.text = "Calculate"
+	calc_btn.custom_minimum_size = Vector2(140, 60)
+	calc_btn.add_theme_font_size_override("font_size", 36)
+	btn_row.add_child(calc_btn)
+
+	var cancel_btn = Button.new()
+	cancel_btn.text = "Cancel"
+	cancel_btn.custom_minimum_size = Vector2(100, 60)
+	cancel_btn.add_theme_font_size_override("font_size", 36)
+	cancel_btn.pressed.connect(func(): backdrop.queue_free())
+	btn_row.add_child(cancel_btn)
+
+	var action_row = HBoxContainer.new()
+	action_row.add_theme_constant_override("separation", 12)
+	action_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	action_row.visible = false
+	vbox.add_child(action_row)
+
+	var show_fridge_btn = Button.new()
+	show_fridge_btn.text = "🔍 Show options in Fridge"
+	show_fridge_btn.custom_minimum_size = Vector2(0, 60)
+	show_fridge_btn.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	show_fridge_btn.add_theme_font_size_override("font_size", 36)
+	show_fridge_btn.add_theme_color_override("font_color", Color(0.3,0.9,0.4))
+	action_row.add_child(show_fridge_btn)
+
+	var ok_btn = Button.new()
+	ok_btn.text = "OK"
+	ok_btn.custom_minimum_size = Vector2(80, 60)
+	ok_btn.add_theme_font_size_override("font_size", 36)
+	ok_btn.pressed.connect(func(): backdrop.queue_free())
+	action_row.add_child(ok_btn)
+
+	var glucose_needed_ref = [0.0]
+
+	calc_btn.pressed.connect(func():
+		var total = slider_tens["slider"].value * 10.0 + \
+					slider_units["slider"].value + \
+					slider_dec["slider"].value * 0.5
+		total = min(total, 30.0)
+
+		# Formula: rapid-acting insulin correction
+		# Each unit lowers blood glucose ~50 mg/dL (standard ISF)
+		# Each 15g fast carbs raises blood glucose ~50 mg/dL (15g rule)
+		# Therefore: glucose_g = insulin_units × 15
+		# For safety margin: minimum 15g, round up to nearest 5g
+		var glucose_g = max(total * 15.0, 15.0)
+		glucose_g = ceil(glucose_g / 5.0) * 5.0
+		glucose_needed_ref[0] = glucose_g
+
+		result_lbl.text = (
+			"🍬 Eat approximately " + str(int(glucose_g)) + "g of fast carbohydrates\n" +
+			"(juice, glucose tablets, sugar, sweet fruit)\n\n" +
+			"Based on the 15g rule: " + str(snappedf(total,0.5)) + " units × 15g = " +
+			str(int(total*15)) + "g  (rounded to " + str(int(glucose_g)) + "g)\n" +
+			"⚠️ This is an estimate. Always follow your doctor's advice."
+		)
+		result_lbl.add_theme_color_override("font_color", Color(1.0,0.7,0.2))
+		action_row.visible = true
+	)
+
+	show_fridge_btn.pressed.connect(func():
+		backdrop.queue_free()
+		_show_glucose_options_in_fridge(glucose_needed_ref[0])
+	)
+
+func _make_insulin_slider(label_text: String, min_v: float, max_v: float,
+		step_v: float, unit_text: String) -> Dictionary:
+	var container = VBoxContainer.new()
+	container.add_theme_constant_override("separation", 4)
+	container.custom_minimum_size = Vector2(80, 0)
+
+	var lbl = Label.new()
+	lbl.text = label_text
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.add_theme_font_size_override("font_size", 36)
+	container.add_child(lbl)
+
+	var val_lbl = Label.new()
+	val_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	val_lbl.add_theme_font_size_override("font_size", 36)
+	val_lbl.add_theme_color_override("font_color", Color(1.0,0.85,0.2))
+	val_lbl.text = "0"
+	container.add_child(val_lbl)
+
+	var slider = HSlider.new()
+	slider.min_value = min_v
+	slider.max_value = max_v
+	slider.step = step_v
+	slider.value = 0
+	slider.custom_minimum_size = Vector2(80, 32)
+	slider.value_changed.connect(func(v): val_lbl.text = str(int(v)))
+	container.add_child(slider)
+
+	var unit_lbl = Label.new()
+	unit_lbl.text = unit_text
+	unit_lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	unit_lbl.add_theme_font_size_override("font_size", 36)
+	unit_lbl.add_theme_color_override("font_color", Color(0.6,0.6,0.6))
+	container.add_child(unit_lbl)
+
+	return {"container": container, "slider": slider}
+
+func _show_glucose_options_in_fridge(glucose_needed: float):
+	_glucose_highlight_green.clear()
+	_glucose_highlight_yellow.clear()
+
+	# Calculate effective glucose (sugar_g or net carbs) for each slot
+	var slot_glucose: Array = []  # [{iid, sugar_g_total, slot}]
+	for slot in fridge_foods:
+		var iid       = slot.get("_iid","")
+		var w         = fridge_weights.get(iid, {})
+		var remaining = w.get("remaining_g", 0.0)
+		var count     = slot.get("_count", 1)
+		var effective = _get_effective_slot(slot)
+		var sugar_per_100  = effective.get("sugar_g", 0.0)
+		var carbs_per_100  = effective.get("carbs_g", 0.0)
+		var fiber_per_100  = effective.get("fiber_g", 0.0)
+		# Use sugar_g for fast-acting glucose; fallback to net carbs
+		var fast_carbs_100 = sugar_per_100 if sugar_per_100 > 0 else max(carbs_per_100 - fiber_per_100, 0.0)
+		var total_fast = fast_carbs_100 * (remaining / 100.0) * count
+		if total_fast > 0:
+			slot_glucose.append({"iid": iid, "sugar": total_fast, "slot": slot})
+
+	# Sort descending by sugar
+	slot_glucose.sort_custom(func(a,b): return a["sugar"] > b["sugar"])
+
+	if slot_glucose.is_empty():
+		_show_no_glucose_warning()
+		return
+
+	# Green: single item provides >= glucose_needed
+	for sg in slot_glucose:
+		if sg["sugar"] >= glucose_needed:
+			_glucose_highlight_green.append(sg["iid"])
+
+	if _glucose_highlight_green.is_empty():
+		# Yellow: greedy combination
+		var running_total = 0.0
+		for sg in slot_glucose:
+			_glucose_highlight_yellow.append(sg["iid"])
+			running_total += sg["sugar"]
+			if running_total >= glucose_needed: break
+
+		if running_total < glucose_needed:
+			_glucose_highlight_green.clear()
+			_glucose_highlight_yellow.clear()
+			_show_no_glucose_warning()
+			return
+
+	_build_glucose_legend()
+	build_fridge_ui()   # rebuild with highlights
+
+func _show_no_glucose_warning():
+	var panel = PanelContainer.new()
+	panel.z_index = 200
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(340, 0)
+	panel.modulate.a = 0.0
+	add_child(panel)
+
+	var lbl = Label.new()
+	lbl.text = "⚠️ You don't have enough glucose in your fridge"
+	lbl.add_theme_font_size_override("font_size", 36)
+	lbl.add_theme_color_override("font_color", Color(1.0,0.3,0.2))
+	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	panel.add_child(lbl)
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(3.0)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.4)
+	tween.tween_callback(func(): panel.queue_free())
+
+func _build_glucose_legend():
+	var existing = get_node_or_null("GlucoseLegend")
+	if existing: existing.queue_free()
+
+	var legend = HBoxContainer.new()
+	legend.name = "GlucoseLegend"
+	legend.add_theme_constant_override("separation", 16)
+
+	# Green entry
+	var green_icon = TextureRect.new()
+	green_icon.name = "GreenIcon"
+	green_icon.custom_minimum_size = Vector2(24, 24)
+	# Placeholder — replace with png later via:
+	# green_icon.texture = load("res://images/icons/green_square.png")
+	var green_cr = ColorRect.new()
+	green_cr.color = Color(0.2, 0.9, 0.3)
+	green_cr.custom_minimum_size = Vector2(24, 24)
+	legend.add_child(green_cr)
+	var green_lbl = Label.new()
+	green_lbl.text = "— Provides enough glucose alone"
+	green_lbl.add_theme_font_size_override("font_size", 36)
+	legend.add_child(green_lbl)
+
+	# Yellow entry
+	var yellow_cr = ColorRect.new()
+	yellow_cr.color = Color(1.0, 0.85, 0.0)
+	yellow_cr.custom_minimum_size = Vector2(24, 24)
+	legend.add_child(yellow_cr)
+	var yellow_lbl = Label.new()
+	yellow_lbl.text = "— Provide enough glucose TOGETHER"
+	yellow_lbl.add_theme_font_size_override("font_size", 36)
+	legend.add_child(yellow_lbl)
+
+	# Insert above fridge container
+	var fridge_container = $Panel/FridgeContainer
+	var parent = fridge_container.get_parent()
+	var idx = fridge_container.get_index()
+	parent.add_child(legend)
+	parent.move_child(legend, idx)
+
+func _notification(what):
+	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
+		_update_insulin_btn_visibility()
+		# Clear glucose highlights when returning to fridge
+		_glucose_highlight_green.clear()
+		_glucose_highlight_yellow.clear()
+		var legend = get_node_or_null("GlucoseLegend")
+		if legend: legend.queue_free()

@@ -1216,6 +1216,7 @@ func _on_reset_intake():
 		DirAccess.remove_absolute("user://water.json")
 	print("Today's intake reset")
 	
+	Global.load_points()
 	# Reset ONLY today's points — not all-time total
 	var today = Time.get_date_string_from_system()
 	Global.points_history[today] = 0.0

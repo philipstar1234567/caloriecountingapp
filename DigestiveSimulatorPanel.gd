@@ -33,8 +33,16 @@ const SEVERITY_COLORS := {
 	2: Color(0.95, 0.45, 0.05, 1.0),   # orange  – moderate
 	3: Color(0.80, 0.08, 0.08, 1.0),   # red     – severe
 }
+# Synergy warnings use a purple-tinted background to visually distinguish them
+const SYNERGY_COLORS := {
+	1: Color(0.45, 0.15, 0.75, 1.0),   # purple  – mild synergy
+	2: Color(0.55, 0.05, 0.85, 1.0),   # violet  – moderate synergy
+	3: Color(0.65, 0.00, 0.90, 1.0),   # deep violet – severe synergy
+}
 const OK_COLOR := Color(0.10, 0.72, 0.30, 1.0)
-
+const WHITE         := Color.WHITE
+const WHITE_80      := Color(1, 1, 1, 0.80)
+const WHITE_65      := Color(1, 1, 1, 0.65)
 
 # ─────────────────────────────────────────────────────────────────────────────
 func _ready() -> void:
@@ -163,23 +171,48 @@ func _on_clear_meal() -> void:
 # ─────────────────────────────────────────────────────────────────────────────
 
 func _run_analysis() -> void:
-	# Clear previous warnings
 	for child in warnings_container.get_children():
 		child.queue_free()
-
+ 
 	if _selected_food_ids.is_empty():
-		_add_placeholder("← Add foods from the list to check your meal.")
+		_add_placeholder("<- Add foods from the list to check your meal.")
 		return
-
+ 
 	var warnings: Array = simulator.analyze_meal(_selected_food_ids)
-
+ 
 	if warnings.is_empty():
 		_add_ok_banner()
 		return
-
-	for w in warnings:
+ 
+	# Separate synergy and regular warnings so synergy always shows at the top
+	var synergy_warnings := warnings.filter(func(w): return w.get("is_synergy", false))
+	var regular_warnings := warnings.filter(func(w): return not w.get("is_synergy", false))
+ 
+	# Synergy section header (only if there are synergy warnings)
+	if not synergy_warnings.is_empty():
+		_add_section_header("⚡  Combination Warnings — these only occur from this specific meal combination")
+		for w in synergy_warnings:
+			_add_warning_card(w)
+ 
+	# Regular warnings section header (only if there are also synergy warnings above)
+	if not regular_warnings.is_empty() and not synergy_warnings.is_empty():
+		_add_section_header("Individual Compound Warnings")
+ 
+	for w in regular_warnings:
 		_add_warning_card(w)
 
+
+func _add_section_header(text: String) -> void:
+	var lbl := Label.new()
+	lbl.text = text
+	lbl.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+	lbl.add_theme_font_size_override("font_size", 36)
+	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	warnings_container.add_child(lbl)
+ 
+	# Thin separator line
+	var sep := HSeparator.new()
+	warnings_container.add_child(sep)
 
 func _add_placeholder(msg: String) -> void:
 	var lbl := Label.new()
@@ -200,38 +233,74 @@ func _add_ok_banner() -> void:
 
 
 func _add_warning_card(warning: Dictionary) -> void:
+	var is_synergy: bool = warning.get("is_synergy", false)
 	# Outer panel with colored background
 	var panel := PanelContainer.new()
 	var style := StyleBoxFlat.new()
-	style.bg_color = SEVERITY_COLORS.get(warning["severity"], Color.GRAY)
-	style.set_corner_radius_all(6)
-	style.content_margin_left   = 12.0
-	style.content_margin_right  = 12.0
-	style.content_margin_top    = 8.0
-	style.content_margin_bottom = 8.0
+	var color_map := SYNERGY_COLORS if is_synergy else SEVERITY_COLORS
+	style.bg_color = color_map.get(warning["severity"], Color.GRAY)
+	style.set_corner_radius_all(8)
+	style.content_margin_left   = 14.0
+	style.content_margin_right  = 14.0
+	style.content_margin_top    = 10.0
+	style.content_margin_bottom = 10.0
+	# Synergy cards get a bright border to stand out further
+	if is_synergy:
+		style.border_color = Color(1.0, 0.85, 1.0, 0.6)
+		style.set_border_width_all(2)
 	panel.add_theme_stylebox_override("panel", style)
 
 	var vbox := VBoxContainer.new()
-	vbox.add_theme_constant_override("separation", 4)
+	vbox.add_theme_constant_override("separation", 10)
 
-	# Header: icon + outcome label + severity badge
-	var header := Label.new()
-	header.text = "%s  %s  — %s" % [
-		warning["icon"],
-		warning["outcome"].replace("_", " "),
-		warning["severity_label"].to_upper()
-	]
-	header.add_theme_color_override("font_color", Color.WHITE)
-	header.add_theme_font_size_override("font_size", 36)
-	vbox.add_child(header)
-
-	# Main explanation
-	var msg := Label.new()
-	msg.text = warning["message"]
-	msg.add_theme_color_override("font_color", Color.WHITE)
-	msg.add_theme_font_size_override("font_size", 36)
-	msg.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	vbox.add_child(msg)
+	# Header: icon + outcome label + severity # ---- Row 1: badge(s) + title + severity ---------------------------------
+	var header_row := HBoxContainer.new()
+	header_row.add_theme_constant_override("separation", 8)
+ 
+	# "⚡ Combination" badge for synergy warnings
+	if is_synergy:
+		var badge := Label.new()
+		badge.text = "⚡ COMBINATION"
+		badge.add_theme_color_override("font_color", Color(1.0, 1.0, 0.5))
+		badge.add_theme_font_size_override("font_size", 36)
+		header_row.add_child(badge)
+ 
+	var icon_lbl := Label.new()
+	icon_lbl.text = warning["icon"]
+	icon_lbl.add_theme_font_size_override("font_size", 36)
+	header_row.add_child(icon_lbl)
+ 
+	var title_lbl := Label.new()
+	title_lbl.text = warning.get("title", warning["outcome"].replace("_", " "))
+	title_lbl.add_theme_color_override("font_color", WHITE)
+	title_lbl.add_theme_font_size_override("font_size", 36)
+	title_lbl.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	title_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	header_row.add_child(title_lbl)
+ 
+	var sev_lbl := Label.new()
+	sev_lbl.text = warning["severity_label"].to_upper()
+	sev_lbl.add_theme_color_override("font_color", WHITE_80)
+	sev_lbl.add_theme_font_size_override("font_size", 36)
+	header_row.add_child(sev_lbl)
+ 
+	vbox.add_child(header_row)
+ 
+	# ---- Row 2: Mechanism (what is happening) --------------------------------
+	var mech_lbl := Label.new()
+	mech_lbl.text = warning.get("mechanism", "")
+	mech_lbl.add_theme_color_override("font_color", WHITE)
+	mech_lbl.add_theme_font_size_override("font_size", 36)
+	mech_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(mech_lbl)
+ 
+	# ---- Row 3: Consequence (what you will feel) -----------------------------
+	var cons_lbl := Label.new()
+	cons_lbl.text = "What you will feel:  " + warning.get("consequence", "")
+	cons_lbl.add_theme_color_override("font_color", WHITE_80)
+	cons_lbl.add_theme_font_size_override("font_size", 36)
+	cons_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	vbox.add_child(cons_lbl)
 
 	# Chemical compounds responsible
 	var chem := Label.new()

@@ -34,6 +34,18 @@ const OUTCOME_DIARRHEA      := "DIARRHEA"
 const OUTCOME_GI_IRRITATION := "GI_IRRITATION"
 const OUTCOME_GLUTEN        := "GLUTEN_REACTION"
 
+# ---- Synergy (combination-only) outcome constants ----------------------------
+# These fire ONLY when two specific compound categories meet in the same meal.
+# Each has a unique key so it is never deduplicated against single-food warnings.
+const OUTCOME_SYN_FAT_PROTEIN        := "SYNERGY_FAT_PROTEIN"
+const OUTCOME_SYN_FAT_FERMENTABLE    := "SYNERGY_FAT_FERMENTABLE_CARBS"
+const OUTCOME_SYN_FRUCTOSE_FIBER     := "SYNERGY_FRUCTOSE_FIBER"
+const OUTCOME_SYN_LACTOSE_FAT        := "SYNERGY_LACTOSE_FAT"
+const OUTCOME_SYN_SULFUR_FERMENT     := "SYNERGY_SULFUR_FERMENTABLE"
+const OUTCOME_SYN_HISTAMINE_ALCOHOL  := "SYNERGY_HISTAMINE_ALCOHOL"
+const OUTCOME_SYN_CAPSAICIN_CAFFEINE := "SYNERGY_CAPSAICIN_CAFFEINE"
+const OUTCOME_SYN_TANNIN_PROTEIN     := "SYNERGY_TANNIN_PROTEIN"
+
 # ─── Internal state ───────────────────────────────────────────────────────────
 var _food_db: Dictionary = {}        # food_id → food dict
 var _is_loaded: bool = false
@@ -143,7 +155,10 @@ func analyze_meal(food_ids: Array) -> Array:
 	_check_gi_irritation(totals, sources, warnings)
 	_check_gluten(totals, sources, warnings)
 
-	# ── Step 3: De-duplicate and sort by severity descending ──────────────
+	# Step 3: Run synergy combination rules
+	_check_synergy_combinations(totals, sources, warnings)
+
+	# ── Step 4: De-duplicate and sort by severity descending ──────────────
 	warnings = _deduplicate_outcomes(warnings)
 	warnings.sort_custom(func(a, b): return a["severity"] > b["severity"])
 
@@ -218,8 +233,10 @@ func _check_bloating(totals: Dictionary, sources: Dictionary, warnings: Array) -
 
 	var sev := clampi(_severity_from_score(score, 2, 5, 9), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_BLOATING, sev,
-		"Likely to cause abdominal bloating and distension. The meal contains multiple fermentable compounds that gut bacteria convert into CO₂, H₂, and CH₄ gas.",
+		OUTCOME_BLOATING, sev, false,
+		"Bloating",
+		"Gut bacteria ferment undigested carbohydrates, producing CO2, H2 and CH4 gas that distends the intestine.",
+		"Abdominal bloating, visible distension, and a feeling of pressure or fullness.",
 		", ".join(causes), foods, "🫃"
 	))
 
@@ -253,8 +270,10 @@ func _check_gas_odorless(totals: Dictionary, sources: Dictionary, warnings: Arra
 
 	var sev := clampi(_severity_from_score(score, 3, 6, 10), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_GAS_ODORLESS, sev,
-		"High volume of odorless intestinal gas expected. Gut bacteria ferment undigested carbohydrates, producing large quantities of CO₂, H₂, and potentially CH₄. Gas may be frequent but not malodorous.",
+		OUTCOME_GAS_ODORLESS, sev, false,
+		"High-Volume Odorless Gas",
+		"Fermentation of undigested carbohydrates by colonic bacteria produces large volumes of CO2, H2, and CH4.",
+		"Frequent passing of gas that is not malodorous but may be embarrassing due to volume.",
 		", ".join(causes), foods, "💨"
 	))
 
@@ -290,8 +309,10 @@ func _check_gas_smelly(totals: Dictionary, sources: Dictionary, warnings: Array)
 
 	var sev := clampi(_severity_from_score(score, 2, 5, 8), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_GAS_SMELLY, sev,
-		"Gas is likely to be noticeably malodorous. Sulfur-containing compounds are metabolized by gut bacteria into hydrogen sulfide (H₂S), methanethiol, and organosulfides — all detectable at parts-per-billion concentrations.",
+		OUTCOME_GAS_SMELLY, sev, false,
+		"Malodorous Gas (Sulfur)",
+		"Gut bacteria metabolize sulfur-containing compounds into hydrogen sulfide (H2S), methanethiol, and organosulfides, detectable at parts-per-billion concentrations.",
+		"Gas with a strong rotten-egg or sulfurous odor.",
 		", ".join(causes), foods, "🤢"
 	))
 
@@ -328,8 +349,10 @@ func _check_gas_putrid(totals: Dictionary, sources: Dictionary, warnings: Array)
 
 	var sev := clampi(_severity_from_score(score, 3, 6, 9), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_GAS_PUTRID, sev,
-		"High risk of intensely foul-smelling gas. Bacterial putrefaction of undigested protein produces indole and skatole (the primary compounds responsible for fecal odor) plus cadaverine and putrescine.",
+		OUTCOME_GAS_PUTRID, sev, false,
+		"Intensely Foul-Smelling Gas (Putrefaction)",
+		"Bacterial putrefaction of undigested protein produces indole and skatole — the primary compounds responsible for fecal odor — plus cadaverine and putrescine.",
+		"Gas with an intensely fecal, putrid odor.",
 		", ".join(causes), foods, "💀"
 	))
 
@@ -393,8 +416,10 @@ func _check_loose_stool(totals: Dictionary, sources: Dictionary, warnings: Array
 
 	var sev := clampi(_severity_from_score(score, 2, 5, 8), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_LOOSE_STOOL, sev,
-		"This meal is likely to produce loose or soft stools. Osmotically active compounds retain water in the gut, while motility stimulants accelerate transit before full water absorption can occur.",
+		OUTCOME_LOOSE_STOOL, sev, false,
+		"Loose or Soft Stool",
+		"Osmotically active compounds retain water in the gut while motility stimulants accelerate transit, preventing full water absorption.",
+		"Loose, soft, or mushy stools shortly after eating.",
 		", ".join(causes), foods, "🚽"
 	))
 
@@ -467,8 +492,10 @@ func _check_diarrhea(totals: Dictionary, sources: Dictionary, warnings: Array) -
 
 	var sev := clampi(_severity_from_score(score, 5, 9, 14), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_DIARRHEA, sev,
-		"This meal combination has a significant risk of causing diarrhea. The compounds present either overwhelm intestinal absorption capacity (osmotic), directly stimulate fluid secretion into the gut (secretory), or severely accelerate transit time.",
+		OUTCOME_DIARRHEA, sev, false,
+		"Diarrhea Risk",
+		"The compounds present either overwhelm intestinal absorption (osmotic), directly stimulate fluid secretion (secretory), or severely accelerate transit time.",
+		"Watery or very loose stools, possibly urgent and crampy.",
 		", ".join(causes), foods, "⚠️🚽"
 	))
 
@@ -512,8 +539,10 @@ func _check_gi_irritation(totals: Dictionary, sources: Dictionary, warnings: Arr
 
 	var sev := clampi(_severity_from_score(score, 2, 4, 7), 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_GI_IRRITATION, sev,
-		"This meal is likely to cause general gastrointestinal irritation: cramping, nausea, or a burning sensation in the gut. Biogenic amines, ethanol, and neurogenic compounds can directly inflame the intestinal mucosa.",
+		OUTCOME_GI_IRRITATION, sev, false,
+		"GI Irritation",
+		"Biogenic amines, ethanol, and neurogenic compounds directly inflame or irritate the intestinal mucosa.",
+		"Cramping, nausea, or a burning sensation in the gut.",
 		", ".join(causes), foods, "🔥"
 	))
 
@@ -529,11 +558,207 @@ func _check_gluten(totals: Dictionary, sources: Dictionary, warnings: Array) -> 
 	var foods : Array = sources.get("gluten", [])
 	var sev := clampi(glu, 1, 3)
 	warnings.append(_make_warning(
-		OUTCOME_GLUTEN, sev,
-		"This meal contains gluten. In gluten-sensitive or celiac individuals, gliadin proteins trigger an immune response causing villous atrophy, malabsorption, diarrhea, bloating, and systemic inflammation.",
-		"gluten/gliadin (immune-mediated enteropathy in sensitive individuals)",
+		OUTCOME_GLUTEN, sev, false,
+		"Gluten Reaction",
+		"Gliadin proteins trigger an immune response in sensitive individuals, causing villous atrophy and malabsorption.",
+		"Bloating, diarrhea, fatigue, and systemic inflammation in gluten-sensitive individuals.",
+		"gluten/gliadin (immune-mediated enteropathy)",
 		foods, "🌾⚠️"
 	))
+	
+# =============================================================================
+# PRIVATE - SYNERGY COMBINATION CHECKER
+#
+# Each rule fires ONLY when two specific compound categories from DIFFERENT
+# foods are present together in the same meal. is_synergy = true tells the UI
+# to display the special "Combination Warning" badge and explanation.
+# =============================================================================
+ 
+func _check_synergy_combinations(totals: Dictionary, sources: Dictionary, warnings: Array) -> void:
+ 
+	var fat  :int= totals.get("fat_high", 0)
+	var prot :int= totals.get("high_protein", 0)
+	var trp  :int= totals.get("tryptophan", 0)
+	var raf  :int= totals.get("raffinose", 0)
+	var fos  :int= totals.get("inulin_fos", 0)
+	var rs   :int= totals.get("resistant_starch", 0)
+	var fru  :int= totals.get("fructose", 0)
+	var sf   :int= totals.get("soluble_fiber", 0)
+	var lac  :int= totals.get("lactose", 0)
+	var saa  :int= totals.get("sulfur_aa", 0)
+	var gls  :int= totals.get("glucosinolates", 0)
+	var his  :int= totals.get("histamine", 0)
+	var alc  :int= totals.get("alcohol", 0)
+	var cap  :int= totals.get("capsaicin", 0)
+	var caf  :int= totals.get("caffeine", 0)
+	var tan  :int= totals.get("tannins", 0)
+ 
+	# ---- SYNERGY 1: Fat + Protein (Putrefaction Accelerator) -----------------
+	# High fat slows gastric emptying. Protein lingers in the small intestine
+	# far longer than normal, so more reaches the colon intact where bacteria
+	# putrefy it into indole, skatole, cadaverine, and H2S.
+	# Neither food alone causes this — the delayed transit is the key.
+	if fat >= 2 and prot >= 2 and trp >= 2:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("fat_high", []))
+		_merge_foods(foods, sources.get("high_protein", []))
+		_merge_foods(foods, sources.get("tryptophan", []))
+		var sev :int= 2 if (fat >= 3 or prot >= 3) else 1
+		warnings.append(_make_warning(
+			OUTCOME_SYN_FAT_PROTEIN, sev, true,
+			"Fat + Protein — Putrefaction Accelerator",
+			"High dietary fat slows gastric emptying, so protein sits in the gut much longer than it would alone. Bacteria putrefy the excess protein into indole, skatole, cadaverine, and hydrogen sulfide — compounds that neither the fat food nor the protein food would generate eaten separately at these levels.",
+			"Intensely foul-smelling, delayed gas 1-3 hours after eating, with possible cramping. Neither food eaten alone would cause this.",
+			"fat_high (delayed transit) + high_protein + tryptophan (amplified colonic putrefaction)",
+			foods, "⚡🧪"
+		))
+ 
+	# ---- SYNERGY 2: Fat + Fermentable Carbohydrates (Fermentation Amplifier) -
+	# Fat slows intestinal transit. Fermentable carbs that would normally pass
+	# through in 4-6 hours instead sit in the colon far longer, giving bacteria
+	# much more time to ferment them. Gas volume is substantially worse than
+	# either food group causes alone.
+	var fermentable := raf + fos + rs
+	if fat >= 2 and fermentable >= 3:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("fat_high", []))
+		if raf >= 1: _merge_foods(foods, sources.get("raffinose", []))
+		if fos >= 1: _merge_foods(foods, sources.get("inulin_fos", []))
+		if rs  >= 1: _merge_foods(foods, sources.get("resistant_starch", []))
+		var sev :int= 2 if fat >= 3 else 1
+		warnings.append(_make_warning(
+			OUTCOME_SYN_FAT_FERMENTABLE, sev, true,
+			"Fat + Fermentable Carbs — Fermentation Amplifier",
+			"Fat significantly slows intestinal transit, giving colonic bacteria far more time to ferment oligosaccharides and resistant starch. Gas production is amplified well beyond what either food group would cause alone.",
+			"Prolonged, severe bloating and gas that builds over several hours — much worse than eating the carbohydrate-rich foods without fat.",
+			"fat_high (slowed transit) + raffinose/inulin_fos/resistant_starch (extended colonic fermentation window)",
+			foods, "⚡💨"
+		))
+ 
+	# ---- SYNERGY 3: Fructose + Soluble Fiber (Osmotic Amplifier) -------------
+	# Soluble fiber ferments rapidly, producing short-chain fatty acids that lower
+	# luminal pH and reduce fructose absorption further. The fermentation
+	# byproducts also draw water osmotically. Together they create a compounded
+	# osmotic-fermentation effect neither causes alone.
+	if fru >= 2 and sf >= 2:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("fructose", []))
+		_merge_foods(foods, sources.get("soluble_fiber", []))
+		var sev :int= 2 if (fru >= 3 and sf >= 3) else 1
+		warnings.append(_make_warning(
+			OUTCOME_SYN_FRUCTOSE_FIBER, sev, true,
+			"Fructose + Soluble Fiber — Osmotic Amplifier",
+			"Soluble fiber fermentation lowers colonic pH and produces osmotically active short-chain fatty acids. This environment reduces fructose absorption and compounds the water-drawing osmotic effect — a double osmotic hit that neither compound causes alone at these levels.",
+			"Loose stools or diarrhea with cramping, more severe than eating either the fruit or the fiber-rich food alone.",
+			"fructose (GLUT-5 saturation) + soluble_fiber (SCFA fermentation -> pH drop -> amplified osmotic effect)",
+			foods, "⚡🚽"
+		))
+ 
+	# ---- SYNERGY 4: Lactose + High Fat (Bolus Delivery Effect) ---------------
+	# Fat delays gastric emptying substantially. Lactose that would normally
+	# arrive in the small intestine gradually instead arrives as a concentrated
+	# bolus, overwhelming lactase enzyme capacity all at once. Even partially
+	# tolerant individuals can experience osmotic symptoms.
+	if lac >= 2 and fat >= 2:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("lactose", []))
+		_merge_foods(foods, sources.get("fat_high", []))
+		var sev :int= 3 if user_lactose_intolerant else (2 if (lac >= 3 or fat >= 3) else 1)
+		warnings.append(_make_warning(
+			OUTCOME_SYN_LACTOSE_FAT, sev, true,
+			"Lactose + Fat — Bolus Delivery Effect",
+			"Fat delays gastric emptying, causing lactose to arrive in the small intestine as a concentrated bolus rather than gradually. This overwhelms lactase enzyme capacity even in partially tolerant individuals, causing osmotic shock that neither the dairy nor the fatty food would cause separately.",
+			"Sudden cramping, bloating, and watery diarrhea 1-2 hours after the meal — more severe than either food eaten alone.",
+			"fat_high (delayed gastric emptying) + lactose (bolus delivery -> lactase overload -> osmotic diarrhea)",
+			foods, "⚡💧"
+		))
+ 
+	# ---- SYNERGY 5: Sulfur + Fermentable Carbs (H2S Amplifier) ---------------
+	# Fermentation of oligosaccharides produces large quantities of H2 gas.
+	# Sulfate-reducing bacteria (Desulfovibrio) use this H2 as an electron donor
+	# to reduce sulfate from sulfur amino acids into H2S.
+	# Reaction: SO4(2-) + 4H2 -> H2S + 4H2O (requires BOTH substrates).
+	# Neither the sulfur-rich food nor the fermentable carb food alone produces
+	# this H2S load.
+	var sulfur_total := saa + gls
+	if sulfur_total >= 2 and (raf >= 2 or rs >= 2 or fos >= 2):
+		var foods :Array= []
+		if saa >= 1: _merge_foods(foods, sources.get("sulfur_aa", []))
+		if gls >= 1: _merge_foods(foods, sources.get("glucosinolates", []))
+		if raf >= 1: _merge_foods(foods, sources.get("raffinose", []))
+		if rs  >= 1: _merge_foods(foods, sources.get("resistant_starch", []))
+		if fos >= 1: _merge_foods(foods, sources.get("inulin_fos", []))
+		var sev :int= 2 if sulfur_total >= 4 else 1
+		warnings.append(_make_warning(
+			OUTCOME_SYN_SULFUR_FERMENT, sev, true,
+			"Sulfur Foods + Fermentable Carbs — H2S Amplifier",
+			"Fermentation of oligosaccharides produces large amounts of H2 gas. Sulfate-reducing gut bacteria (Desulfovibrio) use this H2 to reduce sulfate from sulfur amino acids into hydrogen sulfide via the reaction SO4(2-) + 4H2 -> H2S. This reaction requires both substrates simultaneously — neither the sulfur-rich food nor the fermentable carb alone produces this H2S load.",
+			"Gas that is dramatically more foul-smelling than eating either food alone — a rotten-egg sulfurous odor that can last for hours.",
+			"sulfur_aa/glucosinolates (sulfate donor) + raffinose/resistant_starch/inulin_fos (H2 donor -> H2S via Desulfovibrio)",
+			foods, "⚡🥚"
+		))
+ 
+	# ---- SYNERGY 6: Histamine + Alcohol (DAO Inhibition) ---------------------
+	# Alcohol inhibits diamine oxidase (DAO), the primary intestinal enzyme that
+	# breaks down histamine. A histamine load that would normally be safely
+	# metabolized accumulates in the gut wall because the enzyme is blocked.
+	# The histamine food alone is fine; alcohol alone at moderate levels is fine.
+	# Together the histamine cannot be cleared.
+	if his >= 2 and alc >= 1:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("histamine", []))
+		_merge_foods(foods, sources.get("alcohol", []))
+		var sev :int= 3 if (user_histamine_sensitive or (his >= 3 and alc >= 2)) else 2
+		warnings.append(_make_warning(
+			OUTCOME_SYN_HISTAMINE_ALCOHOL, sev, true,
+			"Histamine + Alcohol — DAO Enzyme Inhibition",
+			"Alcohol inhibits diamine oxidase (DAO), the intestinal enzyme responsible for breaking down histamine. A histamine load from fermented foods, aged cheese, or wine that would normally be safely cleared instead accumulates in the gut wall, activating H1, H2, and H4 receptors. You may normally tolerate both foods individually — the problem is the combination.",
+			"Flushing, GI cramping, diarrhea, headache, and nausea appearing even though you tolerate both foods individually.",
+			"alcohol (DAO inhibition) + histamine (biogenic amine accumulation -> H1/H2/H4 receptor activation)",
+			foods, "⚡🚨"
+		))
+ 
+	# ---- SYNERGY 7: Capsaicin + Caffeine (Double Motility Spike) -------------
+	# Capsaicin activates TRPV1 receptors on enteric neurons, triggering
+	# hypermotility and secretion. Caffeine independently stimulates colonic
+	# contractions via adenosine receptor blockade. These mechanisms act on
+	# completely different receptor systems simultaneously, producing a combined
+	# motility surge neither compound causes alone at moderate doses.
+	if cap >= 2 and caf >= 2:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("capsaicin", []))
+		_merge_foods(foods, sources.get("caffeine", []))
+		var sev :int= 2 if (cap >= 3 or caf >= 3) else 1
+		warnings.append(_make_warning(
+			OUTCOME_SYN_CAPSAICIN_CAFFEINE, sev, true,
+			"Capsaicin + Caffeine — Double Motility Spike",
+			"Capsaicin activates TRPV1 receptors on enteric neurons causing motility and secretion, while caffeine simultaneously blocks adenosine receptors to trigger colonic contractions. These two mechanisms act on completely different receptor systems at the same time, producing a combined motility surge neither compound causes alone at these doses.",
+			"Urgent loose stools or diarrhea with cramping that comes on faster and harder than either food alone — the spicy coffee effect.",
+			"capsaicin (TRPV1 -> enteric neuron hypermotility) + caffeine (adenosine blockade -> colonic contraction)",
+			foods, "⚡☕🌶️"
+		))
+ 
+	# ---- SYNERGY 8: Tannins + High Protein (Putrefaction Paradox) ------------
+	# Tannins bind to mucosal proteins and slow intestinal transit (constipating
+	# via astringency). Protein that would normally clear the colon in a
+	# reasonable time instead sits there longer, giving bacteria more time for
+	# putrefaction. The gut feels settled initially, then becomes increasingly
+	# uncomfortable hours later — a paradox because the "calming" tannins trap
+	# the protein fermentation products inside.
+	if tan >= 2 and prot >= 2:
+		var foods :Array= []
+		_merge_foods(foods, sources.get("tannins", []))
+		_merge_foods(foods, sources.get("high_protein", []))
+		if trp >= 1: _merge_foods(foods, sources.get("tryptophan", []))
+		var sev :int= 2 if (tan >= 3 and prot >= 3) else 1
+		warnings.append(_make_warning(
+			OUTCOME_SYN_TANNIN_PROTEIN, sev, true,
+			"Tannins + High Protein — Putrefaction Paradox",
+			"Tannins bind to intestinal mucosal proteins and slow gut transit through astringency. Protein that would normally clear the colon relatively quickly instead lingers, giving bacteria far more time to putrefy it into indole, skatole, and other foul-smelling compounds. The gut feels settled initially — then gets progressively worse over hours.",
+			"Delayed 2-4 hours foul-smelling gas, bloating, and cramping that worsens over time — not something either the tannin-rich food or the protein food would cause eaten separately.",
+			"tannins (slowed transit via mucosal astringency) + high_protein/tryptophan (prolonged putrefaction -> indole, skatole)",
+			foods, "⚡🍷🥩"
+		))
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -543,18 +768,30 @@ func _check_gluten(totals: Dictionary, sources: Dictionary, warnings: Array) -> 
 func _make_warning(
 	outcome: String,
 	severity: int,
-	message: String,
+	is_synergy: bool,
+	title: String,
+	mechanism: String,
+	consequence: String,
 	chemical_cause: String,
 	foods_involved: Array,
 	icon: String
 ) -> Dictionary:
 	var labels := ["", "Mild", "Moderate", "Severe"]
+	var full_message: String
+	if is_synergy:
+		full_message = "COMBINATION WARNING\n\n%s\n\nWhat you will feel: %s" % [mechanism, consequence]
+	else:
+		full_message = "%s\n\nWhat you will feel: %s" % [mechanism, consequence]
 	return {
 		"outcome":        outcome,
-		"severity":       severity,
+		"severity":       clampi(severity, 1, 3),
 		"severity_label": labels[clampi(severity, 1, 3)],
-		"message":        message,
+		"title":          title,
+		"mechanism":      mechanism,
+		"consequence":    consequence,
+		"message":        full_message,
 		"chemical_cause": chemical_cause,
+		"is_synergy":     is_synergy,
 		"foods_involved": foods_involved,
 		"icon":           icon
 	}
@@ -581,11 +818,14 @@ func _merge_foods(target: Array, source: Array) -> void:
 ## Removes duplicate outcome entries, keeping the highest severity one
 func _deduplicate_outcomes(warnings: Array) -> Array:
 	var seen: Dictionary = {}
-	var result := []
+	var result :Array= []
 	for w in warnings:
-		var key: String = w["outcome"]
-		if not seen.has(key) or seen[key]["severity"] < w["severity"]:
-			seen[key] = w
+		if w.get("is_synergy", false):
+			result.append(w)
+		else:
+			var key: String = w["outcome"]
+			if not seen.has(key) or seen[key]["severity"] < w["severity"]:
+				seen[key] = w
 	for key in seen:
 		result.append(seen[key])
 	return result
