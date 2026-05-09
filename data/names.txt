@@ -1,0 +1,2004 @@
+{
+  "id": "apple",
+  "name": "Apple"
+}
+{
+  "id": "apricot",
+  "name": "Apricot"
+}
+{
+  "id": "dried-fruit",
+  "name": "Dried Fruit"
+}
+{
+  "id": "avocado",
+  "name": "Avocado"
+}
+{
+  "id": "banana",
+  "name": "Banana"
+}
+{
+  "id": "blackberry",
+  "name": "Blackberry"
+}
+{
+  "id": "blueberry",
+  "name": "Blueberry"
+}
+{
+  "id": "breadfruit",
+  "name": "Breadfruit"
+}
+{
+  "id": "carambola",
+  "name": "Carambola (Star Fruit)"
+}
+{
+  "id": "cherry",
+  "name": "Cherry"
+}
+{
+  "id": "cranberry",
+  "name": "Cranberry"
+}
+{
+  "id": "currant",
+  "name": "Currant"
+}
+{
+  "id": "dates",
+  "name": "Dates"
+}
+{
+  "id": "elderberry",
+  "name": "Elderberry"
+}
+{
+  "id": "figs",
+  "name": "Figs"
+}
+{
+  "id": "gooseberry",
+  "name": "Gooseberry"
+}
+{
+  "id": "goji-berry",
+  "name": "Goji Berry"
+}
+{
+  "id": "grapefruit",
+  "name": "Grapefruit"
+}
+{
+  "id": "grape",
+  "name": "Grape"
+}
+{
+  "id": "guava",
+  "name": "Guava"
+}
+{
+  "id": "jackfruit",
+  "name": "Jackfruit"
+}
+{
+  "id": "jujube",
+  "name": "Jujube"
+}
+{
+  "id": "kiwi",
+  "name": "Kiwi"
+}
+{
+  "id": "kumquat",
+  "name": "Kumquat"
+}
+{
+  "id": "lemon",
+  "name": "Lemon"
+}
+{
+  "id": "lime",
+  "name": "Lime"
+}
+{
+  "id": "lychee",
+  "name": "Lychee"
+}
+{
+  "id": "mango",
+  "name": "Mango"
+}
+{
+  "id": "melon",
+  "name": "Melon"
+}
+{
+  "id": "nectarine",
+  "name": "Nectarine"
+}
+{
+  "id": "orange",
+  "name": "Orange"
+}
+{
+  "id": "mandarin",
+  "name": "Mandarin Orange"
+}
+{
+  "id": "papaya",
+  "name": "Papaya"
+}
+{
+  "id": "passion-fruit",
+  "name": "Passion Fruit"
+}
+{
+  "id": "peach",
+  "name": "Peach"
+}
+{
+  "id": "pear",
+  "name": "Pear"
+}
+{
+  "id": "pineapple",
+  "name": "Pineapple"
+}
+{
+  "id": "plum",
+  "name": "Plum"
+}
+{
+  "id": "pomegranate",
+  "name": "Pomegranate"
+}
+{
+  "id": "prickly-pear",
+  "name": "Prickly Pear"
+}
+{
+  "id": "prunes",
+  "name": "Prunes"
+}
+{
+  "id": "raisin",
+  "name": "Raisin"
+}
+{
+  "id": "raspberry",
+  "name": "Raspberry"
+}
+{
+  "id": "strawberry",
+  "name": "Strawberry"
+}
+{
+  "id": "watermelon",
+  "name": "Watermelon"
+}
+{
+  "id": "coconut",
+  "name": "Coconut"
+}
+{
+  "id": "boysenberry",
+  "name": "Boysenberry"
+}
+{
+  "id": "feijoa",
+  "name": "Feijoa"
+}
+{
+  "id": "blackberry-b",
+  "name": "Blackberry"
+}
+{
+  "id": "blueberry-b",
+  "name": "Blueberry"
+}
+{
+  "id": "cranberry-b",
+  "name": "Cranberry"
+}
+{
+  "id": "currant-b",
+  "name": "Currant"
+}
+{
+  "id": "elderberry-b",
+  "name": "Elderberry"
+}
+{
+  "id": "gooseberry-b",
+  "name": "Gooseberry"
+}
+{
+  "id": "goji-berry-b",
+  "name": "Goji Berry"
+}
+{
+  "id": "raspberry-b",
+  "name": "Raspberry"
+}
+{
+  "id": "strawberry-b",
+  "name": "Strawberry"
+}
+{
+  "id": "boysenberry-b",
+  "name": "Boysenberry"
+}
+{
+  "id": "artichoke",
+  "name": "Artichoke"
+}
+{
+  "id": "asparagus",
+  "name": "Asparagus"
+}
+{
+  "id": "bitter-melon",
+  "name": "Bitter Melon"
+}
+{
+  "id": "bamboo-shoots",
+  "name": "Bamboo Shoots"
+}
+{
+  "id": "green-beans",
+  "name": "Green Beans"
+}
+{
+  "id": "beetroot",
+  "name": "Beetroot"
+}
+{
+  "id": "broad-beans",
+  "name": "Broad Beans"
+}
+{
+  "id": "broccoli",
+  "name": "Broccoli"
+}
+{
+  "id": "brussels-sprouts",
+  "name": "Brussels Sprouts"
+}
+{
+  "id": "cabbage",
+  "name": "Cabbage"
+}
+{
+  "id": "red-cabbage",
+  "name": "Red Cabbage"
+}
+{
+  "id": "carrot",
+  "name": "Carrot"
+}
+{
+  "id": "cassava",
+  "name": "Cassava"
+}
+{
+  "id": "cauliflower",
+  "name": "Cauliflower"
+}
+{
+  "id": "chicory",
+  "name": "Chicory"
+}
+{
+  "id": "corn",
+  "name": "Corn"
+}
+{
+  "id": "cucumber",
+  "name": "Cucumber"
+}
+{
+  "id": "eggplant",
+  "name": "Eggplant"
+}
+{
+  "id": "garlic",
+  "name": "Garlic"
+}
+{
+  "id": "ginger",
+  "name": "Ginger"
+}
+{
+  "id": "okra",
+  "name": "Okra"
+}
+{
+  "id": "onion",
+  "name": "Onion"
+}
+{
+  "id": "peas",
+  "name": "Peas"
+}
+{
+  "id": "bell-pepper",
+  "name": "Bell Pepper"
+}
+{
+  "id": "pumpkin",
+  "name": "Pumpkin"
+}
+{
+  "id": "radish",
+  "name": "Radish"
+}
+{
+  "id": "sweet-potato",
+  "name": "Sweet Potato"
+}
+{
+  "id": "taro",
+  "name": "Taro"
+}
+{
+  "id": "tomato",
+  "name": "Tomato"
+}
+{
+  "id": "turnip",
+  "name": "Turnip"
+}
+{
+  "id": "potato",
+  "name": "Potato"
+}
+{
+  "id": "zucchini",
+  "name": "Zucchini"
+}
+{
+  "id": "fennel",
+  "name": "Fennel"
+}
+{
+  "id": "chili-pepper",
+  "name": "Chili Pepper"
+}
+{
+  "id": "yam",
+  "name": "Yam"
+}
+{
+  "id": "spinach",
+  "name": "Spinach"
+}
+{
+  "id": "rhubarb",
+  "name": "Garden Rhubarb"
+}
+{
+  "id": "collard-greens",
+  "name": "Collard Greens"
+}
+{
+  "id": "parsley",
+  "name": "Parsley"
+}
+{
+  "id": "purslane",
+  "name": "Purslane"
+}
+{
+  "id": "dandelion-greens",
+  "name": "Dandelion Greens"
+}
+{
+  "id": "thyme",
+  "name": "Thyme"
+}
+{
+  "id": "dill",
+  "name": "Dill"
+}
+{
+  "id": "celery",
+  "name": "Celery"
+}
+{
+  "id": "chives",
+  "name": "Chives"
+}
+{
+  "id": "coriander",
+  "name": "Coriander"
+}
+{
+  "id": "leek",
+  "name": "Leek"
+}
+{
+  "id": "lettuce",
+  "name": "Lettuce"
+}
+{
+  "id": "mustard-greens",
+  "name": "Mustard Greens"
+}
+{
+  "id": "watercress",
+  "name": "Watercress"
+}
+{
+  "id": "arugula",
+  "name": "Arugula"
+}
+{
+  "id": "quinoa",
+  "name": "Quinoa"
+}
+{
+  "id": "almonds",
+  "name": "Almonds"
+}
+{
+  "id": "cashew",
+  "name": "Cashew"
+}
+{
+  "id": "hazelnut",
+  "name": "Hazelnut"
+}
+{
+  "id": "pine-nuts",
+  "name": "Pine Nuts"
+}
+{
+  "id": "mixed-nuts",
+  "name": "Mixed Nuts"
+}
+{
+  "id": "peanut",
+  "name": "Peanut"
+}
+{
+  "id": "pistachio",
+  "name": "Pistachio"
+}
+{
+  "id": "chestnut",
+  "name": "Chestnut"
+}
+{
+  "id": "walnut",
+  "name": "Walnut"
+}
+{
+  "id": "almond-butter",
+  "name": "Almond Butter"
+}
+{
+  "id": "pecan",
+  "name": "Pecan"
+}
+{
+  "id": "macadamia",
+  "name": "Macadamia"
+}
+{
+  "id": "ginkgo-nuts",
+  "name": "Ginkgo Nuts"
+}
+{
+  "id": "pili-nuts",
+  "name": "Pili Nuts"
+}
+{
+  "id": "watermelon-seeds",
+  "name": "Watermelon Seeds"
+}
+{
+  "id": "oatmeal",
+  "name": "Oatmeal"
+}
+{
+  "id": "oats",
+  "name": "Oats"
+}
+{
+  "id": "rice",
+  "name": "Rice"
+}
+{
+  "id": "brown-rice",
+  "name": "Brown Rice"
+}
+{
+  "id": "pasta",
+  "name": "Pasta"
+}
+{
+  "id": "spaghetti",
+  "name": "Spaghetti"
+}
+{
+  "id": "flour",
+  "name": "Flour"
+}
+{
+  "id": "sesame",
+  "name": "Sesame Seeds"
+}
+{
+  "id": "buckwheat",
+  "name": "Buckwheat"
+}
+{
+  "id": "amaranth",
+  "name": "Amaranth"
+}
+{
+  "id": "couscous",
+  "name": "Couscous"
+}
+{
+  "id": "cornmeal",
+  "name": "Cornmeal"
+}
+{
+  "id": "millet",
+  "name": "Millet"
+}
+{
+  "id": "rye",
+  "name": "Rye"
+}
+{
+  "id": "chickpeas",
+  "name": "Chickpeas"
+}
+{
+  "id": "lentil",
+  "name": "Lentil"
+}
+{
+  "id": "kidney-beans",
+  "name": "Kidney Beans"
+}
+{
+  "id": "soybean",
+  "name": "Soybean"
+}
+{
+  "id": "tofu",
+  "name": "Tofu"
+}
+{
+  "id": "hummus",
+  "name": "Hummus"
+}
+{
+  "id": "white-beans",
+  "name": "White Beans"
+}
+{
+  "id": "black-gram",
+  "name": "Black Gram"
+}
+{
+  "id": "sunflower-seeds",
+  "name": "Sunflower Seeds"
+}
+{
+  "id": "pumpkin-seeds",
+  "name": "Pumpkin Seeds"
+}
+{
+  "id": "flax-seeds",
+  "name": "Flax Seeds"
+}
+{
+  "id": "milk",
+  "name": "Milk"
+}
+{
+  "id": "yogurt",
+  "name": "Yogurt"
+}
+{
+  "id": "greek-yogurt",
+  "name": "Greek Yogurt"
+}
+{
+  "id": "cheese",
+  "name": "Cheese"
+}
+{
+  "id": "cottage-cheese",
+  "name": "Cottage Cheese"
+}
+{
+  "id": "cream-cheese",
+  "name": "Cream Cheese"
+}
+{
+  "id": "butter",
+  "name": "Butter"
+}
+{
+  "id": "egg",
+  "name": "Egg"
+}
+{
+  "id": "chocolate-milk",
+  "name": "Chocolate Milk"
+}
+{
+  "id": "mozzarella",
+  "name": "Mozzarella"
+}
+{
+  "id": "feta",
+  "name": "Feta"
+}
+{
+  "id": "brie",
+  "name": "Brie"
+}
+{
+  "id": "goat-cheese",
+  "name": "Goat Cheese"
+}
+{
+  "id": "ricotta",
+  "name": "Ricotta"
+}
+{
+  "id": "sour-cream",
+  "name": "Sour Cream"
+}
+{
+  "id": "coconut-milk",
+  "name": "Coconut Milk"
+}
+{
+  "id": "kefir",
+  "name": "Kefir"
+}
+{
+  "id": "whipped-cream",
+  "name": "Whipped Cream"
+}
+{
+  "id": "chicken-breast",
+  "name": "Chicken Breast"
+}
+{
+  "id": "chicken-thigh",
+  "name": "Chicken Thigh"
+}
+{
+  "id": "whole-chicken",
+  "name": "Whole Chicken"
+}
+{
+  "id": "turkey",
+  "name": "Turkey"
+}
+{
+  "id": "duck",
+  "name": "Duck"
+}
+{
+  "id": "pork-tenderloin",
+  "name": "Pork Tenderloin"
+}
+{
+  "id": "pork-shoulder",
+  "name": "Pork Shoulder"
+}
+{
+  "id": "pork-chop",
+  "name": "Pork Chop"
+}
+{
+  "id": "bacon",
+  "name": "Bacon"
+}
+{
+  "id": "ground-beef",
+  "name": "Ground Beef"
+}
+{
+  "id": "beef-steak",
+  "name": "Beef Steak"
+}
+{
+  "id": "veal",
+  "name": "Veal"
+}
+{
+  "id": "lamb",
+  "name": "Lamb"
+}
+{
+  "id": "reindeer",
+  "name": "Reindeer"
+}
+{
+  "id": "elk",
+  "name": "Elk / Moose"
+}
+{
+  "id": "sausage",
+  "name": "Sausage"
+}
+{
+  "id": "meatballs",
+  "name": "Meatballs"
+}
+{
+  "id": "salmon",
+  "name": "Salmon"
+}
+{
+  "id": "cod",
+  "name": "Cod"
+}
+{
+  "id": "mackerel",
+  "name": "Mackerel"
+}
+{
+  "id": "herring",
+  "name": "Herring"
+}
+{
+  "id": "trout",
+  "name": "Trout"
+}
+{
+  "id": "tuna",
+  "name": "Tuna"
+}
+{
+  "id": "shrimp",
+  "name": "Shrimp / Prawns"
+}
+{
+  "id": "lobster",
+  "name": "Lobster"
+}
+{
+  "id": "crab",
+  "name": "Crab"
+}
+{
+  "id": "scampi",
+  "name": "Scampi"
+}
+{
+  "id": "tilapia",
+  "name": "Tilapia"
+}
+{
+  "id": "white-bread",
+  "name": "White Bread"
+}
+{
+  "id": "whole-grain-bread",
+  "name": "Whole Grain Bread"
+}
+{
+  "id": "sourdough-bread",
+  "name": "Sourdough Bread"
+}
+{
+  "id": "crispbread",
+  "name": "Crispbread (Knekkebrød)"
+}
+{
+  "id": "bread-roll",
+  "name": "Bread Roll"
+}
+{
+  "id": "kale",
+  "name": "Kale"
+}
+{
+  "id": "pak-choi",
+  "name": "Pak Choi"
+}
+{
+  "id": "rutabaga",
+  "name": "Rutabaga / Swede"
+}
+{
+  "id": "savoy-cabbage",
+  "name": "Savoy Cabbage"
+}
+{
+  "id": "iceberg-lettuce",
+  "name": "Iceberg Lettuce"
+}
+{
+  "id": "chia-seeds",
+  "name": "Chia Seeds"
+}
+{
+  "id": "chinese-cabbage",
+  "name": "Chinese Cabbage"
+}
+{
+  "id": "celeriac",
+  "name": "Celeriac"
+}
+{
+  "id": "yardlong-beans",
+  "name": "Yardlong Beans"
+}
+{
+  "id": "edamame",
+  "name": "Edamame"
+}
+{
+  "id": "endive",
+  "name": "Endive"
+}
+{
+  "id": "jerusalem-artichoke",
+  "name": "Jerusalem Artichoke"
+}
+{
+  "id": "kohlrabi",
+  "name": "Kohlrabi"
+}
+{
+  "id": "lotus-root",
+  "name": "Lotus Root"
+}
+{
+  "id": "parsnip",
+  "name": "Parsnip"
+}
+{
+  "id": "sauerkraut",
+  "name": "Sauerkraut"
+}
+{
+  "id": "seaweed",
+  "name": "Seaweed"
+}
+{
+  "id": "turnip-greens",
+  "name": "Turnip Greens"
+}
+{
+  "id": "water-chestnuts",
+  "name": "Water Chestnuts"
+}
+{
+  "id": "winter-melon",
+  "name": "Winter Melon"
+}
+{
+  "id": "wax-gourd",
+  "name": "Wax Gourd"
+}
+{
+  "id": "summer-squash",
+  "name": "Summer Squash"
+}
+{
+  "id": "wakame",
+  "name": "Wakame"
+}
+{
+  "id": "shallot",
+  "name": "Shallot"
+}
+{
+  "id": "arrowroot",
+  "name": "Arrowroot"
+}
+{
+  "id": "pickled-cucumber",
+  "name": "Pickled Cucumber"
+}
+{
+  "id": "sun-dried-tomato",
+  "name": "Sun-Dried Tomato"
+}
+{
+  "id": "napa-cabbage",
+  "name": "Napa Cabbage"
+}
+{
+  "id": "yautia",
+  "name": "Yautia"
+}
+{
+  "id": "amaranth-leaves",
+  "name": "Amaranth Leaves"
+}
+{
+  "id": "chrysanthemum",
+  "name": "Chrysanthemum Greens"
+}
+{
+  "id": "garden-cress",
+  "name": "Garden Cress"
+}
+{
+  "id": "drumstick-leaves",
+  "name": "Drumstick Leaves (Moringa)"
+}
+{
+  "id": "lambsquarters",
+  "name": "Lambsquarters"
+}
+{
+  "id": "scallion",
+  "name": "Scallion (Spring Onion)"
+}
+{
+  "id": "welsh-onion",
+  "name": "Welsh Onion"
+}
+{
+  "id": "pumpkin-leaves",
+  "name": "Pumpkin Leaves"
+}
+{
+  "id": "sweet-potato-leaves",
+  "name": "Sweet Potato Leaves"
+}
+{
+  "id": "taro-leaves",
+  "name": "Taro Leaves"
+}
+{
+  "id": "vine-spinach",
+  "name": "Vine Spinach (Basella)"
+}
+{
+  "id": "lemongrass",
+  "name": "Lemongrass"
+}
+{
+  "id": "grape-leaves",
+  "name": "Grape Leaves"
+}
+{
+  "id": "spelt",
+  "name": "Spelt"
+}
+{
+  "id": "barley",
+  "name": "Barley"
+}
+{
+  "id": "bulgur",
+  "name": "Bulgur"
+}
+{
+  "id": "lotus-seeds",
+  "name": "Lotus Seeds"
+}
+{
+  "id": "adzuki-bean",
+  "name": "Adzuki Bean"
+}
+{
+  "id": "baked-beans",
+  "name": "Baked Beans"
+}
+{
+  "id": "black-turtle-bean",
+  "name": "Black Turtle Bean"
+}
+{
+  "id": "french-beans",
+  "name": "French Beans"
+}
+{
+  "id": "great-northern-beans",
+  "name": "Great Northern Beans"
+}
+{
+  "id": "navy-beans",
+  "name": "Navy Beans"
+}
+{
+  "id": "pinto-beans",
+  "name": "Pinto Beans"
+}
+{
+  "id": "fava-beans",
+  "name": "Fava Beans"
+}
+{
+  "id": "cowpea",
+  "name": "Cowpea (Black-eyed Pea)"
+}
+{
+  "id": "lablab",
+  "name": "Lablab (Hyacinth Bean)"
+}
+{
+  "id": "lima-beans",
+  "name": "Lima Beans"
+}
+{
+  "id": "lupin-bean",
+  "name": "Lupin Bean"
+}
+{
+  "id": "mung-beans",
+  "name": "Mung Beans"
+}
+{
+  "id": "pigeon-pea",
+  "name": "Pigeon Pea"
+}
+{
+  "id": "refried-beans",
+  "name": "Refried Beans"
+}
+{
+  "id": "tempeh",
+  "name": "Tempeh"
+}
+{
+  "id": "winged-beans",
+  "name": "Winged Beans"
+}
+{
+  "id": "falafel",
+  "name": "Falafel"
+}
+{
+  "id": "arborio-rice",
+  "name": "Arborio Rice"
+}
+{
+  "id": "glutinous-rice",
+  "name": "Glutinous Rice"
+}
+{
+  "id": "soba",
+  "name": "Soba Noodles"
+}
+{
+  "id": "semolina",
+  "name": "Semolina"
+}
+{
+  "id": "khorasan-wheat",
+  "name": "Khorasan Wheat (Kamut)"
+}
+{
+  "id": "blue-cheese",
+  "name": "Blue Cheese"
+}
+{
+  "id": "camembert",
+  "name": "Camembert"
+}
+{
+  "id": "edam",
+  "name": "Edam"
+}
+{
+  "id": "brunost",
+  "name": "Brunost (Brown Cheese)"
+}
+{
+  "id": "gouda-cheese",
+  "name": "Gouda Cheese"
+}
+{
+  "id": "gruyere",
+  "name": "Gruyère"
+}
+{
+  "id": "buttermilk",
+  "name": "Buttermilk"
+}
+{
+  "id": "condensed-milk",
+  "name": "Condensed Milk"
+}
+{
+  "id": "goat-milk",
+  "name": "Goat Milk"
+}
+{
+  "id": "egg-white",
+  "name": "Egg White"
+}
+{
+  "id": "egg-yolk",
+  "name": "Egg Yolk"
+}
+{
+  "id": "fiskesuppe-fjordland",
+  "name": "Fiskesuppe med crème fraîche (Fjordland)"
+}
+{
+  "id": "kjottsuppe-fjordland",
+  "name": "Kjøttsuppe med rotgrønnsaker og poteter (Fjordland)"
+}
+{
+  "id": "proteinbowl-taco-fjordland",
+  "name": "Proteinbowl Taco med kjøttdeig og ris (Fjordland)"
+}
+{
+  "id": "betasuppe-fjordland",
+  "name": "Brimis Fyldig Betasuppe med bygg (Fjordland)"
+}
+{
+  "id": "laks-pasta-fjordland",
+  "name": "Laks og Pasta i frisk urtesaus (Fjordland)"
+}
+{
+  "id": "proteinbowl-kylling-fjordland",
+  "name": "Proteinbowl Kylling og pasta med grønnsaker (Fjordland)"
+}
+{
+  "id": "skogsgryte-fjordland",
+  "name": "Brimis Skogsgryte med bacon og fløtesaus (Fjordland)"
+}
+{
+  "id": "butter-chickpeas-fjordland",
+  "name": "MasalaMagic Butter Chickpeas (Fjordland)"
+}
+{
+  "id": "butter-chicken-fjordland",
+  "name": "MasalaMagic Butter Chicken med basmatiris (Fjordland)"
+}
+{
+  "id": "pasta-kjottsaus-fjordland",
+  "name": "Pasta med kjøttsaus, tomat og løk (Fjordland)"
+}
+{
+  "id": "pasta-ost-skinke-fjordland",
+  "name": "Pasta med ost- og skinkesaus (Fjordland)"
+}
+{
+  "id": "polsegrateng-fjordland",
+  "name": "Pølsegrateng med makaroni og ostesaus (Fjordland)"
+}
+{
+  "id": "fiskegrateng-findus",
+  "name": "Familiens Fiskegrateng med makaroni (Findus)"
+}
+{
+  "id": "kyllingsuppe-marokkansk-meremat",
+  "name": "Marokkansk Kyllingsuppe (Mere Mat)"
+}
+{
+  "id": "kyllingsuppe-curry-meremat",
+  "name": "Suppe med kylling, curry og grønnsaker (Mere Mat)"
+}
+{
+  "id": "gulrotsuppe-meremat",
+  "name": "Suppe med gulrøtter, chili og ingefær (Mere Mat)"
+}
+{
+  "id": "blomkalsuppe-meremat",
+  "name": "Suppe med blomkål, nepe og persillerot (Mere Mat)"
+}
+{
+  "id": "red-curry-suppe-meremat",
+  "name": "Red Curry Suppe med linser og bønner (Mere Mat)"
+}
+{
+  "id": "tomatsuppe-meremat",
+  "name": "Suppe med tomat, squash og basilikum (Mere Mat)"
+}
+{
+  "id": "ramen-meremat",
+  "name": "Koreansk Ramen suppe med svinenakke (Mere Mat)"
+}
+{
+  "id": "risgrot-fjordland",
+  "name": "Risgrøt (Fjordland)"
+}
+{
+  "id": "kjottkaker-ertestuing-fjordland",
+  "name": "Kjøttkaker med ertestuing og poteter (Fjordland)"
+}
+{
+  "id": "svenske-kjottboller-fjordland",
+  "name": "Svenska kjøttboller i fløtesaus med potetstappe (Fjordland)"
+}
+{
+  "id": "fettuccine-funghi",
+  "name": "Fettuccine Funghi med kremet soppsaus"
+}
+{
+  "id": "pulled-pork-fjordland",
+  "name": "Pulled Pork BBQ med coleslaw og potetstappe (Fjordland)"
+}
+{
+  "id": "torsk-purreloksaus-fjordland",
+  "name": "Torsk med purreløksaus, gulrøtter og poteter (Fjordland)"
+}
+{
+  "id": "lammefrikasse-fjordland",
+  "name": "Lammefrikasse med poteter (Fjordland)"
+}
+{
+  "id": "laksefilet-urtesaus-fjordland",
+  "name": "Laksefilet med urtesaus, gulrøtter og poteter (Fjordland)"
+}
+{
+  "id": "saucy-noodles-teriyaki",
+  "name": "Saucy Noodles Teriyaki (Maggi)"
+}
+{
+  "id": "chili-con-carne-waldemars",
+  "name": "Chili con Carne gryte med storfekjøtt (Waldemars)"
+}
+{
+  "id": "pasta-carbonara-foodcollective",
+  "name": "Pasta Carbonara i kremet oste- og fløtesaus (Food Collective)"
+}
+{
+  "id": "lasagne-bolognese-foodcollective",
+  "name": "Lasagne Bolognese (Food Collective)"
+}
+{
+  "id": "pizza-grandiosa",
+  "name": "Grandiosa Pizza Original"
+}
+{
+  "id": "pizza-bigone-classic",
+  "name": "Big One Classic Pizza"
+}
+{
+  "id": "pizza-ristorante-mozzarella",
+  "name": "Ristorante Pizza Mozzarella (Dr. Oetker)"
+}
+{
+  "id": "pizza-ristorante-pollo",
+  "name": "Ristorante Pizza Pollo med kylling og spinat (Dr. Oetker)"
+}
+{
+  "id": "pizza-ristorante-pepperoni",
+  "name": "Ristorante Pepperoni Salame (Dr. Oetker)"
+}
+{
+  "id": "risdrikk",
+  "name": "Risdrikk (usøtet)"
+}
+{
+  "id": "soya-drikk-alpro",
+  "name": "Sojadrikk usøtet (Alpro)"
+}
+{
+  "id": "mandeldrikk-alpro",
+  "name": "Mandeldrikk usøtet (Alpro)"
+}
+{
+  "id": null,
+  "name": null
+}
+{
+  "id": "beef_tenderloin",
+  "name": "Beef Tenderloin (Psoas major)"
+}
+{
+  "id": "beef_ribeye",
+  "name": "Beef Ribeye (Longissimus thoracis)"
+}
+{
+  "id": "beef_striploin",
+  "name": "Beef Striploin (Longissimus lumborum)"
+}
+{
+  "id": "beef_chuck",
+  "name": "Beef Chuck / Shoulder (Triceps brachii / Clod)"
+}
+{
+  "id": "beef_flat_iron",
+  "name": "Beef Flat Iron (Infraspinatus)"
+}
+{
+  "id": "beef_top_sirloin",
+  "name": "Beef Top Sirloin (Gluteus medius)"
+}
+{
+  "id": "beef_topside",
+  "name": "Beef Topside / Inside Round (Semimembranosus)"
+}
+{
+  "id": "beef_silverside",
+  "name": "Beef Silverside / Bottom Round (Biceps femoris)"
+}
+{
+  "id": "beef_eye_of_round",
+  "name": "Beef Eye of Round (Semitendinosus)"
+}
+{
+  "id": "beef_brisket",
+  "name": "Beef Brisket (Pectoralis profundus)"
+}
+{
+  "id": "beef_flank",
+  "name": "Beef Flank (Rectus abdominis)"
+}
+{
+  "id": "beef_neck",
+  "name": "Beef Neck"
+}
+{
+  "id": "beef_shank",
+  "name": "Beef Shank / Shin"
+}
+{
+  "id": "beef_diaphragm",
+  "name": "Beef Diaphragm / Outside Skirt"
+}
+{
+  "id": "pork_loin",
+  "name": "Pork Loin (Longissimus dorsi)"
+}
+{
+  "id": "pork_shoulder",
+  "name": "Pork Shoulder / Blade"
+}
+{
+  "id": "pork_belly",
+  "name": "Pork Belly"
+}
+{
+  "id": "pork_leg",
+  "name": "Pork Leg / Ham (fresh)"
+}
+{
+  "id": "pork_neck",
+  "name": "Pork Neck / Collar"
+}
+{
+  "id": "pork_ribs",
+  "name": "Pork Spare Ribs"
+}
+{
+  "id": "pork_cheek",
+  "name": "Pork Cheek"
+}
+{
+  "id": "pork_knuckle",
+  "name": "Pork Knuckle / Hock (meat portion)"
+}
+{
+  "id": "chicken_breast",
+  "name": "Chicken Breast (Pectoralis major), skinless"
+}
+{
+  "id": "chicken_thigh",
+  "name": "Chicken Thigh, skinless"
+}
+{
+  "id": "chicken_drumstick",
+  "name": "Chicken Drumstick, skinless"
+}
+{
+  "id": "chicken_wing",
+  "name": "Chicken Wing"
+}
+{
+  "id": "chicken_back",
+  "name": "Chicken Back / Oyster"
+}
+{
+  "id": "lamb_leg",
+  "name": "Lamb Leg"
+}
+{
+  "id": "lamb_shoulder",
+  "name": "Lamb Shoulder"
+}
+{
+  "id": "lamb_loin_chop",
+  "name": "Lamb Loin Chop"
+}
+{
+  "id": "beef_liver",
+  "name": "Beef Liver"
+}
+{
+  "id": "beef_kidney",
+  "name": "Beef Kidney"
+}
+{
+  "id": "beef_heart",
+  "name": "Beef Heart"
+}
+{
+  "id": "beef_tongue",
+  "name": "Beef Tongue"
+}
+{
+  "id": "beef_tripe",
+  "name": "Beef Tripe (Stomach lining / Rumen)"
+}
+{
+  "id": "beef_lung",
+  "name": "Beef Lung"
+}
+{
+  "id": "beef_spleen",
+  "name": "Beef Spleen"
+}
+{
+  "id": "beef_brain",
+  "name": "Beef Brain"
+}
+{
+  "id": "beef_marrow_bone",
+  "name": "Beef Bone Marrow"
+}
+{
+  "id": "pork_liver",
+  "name": "Pork Liver"
+}
+{
+  "id": "pork_kidney",
+  "name": "Pork Kidney"
+}
+{
+  "id": "pork_heart",
+  "name": "Pork Heart"
+}
+{
+  "id": "pork_stomach",
+  "name": "Pork Stomach / Maw"
+}
+{
+  "id": "pork_tongue",
+  "name": "Pork Tongue"
+}
+{
+  "id": "pork_brain",
+  "name": "Pork Brain"
+}
+{
+  "id": "pork_lung",
+  "name": "Pork Lung"
+}
+{
+  "id": "chicken_liver",
+  "name": "Chicken Liver"
+}
+{
+  "id": "chicken_heart",
+  "name": "Chicken Heart"
+}
+{
+  "id": "chicken_gizzard",
+  "name": "Chicken Gizzard"
+}
+{
+  "id": "lamb_liver",
+  "name": "Lamb Liver"
+}
+{
+  "id": "lamb_kidney",
+  "name": "Lamb Kidney"
+}
+{
+  "id": "olive_oil_extra_virgin",
+  "name": "Olive Oil, Extra Virgin"
+}
+{
+  "id": "olive_oil_refined",
+  "name": "Olive Oil, Refined (Pure)"
+}
+{
+  "id": "sunflower_oil",
+  "name": "Sunflower Oil"
+}
+{
+  "id": "rapeseed_oil",
+  "name": "Rapeseed Oil (Canola)"
+}
+{
+  "id": "coconut_oil",
+  "name": "Coconut Oil (Virgin)"
+}
+{
+  "id": "flaxseed_oil",
+  "name": "Flaxseed Oil (Linseed Oil)"
+}
+{
+  "id": "sesame_oil",
+  "name": "Sesame Oil"
+}
+{
+  "id": "palm_oil",
+  "name": "Palm Oil"
+}
+{
+  "id": "corn_oil",
+  "name": "Corn Oil (Maize Oil)"
+}
+{
+  "id": "soybean_oil",
+  "name": "Soybean Oil"
+}
+{
+  "id": "grapeseed_oil",
+  "name": "Grapeseed Oil"
+}
+{
+  "id": "walnut_oil",
+  "name": "Walnut Oil"
+}
+{
+  "id": "pumpkin_seed_oil",
+  "name": "Pumpkin Seed Oil (Styrian)"
+}
+{
+  "id": "almond_oil",
+  "name": "Almond Oil (Sweet)"
+}
+{
+  "id": "hazelnut_oil",
+  "name": "Hazelnut Oil"
+}
+{
+  "id": "avocado_oil",
+  "name": "Avocado Oil"
+}
+{
+  "id": "hemp_seed_oil",
+  "name": "Hemp Seed Oil"
+}
+{
+  "id": "wheat_germ_oil",
+  "name": "Wheat Germ Oil"
+}
+{
+  "id": "rice_bran_oil",
+  "name": "Rice Bran Oil"
+}
+{
+  "id": "safflower_oil",
+  "name": "Safflower Oil"
+}
+{
+  "id": "macadamia_oil",
+  "name": "Macadamia Oil"
+}
+{
+  "id": "argan_oil",
+  "name": "Argan Oil (Culinary)"
+}
+{
+  "id": "evening_primrose_oil",
+  "name": "Evening Primrose Oil"
+}
+{
+  "id": "borage_oil",
+  "name": "Borage Oil (Starflower Oil)"
+}
+{
+  "id": "black_cumin_oil",
+  "name": "Black Cumin Oil (Nigella sativa)"
+}
+{
+  "id": "sea_buckthorn_oil",
+  "name": "Sea Buckthorn Berry Oil"
+}
+{
+  "id": "cod_liver_oil",
+  "name": "Cod Liver Oil"
+}
+{
+  "id": "salmon_oil",
+  "name": "Salmon Oil"
+}
+{
+  "id": "krill_oil",
+  "name": "Krill Oil"
+}
+{
+  "id": "butter_clarified",
+  "name": "Clarified Butter (Ghee)"
+}
+{
+  "id": "soy_sauce_japanese",
+  "name": "Soy Sauce, Brewed (Shoyu)"
+}
+{
+  "id": "tamari_sauce",
+  "name": "Tamari Sauce (Gluten-Free Soy Sauce)"
+}
+{
+  "id": "teriyaki_sauce",
+  "name": "Teriyaki Sauce"
+}
+{
+  "id": "worcestershire_sauce",
+  "name": "Worcestershire Sauce"
+}
+{
+  "id": "tomato_ketchup_eu",
+  "name": "Tomato Ketchup (European Formula)"
+}
+{
+  "id": "mustard_dijon",
+  "name": "Dijon Mustard"
+}
+{
+  "id": "mustard_wholegrain",
+  "name": "Whole Grain Mustard"
+}
+{
+  "id": "mayonnaise_eu",
+  "name": "Mayonnaise (European, full-fat)"
+}
+{
+  "id": "bechamel_sauce",
+  "name": "Béchamel Sauce"
+}
+{
+  "id": "tomato_passata",
+  "name": "Tomato Passata (Sieved Tomatoes)"
+}
+{
+  "id": "pesto_basil",
+  "name": "Basil Pesto (traditional, olive oil)"
+}
+{
+  "id": "fish_sauce",
+  "name": "Fish Sauce (Nam Pla / Nuoc Mam)"
+}
+{
+  "id": "oyster_sauce",
+  "name": "Oyster Sauce"
+}
+{
+  "id": "hoisin_sauce",
+  "name": "Hoisin Sauce"
+}
+{
+  "id": "sweet_chili_sauce",
+  "name": "Sweet Chili Sauce"
+}
+{
+  "id": "miso_white",
+  "name": "White Miso Paste (Shiro Miso)"
+}
+{
+  "id": "miso_red",
+  "name": "Red Miso Paste (Aka Miso)"
+}
+{
+  "id": "tahini",
+  "name": "Tahini (Sesame Paste)"
+}
+{
+  "id": "hummus",
+  "name": "Hummus (chickpea dip)"
+}
+{
+  "id": "sriracha",
+  "name": "Sriracha Hot Sauce"
+}
+{
+  "id": "tabasco_sauce",
+  "name": "Tabasco Sauce (Original)"
+}
+{
+  "id": "balsamic_vinegar",
+  "name": "Balsamic Vinegar (Modena IGP)"
+}
+{
+  "id": "apple_cider_vinegar",
+  "name": "Apple Cider Vinegar (unfiltered)"
+}
+{
+  "id": "harissa_paste",
+  "name": "Harissa Paste"
+}
+{
+  "id": "tzatziki",
+  "name": "Tzatziki"
+}
+{
+  "id": "gochujang",
+  "name": "Gochujang (Korean Fermented Chili Paste)"
+}
+{
+  "id": "ponzu_sauce",
+  "name": "Ponzu Sauce"
+}
+{
+  "id": "hp_brown_sauce",
+  "name": "HP Brown Sauce"
+}
+{
+  "id": "remoulade_danish",
+  "name": "Remoulade (Danish-style)"
+}
+{
+  "id": "sheep_milk",
+  "name": "Sheep Milk (Fresh, whole)"
+}
+{
+  "id": "sheep_yogurt",
+  "name": "Sheep Milk Yogurt"
+}
+{
+  "id": "sheep_cheese_manchego",
+  "name": "Manchego Cheese (sheep, DOP)"
+}
+{
+  "id": "sheep_cheese_pecorino_romano",
+  "name": "Pecorino Romano (sheep, DOP)"
+}
+{
+  "id": "sheep_cheese_feta",
+  "name": "Feta Cheese (sheep/goat blend, DOP)"
+}
+{
+  "id": "sheep_cheese_ossau_iraty",
+  "name": "Ossau-Iraty (sheep, AOP)"
+}
+{
+  "id": "sheep_ricotta",
+  "name": "Ricotta di Pecora (sheep ricotta)"
+}
+{
+  "id": "buffalo_milk",
+  "name": "Buffalo Milk (Water Buffalo, whole)"
+}
+{
+  "id": "buffalo_mozzarella",
+  "name": "Mozzarella di Bufala Campana (DOP)"
+}
+{
+  "id": "donkey_milk",
+  "name": "Donkey Milk"
+}
+{
+  "id": "mare_milk",
+  "name": "Mare's Milk (Horse Milk)"
+}
+{
+  "id": "reindeer_milk",
+  "name": "Reindeer Milk"
+}
+{
+  "id": "camel_milk",
+  "name": "Camel Milk"
+}
+{
+  "id": "soy_milk_eu",
+  "name": "Soy Drink (unsweetened, EU formula)"
+}
+{
+  "id": "oat_milk_eu",
+  "name": "Oat Drink (unsweetened, EU formula)"
+}
+{
+  "id": "almond_milk_eu",
+  "name": "Almond Drink (unsweetened, EU formula)"
+}
+{
+  "id": "rice_milk_eu",
+  "name": "Rice Drink (EU formula)"
+}
+{
+  "id": "coconut_milk_drink_eu",
+  "name": "Coconut Drink (carton, EU formula)"
+}
+{
+  "id": "hemp_milk_eu",
+  "name": "Hemp Drink (unsweetened, EU formula)"
+}
+{
+  "id": "hazelnut_milk_eu",
+  "name": "Hazelnut Drink (EU formula)"
+}
+{
+  "id": "spelt_milk_eu",
+  "name": "Spelt Drink (EU formula)"
+}
+{
+  "id": "pea_milk_eu",
+  "name": "Pea Protein Drink (EU formula)"
+}
+{
+  "id": "quinoa_milk_eu",
+  "name": "Quinoa Drink (EU formula)"
+}
+{
+  "id": "macadamia_milk_eu",
+  "name": "Macadamia Drink (EU formula)"
+}
+{
+  "id": "orange_juice_eu",
+  "name": "Orange Juice (100%, not from concentrate, EU)"
+}
+{
+  "id": "apple_juice_eu",
+  "name": "Apple Juice (100%, cloudy, EU)"
+}
+{
+  "id": "fanta_orange_eu",
+  "name": "Fanta Orange (EU formula, sucrose-sweetened)"
+}
+{
+  "id": "coca_cola_eu",
+  "name": "Coca-Cola (EU formula, sucrose-sweetened)"
+}
+{
+  "id": "sparkling_water",
+  "name": "Sparkling Mineral Water (European, e.g. Gerolsteiner)"
+}
+{
+  "id": "black_coffee",
+  "name": "Black Coffee (brewed, espresso-style)"
+}
+{
+  "id": "green_tea",
+  "name": "Green Tea (brewed)"
+}
+{
+  "id": "black_tea",
+  "name": "Black Tea (brewed)"
+}
+{
+  "id": "elderflower_cordial_eu",
+  "name": "Elderflower Cordial (EU, diluted ready-to-drink)"
+}
+{
+  "id": "tomato_juice_eu",
+  "name": "Tomato Juice (EU, unsalted)"
+}
+{
+  "id": "black_currant_juice_eu",
+  "name": "Blackcurrant Juice (100%, EU)"
+}
+{
+  "id": "rosehip_tea",
+  "name": "Rosehip Tea (brewed, EU)"
+}
+{
+  "id": "salt_table",
+  "name": "Table Salt (NaCl, iodised, EU standard)"
+}
+{
+  "id": "black_pepper",
+  "name": "Black Pepper (ground)"
+}
+{
+  "id": "turmeric_ground",
+  "name": "Turmeric (ground)"
+}
+{
+  "id": "cumin_ground",
+  "name": "Cumin (ground)"
+}
+{
+  "id": "paprika_sweet",
+  "name": "Paprika, Sweet (ground)"
+}
+{
+  "id": "cinnamon_ground",
+  "name": "Cinnamon (ground, Ceylon)"
+}
+{
+  "id": "ginger_ground",
+  "name": "Ginger (ground, dried)"
+}
+{
+  "id": "garlic_powder",
+  "name": "Garlic Powder (dried)"
+}
+{
+  "id": "onion_powder",
+  "name": "Onion Powder (dried)"
+}
+{
+  "id": "chili_powder",
+  "name": "Chili Powder (blend, EU)"
+}
+{
+  "id": "dried_oregano",
+  "name": "Oregano (dried)"
+}
+{
+  "id": "dried_thyme",
+  "name": "Thyme (dried)"
+}
+{
+  "id": "dried_rosemary",
+  "name": "Rosemary (dried)"
+}
+{
+  "id": "dried_basil",
+  "name": "Basil (dried)"
+}
+{
+  "id": "caraway_seeds",
+  "name": "Caraway Seeds"
+}
+{
+  "id": "fennel_seeds",
+  "name": "Fennel Seeds"
+}
+{
+  "id": "cloves_ground",
+  "name": "Cloves (ground)"
+}
+{
+  "id": "cardamom_ground",
+  "name": "Cardamom (ground)"
+}
+{
+  "id": "star_anise",
+  "name": "Star Anise (whole, ground for use)"
+}
+{
+  "id": "nutmeg_ground",
+  "name": "Nutmeg (ground)"
+}
+{
+  "id": "saffron",
+  "name": "Saffron (dried stigmas)"
+}
+{
+  "id": "vanilla_extract",
+  "name": "Vanilla Extract (pure, EU)"
+}
+{
+  "id": "bay_leaves_dried",
+  "name": "Bay Leaves (dried)"
+}
+{
+  "id": "coriander_seeds",
+  "name": "Coriander Seeds (ground)"
+}
+{
+  "id": "fenugreek_seeds",
+  "name": "Fenugreek Seeds"
+}
+{
+  "id": "mustard_seeds_yellow",
+  "name": "Mustard Seeds (yellow)"
+}
+{
+  "id": "dried_dill",
+  "name": "Dill (dried)"
+}
+{
+  "id": "dried_parsley",
+  "name": "Parsley (dried)"
+}
+{
+  "id": "dried_sage",
+  "name": "Sage (dried)"
+}
+{
+  "id": "dried_marjoram",
+  "name": "Marjoram (dried)"
+}
+{
+  "id": "cayenne_pepper",
+  "name": "Cayenne Pepper (ground)"
+}
+{
+  "id": "szechuan_pepper",
+  "name": "Szechuan Pepper (ground)"
+}
+{
+  "id": "smoked_paprika",
+  "name": "Paprika, Smoked (Pimentón)"
+}

@@ -400,6 +400,8 @@ func _ready():
 		_eat_meal(temp_meal)
 	)
 	$Panel/MealPlannerPanel.hide()
+	$Panel/MealPlannerPanel.z_index = 60
+	$Panel/ShoppingListPanel.z_index = 60
 	digestive_panel.visible = false   # start hidden
 	digest_check_btn.pressed.connect(_on_digest_check_pressed)
 	Global.any_button_pressed.connect(_on_any_button_pressed)
@@ -1707,23 +1709,59 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	title.autowrap_mode = TextServer.AUTOWRAP_WORD
 	name_row.add_child(title)
 	
-	var expiry_edit = LineEdit.new()
-	expiry_edit.placeholder_text = "dd/mm/yyyy"
-	expiry_edit.text = fridge_expiry.get(iid, "")
-	expiry_edit.custom_minimum_size = Vector2(250, 44)
-	expiry_edit.alignment = HORIZONTAL_ALIGNMENT_CENTER
-	expiry_edit.add_theme_font_size_override("font_size", 36)
-	#expiry_edit.alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	var captured_iid = iid
-	expiry_edit.text_submitted.connect(func(new_text: String):
-		fridge_expiry[captured_iid] = new_text
+	var day_spin = SpinBox.new()
+	day_spin.min_value = 1; day_spin.max_value = 31; day_spin.step = 1
+	day_spin.custom_minimum_size = Vector2(70, 44)
+	day_spin.add_theme_font_size_override("font_size", 20)
+
+	var slash1 = Label.new(); slash1.text = "/"
+	slash1.add_theme_font_size_override("font_size", 22)
+
+	var month_spin = SpinBox.new()
+	month_spin.min_value = 1; month_spin.max_value = 12; month_spin.step = 1
+	month_spin.custom_minimum_size = Vector2(70, 44)
+	month_spin.add_theme_font_size_override("font_size", 20)
+
+	var slash2 = Label.new(); slash2.text = "/"
+	slash2.add_theme_font_size_override("font_size", 22)
+
+	var year_spin = SpinBox.new()
+	year_spin.min_value = 2024; year_spin.max_value = 2040; year_spin.step = 1
+	year_spin.custom_minimum_size = Vector2(90, 44)
+	year_spin.add_theme_font_size_override("font_size", 20)
+
+	# Restore saved values
+	var saved_expiry = fridge_expiry.get(iid, "")
+	if not saved_expiry.is_empty():
+		var parts = saved_expiry.split("/")
+		if parts.size() == 3:
+			day_spin.value   = parts[0].to_int()
+			month_spin.value = parts[1].to_int()
+			year_spin.value  = parts[2].to_int()
+
+	var _save_date = func():
+		var d = int(day_spin.value)
+		var m = int(month_spin.value)
+		var y = int(year_spin.value)
+		# Validate day against month
+		var days_in_month = [0,31,28,31,30,31,30,31,31,30,31,30,31]
+		# Leap year check
+		if m == 2 and (y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)):
+			days_in_month[2] = 29
+		d = min(d, days_in_month[m])
+		day_spin.value = d
+		fridge_expiry[iid] = "%02d/%02d/%04d" % [d, m, y]
 		save_fridge()
-	)
-	expiry_edit.focus_exited.connect(func():
-		fridge_expiry[captured_iid] = expiry_edit.text
-		save_fridge()
-	)
-	name_row.add_child(expiry_edit)
+
+	day_spin.value_changed.connect(func(_v): _save_date.call())
+	month_spin.value_changed.connect(func(_v): _save_date.call())
+	year_spin.value_changed.connect(func(_v): _save_date.call())
+
+	name_row.add_child(day_spin)
+	name_row.add_child(slash1)
+	name_row.add_child(month_spin)
+	name_row.add_child(slash2)
+	name_row.add_child(year_spin)
 
 	var bb_lbl = Label.new()
 	bb_lbl.text = "(Best Before)"
@@ -2732,6 +2770,16 @@ func _make_saved_meal_row(meal: Dictionary) -> VBoxContainer:
 	)
 	btn_row.add_child(edit_btn)
 
+	#var digest_btn = Button.new()
+	#digest_btn.text = "🧪 Simulate"
+	#digest_btn.add_theme_font_size_override("font_size", 22)
+	#digest_btn.custom_minimum_size = Vector2(0, 55)
+	#var captured_meal = meal
+	#digest_btn.pressed.connect(func():
+		#_open_digestive_simulator(captured_meal)
+	#)
+	#btn_row.add_child(digest_btn)
+
 	# Delete button
 	var del_btn = Button.new()
 	del_btn.text = "🗑"
@@ -2989,11 +3037,15 @@ func _handle_meal_input(event: InputEvent, entry: Dictionary, idx: int, timer: T
 		is_release = not event.pressed
 
 	if is_press:
-		# Close any existing meal popups immediately
-		var existing_action = get_node_or_null("MealItemPopup")
-		if existing_action: existing_action.queue_free()
-		var existing_info = get_node_or_null("MealInfoBubble")
-		if existing_info: existing_info.queue_free()
+		# Close ALL existing meal action/info popups before starting timer
+		var to_close = ["MealItemPopup","MealInfoBubble","MealDetailsPopup"]
+		for node_name in to_close:
+			var old = get_node_or_null(node_name)
+			if old: old.queue_free()
+		# Also close any popup that IS a MealItemPopup regardless of exact name
+		for child in get_children():
+			if child.get_meta("is_meal_action_popup", false):
+				child.queue_free()
 		_long_press_active = false
 		timer.start()
 
@@ -3116,6 +3168,8 @@ func _open_meal_dual_popup(entry: Dictionary, idx: int, pressed_btn: Button):
 	action_popup.name = "MealItemPopup"
 	action_popup.custom_minimum_size = Vector2(popup_width, 0)
 	action_popup.position = Vector2(popup_x, popup_y)
+	
+	action_popup.set_meta("is_meal_action_popup", true)
 	
 	var vbox = VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 8)
@@ -4118,11 +4172,10 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 	var existing_info = get_node_or_null("MealInfoBubble")
 	if existing_info: existing_info.queue_free()
 
+	var food_name = slot.get("name","")
 	for ex in _portion_popup_stack:
-		if is_instance_valid(ex) and ex.get_meta("slot_iid","") == slot.get("_iid",""):
-			ex.queue_free()
-			_portion_popup_stack.erase(ex)
-			break
+		if is_instance_valid(ex) and ex.get_meta("food_name","") == food_name:
+			return 
 	
 	_clean_portion_popup_stack()
 	if _portion_popup_stack.size() >= MAX_PORTION_POPUPS:
@@ -4140,6 +4193,8 @@ func _open_from_fridge_portion_popup(slot: Dictionary):
 	popup.mouse_filter = Control.MOUSE_FILTER_STOP
 	popup.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
 	popup.custom_minimum_size = Vector2(360, 0)
+
+	popup.set_meta("food_name", slot.get("name",""))
 
 	var vbox = VBoxContainer.new()
 	vbox.add_theme_constant_override("separation", 8)
@@ -5171,6 +5226,19 @@ func _build_insulin_btn():
 	_insulin_btn.z_index = 50
 	_insulin_btn.tooltip_text = "Insulin → Glucose Calculator"
 
+#insulin png
+	var insulin_icon = TextureRect.new()
+	insulin_icon.name = "Icon"
+	insulin_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	insulin_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	insulin_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var insulin_png_path = "res://images/icons/insulin_btn.png"
+	if ResourceLoader.exists(insulin_png_path):
+		insulin_icon.texture = load(insulin_png_path)
+	else:
+		_insulin_btn.text = "💉"   # fallback to emoji if no png yet
+	_insulin_btn.add_child(insulin_icon)
+
 	# Restore saved position
 	var saved_pos = Vector2(20, 400)
 	if FileAccess.file_exists("user://insulin_btn_pos.json"):
@@ -5588,6 +5656,19 @@ func _build_expire_btn():
 	_expire_btn.z_index = 50
 	_expire_btn.tooltip_text = "Soon to Expire"
 
+#expire png
+	var expire_icon = TextureRect.new()
+	expire_icon.name = "Icon"
+	expire_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	expire_icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	expire_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var expire_png_path = "res://images/icons/expire_btn.png"
+	if ResourceLoader.exists(expire_png_path):
+		expire_icon.texture = load(expire_png_path)
+	else:
+		_expire_btn.text = "📅"
+	_expire_btn.add_child(expire_icon)
+
 	var saved_pos = Vector2(20, 480)
 	if FileAccess.file_exists("user://expire_btn_pos.json"):
 		var f = FileAccess.open("user://expire_btn_pos.json", FileAccess.READ)
@@ -5639,9 +5720,15 @@ func _parse_expiry_unix(date_str: String) -> int:
 	var d = parts[0].to_int()
 	var m = parts[1].to_int()
 	var y = parts[2].to_int()
-	if d == 0 or m == 0 or y == 0: return -1
+	if d < 1 or d > 31: return -1
+	if m < 1 or m > 12: return -1
+	if y < 2024 or y > 2040: return -1
+	var days_in_month = [0,31,28,31,30,31,30,31,31,30,31,30,31]
+	if m == 2 and (y % 4 == 0 and (y % 100 != 0 or y % 400 == 0)):
+		days_in_month[2] = 29
+	if d > days_in_month[m]: return -1
 	return int(Time.get_unix_time_from_datetime_dict({
-		"year":y,"month":m,"day":d,"hour":0,"minute":0,"second":0
+		"year":y,"month":m,"day":d,"hour":12,"minute":0,"second":0
 	}))
 
 func _refresh_expire_btn_badge():
