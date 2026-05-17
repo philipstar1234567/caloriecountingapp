@@ -186,6 +186,48 @@ func _ready():
 	)
 	get_node(BASE + "HideRedWarningsRow/HideRedCheck").button_pressed = Global.hide_red_warnings
 
+	# Tooth sensitivity checkboxes
+	var remove_check = get_node(BASE + "ToothSensitivityRow/RemoveStainingCheck")
+	var warn_check   = get_node(BASE + "ToothSensitivityRow/WarnStainingCheck")
+	remove_check.button_pressed = Global.tooth_remove_staining
+	warn_check.button_pressed   = Global.tooth_warn_staining
+	remove_check.toggled.connect(func(checked):
+		if checked:
+			warn_check.button_pressed = false
+			Global.tooth_warn_staining = false
+		Global.tooth_remove_staining = checked
+		Global.save_profile()
+	)
+	warn_check.toggled.connect(func(checked):
+		if checked:
+			remove_check.button_pressed = false
+			Global.tooth_remove_staining = false
+		Global.tooth_warn_staining = checked
+		Global.save_profile()
+	)
+	
+	# Parodontosis checkboxes
+	var paro_remove_check = get_node(BASE + "ParodontosisRow/ParodontosisRemoveCheck")
+	var paro_warn_check   = get_node(BASE + "ParodontosisRow/ParodontosisWarnCheck")
+	paro_remove_check.button_pressed = Global.paro_remove
+	paro_warn_check.button_pressed   = Global.paro_warn
+	paro_remove_check.toggled.connect(func(checked):
+		if checked:
+			paro_warn_check.button_pressed = false
+			Global.paro_warn = false
+		Global.paro_remove = checked
+		Global.save_profile()
+		
+	)
+	paro_warn_check.toggled.connect(func(checked):
+		if checked:
+			paro_remove_check.button_pressed = false
+			Global.paro_remove = false
+		Global.paro_warn = checked
+		Global.save_profile()
+		
+	)
+	
 	# Kidney care
 	get_node(KIDNEY + "KnownDisease").toggled.connect(_on_known_disease_toggled)
 	get_node(KIDNEY + "InputFields/CalculateButton").pressed.connect(_on_calculate_egfr)
@@ -288,6 +330,7 @@ func _ready():
 	load_body_metrics()
 	load_metabolic_ui()
 	_apply_dynamic_sizing()
+	_configure_touch_controls()
 
 	var temp_opt = get_node(BASE + "TempUnitRow/TempUnitOption")
 	if temp_opt:
@@ -1456,3 +1499,25 @@ func _apply_dynamic_sizing():
 		if panel:
 			panel.custom_minimum_size = Vector2(0, 0)
 			panel.size_flags_vertical = Control.SIZE_SHRINK_BEGIN
+
+func _configure_touch_controls(node: Node = self):
+	for child in node.get_children():
+		if child is ScrollContainer:
+			child.scroll_deadzone = 4
+			child.mouse_filter = Control.MOUSE_FILTER_STOP
+		if child is SpinBox:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+			child.get_line_edit().mouse_filter = Control.MOUSE_FILTER_IGNORE
+			for spinbox_child in child.get_children():
+				if spinbox_child is BaseButton:
+					spinbox_child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+		elif child is OptionButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is CheckBox:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is BaseButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		_configure_touch_controls(child)

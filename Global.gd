@@ -6,6 +6,14 @@ signal streak_milestone_reached(days: int)
 signal quest_completed(quest: Dictionary)
 signal badge_earned(badge: Dictionary)
 signal item_equipped
+signal food_discovered(food_id: String)
+
+var _discovery_counter: int = 0
+var _next_discovery_at: int = 0 
+
+var discovered_foods: Array = []   
+
+var consecutive_logging_days: int = 0
 
 var last_report_date: String = ""
 
@@ -49,6 +57,13 @@ var known_diagnoses: Array = []  # only manually checked boxes
 var daily_water_liters: float = 2.5  # default, recalculated based on conditions
 
 var hide_red_warnings: bool = false
+
+var tooth_remove_staining: bool = false
+var tooth_warn_staining: bool = false
+#var tooth_staining_data: Dictionary = {}  # keyed by food id
+
+var paro_remove: bool = false
+var paro_warn: bool = false
 
 var metabolic_risk_levels: Dictionary = {}
 var conditions_data: Dictionary = {}
@@ -310,39 +325,34 @@ const SEASONS = [
 var current_league_idx: int = 0
 var league_weekly_pts: int  = 0
 var league_week_start: String = ""
-
+var a = get_sat_fat_limit_g()
 var metabolic_warnings_data = {
 
 	# ── Glycemic / T2DM ──────────────────────────────────────────────────
 	"glycemic-health": {
 		"label": "Glycemic Health",
 		"field": "sugar_g",
-		"caution": 5.0, "avoid": 10.0,
-		"caution_msg": "Moderate sugar content. Watch portion size.",
+		"avoid": 5.0,
 		"avoid_msg": "High sugar. Not recommended for diabetes/prediabetes."
 	},
 	"glycemic-health-sat-fat": {
 		"label": "Glycemic Health",
 		"field": "saturated_fat_g",
-		"caution": 3.0, "avoid": 6.0,
-		"caution_msg": "Moderate saturated fat — worsens insulin resistance.",
-		"avoid_msg": "High saturated fat. Avoid — promotes insulin resistance."
+		"avoid": get_sat_fat_limit_g()
+		#"avoid_msg": "High saturated fat. Avoid — promotes insulin resistance."
 	},
 
 	# ── NAFLD / MASLD ─────────────────────────────────────────────────────
 	"nafld": {
 		"label": "NAFLD",
 		"field": "sugar_g",
-		"caution": 5.0, "avoid": 10.0,
-		"caution_msg": "Contains sugar — limit for liver health.",
+		"avoid": 7.0,
 		"avoid_msg": "High sugar. Drives hepatic fat accumulation."
 	},
 	"nafld-fat": {
 		"label": "NAFLD",
 		"field": "saturated_fat_g",
-		"caution": 3.0, "avoid": 6.0,
-		"caution_msg": "Moderate saturated fat — limit for liver health.",
-		"avoid_msg": "High saturated fat. Avoid with NAFLD."
+		"avoid": get_sat_fat_limit_g()
 	},
 	"nafld-iron": {
 		"label": "NAFLD",
@@ -356,9 +366,8 @@ var metabolic_warnings_data = {
 	"lipid-health": {
 		"label": "Lipid Health",
 		"field": "saturated_fat_g",
-		"caution": 3.0, "avoid": 5.0,
-		"caution_msg": "Moderate saturated fat. Limit for cholesterol management.",
-		"avoid_msg": "High saturated fat. Avoid — raises LDL cholesterol."
+		"avoid": get_sat_fat_limit_g()
+		
 	},
 	"lipid-health-sugar": {
 		"label": "Lipid Health (TG)",
@@ -479,9 +488,8 @@ var metabolic_warnings_data = {
 	"post-cholecystectomy-sat-fat": {
 		"label": "Post-Cholecystectomy",
 		"field": "saturated_fat_g",
-		"caution": 4.0, "avoid": 8.0,
-		"caution_msg": "Moderate saturated fat — limit after gallbladder removal.",
-		"avoid_msg": "High saturated fat — significantly worsens fat malabsorption."
+		"avoid": get_sat_fat_limit_g()
+		#"avoid_msg": "High saturated fat — significantly worsens fat malabsorption."
 	},
 
 	# ── Hashimoto's / Thyroid ─────────────────────────────────────────────
@@ -1162,9 +1170,9 @@ func get_visible_micronutrients() -> Array:
 #  STARTUP
 # ─────────────────────────────────────────
 func _ready():
+	load_streak()
 	load_quests()
 	load_profile()
-	load_streak()
 	load_points()
 	load_badges()
 	load_currency()
@@ -1178,7 +1186,7 @@ func _ready():
 		call_deferred("_show_weekly_report")
 		Global.mark_report_shown()
 	Global.load_ui_settings()
-
+	#load_tooth_staining_data()
 # ─────────────────────────────────────────
 #  WARNINGS — called by FridgePage per food
 
@@ -1245,16 +1253,24 @@ func get_warnings(food: Dictionary) -> Array:
 
 			var value = food.get(field, 0.0)
 			if value >= w["avoid"]:
-				warnings.append({"severity":"avoid","message":w["avoid_msg"]})
+				if w.has("avoid_msg"):
+					warnings.append({"severity":"avoid","message":w["avoid_msg"]})
 				break
-			elif value >= w["caution"]:
-				warnings.append({"severity":"caution","message":w["caution_msg"]})
+			elif w.has("caution") and value >= w["caution"]:
+				if w.has("caution_msg"):
+					warnings.append({"severity":"caution","message":w["caution_msg"]})
 				break
 			if Global.active_metabolic_conditions.has("graves-disease"):
 				var cat = food.get("category","")
 				var fid = food.get("id","")
 				if cat == "vegetables" and fid in ["seaweed","wakame"]:
 					warnings.append({"severity":"avoid","message":"Seaweed — avoid with Graves' disease (variable high iodine)."})
+		# Tooth staining warnings
+	for w in get_tooth_warnings(food):
+		warnings.append(w)
+	# Parodontosis warnings
+	for pw in get_paro_warnings(food):
+		warnings.append(pw)
 	return warnings
 
 # ─────────────────────────────────────────
@@ -1266,7 +1282,11 @@ func save_profile():
 		"conditions": active_conditions,
 		"kidney_at_risk": kidney_at_risk,
 		"hide_red_warnings": hide_red_warnings,
-		"use_fahrenheit":   use_fahrenheit
+		"use_fahrenheit":   use_fahrenheit,
+		"tooth_remove_staining": tooth_remove_staining,
+		"tooth_warn_staining":   tooth_warn_staining,
+		"paro_remove": paro_remove,
+		"paro_warn":   paro_warn,
 	}))
 	file.close()
 
@@ -1279,7 +1299,13 @@ func load_profile():
 	active_conditions = data.get("conditions", [])
 	kidney_at_risk = data.get("kidney_at_risk", false)
 	hide_red_warnings   = data.get("hide_red_warnings", false)
+	tooth_remove_staining = data.get("tooth_remove_staining", false)
+	tooth_warn_staining   = data.get("tooth_warn_staining", false)
 	use_fahrenheit      = data.get("use_fahrenheit", false)
+	paro_remove = data.get("paro_remove", false)
+	paro_warn   = data.get("paro_warn", false)
+	
+
 # ─────────────────────────────────────────
 #  METABOLIC CONDITIONS
 # ─────────────────────────────────────────
@@ -1427,6 +1453,7 @@ func get_macro_goals() -> Dictionary:
 	var fat_pct_min = 0.20
 	var fat_pct_max = 0.35
 
+
 	# EPI: fat MUST NOT BE RESTRICTED (different from all other conditions)
 	if c.has("epi"):
 		var fat_goal_g    = 40.0  # 30–50 g midpoint (NOT % kcal)
@@ -1504,8 +1531,27 @@ func get_macro_goals() -> Dictionary:
 		"fat_g_max":    fat_max_g,
 		"carbs_g_min":  carb_min_g,
 		"carbs_g_max":  carb_max_g,
-		"fiber_g":      fiber_g
+		"fiber_g":      fiber_g,
+		"sat_fat_g_max": get_sat_fat_limit_g()
 	}
+
+func get_sat_fat_limit_g() -> float:
+	var kcal = adjusted_kcal_goal if adjusted_kcal_goal > 0 else body_metrics.get("daily_goal", 2000.0)
+	var pct  = 0.10
+	if active_metabolic_conditions.has("nafld"):               pct = 0.07
+	if active_metabolic_conditions.has("glycemic-health"):     pct = 0.07
+	if active_metabolic_conditions.has("post-cholecystectomy"):pct = 0.07
+	if active_metabolic_conditions.has("lipid-health"):        pct = 0.06
+	return (pct * kcal) / 9.0
+
+func get_sat_fat_threshold_grams_for_food(sat_fat_per_100g: float, already_eaten_sat_fat_g: float) -> float:
+	# Returns: how many grams of this food can be eaten before hitting the daily sat fat limit
+	# Returns -1 if food has no sat fat (no warning needed)
+	if sat_fat_per_100g <= 0.0: return -1.0
+	var budget = get_sat_fat_limit_g() - already_eaten_sat_fat_g
+	if budget <= 0.0: return 0.0   # already exceeded — any amount warns
+	# Exact math: solve x * sat_fat_per_100g / 100 = budget
+	return (budget * 100.0) / sat_fat_per_100g
 
 func get_condition_clinical_notes() -> Dictionary:
 	var notes: Dictionary = {}
@@ -1636,6 +1682,7 @@ func check_and_update_streak():
 			print("STREAK: freeze used! streak=", daily_streak)
 		else:
 			daily_streak = 1
+			consecutive_logging_days = 0
 			print("STREAK: missed a day, reset to 1")
 	else:
 		daily_streak = 1
@@ -1648,32 +1695,37 @@ func check_and_update_streak():
 		if daily_streak == m and _last_celebrated_milestone < m:
 			_last_celebrated_milestone = m
 			streak_milestone_reached.emit(m)
+			award_py(m * 5, "Streak milestone " + str(m) + " days")
 
 	last_streak_date = today
-
+	consecutive_logging_days = max(consecutive_logging_days, daily_streak)
 	save_streak()
 	print("STREAK: saved. streak=", daily_streak, " last_date=", last_streak_date)
 
 func save_streak():
 	var file = FileAccess.open("user://streak.json", FileAccess.WRITE)
+	if file == null: return
 	file.store_string(JSON.stringify({
 		"daily_streak":              daily_streak,
 		"last_streak_date":          last_streak_date,
 		"streak_freeze_count":       streak_freeze_count,
-		"last_celebrated_milestone": _last_celebrated_milestone
+		"last_celebrated_milestone": _last_celebrated_milestone,
+		"consecutive_logging_days":   consecutive_logging_days
 	}))
 	file.close()
 
 func load_streak():
 	if not FileAccess.file_exists("user://streak.json"): return
 	var file = FileAccess.open("user://streak.json", FileAccess.READ)
+	if file == null: return
 	var data = JSON.parse_string(file.get_as_text())
 	file.close()
-	if not data: return
+	if not data or not data is Dictionary: return
 	daily_streak              = data.get("daily_streak", 0)
 	last_streak_date          = data.get("last_streak_date", "")
 	streak_freeze_count       = data.get("streak_freeze_count", 1)
 	_last_celebrated_milestone = data.get("last_celebrated_milestone", 0)
+	consecutive_logging_days  = data.get("consecutive_logging_days", 0)
 
 func _get_yesterday_string() -> String:
 	var unix = Time.get_unix_time_from_system() - 86400
@@ -2329,10 +2381,98 @@ func calculate_and_save_points(today_totals: Dictionary, water_ml_val: float, fo
 		var ratio = ox / max(ca, 1.0)
 		if ratio > 0.5:
 			pts -= floor((ratio - 0.5) / 0.5)
-
+	
+	# Saturated fat penalty
+	var eaten_sat_fat = today_totals.get("saturated_fat_g", 0.0)
+	var sat_fat_limit = get_sat_fat_limit_g()
+	if sat_fat_limit > 0 and eaten_sat_fat > sat_fat_limit:
+		pts -= 1.0
+		
 	# ── Strict avoid penalty (accumulated separately in points_history["_penalty"]) ──
 	var penalty = points_history.get("_penalty_" + today, 0.0)
 	pts += penalty
 
 	pts += float(get_season_bonus_pts(today_totals, foods_eaten))
 	save_points(today, pts)
+
+func get_tooth_warnings(food: Dictionary) -> Array:
+	if not tooth_warn_staining: return []
+	var severity = food.get("severity", -1)
+	if severity <= 0: return []
+	var notes      = food.get("notes", "")
+	var mechanisms = food.get("mechanisms", [])
+	var sev_label  = ""
+	match severity:
+		0: sev_label = "Transient only (removed by brushing)"
+		1: sev_label = "Mild staining ★"
+		2: sev_label = "Moderate staining ★★"
+		3: sev_label = "Strong staining ★★★"
+	var msg = "🦷 Tooth staining — severity: " + sev_label
+	if notes != "":
+		msg += "\n" + notes
+	if mechanisms.size() > 0:
+		msg += "\nMechanism: " + ", ".join(mechanisms)
+	return [{"severity": "caution", "message": msg}]
+
+func get_paro_warnings(food: Dictionary) -> Array:
+	if not paro_warn: return []
+	var safe = food.get("safe for parodontosis check", "yes")
+	if safe == "yes": return []
+	return [{"severity": "caution", "message": "🦷 This food feeds bacteria / fungi that worsen Parodontosis."}]
+
+func discover_food(food_id: String):
+	if not discovered_foods.has(food_id):
+		discovered_foods.append(food_id)
+		save_discoveries()
+		food_discovered.emit(food_id)
+		
+func save_discoveries():
+	var file = FileAccess.open("user://discoveries.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify({"discovered": discovered_foods}))
+	file.close()
+
+func load_discoveries():
+	if not FileAccess.file_exists("user://discoveries.json"): return
+	var file = FileAccess.open("user://discoveries.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	file.close()
+	if data: discovered_foods = data.get("discovered",[])
+
+func _roll_next_discovery():
+	randomize()
+	_next_discovery_at = _discovery_counter + (randi() % 8 + 3)  # 3-10 logs
+
+func should_trigger_discovery() -> bool:
+	_discovery_counter += 1
+	if _next_discovery_at == 0: _roll_next_discovery()
+	if _discovery_counter >= _next_discovery_at:
+		_roll_next_discovery()
+		return true
+	return false
+
+const NUTRITIONAL_DISCOVERIES = [
+	{"fact":"Broccoli contains more Vitamin C per gram than oranges!", "field":"vitamin_c_mg", "emoji":"🥦"},
+	{"fact":"Salmon's omega-3 fatty acids are most bioavailable when eaten at room temperature.", "field":"fat_g", "emoji":"🐟"},
+	{"fact":"Lentils have more protein per gram than beef — and no saturated fat!", "field":"protein_g", "emoji":"🫘"},
+	{"fact":"Cooking tomatoes increases lycopene availability by 300%!", "field":"lycopene_mcg", "emoji":"🍅"},
+	{"fact":"Spinach is richer in iron when eaten with vitamin C — try lemon juice!", "field":"iron_mg", "emoji":"🥬"},
+	{"fact":"Eggs contain all 9 essential amino acids — a complete protein.", "field":"protein_g", "emoji":"🥚"},
+	{"fact":"Dark berries have 4x more antioxidants than light-coloured fruits.", "field":"anthocyanins_mg", "emoji":"🫐"},
+	{"fact":"Almonds are the highest nut source of Vitamin E — bone and skin health.", "field":"vitamin_e_mg", "emoji":"🌰"},
+	{"fact":"Fermented foods feed gut bacteria that regulate serotonin production.", "field":"lactose_g", "emoji":"🧫"},
+	{"fact":"Magnesium from green vegetables is better absorbed than from supplements.", "field":"magnesium_mg", "emoji":"🌿"},
+]
+
+func get_discovery_for_food(food: Dictionary) -> Dictionary:
+	# Find a discovery fact relevant to the food's highest nutrient
+	var best_key = ""
+	var best_val = 0.0
+	for key in ["protein_g","vitamin_c_mg","iron_mg","lycopene_mcg","vitamin_e_mg","magnesium_mg"]:
+		if food.get(key,0.0) > best_val:
+			best_val = food.get(key,0.0)
+			best_key = key
+	for discovery in NUTRITIONAL_DISCOVERIES:
+		if discovery["field"] == best_key:
+			return discovery
+	# Fallback: random discovery
+	return NUTRITIONAL_DISCOVERIES[randi() % NUTRITIONAL_DISCOVERIES.size()]

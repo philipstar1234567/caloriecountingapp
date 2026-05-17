@@ -74,7 +74,7 @@ func _ready() -> void:
 
 	# ── Populate food list ──────────────────────────────────────────────────
 	_populate_food_list(_all_food_ids)
-
+	_configure_touch_controls()
 
 # ─────────────────────────────────────────────────────────────────────────────
 # PUBLIC — called from FridgePage.gd to open the panel
@@ -325,6 +325,27 @@ func _add_warning_card(warning: Dictionary) -> void:
 	panel.add_child(vbox)
 	warnings_container.add_child(panel)
 
+func _configure_touch_controls(node: Node = self):
+	for child in node.get_children():
+		if child is ScrollContainer:
+			child.scroll_deadzone = 4
+			child.mouse_filter = Control.MOUSE_FILTER_STOP
+		if child is SpinBox:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+			child.get_line_edit().mouse_filter = Control.MOUSE_FILTER_PASS
+			for spinbox_child in child.get_children():
+				if spinbox_child is BaseButton:
+					spinbox_child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+		elif child is OptionButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is CheckBox:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is BaseButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		_configure_touch_controls(child)
 
 # ─────────────────────────────────────────────────────────────────────────────
 func _on_close() -> void:

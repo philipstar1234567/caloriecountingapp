@@ -502,14 +502,14 @@ Eat"
 [node name="ThrowBtn" type="Panel" parent="Panel"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.348
+anchor_left = 0.286
 anchor_top = 0.964
-anchor_right = 0.643
+anchor_right = 0.694
 anchor_bottom = 0.991
-offset_left = -0.160034
+offset_left = 0.379974
 offset_top = 0.151855
-offset_right = -0.309998
-offset_bottom = 0.787842
+offset_right = 0.0200195
+offset_bottom = 0.788086
 
 [node name="DigestCheckBtn" type="Button" parent="Panel"]
 layout_mode = 1

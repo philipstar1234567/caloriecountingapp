@@ -1,5 +1,6 @@
 extends Control
 
+var _minigame_btn: Button = null
 var _expire_btn: Button = null
 var _expire_btn_dragging: bool = false
 var _expire_btn_drag_offset: Vector2 = Vector2.ZERO
@@ -75,7 +76,7 @@ var warning_filter: String = "all"  # "all", "caution", "avoid", "none"
 const Z_INFO_BUBBLE    = 10
 const Z_ACTION_POPUP   = 20
 const Z_COOK_PARAMS    = 25   # shows above action popup
-const Z_DETAILS_POPUP  = 15
+const Z_DETAILS_POPUP  = 61
 const Z_LIMIT_WARNING  = 30   # highest — must be seen above everything
 
 const FOODS_TO_AVOID_NOTES = {
@@ -254,6 +255,7 @@ const FRY_FAT_ABSORPTION_G = 6.0
 # ── All filterable nutrients with display labels ──
 # Note: vitamin_k1 is intentionally excluded for safety
 const FILTER_OPTIONS = [
+	{"key":"kcal_per_100g", "label":"Kcal / 100g"},
 	{"key":"vitamin_a_mcg",        "label":"Vit A"},
 	{"key":"vitamin_b1_mg",        "label":"B1 (Thiamine)"},
 	{"key":"vitamin_b2_mg",        "label":"B2 (Riboflavin)"},
@@ -298,7 +300,8 @@ const FILTER_OPTIONS = [
 	{"key":"resistant_starch_pct","label":"Resistant Starch %"},
 	{"key":"rapid_starch_pct",    "label":"Fast Starch %"},
 	{"key":"slow_starch_pct",     "label":"Slow Starch %"},
-	{"key":"wbsf_n", "label":"Toughness"}
+	{"key":"wbsf_n", "label":"Toughness"},
+	{"key":"ph", "label":"pH level"}
 ]
 
 func _ready():
@@ -306,6 +309,7 @@ func _ready():
 	load_fridge()
 	load_shopping_list()
 	load_saved_meals()
+	_configure_touch_controls()
 	$Panel/ShoppingListPanel/UndoBtn.pressed.connect(_undo_shopping)
 	$Panel/ShoppingListPanel/VBoxContainer/ListPaperArea/ShoppingNavRow/ShoppingPrevBtn.pressed.connect(func():
 		if shopping_page > 0:
@@ -409,7 +413,10 @@ func _ready():
 	_build_warning_filter_buttons()
 	_connect_sort_buttons()
 	Global.item_equipped.connect(func(_a,_b): pass)  # existing signal
+	_build_minigame_btn()
+	_build_encyclopedia_btn()
 	_build_insulin_btn()
+	_build_minigame_btn()
 	_update_insulin_btn_visibility()
 
 # ─────────────────────────────────────────
@@ -704,6 +711,18 @@ func refresh_current_tab():
 				else a.get(sort_key,0.0) > b.get(sort_key,0.0)
 		)
 		
+	# Tooth staining filter
+	if Global.tooth_remove_staining:
+		filtered = filtered.filter(func(f):
+			return f.get("severity", -1) < 1
+		)
+		
+	# Parodontosis filter
+	if Global.paro_remove:
+		filtered = filtered.filter(func(f):
+			return f.get("safe for parodontosis check", "yes") == "yes"
+		)
+		
 	if warning_filter != "all" or Global.hide_red_warnings:
 		filtered = filtered.filter(func(f):
 			var severity = _get_food_severity(f)
@@ -823,8 +842,8 @@ func make_browse_row(food: Dictionary) -> HBoxContainer:
 		ox_lbl.add_theme_font_size_override("font_size", fs)
 		row.add_child(ox_lbl)
 
-		var warnings = Global.get_warnings(food)
-		if warnings.size() > 0:
+		
+		if severity != "safe":
 			var info_btn = Button.new()
 			info_btn.text = "ℹ️"
 			info_btn.flat = true
@@ -1122,6 +1141,7 @@ func refresh_shopping_list():
 
 	_build_shopping_dots()
 	_check_shopping_overflow()
+	_configure_touch_controls()
 
 func _apply_strikethrough(cb: CheckBox, original_text: String):
 	# Replace checkbox label with a RichTextLabel showing strikethrough
@@ -1415,7 +1435,7 @@ func build_fridge_ui():
 
 	var throw_btn = Button.new()
 	throw_btn.text = "🗑 Throw empty items out"
-	throw_btn.add_theme_font_size_override("font_size", 26)
+	throw_btn.add_theme_font_size_override("font_size", 36)
 	throw_btn.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
 	throw_btn.custom_minimum_size = Vector2(0, 60)
 	throw_btn.alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -1425,6 +1445,7 @@ func build_fridge_ui():
 
 	# Build dot indicators
 	_build_page_dots()
+	_configure_touch_controls()
 
 func _build_page_dots():
 	var dots_container = $Panel/PageDots
@@ -1712,23 +1733,23 @@ func _open_dual_popup(slot: Dictionary, pressed_btn: Button):
 	var day_spin = SpinBox.new()
 	day_spin.min_value = 1; day_spin.max_value = 31; day_spin.step = 1
 	day_spin.custom_minimum_size = Vector2(70, 44)
-	day_spin.add_theme_font_size_override("font_size", 20)
+	day_spin.add_theme_font_size_override("font_size", 36)
 
 	var slash1 = Label.new(); slash1.text = "/"
-	slash1.add_theme_font_size_override("font_size", 22)
+	slash1.add_theme_font_size_override("font_size", 36)
 
 	var month_spin = SpinBox.new()
 	month_spin.min_value = 1; month_spin.max_value = 12; month_spin.step = 1
 	month_spin.custom_minimum_size = Vector2(70, 44)
-	month_spin.add_theme_font_size_override("font_size", 20)
+	month_spin.add_theme_font_size_override("font_size", 36)
 
 	var slash2 = Label.new(); slash2.text = "/"
-	slash2.add_theme_font_size_override("font_size", 22)
+	slash2.add_theme_font_size_override("font_size", 36)
 
 	var year_spin = SpinBox.new()
 	year_spin.min_value = 2024; year_spin.max_value = 2040; year_spin.step = 1
 	year_spin.custom_minimum_size = Vector2(90, 44)
-	year_spin.add_theme_font_size_override("font_size", 20)
+	year_spin.add_theme_font_size_override("font_size", 36)
 
 	# Restore saved values
 	var saved_expiry = fridge_expiry.get(iid, "")
@@ -2178,6 +2199,7 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 		_log_food_to_file(scaled)
 	else:
 		home.log_food(scaled)
+	_maybe_show_discovery(slot)
 
 func _modify_weight(slot: Dictionary, new_total_g: float, popup: PanelContainer):
 	var iid = slot.get("_iid","")
@@ -2219,7 +2241,7 @@ func _show_weight_notification(food_name: String, old_g: float, new_g: float):
 
 	var lbl = Label.new()
 	lbl.text = "⚖️ " + food_name + ": " + str(snappedf(old_g,0.1)) + "g → " + str(snappedf(new_g,0.1)) + "g"
-	lbl.add_theme_font_size_override("font_size", 24)
+	lbl.add_theme_font_size_override("font_size", 36)
 	lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 	panel.add_child(lbl)
 	add_child(panel)
@@ -2623,6 +2645,18 @@ func _refresh_meal_tab():
 			return f.get("name","").to_lower().contains(search_text)
 		)
 
+	# Tooth staining filter
+	if Global.tooth_remove_staining:
+		filtered = filtered.filter(func(f):
+			return f.get("severity", -1) < 1
+		)
+	
+	# Parodontosis filter
+	if Global.paro_remove:
+		filtered = filtered.filter(func(f):
+			return f.get("safe for parodontosis check", "yes") == "yes"
+		)
+
 	# Warning filter
 	if meal_warning_filter != "all" or Global.hide_red_warnings:
 		filtered = filtered.filter(func(f):
@@ -2676,6 +2710,7 @@ func _refresh_my_meals_tab():
 		return
 	for meal in saved_meals:
 		vbox.add_child(_make_saved_meal_row(meal))
+	_configure_touch_controls()
 
 func _make_saved_meal_row(meal: Dictionary) -> VBoxContainer:
 	var card = VBoxContainer.new()
@@ -2894,13 +2929,13 @@ func _make_meal_browse_row(food: Dictionary) -> HBoxContainer:
 		row.add_child(ox_lbl)
 
 	# Warning badge
-		var warnings = Global.get_warnings(food)
-		if warnings.size() > 0:
+	
+		if severity != "safe":
 			var info_btn = Button.new()
 			info_btn.text = "ℹ️"
 			info_btn.flat = true
 			info_btn.custom_minimum_size = Vector2(44, 44)
-			info_btn.add_theme_font_size_override("font_size", 36)
+			info_btn.add_theme_font_size_override("font_size", fs)
 			info_btn.pressed.connect(func():
 				Global.any_button_pressed.emit()
 				_show_warning_detail_panel(food)
@@ -3584,6 +3619,7 @@ func _show_meal_details():
 	popup.name = "MealDetailsPopup"
 	popup.top_level = true  # escapes parent clipping, uses full screen
 	var vp = get_viewport_rect().size
+	popup.z_index = 4000
 	var panel_w = 800.0     # ← adjust this to taste
 	popup.set_anchor_and_offset(SIDE_LEFT,   0, vp.x / 2.0 - panel_w / 2.0)
 	popup.set_anchor_and_offset(SIDE_RIGHT,  0, vp.x / 2.0 + panel_w / 2.0)
@@ -4109,7 +4145,7 @@ func _refresh_from_fridge_tab():
 	if fridge_foods.is_empty():
 		var empty = Label.new()
 		empty.text = "Your fridge is empty.\nAdd foods from the Shopping List first."
-		empty.add_theme_font_size_override("font_size", 22)
+		empty.add_theme_font_size_override("font_size", 36)
 		empty.autowrap_mode = TextServer.AUTOWRAP_WORD
 		fridge_vbox.add_child(empty)
 		return
@@ -4294,7 +4330,7 @@ func _show_popup_limit_warning():
 	var lbl = Label.new()
 	lbl.name = "PopupLimitWarning"
 	lbl.text = "⚠️ Max 3 popups open at once"
-	lbl.add_theme_font_size_override("font_size", 28)
+	lbl.add_theme_font_size_override("font_size", 36)
 	lbl.add_theme_color_override("font_color", Color.WHITE)
 	lbl.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	lbl.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
@@ -4325,7 +4361,7 @@ func _show_fridge_portion_input(popup: PanelContainer, vbox: VBoxContainer, slot
 
 	var lbl = Label.new()
 	lbl.text = p[0]
-	lbl.add_theme_font_size_override("font_size", 22)
+	lbl.add_theme_font_size_override("font_size", 36)
 	input_area.add_child(lbl)
 
 	var spin = SpinBox.new()
@@ -4337,7 +4373,7 @@ func _show_fridge_portion_input(popup: PanelContainer, vbox: VBoxContainer, slot
 	input_area.add_child(spin)
 
 	var preview = Label.new()
-	preview.add_theme_font_size_override("font_size", 20)
+	preview.add_theme_font_size_override("font_size", 36)
 	var initial_g = _calc_portion_g(action_key, p[1], density)
 	preview.text = "≈ " + str(snappedf(initial_g, 0.1)) + " g"
 	input_area.add_child(preview)
@@ -4349,7 +4385,7 @@ func _show_fridge_portion_input(popup: PanelContainer, vbox: VBoxContainer, slot
 	var confirm = Button.new()
 	confirm.text = "✓ Add to Plate"
 	confirm.custom_minimum_size = Vector2(0, 55)
-	confirm.add_theme_font_size_override("font_size", 22)
+	confirm.add_theme_font_size_override("font_size", 36)
 	confirm.pressed.connect(func():
 		var portion_g = _calc_portion_g(action_key, spin.value, density)
 		portion_g = min(portion_g, remaining)
@@ -4529,7 +4565,9 @@ func _do_eat_meal(meal: Dictionary):
 
 	save_fridge()
 	build_fridge_ui()
-
+	# After the nutrient summing loop, before logging:
+	if not meal_items.is_empty():
+		_maybe_show_discovery(meal_items[0].get("food", {}))
 	# Build a combined food dict and log to HomePage
 	var meal_food = total_nutrients.duplicate()
 	meal_food["name"] = meal.get("name", "Meal")
@@ -4703,13 +4741,49 @@ func _show_warning_detail_panel(food: Dictionary):
 	if existing: existing.queue_free()
 
 	var warnings = Global.get_warnings(food)
+
+	var ox = food.get("oxalate_mg_per_100g", 0.0)
+	if ox >= 50.0 and not warnings.any(func(w): return "oxalate" in w.get("message","").to_lower()):
+		warnings.append({
+			"severity": "avoid",
+			"message":  "Very high oxalate content (" + str(snappedf(ox,0.1)) + " mg/100g). " +
+						"Consistently high oxalate intake increases kidney stone risk, " +
+						"especially combined with low calcium or low fluid intake."
+		})
+	elif ox >= 10.0 and not warnings.any(func(w): return "oxalate" in w.get("message","").to_lower()):
+		warnings.append({
+			"severity": "caution",
+			"message":  "Moderate oxalate content (" + str(snappedf(ox,0.1)) + " mg/100g). " +
+						"Eat with calcium-rich foods to reduce absorption. " +
+						"Relevant if you have a history of calcium oxalate kidney stones."
+		})
+
+	var strict_conditions = Global.get_strict_avoid_conditions(food)
+	for condition in strict_conditions:
+		var condition_name = condition.replace("-"," ").capitalize()
+		if not warnings.any(func(w): return condition_name.to_lower() in w.get("message","").to_lower()):
+			warnings.append({
+				"severity": "avoid",
+				"message":  "Strictly contraindicated for " + condition_name + ". " +
+							"This food appears on your strict avoid list for this condition."
+			})
+
+	var limit_conditions = _get_limit_conditions(food)
+	for condition in limit_conditions:
+		var condition_name = condition.replace("-"," ").capitalize()
+		if not warnings.any(func(w): return condition_name.to_lower() in w.get("message","").to_lower()):
+			warnings.append({
+				"severity": "caution",
+				"message":  "Limit intake with " + condition_name + ". " +
+							"This food is in the 'limit' category for your condition."
+			})
+
 	if warnings.is_empty(): return
 
 	var shopping_panel = $Panel/ShoppingListPanel
 	shopping_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_set_children_mouse_filter(shopping_panel, Control.MOUSE_FILTER_IGNORE)
 
-	# ── CanvasLayer ensures true full-screen coverage ──
 	var canvas = CanvasLayer.new()
 	canvas.name = "WarningDetailOverlay"
 	add_child(canvas)
@@ -4732,7 +4806,6 @@ func _show_warning_detail_panel(food: Dictionary):
 			_close.call()
 	)
 
-	# ── Panel — centered, dynamic height based on content ──
 	var panel = PanelContainer.new()
 	panel.mouse_filter = Control.MOUSE_FILTER_STOP
 
@@ -4743,10 +4816,8 @@ func _show_warning_detail_panel(food: Dictionary):
 	panel.set_anchor_and_offset(SIDE_LEFT,  0, viewport.x / 2.0 - panel_width / 2.0)
 	panel.set_anchor_and_offset(SIDE_RIGHT, 0, viewport.x / 2.0 + panel_width / 2.0)
 	panel.set_anchor_and_offset(SIDE_TOP,   0, 500.0)
-	# No SIDE_BOTTOM — height is driven by content
 	backdrop.add_child(panel)
 
-	# Scroll so very long warnings don't go off-screen
 	var scroll = ScrollContainer.new()
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	scroll.custom_minimum_size = Vector2(0, 0)
@@ -4782,31 +4853,49 @@ func _show_warning_detail_panel(food: Dictionary):
 		msg.autowrap_mode = TextServer.AUTOWRAP_WORD
 		row.add_child(msg)
 
-	vbox.add_child(HSeparator.new())
+	# ── Saturated fat guidance (moved here, after vbox exists) ──
+	var sat_fat_per_100g = food.get("saturated_fat_g", 0.0)
+	if sat_fat_per_100g > 0.0:
+		var home = get_tree().root.get_node_or_null("Main/ContentArea/HomePage")
+		var eaten_sat_fat = 0.0
+		if home: eaten_sat_fat = home.today_totals.get("saturated_fat_g", 0.0)
 
-	var hint = Label.new()
-	hint.text = "Tap anywhere to close"
-	hint.add_theme_font_size_override("font_size", 36)
-	hint.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(hint)
+		var threshold_g = Global.get_sat_fat_threshold_grams_for_food(sat_fat_per_100g, eaten_sat_fat)
+		var limit_g     = snappedf(Global.get_sat_fat_limit_g(), 0.1)
+		var remaining_g = snappedf(Global.get_sat_fat_limit_g() - eaten_sat_fat, 0.1)
 
-	# ── Strict avoidance ──
-	var strict_conditions = Global.get_strict_avoid_conditions(food)
-	if not strict_conditions.is_empty():
 		vbox.add_child(HSeparator.new())
-		var sa_title = Label.new()
-		sa_title.text = "⛔ Strict Avoidance"
-		sa_title.add_theme_font_size_override("font_size", 36)
-		sa_title.add_theme_color_override("font_color", Color(0.95, 0.2, 0.2))
-		vbox.add_child(sa_title)
-		for condition in strict_conditions:
-			var cond_lbl = Label.new()
-			cond_lbl.text = "This food is strictly contraindicated for: " + \
-				condition.replace("-"," ").capitalize()
-			cond_lbl.add_theme_font_size_override("font_size", 36)
-			cond_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
-			vbox.add_child(cond_lbl)
+		var sf_title = Label.new()
+		sf_title.text = "🧈 Saturated Fat Guidance"
+		sf_title.add_theme_font_size_override("font_size", 36)
+		sf_title.add_theme_color_override("font_color", Color(1.0, 0.6, 0.1))
+		vbox.add_child(sf_title)
+
+		var sf_lbl = Label.new()
+		sf_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		sf_lbl.add_theme_font_size_override("font_size", 36)
+
+		if threshold_g < 0:
+			sf_lbl.text = "✅ This food contains no saturated fat."
+		elif threshold_g == 0.0:
+			sf_lbl.text = (
+				"⛔ You have already reached your saturated fat limit for today (" +
+				str(snappedf(eaten_sat_fat, 0.1)) + "g / " + str(limit_g) + "g).\n" +
+				"Avoid any additional saturated fat today."
+			)
+		elif threshold_g < 10.0:
+			sf_lbl.text = (
+				"⛔ Even a small amount of this food (" + str(snappedf(threshold_g,0.1)) +
+				"g) would exceed your daily saturated fat budget.\n" +
+				"Remaining budget: " + str(remaining_g) + "g of " + str(limit_g) + "g total."
+			)
+		else:
+			sf_lbl.text = (
+				"⚠️ Stay under " + str(int(snappedf(threshold_g, 1.0))) + "g of this food " +
+				"to stay within your saturated fat limit.\n" +
+				"Remaining sat fat budget today: " + str(remaining_g) + "g of " + str(limit_g) + "g."
+			)
+		vbox.add_child(sf_lbl)
 
 	# ── Limit advice ──
 	for condition in Global.active_metabolic_conditions:
@@ -4822,14 +4911,22 @@ func _show_warning_detail_panel(food: Dictionary):
 				lim_lbl.add_theme_font_size_override("font_size", 36)
 				lim_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 				lim_lbl.add_theme_color_override("font_color", Color(1.0, 0.6, 0.1))
-				lim_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
 				vbox.add_child(lim_lbl)
 				break
+
+	vbox.add_child(HSeparator.new())
+
+	var hint = Label.new()
+	hint.text = "Tap anywhere to close"
+	hint.add_theme_font_size_override("font_size", 36)
+	hint.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(hint)
 
 	# ── Clamp panel height after layout ──
 	vbox.queue_sort()
 	await get_tree().process_frame
-	await get_tree().process_frame 
+	await get_tree().process_frame
 	if is_instance_valid(panel):
 		var content_h = vbox.size.y + 20.0
 		var clamped_h = min(content_h, max_height)
@@ -4890,7 +4987,7 @@ func _show_cook_change_notification(before: Dictionary, after: Dictionary):
 	for line in lines:
 		var lbl = Label.new()
 		lbl.text = line
-		lbl.add_theme_font_size_override("font_size", 20)
+		lbl.add_theme_font_size_override("font_size", 36)
 		vbox.add_child(lbl)
 
 	add_child(panel)
@@ -5873,3 +5970,274 @@ func _open_expiry_list():
 	close_btn.add_theme_font_size_override("font_size", 36)
 	close_btn.pressed.connect(func(): backdrop.queue_free())
 	outer.add_child(close_btn)
+
+func _configure_touch_controls(node: Node = self):
+	for child in node.get_children():
+		if child is ScrollContainer:
+			child.scroll_deadzone = 4
+			child.mouse_filter = Control.MOUSE_FILTER_STOP
+		if child is SpinBox:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+			child.get_line_edit().mouse_filter = Control.MOUSE_FILTER_PASS
+			for spinbox_child in child.get_children():
+				if spinbox_child is BaseButton:
+					spinbox_child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+		elif child is OptionButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is CheckBox:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is BaseButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		_configure_touch_controls(child)
+		
+
+func _build_minigame_btn():
+	_minigame_btn = Button.new()
+	_minigame_btn.text = "🎮"
+	_minigame_btn.custom_minimum_size = Vector2(64, 64)
+	_minigame_btn.add_theme_font_size_override("font_size", 32)
+	_minigame_btn.z_index = 50
+	_minigame_btn.tooltip_text = "Mini Games"
+
+	var saved_pos = Vector2(20, 560)
+	if FileAccess.file_exists("user://minigame_btn_pos.json"):
+		var f = FileAccess.open("user://minigame_btn_pos.json", FileAccess.READ)
+		var d = JSON.parse_string(f.get_as_text())
+		f.close()
+		if d: saved_pos = Vector2(d.get("x",20), d.get("y",560))
+	_minigame_btn.position = saved_pos
+
+	_minigame_btn.gui_input.connect(_on_minigame_btn_input)
+	add_child(_minigame_btn)
+
+var _mg_dragging: bool = false
+var _mg_drag_offset: Vector2 = Vector2.ZERO
+
+func _on_minigame_btn_input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_mg_dragging = false
+			_mg_drag_offset = _minigame_btn.position - event.global_position
+		else:
+			if not _mg_dragging: _open_minigame_overlay()
+			else:
+				var f = FileAccess.open("user://minigame_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_minigame_btn.position.x,"y":_minigame_btn.position.y}))
+				f.close()
+			_mg_dragging = false
+	elif event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+		_mg_dragging = true
+		_minigame_btn.position = (event.global_position + _mg_drag_offset).clamp(
+			Vector2.ZERO, get_viewport_rect().size - _minigame_btn.custom_minimum_size)
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_mg_dragging = false
+			_mg_drag_offset = _minigame_btn.position - event.position
+		else:
+			if not _mg_dragging: _open_minigame_overlay()
+			else:
+				var f = FileAccess.open("user://minigame_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_minigame_btn.position.x,"y":_minigame_btn.position.y}))
+				f.close()
+			_mg_dragging = false
+	elif event is InputEventScreenDrag:
+		_mg_dragging = true
+		_minigame_btn.position = (event.position + _mg_drag_offset).clamp(
+			Vector2.ZERO, get_viewport_rect().size - _minigame_btn.custom_minimum_size)
+
+func _open_minigame_overlay():
+	var existing = get_node_or_null("MiniGameOverlay")
+	if existing: existing.queue_free()
+
+	var backdrop = ColorRect.new()
+	backdrop.name = "MiniGameOverlay"
+	backdrop.color = Color(0.05,0.05,0.1,0.95)
+	backdrop.top_level = true
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	backdrop.z_index = 70
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(backdrop)
+
+	var scene_path = "res://MiniGamePage.tscn"
+	if not ResourceLoader.exists(scene_path):
+		backdrop.queue_free()
+		return
+
+	var mg = load(scene_path).instantiate()
+	mg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	mg.setup(all_foods)
+	mg.close_requested.connect(func(): backdrop.queue_free())
+	backdrop.add_child(mg)
+	
+	
+#Discovery Facts
+
+func _maybe_show_discovery(food: Dictionary):
+	if not Global.should_trigger_discovery(): return
+	var discovery = Global.get_discovery_for_food(food)
+	if discovery.is_empty(): return
+
+	var existing = get_node_or_null("DiscoveryBanner")
+	if existing: existing.queue_free()
+
+	# Find the food's highest nutrient value for the fact line
+	var top_field = ""
+	var top_val   = 0.0
+	var field_labels = {
+		"vitamin_c_mg":"Vitamin C","protein_g":"Protein","iron_mg":"Iron",
+		"calcium_mg":"Calcium","vitamin_d_mcg":"Vitamin D","fiber_g":"Fiber",
+		"magnesium_mg":"Magnesium","potassium_mg":"Potassium","lycopene_mcg":"Lycopene",
+		"vitamin_e_mg":"Vitamin E","anthocyanins_mg":"Anthocyanins","zinc_mg":"Zinc"
+	}
+	for key in field_labels.keys():
+		if food.get(key,0.0) > top_val:
+			top_val = food.get(key,0.0)
+			top_field = key
+
+	var banner = PanelContainer.new()
+	banner.name = "DiscoveryBanner"
+	banner.z_index = 60
+	banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	banner.set_anchor_and_offset(SIDE_LEFT,  0, 0)
+	banner.set_anchor_and_offset(SIDE_RIGHT, 1, 0)
+	banner.set_anchor_and_offset(SIDE_TOP,   0, 0)
+	banner.set_anchor_and_offset(SIDE_BOTTOM,0, 0)
+
+	var sb = StyleBoxFlat.new()
+	sb.bg_color = Color(0.15, 0.15, 0.15, 0.75)
+	sb.set_corner_radius_all(0)
+	banner.add_theme_stylebox_override("panel", sb)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 4)
+	banner.add_child(vbox)
+
+	var emoji_lbl = Label.new()
+	emoji_lbl.text = discovery.get("emoji","🌟") + "  Did you know?"
+	emoji_lbl.add_theme_font_size_override("font_size", 36)
+	emoji_lbl.add_theme_color_override("font_color", Color(1.0,0.85,0.2))
+	emoji_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vbox.add_child(emoji_lbl)
+
+	var fact_lbl = Label.new()
+	fact_lbl.text = discovery.get("fact","")
+	fact_lbl.add_theme_font_size_override("font_size", 36)
+	fact_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+	fact_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vbox.add_child(fact_lbl)
+
+	if top_field != "" and top_val > 0:
+		var nutr_lbl = Label.new()
+		nutr_lbl.text = food.get("name","") + " is especially rich in " + \
+			field_labels.get(top_field, top_field) + \
+			" (" + str(snappedf(top_val,0.1)) + " per 100g)"
+		nutr_lbl.add_theme_font_size_override("font_size", 36)
+		nutr_lbl.add_theme_color_override("font_color", Color(0.6,0.9,0.6))
+		nutr_lbl.autowrap_mode = TextServer.AUTOWRAP_WORD
+		nutr_lbl.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.add_child(nutr_lbl)
+
+	add_child(banner)
+	Global.award_py(randi() % 10 + 5, "Discovery bonus")
+
+	var tween = create_tween()
+	tween.tween_property(banner, "modulate:a", 1.0, 0.3)
+	tween.tween_interval(5.0)
+	tween.tween_property(banner, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(func(): banner.queue_free())
+
+var _encyc_btn: Button = null
+var _ec_dragging: bool = false
+var _ec_drag_offset: Vector2 = Vector2.ZERO
+
+func _build_encyclopedia_btn():
+	_encyc_btn = Button.new()
+	_encyc_btn.text = "📖"
+	_encyc_btn.custom_minimum_size = Vector2(64, 64)
+	_encyc_btn.add_theme_font_size_override("font_size", 32)
+	_encyc_btn.z_index = 50
+	_encyc_btn.tooltip_text = "Food Encyclopedia"
+
+	var saved_pos = Vector2(20, 640)
+	if FileAccess.file_exists("user://encyc_btn_pos.json"):
+		var f = FileAccess.open("user://encyc_btn_pos.json", FileAccess.READ)
+		var d = JSON.parse_string(f.get_as_text())
+		f.close()
+		if d: saved_pos = Vector2(d.get("x",20), d.get("y",640))
+	_encyc_btn.position = saved_pos
+	_encyc_btn.gui_input.connect(_on_encyc_btn_input)
+	add_child(_encyc_btn)
+
+func _on_encyc_btn_input(event: InputEvent):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			_ec_dragging = false
+			_ec_drag_offset = _encyc_btn.position - event.global_position
+		else:
+			if not _ec_dragging: _open_encyclopedia_overlay()
+			else:
+				var f = FileAccess.open("user://encyc_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_encyc_btn.position.x,"y":_encyc_btn.position.y}))
+				f.close()
+			_ec_dragging = false
+	elif event is InputEventMouseMotion and event.button_mask == MOUSE_BUTTON_MASK_LEFT:
+		_ec_dragging = true
+		_encyc_btn.position = (event.global_position + _ec_drag_offset).clamp(
+			Vector2.ZERO, get_viewport_rect().size - _encyc_btn.custom_minimum_size)
+	elif event is InputEventScreenTouch:
+		if event.pressed:
+			_ec_dragging = false
+			_ec_drag_offset = _encyc_btn.position - event.position
+		else:
+			if not _ec_dragging: _open_encyclopedia_overlay()
+			else:
+				var f = FileAccess.open("user://encyc_btn_pos.json", FileAccess.WRITE)
+				f.store_string(JSON.stringify({"x":_encyc_btn.position.x,"y":_encyc_btn.position.y}))
+				f.close()
+			_ec_dragging = false
+	elif event is InputEventScreenDrag:
+		_ec_dragging = true
+		_encyc_btn.position = (event.position + _ec_drag_offset).clamp(
+			Vector2.ZERO, get_viewport_rect().size - _encyc_btn.custom_minimum_size)
+
+func _open_encyclopedia_overlay():
+	var existing = get_node_or_null("EncyclopediaOverlay")
+	if existing: existing.queue_free()
+
+	var backdrop = ColorRect.new()
+	backdrop.name = "EncyclopediaOverlay"
+	backdrop.top_level = true
+	backdrop.color = Color(0.05,0.05,0.1,0.95)
+	backdrop.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	#backdrop.set_anchor_and_offset(SIDE_TOP, 1, 70)
+	backdrop.z_index = 70
+	backdrop.mouse_filter = Control.MOUSE_FILTER_STOP
+	add_child(backdrop)
+
+	var scene_path = "res://EncyclopediaPage.tscn"
+	if not ResourceLoader.exists(scene_path):
+		backdrop.queue_free()
+		return
+
+	var encyc = load(scene_path).instantiate()
+	encyc.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+	# Pass all_foods reference if EncyclopediaPage.gd has a setup method
+	if encyc.has_method("setup"):
+		encyc.setup(all_foods)
+
+	# Close button — add if EncyclopediaPage doesn't have one
+	var close_btn = Button.new()
+	close_btn.text = "✕ Close Encyclopedia"
+	close_btn.set_anchor_and_offset(SIDE_LEFT,   0, 10)
+	close_btn.set_anchor_and_offset(SIDE_RIGHT,  1, -10)
+	close_btn.set_anchor_and_offset(SIDE_TOP,    1, -70)
+	close_btn.set_anchor_and_offset(SIDE_BOTTOM, 1, -2300)
+	close_btn.add_theme_font_size_override("font_size", 36)
+	close_btn.z_index = 5
+	close_btn.pressed.connect(func(): backdrop.queue_free())
+	backdrop.add_child(encyc)
+	backdrop.add_child(close_btn)

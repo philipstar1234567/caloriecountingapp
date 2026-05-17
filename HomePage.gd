@@ -72,6 +72,7 @@ func _init_today_totals():
 #  LOG FOOD
 # ─────────────────────────────────────────
 func log_food(food: Dictionary):
+	print("STREAK before:", Global.daily_streak, " last_date:", Global.last_streak_date, " today:", Time.get_date_string_from_system())
 	for key in today_totals.keys():
 		var food_key = "oxalate_mg_per_100g" if key == "oxalate_mg" else key
 		today_totals[key] += food.get(food_key, 0.0)
@@ -85,7 +86,11 @@ func log_food(food: Dictionary):
 		var current_penalty = Global.points_history.get(key, 0.0)
 		Global.points_history[key] = current_penalty - float(strict_conditions.size())
 		_show_strict_avoid_penalty_toast(food, strict_conditions)
-
+		# Variable reward — nutritional discovery
+	if Global.should_trigger_discovery():
+		var discovery = Global.get_discovery_for_food(food)
+		_show_discovery_popup(discovery)
+		Global.award_py(randi() % 10 + 5, "Discovery bonus")
 	Global.check_and_update_streak()
 	var cat = food.get("category","")
 	if cat != "" and not _categories_eaten_today.has(cat):
@@ -98,7 +103,55 @@ func log_food(food: Dictionary):
 	totals_for_quests["_category_count"] = _count_categories_today()
 	Global.check_quests(totals_for_quests)
 	Global.calculate_and_save_points(today_totals, water_ml, foods_eaten)
+	Global.discover_food(food.get("id",""))
 	refresh_display()
+
+func _show_discovery_popup(discovery: Dictionary):
+	var existing = get_node_or_null("DiscoveryPopup")
+	if existing: existing.queue_free()
+
+	var panel = PanelContainer.new()
+	panel.name = "DiscoveryPopup"
+	panel.z_index = 70
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
+	panel.custom_minimum_size = Vector2(340, 0)
+	panel.modulate.a = 0.0
+	panel.scale = Vector2(0.8, 0.8)
+
+	var vbox = VBoxContainer.new()
+	vbox.add_theme_constant_override("separation", 12)
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	panel.add_child(vbox)
+
+	var emoji = Label.new()
+	emoji.text = discovery.get("emoji","🌟") + " Discovery!"
+	emoji.add_theme_font_size_override("font_size", 32)
+	emoji.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	emoji.add_theme_color_override("font_color", Color(1.0, 0.85, 0.2))
+	vbox.add_child(emoji)
+
+	var fact = Label.new()
+	fact.text = discovery.get("fact","")
+	fact.add_theme_font_size_override("font_size", 22)
+	fact.autowrap_mode = TextServer.AUTOWRAP_WORD
+	fact.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(fact)
+
+	var reward = Label.new()
+	reward.text = "🎁 Surprise bonus!"
+	reward.add_theme_font_size_override("font_size", 20)
+	reward.add_theme_color_override("font_color", Color(0.4, 1.0, 0.4))
+	reward.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(reward)
+
+	add_child(panel)
+
+	var tween = create_tween()
+	tween.tween_property(panel, "modulate:a", 1.0, 0.4)
+	tween.parallel().tween_property(panel, "scale", Vector2(1.0,1.0), 0.4)
+	tween.tween_interval(3.5)
+	tween.tween_property(panel, "modulate:a", 0.0, 0.5)
+	tween.tween_callback(func(): panel.queue_free())
 
 func _count_categories_today() -> int:
 	var cats: Array = []
@@ -173,6 +226,7 @@ func refresh_display():
 		_refresh_micro_card()
 	_refresh_water_card()
 	_refresh_tips_card()
+	_configure_touch_controls()
 
 
 	
@@ -610,13 +664,20 @@ func _refresh_macro_card():
 	circles_row.alignment = BoxContainer.ALIGNMENT_CENTER
 	circles_row.add_theme_constant_override("separation", 16)
 	vbox.add_child(circles_row)
-
+	
+	#if Global.should_show_field("saturated_fat_g"):
+	#	var sat_limit = macro_goals.get("sat_fat_g_max", 0.0)
+	#	var sat_val   = snappedf(today_totals.get("saturated_fat_g", 0.0), 0.1)
+#		_add_macro_row(vbox, "Sat. Fat", sat_val, sat_limit, "g",
+#			sat_val > sat_limit)
+	
 	var macros = [
 		{"key":"calories",    "label":"kcal", "goal":daily_goal},
 		{"key":"protein_g",   "label":"P",    "goal":macro_goals.get("protein_g",50.0)},
 		{"key":"fat_g",       "label":"Fat",  "goal":macro_goals.get("fat_g_max",70.0)},
 		{"key":"carbs_g",     "label":"Carb", "goal":macro_goals.get("carbs_g_max",300.0)},
 		{"key":"fiber_g",     "label":"Fibre","goal":macro_goals.get("fiber_g",25.0)},
+		
 	]
 
 	for macro in macros:
@@ -651,10 +712,18 @@ func _refresh_macro_card():
 		#col.add_child(lbl)
 
 	# Click opens detail overlay
+	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.gui_input.connect(func(event):
+		print("CARD GOT EVENT: ", event)
 		if event is InputEventMouseButton and event.pressed:
+			print("OPENING MACRO")
 			_open_macro_overlay()
 	)
+	#card.gui_input.connect(func(event):
+		#if event is InputEventMouseButton and event.pressed:
+			#_open_macro_overlay()
+	#)
+	_set_children_ignore_mouse(card)
 	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/MacroCard)
 
 func _open_macro_overlay():
@@ -673,7 +742,7 @@ func _open_macro_overlay():
 			{"label":"Calories",      "key":"calories",    "unit":"kcal","goal":daily_goal,                         "min":bmr},
 			{"label":"Protein",       "key":"protein_g",   "unit":"g",  "goal":macro_goals.get("protein_g",50.0),  "min":0},
 			{"label":"Fat",           "key":"fat_g",       "unit":"g",  "goal":macro_goals.get("fat_g_max",70.0),  "min":macro_goals.get("fat_g_min",44.0)},
-			{"label":"  Saturated",   "key":"saturated_fat_g","unit":"g","goal":20.0,                              "min":0},
+			{"label":"  MAX limit Saturated Fats",   "key":"saturated_fat_g","unit":"g","goal":20.0,                              "min":0},
 			{"label":"Carbohydrates", "key":"carbs_g",     "unit":"g",  "goal":macro_goals.get("carbs_g_max",300.0),"min":macro_goals.get("carbs_g_min",225.0)},
 			{"label":"  Sugar",       "key":"sugar_g",     "unit":"g",  "goal":50.0,                              "min":0},
 			{"label":"Fiber",         "key":"fiber_g",     "unit":"g",  "goal":macro_goals.get("fiber_g",25.0),   "min":0},
@@ -830,10 +899,12 @@ func _refresh_micro_card():
 	fs_label.add_theme_color_override("font_color", Color(1.0, 0.85, 0.5))
 	vbox.add_child(fs_label)
 
+	card.mouse_filter = Control.MOUSE_FILTER_STOP
 	card.gui_input.connect(func(event):
 		if event is InputEventMouseButton and event.pressed:
 			_open_micro_overlay()
 	)
+	_set_children_ignore_mouse(card)
 	#_fix_labels_in($Panel/ScrollContainer/VBoxContainer/MicroCard)
 
 func _open_micro_overlay():
@@ -1310,6 +1381,7 @@ func _show_overlay_panel(populate_fn: Callable):
 	panel.set_anchor_and_offset(SIDE_LEFT,  0, viewport.x / 2.0 - panel_width / 2.0)
 	panel.set_anchor_and_offset(SIDE_RIGHT, 0, viewport.x / 2.0 + panel_width / 2.0)
 	panel.set_anchor_and_offset(SIDE_TOP,    0,  80)
+	panel.set_anchor_and_offset(SIDE_BOTTOM, 1, -0)
   # ← cap the bottom
 	backdrop.add_child(panel)
 
@@ -1345,7 +1417,7 @@ func _show_overlay_panel(populate_fn: Callable):
 		var content_h   = scroll_vbox.size.y + 20.0
 		var clamped_h   = min(content_h, max_h)
 		scroll.custom_minimum_size = Vector2(0, clamped_h)
-
+		panel.set_anchor_and_offset(SIDE_BOTTOM, 0, 0 + clamped_h)
 
 # ─────────────────────────────────────────
 #  SAVE / LOAD
@@ -2059,3 +2131,30 @@ func _open_all_notes_overlay(notes: Array):
 			scroll_vbox.add_child(HSeparator.new())
 	)
 	
+func _set_children_ignore_mouse(node: Control):
+	for child in node.get_children():
+		if child is Control:
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			_set_children_ignore_mouse(child)
+
+func _configure_touch_controls(node: Node = self):
+	for child in node.get_children():
+		if child is ScrollContainer:
+			child.scroll_deadzone = 4
+			child.mouse_filter = Control.MOUSE_FILTER_STOP
+		if child is SpinBox:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+			child.get_line_edit().mouse_filter = Control.MOUSE_FILTER_PASS
+			for spinbox_child in child.get_children():
+				if spinbox_child is BaseButton:
+					spinbox_child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+		elif child is OptionButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is CheckBox:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is BaseButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		_configure_touch_controls(child)
