@@ -1175,6 +1175,7 @@ func _ready():
 	load_profile()
 	load_points()
 	load_badges()
+	load_discoveries()
 	load_currency()
 	load_report_date()
 	load_body_metrics_from_file()
@@ -2421,10 +2422,12 @@ func get_paro_warnings(food: Dictionary) -> Array:
 	return [{"severity": "caution", "message": "🦷 This food feeds bacteria / fungi that worsen Parodontosis."}]
 
 func discover_food(food_id: String):
-	if not discovered_foods.has(food_id):
-		discovered_foods.append(food_id)
+	var normalized = food_id.to_lower().replace(" ","_").strip_edges()
+	if normalized.is_empty(): return
+	if not discovered_foods.has(normalized):
+		discovered_foods.append(normalized)
 		save_discoveries()
-		food_discovered.emit(food_id)
+		food_discovered.emit(normalized)
 		
 func save_discoveries():
 	var file = FileAccess.open("user://discoveries.json", FileAccess.WRITE)

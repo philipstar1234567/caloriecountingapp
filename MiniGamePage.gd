@@ -57,6 +57,7 @@ const MATCH_CHALLENGES = [
 ]
 
 func _ready():
+	_configure_touch_controls()
 	pass
 
 func _build_game_select():
@@ -65,7 +66,7 @@ func _build_game_select():
 
 	var title = Label.new()
 	title.text = "🎮 Nutrition Mini-Games"
-	title.add_theme_font_size_override("font_size", 36)
+	title.add_theme_font_size_override("font_size", 70)
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(title)
 
@@ -175,9 +176,19 @@ func _start_sort_game():
 		)
 		vbox.add_child(btn)
 		food_buttons.append(btn)
+	var early_back_btn = Button.new()
+	early_back_btn.name = "EarlyBackBtn"
+	early_back_btn.text = "← Back to Games"
+	early_back_btn.custom_minimum_size = Vector2(0, 60)
+	early_back_btn.add_theme_font_size_override("font_size", 36)
+	early_back_btn.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+	early_back_btn.pressed.connect(func(): _build_game_select())
+	vbox.add_child(early_back_btn)
 
 func _check_sort_answer(vbox: VBoxContainer, selected: Array, foods: Array,
 		sort_key: String, descending: bool):
+	var early_back = vbox.get_node_or_null("EarlyBackBtn")
+	if early_back: early_back.queue_free()
 	var correct = foods.duplicate()
 	correct.sort_custom(func(a,b):
 		return a.get(sort_key,0) > b.get(sort_key,0) if descending \
@@ -266,10 +277,20 @@ func _start_guess_game():
 		next_btn.custom_minimum_size = Vector2(0,60)
 		next_btn.add_theme_font_size_override("font_size",36)
 		next_btn.pressed.connect(func(): _build_game_select())
+		var early_back = vbox.get_node_or_null("EarlyBackBtn")
+		if early_back: early_back.queue_free()
 		vbox.add_child(next_btn)
 	)
 	vbox.add_child(submit_btn)
-
+	var early_back_btn = Button.new()
+	early_back_btn.name = "EarlyBackBtn"
+	early_back_btn.text = "← Back to Games"
+	early_back_btn.custom_minimum_size = Vector2(0, 60)
+	early_back_btn.add_theme_font_size_override("font_size", 36)
+	early_back_btn.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+	early_back_btn.pressed.connect(func(): _build_game_select())
+	vbox.add_child(early_back_btn)
+	
 func _start_match_game():
 	var vbox = $Panel/ScrollContainer/VBoxContainer
 	for child in vbox.get_children(): child.queue_free()
@@ -339,8 +360,18 @@ func _start_match_game():
 			if state["answered"] == total:
 				_show_match_result(vbox, state["correct"], total)
 		)
+	var early_back_btn = Button.new()
+	early_back_btn.name = "EarlyBackBtn"
+	early_back_btn.text = "← Back to Games"
+	early_back_btn.custom_minimum_size = Vector2(0, 60)
+	early_back_btn.add_theme_font_size_override("font_size", 36)
+	early_back_btn.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+	early_back_btn.pressed.connect(func(): _build_game_select())
+	vbox.add_child(early_back_btn)
 
 func _show_match_result(vbox: VBoxContainer, correct: int, total: int):
+	var early_back = vbox.get_node_or_null("EarlyBackBtn")
+	if early_back: early_back.queue_free()
 	var py_earned = correct * 6
 	var result = Label.new()
 	result.text = "Score: " + str(correct) + "/" + str(total) + \
@@ -527,10 +558,23 @@ func _start_taste_test():
 	var result_placeholder = Control.new()
 	result_placeholder.name = "TasteResult"
 	vbox.add_child(result_placeholder)
+	
+		# Back button visible during gameplay — removed when result appears
+	var early_back_btn = Button.new()
+	early_back_btn.name = "EarlyBackBtn"
+	early_back_btn.text = "← Back to Games"
+	early_back_btn.custom_minimum_size = Vector2(0, 60)
+	early_back_btn.add_theme_font_size_override("font_size", 36)
+	early_back_btn.add_theme_color_override("font_color", Color(0.6, 0.6, 0.6))
+	early_back_btn.pressed.connect(func(): _build_game_select())
+	vbox.add_child(early_back_btn)
 
 func _check_taste_result(vbox: VBoxContainer, placed: Dictionary, chosen: Array):
 	var result_node = vbox.get_node_or_null("TasteResult")
 	if result_node: result_node.queue_free()
+	
+	var early_back = vbox.get_node_or_null("EarlyBackBtn")
+	if early_back: early_back.queue_free()
 
 	var correct = 0
 	for food in chosen:
@@ -605,3 +649,25 @@ func _check_taste_result(vbox: VBoxContainer, placed: Dictionary, chosen: Array)
 	back_btn.add_theme_font_size_override("font_size", 36)
 	back_btn.pressed.connect(func(): _build_game_select())
 	result_col.add_child(back_btn)
+
+func _configure_touch_controls(node: Node = self):
+	for child in node.get_children():
+		if child is ScrollContainer:
+			child.scroll_deadzone = 4
+			child.mouse_filter = Control.MOUSE_FILTER_STOP
+		if child is SpinBox:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+			child.get_line_edit().mouse_filter = Control.MOUSE_FILTER_PASS
+			for spinbox_child in child.get_children():
+				if spinbox_child is BaseButton:
+					spinbox_child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+		elif child is OptionButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is CheckBox:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is BaseButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		_configure_touch_controls(child)

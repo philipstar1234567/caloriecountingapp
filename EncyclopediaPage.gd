@@ -8,12 +8,15 @@ func _ready():
 	Global.load_discoveries()
 	Global.food_discovered.connect(func(_id): refresh_display())
 	refresh_display()
+	_configure_touch_controls()
 
 func _notification(what):
 	if what == NOTIFICATION_VISIBILITY_CHANGED and visible:
 		refresh_display()
 
 func refresh_display():
+	print("Discovered foods: ", Global.discovered_foods)
+	print("Sample food ids from all_foods: ", all_foods.slice(0,5).map(func(f): return f.get("id","")))
 	var vbox = $Panel/ScrollContainer/VBoxContainer
 	for child in vbox.get_children(): child.queue_free()
 
@@ -24,7 +27,7 @@ func refresh_display():
 
 	var title = Label.new()
 	title.text = "📖 Food Encyclopedia"
-	title.add_theme_font_size_override("font_size", 48)
+	title.add_theme_font_size_override("font_size", 60)
 	vbox.add_child(title)
 
 	var count_lbl = Label.new()
@@ -46,7 +49,7 @@ func refresh_display():
 
 	# Show discovered foods
 	for food in all_foods:
-		var fid  = food.get("id","")
+		var fid   = food.get("id","").to_lower().replace(" ","_").strip_edges()
 		var known = Global.discovered_foods.has(fid)
 		var entry_panel = PanelContainer.new()
 		var ev = HBoxContainer.new()
@@ -120,3 +123,25 @@ func setup(foods: Array):
 	all_foods = foods
 	Global.load_discoveries()
 	call_deferred("refresh_display")
+
+func _configure_touch_controls(node: Node = self):
+	for child in node.get_children():
+		if child is ScrollContainer:
+			child.scroll_deadzone = 4
+			child.mouse_filter = Control.MOUSE_FILTER_STOP
+		if child is SpinBox:
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+			child.get_line_edit().mouse_filter = Control.MOUSE_FILTER_PASS
+			for spinbox_child in child.get_children():
+				if spinbox_child is BaseButton:
+					spinbox_child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+		elif child is OptionButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is CheckBox:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		elif child is BaseButton:
+			child.action_mode = BaseButton.ACTION_MODE_BUTTON_RELEASE
+			child.mouse_filter = Control.MOUSE_FILTER_PASS
+		_configure_touch_controls(child)

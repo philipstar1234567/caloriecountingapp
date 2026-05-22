@@ -2199,6 +2199,9 @@ func _eat_portion(slot: Dictionary, portion_g: float, popup: PanelContainer):
 		_log_food_to_file(scaled)
 	else:
 		home.log_food(scaled)
+	var src_id = slot.get("id","")
+	if not src_id.is_empty():
+		Global.discover_food(src_id)
 	_maybe_show_discovery(slot)
 
 func _modify_weight(slot: Dictionary, new_total_g: float, popup: PanelContainer):
@@ -4565,6 +4568,10 @@ func _do_eat_meal(meal: Dictionary):
 
 	save_fridge()
 	build_fridge_ui()
+	for entry in items:
+		var fid = entry.get("food",{}).get("id","")
+		if not fid.is_empty():
+			Global.discover_food(fid)
 	# After the nutrient summing loop, before logging:
 	if not meal_items.is_empty():
 		_maybe_show_discovery(meal_items[0].get("food", {}))
@@ -6236,7 +6243,7 @@ func _open_encyclopedia_overlay():
 	close_btn.set_anchor_and_offset(SIDE_RIGHT,  1, -10)
 	close_btn.set_anchor_and_offset(SIDE_TOP,    1, -70)
 	close_btn.set_anchor_and_offset(SIDE_BOTTOM, 1, -2300)
-	close_btn.add_theme_font_size_override("font_size", 36)
+	close_btn.add_theme_font_size_override("font_size", 50)
 	close_btn.z_index = 5
 	close_btn.pressed.connect(func(): backdrop.queue_free())
 	backdrop.add_child(encyc)

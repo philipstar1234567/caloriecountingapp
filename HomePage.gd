@@ -103,7 +103,10 @@ func log_food(food: Dictionary):
 	totals_for_quests["_category_count"] = _count_categories_today()
 	Global.check_quests(totals_for_quests)
 	Global.calculate_and_save_points(today_totals, water_ml, foods_eaten)
-	Global.discover_food(food.get("id",""))
+	#Global.discover_food(food.get("id",""))
+	var food_id = food.get("id","")
+	if not food_id.is_empty() and food_id != "meal_eaten":
+		Global.discover_food(food_id)
 	refresh_display()
 
 func _show_discovery_popup(discovery: Dictionary):
