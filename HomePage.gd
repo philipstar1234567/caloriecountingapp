@@ -39,6 +39,7 @@ func _ready():
 	vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	
 	_check_weekly_reflection()
+	Global.check_and_update_streak()
 
 
 func _notification(what):

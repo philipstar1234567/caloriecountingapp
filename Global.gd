@@ -1187,6 +1187,7 @@ func _ready():
 		call_deferred("_show_weekly_report")
 		Global.mark_report_shown()
 	Global.load_ui_settings()
+	check_and_update_streak()
 	#load_tooth_staining_data()
 # ─────────────────────────────────────────
 #  WARNINGS — called by FridgePage per food
@@ -1660,7 +1661,10 @@ func get_condition_clinical_notes() -> Dictionary:
 
 func check_and_update_streak():
 	var today     = Time.get_date_string_from_system()
+	for i in range(365):
+		var date_str = _subtract_days_from_date(today, i)
 	var yesterday = _get_yesterday_string()
+	print("STREAK CHECK: today=", today, " yesterday=", yesterday, " last_date=", last_streak_date, " streak=", daily_streak)
 
 	print("STREAK CHECK: today=", today, " last=", last_streak_date,
 		" streak=", daily_streak)
@@ -1705,7 +1709,9 @@ func check_and_update_streak():
 
 func save_streak():
 	var file = FileAccess.open("user://streak.json", FileAccess.WRITE)
-	if file == null: return
+	if file == null:
+		print("STREAK SAVE FAILED - cannot open file")
+		return
 	file.store_string(JSON.stringify({
 		"daily_streak":              daily_streak,
 		"last_streak_date":          last_streak_date,
@@ -1714,24 +1720,56 @@ func save_streak():
 		"consecutive_logging_days":   consecutive_logging_days
 	}))
 	file.close()
+	print("STREAK SAVED: streak=", daily_streak, " date=", last_streak_date)
 
 func load_streak():
-	if not FileAccess.file_exists("user://streak.json"): return
+	if not FileAccess.file_exists("user://streak.json"):
+		print("STREAK: no file found at user://streak.json")
+		return
 	var file = FileAccess.open("user://streak.json", FileAccess.READ)
-	if file == null: return
-	var data = JSON.parse_string(file.get_as_text())
+	if file == null:
+		print("STREAK: file exists but cannot open")
+		return
+	var text = file.get_as_text()
 	file.close()
-	if not data or not data is Dictionary: return
+	print("STREAK: raw file content: ", text)
+	var json  = JSON.new()
+	var error = json.parse(text)
+	if error != OK:
+		print("STREAK parse error: ", json.get_error_message(), " line: ", json.get_error_line())
+		return
+	var data = json.get_data()
+	if not data or not data is Dictionary:
+		print("STREAK: parsed data is not a Dictionary, it is: ", typeof(data))
+		return
 	daily_streak              = data.get("daily_streak", 0)
 	last_streak_date          = data.get("last_streak_date", "")
 	streak_freeze_count       = data.get("streak_freeze_count", 1)
 	_last_celebrated_milestone = data.get("last_celebrated_milestone", 0)
 	consecutive_logging_days  = data.get("consecutive_logging_days", 0)
+	print("STREAK LOADED: streak=", daily_streak, " date=", last_streak_date)
 
 func _get_yesterday_string() -> String:
-	var unix = Time.get_unix_time_from_system() - 86400
-	var dt   = Time.get_datetime_dict_from_unix_time(unix)
-	return "%04d-%02d-%02d" % [dt.year, dt.month, dt.day]
+	return _subtract_days_from_date(Time.get_date_string_from_system(), 1)
+
+func _subtract_days_from_date(date_str: String, days: int) -> String:
+	var parts = date_str.split("-")
+	if parts.size() != 3: return date_str
+	var year  = parts[0].to_int()
+	var month = parts[1].to_int()
+	var day   = parts[2].to_int()
+	for _i in range(days):
+		day -= 1
+		if day == 0:
+			month -= 1
+			if month == 0:
+				month = 12
+				year -= 1
+			var dim = [0,31,28,31,30,31,30,31,31,30,31,30,31]
+			if month == 2 and (year%4==0 and (year%100!=0 or year%400==0)):
+				dim[2] = 29
+			day = dim[month]
+	return "%04d-%02d-%02d" % [year, month, day]
 
 func _days_between(date_a: String, date_b: String) -> int:
 	# Parse both strings and compute difference in days
